@@ -4,7 +4,7 @@ export const SUBJECTS_META = [
   { id: 'base',           label_it: 'Matematica di base',      label_en: 'Basic Mathematics',     level: 'green',  emoji: '📐', order: 1 },
   { id: 'analisi',        label_it: 'Analisi',                 label_en: 'Calculus',              level: 'blue',   emoji: '∫',  order: 2 },
   { id: 'algebra-lineare',label_it: 'Algebra lineare',         label_en: 'Linear Algebra',        level: 'blue',   emoji: '⊗',  order: 3 },
-  { id: 'probabilita',    label_it: 'Probabilità',             label_en: 'Probability',           level: 'blue',   emoji: '🎲', order: 4 },
+  { id: 'probabilita',    label_it: 'Probabilità',       label_en: 'Probability',           level: 'blue',   emoji: '🎲', order: 4 },
   { id: 'statistica',     label_it: 'Statistica e inferenza',  label_en: 'Statistics & Inference',level: 'purple', emoji: '📊', order: 5 },
   { id: 'econometria',    label_it: 'Econometria',             label_en: 'Econometrics',          level: 'purple', emoji: '📈', order: 6 },
   { id: 'finanza',        label_it: 'Finanza applicata',       label_en: 'Applied Finance',       level: 'purple', emoji: '💹', order: 7 },
@@ -14,7 +14,7 @@ function slugify(str) {
   return str
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
 }
