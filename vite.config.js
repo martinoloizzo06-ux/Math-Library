@@ -8,6 +8,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['icons/*.png'],
+      workbox: {
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+      },
       manifest: {
         name: 'Biblioteca di Matematica',
         short_name: 'MatBib',
