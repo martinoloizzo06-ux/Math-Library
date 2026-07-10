@@ -33,6 +33,12 @@ export function loadLessons() {
   }
   allLessons.sort((a, b) => (a.order || 0) - (b.order || 0));
 
+  // Indice id → lezione per la risoluzione dei prerequisiti
+  const lessonById = {};
+  for (const lesson of allLessons) {
+    if (lesson.id) lessonById[lesson.id] = lesson;
+  }
+
   const bySubject = {};
   for (const lesson of allLessons) {
     const sid = lesson.subject;
@@ -56,5 +62,19 @@ export function loadLessons() {
     return { ...meta, topics, lessonCount };
   });
 
-  return { subjects, allLessons };
+  // Raccoglie prerequisiti non risolti (id referenziato ma lezione inesistente)
+  const segnalazioni = [];
+  for (const lesson of allLessons) {
+    const prereqs = Array.isArray(lesson.prerequisiti) ? lesson.prerequisiti : [];
+    for (const pid of prereqs) {
+      if (!lessonById[pid]) {
+        segnalazioni.push({ tipo: 'prerequisito-non-trovato', lezione: lesson.id, id_mancante: pid });
+      }
+    }
+  }
+  if (segnalazioni.length > 0 && import.meta.env.DEV) {
+    console.warn('[KB] Prerequisiti non risolti:', segnalazioni);
+  }
+
+  return { subjects, allLessons, lessonById, segnalazioni };
 }

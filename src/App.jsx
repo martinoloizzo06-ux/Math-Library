@@ -9,7 +9,7 @@ import TopicList from './components/TopicList.jsx';
 import LessonList from './components/LessonList.jsx';
 import LessonView from './components/LessonView.jsx';
 
-const { subjects, allLessons } = loadLessons();
+const { subjects, allLessons, lessonById } = loadLessons();
 
 // ── Page components ─────────────────────────────────────────
 
@@ -74,6 +74,7 @@ function LessonPage({ lang, progress }) {
       topic={topic}
       lang={lang}
       progress={progress}
+      lessonById={lessonById}
       onBackToLessons={() => navigate(`/${subjectId}/${topicSlug}`)}
       onBackToTopics={() => navigate(`/${subjectId}`)}
       onBackToSubjects={() => navigate('/')}

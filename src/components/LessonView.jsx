@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
@@ -9,10 +10,8 @@ import MathPlot from './visual/MathPlot.jsx';
 import FunctionSlider from './visual/FunctionSlider.jsx';
 import NormalBell from './visual/NormalBell.jsx';
 
-// Mappa "linguaggio del blocco codice" → componente React da renderizzare
 const VISUAL = { plot: MathPlot, slider: FunctionSlider, normalbell: NormalBell };
 
-// Il componente <pre> intercetta i blocchi ```plot / ```slider / ```normalbell
 function CustomPre({ children, ...props }) {
   const child = React.Children.toArray(children)[0];
   if (child?.props) {
@@ -23,7 +22,7 @@ function CustomPre({ children, ...props }) {
       if (Comp) {
         try {
           return <Comp {...JSON.parse(String(code).trim())} />;
-        } catch { /* JSON non valido → mostra il blocco di codice normale */ }
+        } catch { /* JSON non valido → blocco codice normale */ }
       }
     }
   }
@@ -36,8 +35,92 @@ const MD_PLUGINS = {
   components: { pre: CustomPre },
 };
 
+// ── Badge livello ──────────────────────────────────────────────────────────────
+
+const LIVELLO_LABEL = {
+  intro:         { it: 'Intro',         en: 'Intro',       cls: 'badge--green'  },
+  universitario: { it: 'Universitario', en: 'University',  cls: 'badge--blue'   },
+  avanzato:      { it: 'Avanzato',      en: 'Advanced',    cls: 'badge--purple' },
+  phd:           { it: 'PhD',           en: 'PhD',         cls: 'badge--purple' },
+};
+
+const STATO_LABEL = {
+  completa:         { it: 'Completa',         en: 'Complete',      cls: 'badge--stato-ok'  },
+  bozza:            { it: 'Bozza',            en: 'Draft',         cls: 'badge--stato-bozza' },
+  'da-rielaborare': { it: 'Da rielaborare',   en: 'To revise',     cls: 'badge--stato-warn' },
+};
+
+// ── Box prerequisiti ───────────────────────────────────────────────────────────
+
+function PrerequisitiBadge({ ids, lessonById, lang }) {
+  if (!ids || ids.length === 0) return null;
+
+  return (
+    <div className="kb-prerequisiti">
+      <span className="kb-prerequisiti__label">
+        {lang === 'it' ? 'Prerequisiti:' : 'Prerequisites:'}
+      </span>
+      <ul className="kb-prerequisiti__list">
+        {ids.map(pid => {
+          const target = lessonById?.[pid];
+          if (!target) {
+            return (
+              <li key={pid} className="kb-prereq-item kb-prereq-item--missing">
+                <span title={`ID: ${pid}`}>⚠ {pid}</span>
+              </li>
+            );
+          }
+          const label = lang === 'it' ? (target.title_it || target.titolo) : (target.title_en || target.title_it || target.titolo);
+          const url = `/${target.subject || target.materia}/${target.topicSlug}/${target.lessonSlug}`;
+          return (
+            <li key={pid} className="kb-prereq-item">
+              <a href={url} className="kb-prereq-link">{label}</a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+// ── Blocco fonti integrate ─────────────────────────────────────────────────────
+
+const RUOLO_LABEL = {
+  'primaria':      { it: 'primaria',      en: 'primary'      },
+  'minore':        { it: 'minore',        en: 'secondary'    },
+  'appunti-prof':  { it: 'appunti prof.', en: 'lecture notes'},
+};
+
+function FontiSection({ fonti, lang }) {
+  if (!fonti || fonti.length === 0) return null;
+  return (
+    <aside className="kb-fonti">
+      <h2 className="kb-fonti__title">
+        {lang === 'it' ? '📚 Fonti' : '📚 Sources'}
+      </h2>
+      <ul className="kb-fonti__list">
+        {fonti.map((f, i) => {
+          const ruolo = RUOLO_LABEL[f.ruolo]?.[lang] ?? f.ruolo;
+          return (
+            <li key={i} className="kb-fonte-item">
+              <span className="kb-fonte-id">{f.id_fonte}</span>
+              <span className="kb-fonte-ruolo">{ruolo}</span>
+              {f.sezioni_coperte && (
+                <span className="kb-fonte-sezioni">{f.sezioni_coperte}</span>
+              )}
+              {f.note && <p className="kb-fonte-note">{f.note}</p>}
+            </li>
+          );
+        })}
+      </ul>
+    </aside>
+  );
+}
+
+// ── Componente principale ──────────────────────────────────────────────────────
+
 export default function LessonView({
-  lesson, subject, topic, lang, progress,
+  lesson, subject, topic, lang, progress, lessonById,
   onBackToLessons, onBackToTopics, onBackToSubjects,
 }) {
   const subjectLabel = lang === 'it' ? subject.label_it : subject.label_en;
@@ -45,6 +128,14 @@ export default function LessonView({
   const title        = lang === 'it' ? lesson.title_it  : (lesson.title_en || lesson.title_it);
   const read         = progress.isRead(lesson.id);
   const bookmarked   = progress.isBookmarked(lesson.id);
+
+  const livello = lesson.livello ?? null;
+  const stato   = lesson.stato   ?? null;
+  const prereqs = Array.isArray(lesson.prerequisiti) ? lesson.prerequisiti : [];
+  const fonti   = Array.isArray(lesson.fonti_integrate) ? lesson.fonti_integrate : [];
+
+  const livelloCfg = livello ? LIVELLO_LABEL[livello] : null;
+  const statoCfg   = stato   ? STATO_LABEL[stato]     : null;
 
   return (
     <div className="page-wrap lesson-wrap">
@@ -56,13 +147,29 @@ export default function LessonView({
       ]} />
 
       <div className="lesson-header">
-        <h1 className="lesson-title">{title}</h1>
-
-        <div className="lesson-source">
-          <span className="lesson-source-label">{lang === 'it' ? 'Fonte:' : 'Source:'}</span>
-          {' '}<em>{lesson.source_book}</em>
-          {lesson.source_chapter && <> — {lesson.source_chapter}</>}
+        <div className="lesson-header__top">
+          <h1 className="lesson-title">{title}</h1>
+          <div className="lesson-badges">
+            {livelloCfg && (
+              <span className={`kb-badge ${livelloCfg.cls}`}>
+                {lang === 'it' ? livelloCfg.it : livelloCfg.en}
+              </span>
+            )}
+            {statoCfg && (
+              <span className={`kb-badge ${statoCfg.cls}`}>
+                {lang === 'it' ? statoCfg.it : statoCfg.en}
+              </span>
+            )}
+          </div>
         </div>
+
+        {lesson.source_book && (
+          <div className="lesson-source">
+            <span className="lesson-source-label">{lang === 'it' ? 'Fonte:' : 'Source:'}</span>
+            {' '}<em>{lesson.source_book}</em>
+            {lesson.source_chapter && <> — {lesson.source_chapter}</>}
+          </div>
+        )}
 
         <div className="lesson-actions">
           <button
@@ -84,9 +191,13 @@ export default function LessonView({
         </div>
       </div>
 
+      <PrerequisitiBadge ids={prereqs} lessonById={lessonById} lang={lang} />
+
       <article className="lesson-content">
         <ReactMarkdown {...MD_PLUGINS}>{lesson.content}</ReactMarkdown>
       </article>
+
+      <FontiSection fonti={fonti} lang={lang} />
 
       {/* Punto di integrazione AI tutor — disabilitato */}
       {/* <AiTutor lesson={lesson} lang={lang} /> */}

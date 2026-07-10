@@ -1,5 +1,35 @@
 ---
 id: probabilita-06-normale
+titolo: "Distribuzione normale (gaussiana)"
+materia: probabilita
+argomento: "Variabili aleatorie"
+modulo: "Distribuzioni continue notevoli"
+livello: universitario
+stato: completa
+versione: "1.0"
+data_ultima_rielaborazione: "2026-07-10"
+
+prerequisiti:
+  - probabilita-05-var-continue
+  - probabilita-02-condizionata
+
+collegamenti:
+  - probabilita-09-disuguaglianze-lgn
+  - probabilita-10-tcl
+  - probabilita-11-multinormale
+
+fonti_integrate:
+  - id_fonte: blitzstein-prob
+    ruolo: primaria
+    sezioni_coperte: "Cap. 5.4–5.6"
+    note: "notazione N(μ,σ²) seguita; Blitzstein usa σ² per la varianza (non σ)"
+
+componenti_usati:
+  - normalbell
+
+sezioni_omesse: []
+
+# campi legacy (mantenuti per retrocompatibilità loader)
 subject: probabilita
 topic_it: Variabili aleatorie
 topic_en: Random variables
@@ -7,7 +37,7 @@ title_it: Distribuzione normale (gaussiana)
 title_en: Normal (Gaussian) distribution
 level: blue
 order: 6
-source_book: "Blitzstein & Hwang, Introduction to Probability; MIT OCW 6.041; Ross, Probability Models"
+source_book: "Blitzstein & Hwang, Introduction to Probability"
 source_chapter: "Cap. 5 — Distribuzione normale"
 ---
 
