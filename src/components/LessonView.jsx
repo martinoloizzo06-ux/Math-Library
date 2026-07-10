@@ -1,13 +1,39 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
+import remarkGfm from 'remark-gfm';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import Breadcrumb from './Breadcrumb.jsx';
+import MathPlot from './visual/MathPlot.jsx';
+import FunctionSlider from './visual/FunctionSlider.jsx';
+import NormalBell from './visual/NormalBell.jsx';
+
+// Mappa "linguaggio del blocco codice" → componente React da renderizzare
+const VISUAL = { plot: MathPlot, slider: FunctionSlider, normalbell: NormalBell };
+
+// Il componente <pre> intercetta i blocchi ```plot / ```slider / ```normalbell
+function CustomPre({ children, ...props }) {
+  const child = React.Children.toArray(children)[0];
+  if (child?.props) {
+    const { className, children: code } = child.props;
+    const match = /language-(\w+)/.exec(className || '');
+    if (match) {
+      const Comp = VISUAL[match[1]];
+      if (Comp) {
+        try {
+          return <Comp {...JSON.parse(String(code).trim())} />;
+        } catch { /* JSON non valido → mostra il blocco di codice normale */ }
+      }
+    }
+  }
+  return <pre {...props}>{children}</pre>;
+}
 
 const MD_PLUGINS = {
-  remarkPlugins: [remarkMath],
+  remarkPlugins: [remarkMath, remarkGfm],
   rehypePlugins: [rehypeKatex, rehypeRaw],
+  components: { pre: CustomPre },
 };
 
 export default function LessonView({
