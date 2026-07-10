@@ -1,0 +1,161 @@
+/* ── Componenti visuali — grafici e interattivi ─────────── */
+
+/* Grafico statico */
+.math-plot {
+  margin: 1.75rem 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.math-plot-title {
+  padding: 0.65rem 1rem 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+.math-plot-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.math-plot-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.2rem;
+  justify-content: center;
+  padding: 0.4rem 1rem 0.7rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.math-plot-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.math-plot-legend-line {
+  display: inline-block;
+  width: 22px;
+  height: 3px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.math-plot-legend-line--dash {
+  background: transparent !important;
+  border-top: 3px dashed;
+  height: 0;
+  margin-top: 1px;
+}
+
+/* Grafico con slider */
+.math-slider-wrap {
+  margin: 1.75rem 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.math-slider-control {
+  padding: 0.75rem 1rem 1rem;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.math-slider-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  cursor: default;
+}
+
+.math-slider-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.math-slider-val {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.math-slider-bounds {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.78rem;
+  opacity: 0.7;
+}
+
+.math-slider-input {
+  width: 100%;
+  accent-color: var(--primary);
+  cursor: pointer;
+  height: 20px;
+}
+
+/* Distribuzione normale */
+.normal-bell-wrap {
+  margin: 1.75rem 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.normal-bell-controls {
+  padding: 0.75rem 1rem 0.5rem;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  display: grid;
+  grid-template-columns: 1fr;   /* un solo slider per riga → più largo e usabile */
+  gap: 0.65rem;
+}
+
+.normal-bell-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--border);
+}
+
+.normal-bell-stat {
+  padding: 0.6rem 0.5rem;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  border-right: 1px solid var(--border);
+}
+
+.normal-bell-stat:last-child {
+  border-right: none;
+}
+
+.normal-bell-stat strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.1rem;
+}
+
+/* Dark mode: il primary è già una CSS var, funziona automaticamente */
+
+/* Responsive */
+@media (max-width: 480px) {
+  .math-plot-legend {
+    font-size: 0.75rem;
+  }
+}
