@@ -1,6 +1,7 @@
 import React from 'react';
+import SearchBar from './SearchBar.jsx';
 
-export default function Header({ lang, onToggleLang, darkMode, onToggleDark, onHome }) {
+export default function Header({ lang, onToggleLang, darkMode, onToggleDark, onHome, allLessons, subjects }) {
   return (
     <header className="header">
       <button className="header-logo" onClick={onHome} aria-label="Home">
@@ -10,6 +11,7 @@ export default function Header({ lang, onToggleLang, darkMode, onToggleDark, onH
         </span>
       </button>
       <div className="header-actions">
+        <SearchBar allLessons={allLessons} subjects={subjects} lang={lang} />
         <button
           className="btn-icon"
           onClick={onToggleLang}

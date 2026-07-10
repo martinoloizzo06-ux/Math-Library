@@ -10,33 +10,46 @@ export const SUBJECTS_META = [
   { id: 'finanza',        label_it: 'Finanza applicata',       label_en: 'Applied Finance',       level: 'purple', emoji: '💹', order: 7 },
 ];
 
+function slugify(str) {
+  return str
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 export function loadLessons() {
   const rawModules = import.meta.glob('../lessons/**/*.md', { query: '?raw', import: 'default', eager: true });
 
   const allLessons = [];
-  for (const [, raw] of Object.entries(rawModules)) {
+  for (const [path, raw] of Object.entries(rawModules)) {
     const { data, content } = parseFrontmatter(raw);
-    if (data.id) allLessons.push({ ...data, content });
+    if (data.id) {
+      const lessonSlug = path.split('/').pop().replace(/\.md$/, '');
+      const topicSlug  = slugify(data.topic_it || 'generale');
+      allLessons.push({ ...data, content, lessonSlug, topicSlug });
+    }
   }
   allLessons.sort((a, b) => (a.order || 0) - (b.order || 0));
 
-  // Group: subjectId → topic_it → { topic_en, lessons[] }
   const bySubject = {};
   for (const lesson of allLessons) {
     const sid = lesson.subject;
     if (!bySubject[sid]) bySubject[sid] = {};
     const topicKey = lesson.topic_it || 'Generale';
     if (!bySubject[sid][topicKey]) {
-      bySubject[sid][topicKey] = { topic_en: lesson.topic_en || topicKey, lessons: [] };
+      bySubject[sid][topicKey] = { topic_en: lesson.topic_en || topicKey, topicSlug: lesson.topicSlug, lessons: [] };
     }
     bySubject[sid][topicKey].lessons.push(lesson);
   }
 
   const subjects = SUBJECTS_META.map(meta => {
     const topicsMap = bySubject[meta.id] || {};
-    const topics = Object.entries(topicsMap).map(([topic_it, { topic_en, lessons }]) => ({
+    const topics = Object.entries(topicsMap).map(([topic_it, { topic_en, topicSlug, lessons }]) => ({
       topic_it,
       topic_en,
+      topicSlug,
       lessons: lessons.sort((a, b) => (a.order || 0) - (b.order || 0)),
     }));
     const lessonCount = topics.reduce((s, t) => s + t.lessons.length, 0);

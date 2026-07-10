@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useLanguage } from './hooks/useLanguage.js';
 import { useProgress } from './hooks/useProgress.js';
 import { loadLessons } from './utils/lessonLoader.js';
@@ -10,9 +11,82 @@ import LessonView from './components/LessonView.jsx';
 
 const { subjects, allLessons } = loadLessons();
 
+// ── Page components ─────────────────────────────────────────
+
+function SubjectsPage({ lang, progress }) {
+  const navigate = useNavigate();
+  return (
+    <SubjectGrid
+      subjects={subjects}
+      lang={lang}
+      progress={progress}
+      allLessons={allLessons}
+      onSelect={s => navigate(`/${s.id}`)}
+    />
+  );
+}
+
+function TopicsPage({ lang }) {
+  const { subjectId } = useParams();
+  const navigate = useNavigate();
+  const subject = subjects.find(s => s.id === subjectId);
+  if (!subject) return <Navigate to="/" replace />;
+  return (
+    <TopicList
+      subject={subject}
+      lang={lang}
+      onSelectTopic={t => navigate(`/${subjectId}/${t.topicSlug}`)}
+      onBack={() => navigate('/')}
+    />
+  );
+}
+
+function LessonsPage({ lang, progress }) {
+  const { subjectId, topicSlug } = useParams();
+  const navigate = useNavigate();
+  const subject = subjects.find(s => s.id === subjectId);
+  const topic   = subject?.topics.find(t => t.topicSlug === topicSlug);
+  if (!subject || !topic) return <Navigate to={`/${subjectId ?? ''}`} replace />;
+  return (
+    <LessonList
+      subject={subject}
+      topic={topic}
+      lang={lang}
+      progress={progress}
+      onSelectLesson={l => navigate(`/${subjectId}/${topicSlug}/${l.lessonSlug}`)}
+      onBackToTopics={() => navigate(`/${subjectId}`)}
+      onBackToSubjects={() => navigate('/')}
+    />
+  );
+}
+
+function LessonPage({ lang, progress }) {
+  const { subjectId, topicSlug, lessonSlug } = useParams();
+  const navigate = useNavigate();
+  const subject = subjects.find(s => s.id === subjectId);
+  const topic   = subject?.topics.find(t => t.topicSlug === topicSlug);
+  const lesson  = allLessons.find(l => l.lessonSlug === lessonSlug && l.subject === subjectId);
+  if (!subject || !topic || !lesson) return <Navigate to="/" replace />;
+  return (
+    <LessonView
+      lesson={lesson}
+      subject={subject}
+      topic={topic}
+      lang={lang}
+      progress={progress}
+      onBackToLessons={() => navigate(`/${subjectId}/${topicSlug}`)}
+      onBackToTopics={() => navigate(`/${subjectId}`)}
+      onBackToSubjects={() => navigate('/')}
+    />
+  );
+}
+
+// ── Root App ────────────────────────────────────────────────
+
 export default function App() {
   const { lang, toggle: toggleLang } = useLanguage();
   const progress = useProgress();
+  const navigate = useNavigate();
 
   const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem('matbib-dark');
@@ -25,19 +99,6 @@ export default function App() {
     localStorage.setItem('matbib-dark', darkMode);
   }, [darkMode]);
 
-  const [nav, setNav] = useState({ view: 'subjects' });
-
-  const currentSubject = nav.subjectId ? subjects.find(s => s.id === nav.subjectId) : null;
-  const currentTopic   = nav.topicIt && currentSubject
-    ? currentSubject.topics.find(t => t.topic_it === nav.topicIt)
-    : null;
-  const currentLesson  = nav.lessonId ? allLessons.find(l => l.id === nav.lessonId) : null;
-
-  const goSubjects = ()                   => setNav({ view: 'subjects' });
-  const goTopics   = (subjectId)          => setNav({ view: 'topics',  subjectId });
-  const goLessons  = (sId, tIt)           => setNav({ view: 'lessons', subjectId: sId, topicIt: tIt });
-  const goLesson   = (sId, tIt, lId)      => setNav({ view: 'lesson',  subjectId: sId, topicIt: tIt, lessonId: lId });
-
   return (
     <div className="app">
       <Header
@@ -45,52 +106,18 @@ export default function App() {
         onToggleLang={toggleLang}
         darkMode={darkMode}
         onToggleDark={() => setDarkMode(d => !d)}
-        onHome={goSubjects}
+        onHome={() => navigate('/')}
+        allLessons={allLessons}
+        subjects={subjects}
       />
       <main className="main">
-        {nav.view === 'subjects' && (
-          <SubjectGrid
-            subjects={subjects}
-            lang={lang}
-            progress={progress}
-            allLessons={allLessons}
-            onSelect={s => goTopics(s.id)}
-          />
-        )}
-
-        {nav.view === 'topics' && currentSubject && (
-          <TopicList
-            subject={currentSubject}
-            lang={lang}
-            onSelectTopic={t => goLessons(currentSubject.id, t.topic_it)}
-            onBack={goSubjects}
-          />
-        )}
-
-        {nav.view === 'lessons' && currentSubject && currentTopic && (
-          <LessonList
-            subject={currentSubject}
-            topic={currentTopic}
-            lang={lang}
-            progress={progress}
-            onSelectLesson={l => goLesson(currentSubject.id, currentTopic.topic_it, l.id)}
-            onBackToTopics={() => goTopics(currentSubject.id)}
-            onBackToSubjects={goSubjects}
-          />
-        )}
-
-        {nav.view === 'lesson' && currentLesson && currentSubject && currentTopic && (
-          <LessonView
-            lesson={currentLesson}
-            subject={currentSubject}
-            topic={currentTopic}
-            lang={lang}
-            progress={progress}
-            onBackToLessons={() => goLessons(currentSubject.id, currentTopic.topic_it)}
-            onBackToTopics={() => goTopics(currentSubject.id)}
-            onBackToSubjects={goSubjects}
-          />
-        )}
+        <Routes>
+          <Route path="/"                              element={<SubjectsPage lang={lang} progress={progress} />} />
+          <Route path="/:subjectId"                    element={<TopicsPage   lang={lang} />} />
+          <Route path="/:subjectId/:topicSlug"         element={<LessonsPage  lang={lang} progress={progress} />} />
+          <Route path="/:subjectId/:topicSlug/:lessonSlug" element={<LessonPage lang={lang} progress={progress} />} />
+          <Route path="*"                              element={<Navigate to="/" replace />} />
+        </Routes>
       </main>
     </div>
   );
