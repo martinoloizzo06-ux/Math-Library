@@ -1,291 +1,359 @@
 ---
 id: analisi-05-limiti-notevoli-asintoti
+titolo: "Limiti notevoli e asintoti"
+materia: analisi
+argomento: "Limiti e continuità"
+modulo: "Limiti notevoli e comportamento all'infinito"
+livello: universitario
+slug: analisi-05-limiti-notevoli-asintoti
+
+# legacy
 subject: analisi
-topic_it: Limiti e continuità
-topic_en: Limits and continuity
-title_it: Limiti notevoli e asintoti
-title_en: Notable limits and asymptotes
+topic_it: "Limiti e continuità"
+topic_en: "Limits and continuity"
+title_it: "Limiti notevoli e asintoti"
+title_en: "Notable limits and asymptotes"
 level: blue
 order: 5
-source_book: "J. Stewart, Calculus; MIT OCW 18.01"
-source_chapter: "Cap. 2 — Asintoti e limiti speciali"
+source_book: "OpenStax, Calculus Vol. 1; A. Villanacci, Appunti di Matematica 1"
+source_chapter: "OpenStax Cap. 2.2, 2.5, 4.6; Villanacci Cap. 6"
+
+prerequisiti:
+  - analisi-01-limite-intuitivo
+  - analisi-02-limite-epsilon-delta
+  - analisi-03-calcolo-limiti
+  - analisi-04-continuita
+  - base-18-seno-coseno-tangente
+  - base-15-funzione-logaritmica
+
+collegamenti:
+  - analisi-06-derivata-definizione
+  - analisi-09-studio-funzione
+  - analisi-10-taylor
+  - analisi-16-successioni
+  - analisi-19-serie-taylor
+
+fonti_integrate:
+  - id_fonte: openstax-calculus-1
+    ruolo: primaria
+    sezioni_coperte: "Cap. 2.2 (Squeeze), 2.5 (limiti all'infinito e asintoti), 4.6 (asintoti)"
+    note: "dimostrazione geometrica di sin x / x = 1 con il teorema del confronto; classificazione degli asintoti (orizzontale/verticale/obliquo)"
+  - id_fonte: villanacci-math1
+    ruolo: appunti-prof
+    sezioni_coperte: "Cap. 6 — Limiti notevoli ed equivalenze asintotiche"
+    note: "priorità su notazione (x₀, ℓ) e convenzioni d'esame; catalogo dei limiti notevoli ed equivalenze asintotiche f ∼ g come strumento di calcolo primario; regola d'uso (solo in prodotti e quozienti)"
+
+versione: "2.0"
+data_ultima_rielaborazione: "2026-07-10"
+stato: completa
+
+componenti_usati:
+  - plot
+  - slider
+
+sezioni_omesse: []
 ---
 
-## 1. Intuizione e motivazione
+## 1. Motivazione e intuizione
 
-Immagina di osservare un aereo che vola sempre più in alto. Man mano che si allontana, la sua traiettoria curva — la curvatura della Terra — diventa sempre meno rilevante: a grandissime distanze, l'aereo sembra muoversi lungo una retta. Quella retta immaginaria verso cui la traiettoria converge si chiama **asintoto**.
+Alcuni limiti ritornano così spesso che memorizzarli conviene tanto quanto ricordare le tabelline. Sono i **limiti notevoli**: risultati esatti — non approssimazioni — che compaiono ovunque nell'analisi e che, una volta noti, trasformano calcoli apparentemente impossibili in poche righe di algebra.
 
-Viceversa, pensa al decadimento radioattivo: la quantità di sostanza radioattiva si dimezza ogni periodo di dimezzamento, avvicinandosi sempre più a zero ma non toccandolo mai in tempo finito. L'asse delle $x$ (la retta $y=0$) è l'asintoto orizzontale della curva di decadimento $N(t) = N_0 e^{-\lambda t}$.
+Il più importante di tutti è $\displaystyle\lim_{x\to 0}\frac{\sin x}{x}=1$. A prima vista è misterioso: sia il numeratore sia il denominatore tendono a $0$, quindi siamo davanti a una forma indeterminata $0/0$. Eppure il rapporto tende a un valore preciso, $1$. Questo limite non è una curiosità: è la pietra angolare della trigonometria differenziale. Da esso discende la derivata di $\sin x$, e da quella l'intera analisi delle oscillazioni, delle onde, dei segnali e dei circuiti. Senza questo limite non esisterebbe il calcolo che descrive il suono e la luce.
 
-Per studiare questi comportamenti limite servono i **limiti notevoli**: risultati esatti che compaiono così frequentemente nell'analisi da meritare un nome e una memorizzazione. Il più importante è $\lim_{x\to 0}\frac{\sin x}{x} = 1$ — non è solo un risultato elegante, ma la pietra angolare di tutta la trigonometria differenziale. Da esso discende la derivata di $\sin x$, e da quella l'intera analisi delle onde, dei segnali, dei circuiti elettrici.
+Altrettanto fondamentale è $\displaystyle\lim_{x\to+\infty}\Big(1+\frac1x\Big)^x=e$. Qui la forma indeterminata è $1^\infty$: la base tende a $1$ (e $1$ elevato a qualsiasi cosa fa $1$?), ma l'esponente cresce senza limite. La tensione tra questi due effetti produce un numero irrazionale ben definito, $e\approx 2{,}71828$, la base dei logaritmi naturali e il cuore di ogni fenomeno di crescita, decadimento e interesse composto.
 
-Altrettanto fondamentale è $\lim_{x\to\infty}\left(1+\frac{1}{x}\right)^x = e$: questa è la definizione stessa del numero di Eulero, la base dei logaritmi naturali e delle equazioni differenziali che governano crescita, decadimento e interesse composto.
+La seconda metà della lezione affronta una domanda geometrica: *come si comporta il grafico di una funzione quando ci si allontana all'infinito, o ci si avvicina a un punto proibito?* La risposta è il concetto di **asintoto** — una retta a cui la curva si incolla sempre di più senza (necessariamente) toccarla. Pensa a un aereo che sale: da lontano la sua traiettoria sembra una retta. O al decadimento radioattivo $N(t)=N_0e^{-\lambda t}$, che si avvicina a zero senza mai annullarsi in tempo finito: la retta $y=0$ è il suo asintoto orizzontale. Limiti notevoli e asintoti sono due facce dello stesso strumento — il limite — usato per catturare comportamenti "al bordo" del dominio.
 
 ---
 
 ## 2. Prerequisiti
 
-- Definizione di **limite** (lezione 1) e tecniche di calcolo (lezione 3)
-- **Continuità** e comportamento delle funzioni elementari (lezione 4)
-- **Teorema del confronto** (lezione 2): fondamentale per dimostrare $\frac{\sin x}{x} \to 1$
-- Proprietà delle funzioni **trigonometriche**: identità pitagorica $\sin^2 x + \cos^2 x = 1$, interpretazione geometrica degli angoli in radianti
-- Nozione di **logaritmo** e di **esponenziale**: proprietà di base, derivate (anticipazione)
+- **Calcolo dei limiti** (Analisi, lezione 3): algebra dei limiti, forme indeterminate, cambio di variabile, aritmetica estesa con $\pm\infty$. Qui li applicheremo intensivamente.
+- **Definizione $\varepsilon$–$\delta$ e teorema del confronto** (Analisi, lezione 2): il teorema del confronto (squeeze) è lo strumento che dimostra $\sin x/x\to 1$.
+- **Continuità** (Analisi, lezione 4): serve per giustificare la permutabilità limite-funzione (es. $\lim e^{g(x)}=e^{\lim g(x)}$) usata nei limiti in forma $1^\infty$.
+- **Seno, coseno, tangente** (Base, lezione 18): identità pitagorica $\sin^2 x+\cos^2 x=1$, misura degli angoli in **radianti** (essenziale: i limiti notevoli trigonometrici valgono solo in radianti).
+- **Funzione logaritmica** (Base, lezione 15): proprietà del logaritmo naturale, $\ln$ come inversa di $e^x$; la tecnica del "passaggio al logaritmo" per le forme $1^\infty$.
 
 ---
 
-## 3. Teoria passo-passo
+## 3. Teoria completa
 
-### Limiti notevoli fondamentali
+### 3.1 Limiti notevoli trigonometrici
 
-**Limite 1 — Il seno fondamentale:**
+**Limite fondamentale del seno.**
 
-$$\lim_{x \to 0} \frac{\sin x}{x} = 1$$
+$$\lim_{x\to 0}\frac{\sin x}{x}=1.$$
 
-Questo limite vale solo quando $x$ è in **radianti**. In gradi il risultato sarebbe $\pi/180$. È il fondamento di tutta la trigonometria differenziale.
+Qui $x$ è misurato in **radianti**: è un'ipotesi essenziale, non una convenzione stilistica (in gradi il limite varrebbe $\pi/180$, vedi §8). Il significato è che, per angoli piccoli, il seno dell'angolo e l'angolo stesso sono *quasi indistinguibili*: $\sin x\approx x$.
 
-**Limite 2 — Il coseno:**
+**Limite del coseno.**
 
-$$\lim_{x \to 0} \frac{1 - \cos x}{x^2} = \frac{1}{2}$$
+$$\lim_{x\to 0}\frac{1-\cos x}{x^2}=\frac12,\qquad\text{da cui}\qquad \lim_{x\to 0}\frac{1-\cos x}{x}=0.$$
 
-Equivalentemente: $\lim_{x\to 0}\frac{1-\cos x}{x} = 0$. Il coseno si avvicina a 1 più "velocemente" del seno si avvicina a 0.
+Il coseno si avvicina a $1$ "più in fretta" (all'ordine $x^2$) di quanto il seno si avvicini a $0$ (all'ordine $x$). Questa gerarchia di velocità sarà resa precisa dalle equivalenze asintotiche.
 
-**Limite 3 — Il numero di Eulero (forma $+\infty$):**
+### 3.2 Il numero $e$ e i limiti esponenziali–logaritmici
 
-$$\lim_{x \to +\infty} \left(1 + \frac{1}{x}\right)^x = e \approx 2{,}71828\ldots$$
+**Definizione di $e$ tramite limite.**
 
-Questa è una delle definizioni equivalenti di $e$.
+$$\lim_{x\to+\infty}\Big(1+\frac1x\Big)^x=e,\qquad\text{equivalentemente}\qquad \lim_{t\to 0}(1+t)^{1/t}=e.$$
 
-**Limite 4 — Il numero di Eulero (forma $0$):**
+Le due forme sono la stessa cosa vista da due lati: ponendo $t=1/x$, quando $x\to+\infty$ si ha $t\to 0^+$. Il numero $e\approx 2{,}71828\ldots$ è irrazionale (anzi trascendente) ed è la base naturale dell'analisi.
 
-$$\lim_{x \to 0} (1 + x)^{1/x} = e$$
+**Generalizzazione con parametro.** Per ogni $a\in\mathbb{R}$,
 
-Forma equivalente del limite 3, con la sostituzione $x \mapsto 1/x$.
+$$\lim_{x\to+\infty}\Big(1+\frac{a}{x}\Big)^x=e^{a}.$$
 
-**Limite 5 — Logaritmo naturale:**
+**Limite del logaritmo.**
 
-$$\lim_{x \to 0} \frac{\ln(1+x)}{x} = 1$$
+$$\lim_{x\to 0}\frac{\ln(1+x)}{x}=1.$$
 
-Equivalenza asintotica: $\ln(1+x) \sim x$ per $x \to 0$.
+**Limite dell'esponenziale.**
 
-**Limite 6 — Esponenziale:**
+$$\lim_{x\to 0}\frac{e^{x}-1}{x}=1.$$
 
-$$\lim_{x \to 0} \frac{e^x - 1}{x} = 1$$
+Questi due, come vedremo in §5, si deducono l'uno dall'altro e dalla definizione di $e$. Interpretazione: vicino a $0$, sia $\ln(1+x)$ sia $e^x-1$ sono "quasi uguali" a $x$.
 
-Equivalenza asintotica: $e^x - 1 \sim x$ per $x \to 0$.
+**Limite della potenza.** Per ogni $\alpha\in\mathbb{R}$,
 
-**Limite 7 — Generalizzazione con parametro:**
+$$\lim_{x\to 0}\frac{(1+x)^{\alpha}-1}{x}=\alpha.$$
 
-$$\lim_{x \to +\infty} \left(1 + \frac{a}{x}\right)^x = e^a \quad \forall a \in \mathbb{R}$$
+### 3.3 Equivalenze asintotiche
 
-Tutti questi limiti sono collegati. I limiti 5 e 6 si deducono dal limite 3. Le **equivalenze asintotiche** più utili per $x \to 0$:
+I limiti notevoli si riassumono in modo compatto con le **equivalenze asintotiche**, lo strumento di calcolo più efficiente per le forme $0/0$ (impostazione Villanacci).
 
-$$\sin x \sim x, \quad 1-\cos x \sim \frac{x^2}{2}, \quad \tan x \sim x$$
+**Definizione.** Due funzioni $f,g$ sono *asintoticamente equivalenti* per $x\to x_0$, e si scrive $f\sim g$, se
 
-$$\ln(1+x) \sim x, \quad e^x-1 \sim x, \quad (1+x)^\alpha - 1 \sim \alpha x$$
+$$\lim_{x\to x_0}\frac{f(x)}{g(x)}=1.$$
 
-Il simbolo $f \sim g$ significa $\lim \frac{f}{g} = 1$ e si può usare in **moltiplicazioni** (non in addizioni o sottrazioni).
+Dai limiti notevoli, per $x\to 0$:
 
-### Asintoti
+$$\sin x\sim x,\qquad \tan x\sim x,\qquad 1-\cos x\sim \frac{x^2}{2},$$
+$$\ln(1+x)\sim x,\qquad e^{x}-1\sim x,\qquad (1+x)^{\alpha}-1\sim \alpha x.$$
 
-Un **asintoto** di $f$ è una retta $\ell$ tale che la distanza tra il punto $(x, f(x))$ e la retta $\ell$ tende a 0 quando $x \to \pm\infty$ o $x \to a^{\pm}$.
+**Regola d'uso (fondamentale).** In un limite si può sostituire un fattore con un suo equivalente asintotico **solo se il fattore compare in un prodotto o in un quoziente**. È vietato sostituire un termine dentro una somma o differenza, perché lì i termini di ordine superiore — quelli trascurati dall'equivalenza — possono diventare decisivi. Esempio del divieto: $x-\sin x\sim x-x=0$ è **falso** (il vero comportamento è $\sim x^3/6$). La sostituzione ingenua cancella proprio l'informazione che cerchiamo. Questo è l'errore più insidioso della sezione 8.
 
-**Asintoto orizzontale:** la retta $y = L$ è asintoto orizzontale di $f$ se:
+### 3.4 Asintoti
 
-$$\lim_{x \to +\infty} f(x) = L \quad \text{oppure} \quad \lim_{x \to -\infty} f(x) = L$$
+Un **asintoto** di $f$ è una retta a cui la distanza del punto $(x,f(x))$ dalla retta tende a $0$ quando $x\to\pm\infty$ oppure $x\to x_0^{\pm}$.
 
-Una funzione può avere due asintoti orizzontali distinti (uno per $+\infty$ e uno per $-\infty$).
+**Asintoto orizzontale.** La retta $y=\ell$ è asintoto orizzontale (per $x\to+\infty$, o per $x\to-\infty$) se
 
-**Asintoto verticale:** la retta $x = a$ è asintoto verticale di $f$ se almeno uno tra:
+$$\lim_{x\to+\infty}f(x)=\ell\qquad\text{oppure}\qquad \lim_{x\to-\infty}f(x)=\ell,\quad \ell\in\mathbb{R}.$$
 
-$$\lim_{x \to a^+} f(x) = \pm\infty \quad \text{o} \quad \lim_{x \to a^-} f(x) = \pm\infty$$
+Una funzione può avere **due** asintoti orizzontali distinti, uno per parte (es. $\arctan x$: $\pi/2$ a destra, $-\pi/2$ a sinistra).
 
-Gli asintoti verticali si trovano tipicamente dove il denominatore si annulla e il numeratore no.
+**Asintoto verticale.** La retta $x=x_0$ è asintoto verticale se almeno uno dei limiti unilaterali è infinito:
 
-**Asintoto obliquo:** la retta $y = mx + q$ (con $m \neq 0$) è asintoto obliquo di $f$ per $x\to+\infty$ se:
+$$\lim_{x\to x_0^{+}}f(x)=\pm\infty\qquad\text{o}\qquad \lim_{x\to x_0^{-}}f(x)=\pm\infty.$$
 
-$$\lim_{x \to +\infty} [f(x) - (mx + q)] = 0$$
+Si cercano tipicamente dove il denominatore si annulla **ma il numeratore no** (se anche il numeratore si annulla può esserci una discontinuità eliminabile invece di un asintoto — collegamento con la lezione 4).
 
-**Come trovare $m$ e $q$:**
+**Asintoto obliquo.** La retta $y=mx+q$ con $m\neq 0$ è asintoto obliquo per $x\to+\infty$ se
 
-$$m = \lim_{x \to +\infty} \frac{f(x)}{x} \quad \text{(se questo limite esiste e è finito e } \neq 0\text{)}$$
+$$\lim_{x\to+\infty}\big[f(x)-(mx+q)\big]=0.$$
 
-$$q = \lim_{x \to +\infty} [f(x) - mx] \quad \text{(se questo limite esiste e è finito)}$$
+I coefficienti si trovano nell'ordine:
 
-Se l'asintoto orizzontale esiste (cioè $\lim f(x) = L$ finito), allora $m = 0$ e l'asintoto obliquo degenera in quello orizzontale: non esistono entrambi separatamente.
+$$m=\lim_{x\to+\infty}\frac{f(x)}{x},\qquad q=\lim_{x\to+\infty}\big[f(x)-mx\big],$$
 
----
-
-## 4. Derivazione commentata
-
-**Dimostrazione geometrica che $\lim_{x \to 0^+} \dfrac{\sin x}{x} = 1$.**
-
-Consideriamo un angolo $x$ in radianti con $0 < x < \pi/2$. Disegniamo un cerchio di raggio 1 centrato nell'origine O. Siano:
-- $A = (1, 0)$
-- $B = (\cos x, \sin x)$ il punto sul cerchio corrispondente all'angolo $x$
-- $C = (1, \tan x)$ il punto sulla tangente verticale all'asse $x$ in $x=1$
-
-Confrontiamo le aree di tre figure (tutte contenute una nell'altra):
-
-**Triangolo $OAB$:** area $= \frac{1}{2} \cdot \text{base} \cdot \text{altezza} = \frac{1}{2} \cdot 1 \cdot \sin x = \dfrac{\sin x}{2}$
-
-**Settore circolare $OAB$:** area $= \frac{x}{2\pi} \cdot \pi \cdot 1^2 = \dfrac{x}{2}$ (poiché il settore ha angolo $x$ su $2\pi$)
-
-**Triangolo $OAC$:** area $= \frac{1}{2} \cdot 1 \cdot \tan x = \dfrac{\tan x}{2}$
-
-Poiché Triangolo $OAB$ $\subset$ Settore $\subset$ Triangolo $OAC$:
-
-$$\frac{\sin x}{2} \leq \frac{x}{2} \leq \frac{\tan x}{2}$$
-
-Dividiamo tutto per $\dfrac{\sin x}{2} > 0$:
-
-$$1 \leq \frac{x}{\sin x} \leq \frac{1}{\cos x}$$
-
-Prendiamo i reciproci (invertendo le disuguaglianze):
-
-$$\cos x \leq \frac{\sin x}{x} \leq 1$$
-
-Per $x\to 0^+$: $\cos x \to 1$ e $1 \to 1$. Per il **teorema del confronto**:
-
-$$\lim_{x\to 0^+} \frac{\sin x}{x} = 1$$
-
-Poiché $\frac{\sin x}{x}$ è una funzione pari (numeratore dispari, denominatore dispari, il rapporto è pari), anche $\lim_{x\to 0^-} \frac{\sin x}{x} = 1$.
-
-Quindi $\lim_{x \to 0} \dfrac{\sin x}{x} = 1$. $\square$
-
-**Commenti importanti:**
-- La dimostrazione usa le **aree** di figure geometriche, che richiedono che $x$ sia in radianti. In gradi il limite sarebbe diverso.
-- Il teorema del confronto è la chiave: "schiaccia" $\frac{\sin x}{x}$ tra $\cos x$ e 1, entrambi convergenti a 1.
-- La parità di $\frac{\sin x}{x}$ permette di estendere il risultato a $x \to 0^-$.
+purché entrambi i limiti esistano finiti (e $m\neq 0$). Se esiste un asintoto orizzontale ($\lim f=\ell$ finito), allora $m=0$: l'asintoto orizzontale è il caso degenere $m=0$ dell'obliquo, e i due **non coesistono** dallo stesso lato.
 
 ---
 
-## 5. Esempi graduati
+## 4. Dimostrazioni
 
-**Esempio 1 — Uso diretto del limite notevole del seno**
+### 4.1 Dimostrazione geometrica di $\lim_{x\to 0}\frac{\sin x}{x}=1$
 
-$$\lim_{x \to 0} \frac{\sin(5x)}{x}$$
+Sia $0<x<\pi/2$, con $x$ in radianti. Nel cerchio unitario di centro $O$ consideriamo $A=(1,0)$, il punto $B=(\cos x,\sin x)$ corrispondente all'angolo $x$, e $C=(1,\tan x)$ sulla retta tangente in $A$. Confrontiamo tre aree, ciascuna contenuta nella successiva:
 
-Riscriviamo per ottenere la forma $\frac{\sin(t)}{t}$ con $t = 5x \to 0$:
+$$\underbrace{\text{area}(\triangle OAB)}_{\frac12\sin x}\;\le\;\underbrace{\text{area(settore }OAB)}_{\frac{x}{2}}\;\le\;\underbrace{\text{area}(\triangle OAC)}_{\frac12\tan x}.$$
 
-$$= \lim_{x \to 0} 5 \cdot \frac{\sin(5x)}{5x} = 5 \cdot 1 = 5$$
+L'area del settore vale $\frac{x}{2\pi}\cdot\pi\cdot 1^2=\frac{x}{2}$ perché il settore copre una frazione $\frac{x}{2\pi}$ del disco unitario — ed è **qui** che entra la misura in radianti. Otteniamo
 
----
+$$\frac{\sin x}{2}\le \frac{x}{2}\le\frac{\tan x}{2}\;\;\Longrightarrow\;\; \sin x\le x\le \frac{\sin x}{\cos x}.$$
 
-**Esempio 2 — Rapporto di due seni**
+Dividendo per $\sin x>0$: $\;1\le \dfrac{x}{\sin x}\le \dfrac{1}{\cos x}$. Passando ai reciproci (che inverte le disuguaglianze fra quantità positive):
 
-$$\lim_{x \to 0} \frac{\sin(3x)}{\sin(7x)}$$
+$$\cos x\le \frac{\sin x}{x}\le 1.$$
 
-Moltiplichiamo e dividiamo opportunamente per ridurre a limiti notevoli noti:
+Per $x\to 0^+$ si ha $\cos x\to 1$ e la costante $1\to 1$; per il **teorema del confronto** (squeeze) la funzione intrappolata converge:
 
-$$= \lim_{x\to 0} \frac{\sin(3x)}{3x} \cdot \frac{7x}{\sin(7x)} \cdot \frac{3x}{7x} = 1 \cdot 1 \cdot \frac{3}{7} = \frac{3}{7}$$
+$$\lim_{x\to 0^+}\frac{\sin x}{x}=1.$$
 
----
+Infine $\frac{\sin x}{x}$ è **pari** ($\sin$ è dispari, $x$ è dispari, il rapporto è pari), quindi il limite sinistro coincide con il destro e
 
-**Esempio 3 — Limite di $(1+a/x)^x$**
+$$\lim_{x\to 0}\frac{\sin x}{x}=1. \qquad\blacksquare$$
 
-$$\lim_{x \to +\infty} \left(1 + \frac{2}{x}\right)^x$$
+### 4.2 Dimostrazione di $\lim_{x\to 0}\frac{1-\cos x}{x^2}=\frac12$
 
-Forma $1^\infty$, caso del limite notevole 7 con $a=2$. Verifichiamo riscrivendo:
+Moltiplichiamo numeratore e denominatore per il "coniugato" $1+\cos x$ per far comparire $\sin^2 x$:
 
-$$\left(1 + \frac{2}{x}\right)^x = \left[\left(1 + \frac{2}{x}\right)^{x/2}\right]^2$$
+$$\frac{1-\cos x}{x^2}=\frac{(1-\cos x)(1+\cos x)}{x^2(1+\cos x)}=\frac{1-\cos^2 x}{x^2(1+\cos x)}=\frac{\sin^2 x}{x^2(1+\cos x)}.$$
 
-Posto $t = x/2 \to +\infty$ con $x \to +\infty$:
+Abbiamo usato l'identità pitagorica $1-\cos^2 x=\sin^2 x$. Ora separiamo i fattori:
 
-$$= \left[\left(1 + \frac{1}{t}\right)^t\right]^2 \to e^2$$
+$$\frac{\sin^2 x}{x^2(1+\cos x)}=\Big(\frac{\sin x}{x}\Big)^{2}\cdot\frac{1}{1+\cos x}.$$
 
----
+Per $x\to 0$: il primo fattore tende a $1^2=1$ (dalla dimostrazione 4.1) e il secondo a $\frac{1}{1+1}=\frac12$. Per l'algebra dei limiti il prodotto tende a $1\cdot\frac12=\frac12$. $\blacksquare$
 
-**Esempio 4 — Asintoto orizzontale**
+### 4.3 Dimostrazione di $\lim_{x\to 0}\frac{\ln(1+x)}{x}=1$ e di $\lim_{x\to 0}\frac{e^{x}-1}{x}=1$
 
-Trovare gli asintoti orizzontali di $f(x) = \dfrac{3x^2 - 1}{x^2 + 2}$.
+**Passo 1 (dal numero $e$ al logaritmo).** Riscriviamo il rapporto usando la proprietà $\alpha\ln\beta=\ln\beta^{\alpha}$:
 
-$$\lim_{x \to \pm\infty} \frac{3x^2-1}{x^2+2} = \lim_{x\to\pm\infty} \frac{3 - 1/x^2}{1 + 2/x^2} = \frac{3}{1} = 3$$
+$$\frac{\ln(1+x)}{x}=\frac{1}{x}\ln(1+x)=\ln\!\big((1+x)^{1/x}\big).$$
 
-La retta $y = 3$ è asintoto orizzontale sia per $x\to+\infty$ che per $x\to-\infty$ (unico asintoto orizzontale).
+Per $x\to 0$, l'argomento tende a $(1+x)^{1/x}\to e$ (definizione di $e$, §3.2). Poiché il logaritmo è **continuo** in $e$, possiamo scambiare limite e funzione (permutabilità, lezione 4):
 
----
+$$\lim_{x\to 0}\frac{\ln(1+x)}{x}=\ln\!\Big(\lim_{x\to 0}(1+x)^{1/x}\Big)=\ln e=1.$$
 
-**Esempio 5 — Asintoto verticale**
+**Passo 2 (dal logaritmo all'esponenziale, per inversione).** Nel limite $\lim_{x\to 0}\frac{e^x-1}{x}$ poniamo la sostituzione $y=e^{x}-1$, cioè $x=\ln(1+y)$; quando $x\to 0$ si ha $y\to 0$. Allora
 
-Trovare gli asintoti verticali di $f(x) = \dfrac{x+1}{x^2-4}$.
+$$\frac{e^{x}-1}{x}=\frac{y}{\ln(1+y)}=\left(\frac{\ln(1+y)}{y}\right)^{-1}.$$
 
-Il denominatore $x^2-4 = (x-2)(x+2)$ si annulla in $x = \pm 2$. Verifichiamo:
+Per il Passo 1 la quantità fra parentesi tende a $1$, dunque il suo reciproco tende a $1$:
 
-Per $x = 2$: numeratore $= 3 \neq 0$. $\lim_{x\to 2^+} \frac{x+1}{(x-2)(x+2)} = \frac{3}{0^+ \cdot 4} = +\infty$. Asintoto verticale $x=2$.
+$$\lim_{x\to 0}\frac{e^{x}-1}{x}=1. \qquad\blacksquare$$
 
-Per $x = -2$: numeratore $= -1 \neq 0$. $\lim_{x\to -2^+} \frac{x+1}{(x-2)(x+2)} = \frac{-1}{(-4)\cdot 0^+} = +\infty$. Asintoto verticale $x=-2$.
-
----
-
-**Esempio 6 — Asintoto obliquo (divisione polinomiale)**
-
-Trovare l'asintoto obliquo di $f(x) = \dfrac{x^2+1}{x-1}$ per $x\to+\infty$.
-
-**Passo 1 — trovare $m$:**
-
-$$m = \lim_{x\to+\infty} \frac{f(x)}{x} = \lim_{x\to+\infty} \frac{x^2+1}{x(x-1)} = \lim_{x\to+\infty} \frac{x^2+1}{x^2-x} = 1$$
-
-**Passo 2 — trovare $q$:**
-
-$$q = \lim_{x\to+\infty} [f(x) - x] = \lim_{x\to+\infty} \frac{x^2+1 - x(x-1)}{x-1} = \lim_{x\to+\infty} \frac{x+1}{x-1} = 1$$
-
-L'asintoto obliquo è $y = x + 1$.
-
-*Verifica con divisione polinomiale:* $\frac{x^2+1}{x-1} = x + 1 + \frac{2}{x-1}$. Per $x\to+\infty$, il resto $\frac{2}{x-1} \to 0$, confermando $y=x+1$.
+I due limiti sono quindi **la stessa affermazione** letta nei due versi dell'inversione $\exp\leftrightarrow\ln$.
 
 ---
 
-**Esempio 7 — Equivalenza asintotica (composizione)**
+## 5. Derivazioni
 
-$$\lim_{x \to 0} \frac{\ln(1+\sin x)}{x}$$
+### 5.1 Il limite generalizzato $\big(1+\frac{a}{x}\big)^x\to e^a$
 
-Per $x\to 0$: $\sin x \sim x$, poi $\ln(1+t) \sim t$ per $t \to 0$. Quindi $\ln(1+\sin x) \sim \sin x \sim x$:
+Vogliamo ricavare $\lim_{x\to+\infty}\big(1+\frac{a}{x}\big)^{x}=e^{a}$ dalla definizione di $e$, per $a\neq 0$. La strategia è **passare al logaritmo** per trasformare la potenza in un prodotto:
 
-$$\lim_{x\to 0} \frac{\ln(1+\sin x)}{x} = 1$$
+$$L=\lim_{x\to+\infty}\Big(1+\frac{a}{x}\Big)^{x}\;\Longrightarrow\;\ln L=\lim_{x\to+\infty}x\,\ln\!\Big(1+\frac{a}{x}\Big).$$
 
-*Verifica rigorosa:* $\frac{\ln(1+\sin x)}{x} = \frac{\ln(1+\sin x)}{\sin x} \cdot \frac{\sin x}{x} \to 1 \cdot 1 = 1$.
+Poniamo $t=\frac{a}{x}$, così $t\to 0$ e $x=\frac{a}{t}$:
+
+$$\ln L=\lim_{t\to 0}\frac{a}{t}\,\ln(1+t)=a\cdot\lim_{t\to 0}\frac{\ln(1+t)}{t}=a\cdot 1=a,$$
+
+avendo usato il limite notevole del logaritmo (§4.3). Poiché $\ln L=a$ e l'esponenziale è continuo, $L=e^{a}$. La tecnica — logaritmo, cambio di variabile, limite notevole, esponenziale — è lo schema universale per le forme $1^{\infty}$.
+
+### 5.2 Le formule di $m$ e $q$ per l'asintoto obliquo
+
+Deriviamo le formule operative dalla definizione. Supponiamo che $y=mx+q$ (con $m\neq 0$) sia asintoto obliquo per $x\to+\infty$, cioè valga la condizione $(\ast)$:
+
+$$\lim_{x\to+\infty}\big[f(x)-mx-q\big]=0. \qquad (\ast)$$
+
+**Ricavare $m$.** Dividiamo la quantità in $(\ast)$ per $x$:
+
+$$\frac{f(x)-mx-q}{x}=\frac{f(x)}{x}-m-\frac{q}{x}.$$
+
+Per $x\to+\infty$ il primo membro tende a $0$ (numeratore tendente a $0$, denominatore a $+\infty$) e $\frac{q}{x}\to 0$. Resta $\lim\big(\frac{f(x)}{x}-m\big)=0$, cioè
+
+$$\boxed{\,m=\lim_{x\to+\infty}\frac{f(x)}{x}\,}.$$
+
+**Ricavare $q$.** Noto $m$, isoliamo $q$ direttamente da $(\ast)$: poiché $\lim[f(x)-mx-q]=0$ e $q$ è costante,
+
+$$\boxed{\,q=\lim_{x\to+\infty}\big[f(x)-mx\big]\,}.$$
+
+L'ordine è obbligatorio: senza $m$ non si può calcolare $q$. Se $m$ risulta $0$, non c'è asintoto obliquo (semmai orizzontale); se $m$ è infinito o non esiste, non c'è asintoto obliquo affatto. La stessa procedura vale per $x\to-\infty$.
 
 ---
 
-**Esempio 8 — Tutti gli asintoti di una funzione irrazionale**
+## 6. Esempi
 
-Trovare tutti gli asintoti di $f(x) = \sqrt{x^2 + x} - x$ per $x\to+\infty$.
+### Esempio 1 — Riporto alla forma notevole (introduttivo)
 
-Razionalizziamo (forma $\infty - \infty$):
+Calcolare $\displaystyle\lim_{x\to 0}\frac{\sin(5x)}{x}$.
 
-$$\sqrt{x^2+x} - x = \frac{(\sqrt{x^2+x}-x)(\sqrt{x^2+x}+x)}{\sqrt{x^2+x}+x} = \frac{x^2+x-x^2}{\sqrt{x^2+x}+x} = \frac{x}{\sqrt{x^2+x}+x}$$
+**Soluzione.** L'argomento del seno è $5x$, non $x$: moltiplichiamo e dividiamo per $5$ per ricostruire la forma $\frac{\sin t}{t}$ con $t=5x\to 0$:
 
-Per $x>0$: $\sqrt{x^2+x} = x\sqrt{1+1/x}$:
+$$\frac{\sin(5x)}{x}=5\cdot\frac{\sin(5x)}{5x}\;\xrightarrow[x\to 0]{}\;5\cdot 1=5.$$
 
-$$= \frac{x}{x\sqrt{1+1/x}+x} = \frac{1}{\sqrt{1+1/x}+1} \to \frac{1}{1+1} = \frac{1}{2}$$
+*Commento:* la manovra "moltiplica e dividi per far combaciare l'argomento" è il gesto base di tutti i limiti notevoli trigonometrici.
 
-La retta $y = 1/2$ è asintoto orizzontale per $x\to+\infty$.
+### Esempio 2 — Rapporto di due seni (introduttivo)
+
+Calcolare $\displaystyle\lim_{x\to 0}\frac{\sin(3x)}{\sin(7x)}$.
+
+**Soluzione.** Con le equivalenze $\sin(3x)\sim 3x$ e $\sin(7x)\sim 7x$ (lecito: sono in un quoziente):
+
+$$\frac{\sin(3x)}{\sin(7x)}\sim\frac{3x}{7x}=\frac{3}{7}.$$
+
+*Verifica rigorosa:* $\dfrac{\sin(3x)}{3x}\cdot\dfrac{7x}{\sin(7x)}\cdot\dfrac{3x}{7x}\to 1\cdot1\cdot\frac37=\frac37.$ $\square$
+
+### Esempio 3 — Forma $1^\infty$ (standard)
+
+Calcolare $\displaystyle\lim_{x\to+\infty}\Big(1+\frac{2}{x}\Big)^{x}$.
+
+**Soluzione.** È il limite generalizzato con $a=2$, quindi vale $e^{2}$. In alternativa, per esplicitare: $\big(1+\frac2x\big)^{x}=\Big[\big(1+\frac{1}{x/2}\big)^{x/2}\Big]^{2}$; posto $t=x/2\to+\infty$ la base tende a $e$, dunque il tutto a $e^{2}$. $\square$
+
+### Esempio 4 — Equivalenze in composizione (standard)
+
+Calcolare $\displaystyle\lim_{x\to 0}\frac{\ln(1+\sin x)}{x}$.
+
+**Soluzione.** Concateniamo equivalenze: per $x\to 0$, $\sin x\sim x$, quindi $\sin x\to 0$ e $\ln(1+\sin x)\sim \sin x\sim x$ (sostituzione lecita: siamo in un quoziente). Perciò il limite è $1$.
+
+*Verifica rigorosa:* $\dfrac{\ln(1+\sin x)}{x}=\dfrac{\ln(1+\sin x)}{\sin x}\cdot\dfrac{\sin x}{x}\to 1\cdot 1=1.$ $\square$
+
+### Esempio 5 — Esponenziale e seno insieme (avanzato)
+
+Calcolare $\displaystyle\lim_{x\to 0}\frac{e^{2x}-1}{\sin(3x)}$.
+
+**Soluzione.** Equivalenze: $e^{2x}-1\sim 2x$ e $\sin(3x)\sim 3x$, entrambe in un quoziente:
+
+$$\frac{e^{2x}-1}{\sin(3x)}\sim\frac{2x}{3x}=\frac23.$$
+
+*Verifica:* $\dfrac{e^{2x}-1}{2x}\cdot\dfrac{3x}{\sin(3x)}\cdot\dfrac23\to 1\cdot1\cdot\frac23=\frac23.$ $\square$
+
+### Esempio 6 — Asintoti verticali e orizzontali (standard)
+
+Trovare tutti gli asintoti di $f(x)=\dfrac{x^{2}}{x^{2}-1}$.
+
+**Soluzione.** *Verticali:* $x^{2}-1=(x-1)(x+1)$ si annulla in $x=\pm1$, dove il numeratore vale $1\neq 0$; entrambi i limiti unilaterali sono infiniti, dunque $x=1$ e $x=-1$ sono asintoti verticali. *Orizzontale:* $\lim_{x\to\pm\infty}\frac{x^2}{x^2-1}=\lim\frac{1}{1-1/x^2}=1$, quindi $y=1$ è asintoto orizzontale in entrambe le direzioni. *Obliquo:* poiché esiste l'orizzontale, $m=\lim f(x)/x=0$: nessun asintoto obliquo. $\square$
+
+### Esempio 7 — Asintoto obliquo con verifica per divisione (avanzato)
+
+Trovare l'asintoto obliquo di $f(x)=\dfrac{x^{2}+1}{x-1}$ per $x\to+\infty$.
+
+**Soluzione.** $m=\lim_{x\to+\infty}\frac{x^{2}+1}{x(x-1)}=\lim\frac{x^2+1}{x^2-x}=1$. Poi
+
+$$q=\lim_{x\to+\infty}\Big[\frac{x^{2}+1}{x-1}-x\Big]=\lim_{x\to+\infty}\frac{x^{2}+1-x(x-1)}{x-1}=\lim_{x\to+\infty}\frac{x+1}{x-1}=1.$$
+
+Asintoto obliquo: $y=x+1$. *Verifica:* la divisione dà $\frac{x^2+1}{x-1}=x+1+\frac{2}{x-1}$, e il resto $\frac{2}{x-1}\to 0$. $\square$
+
+### Esempio 8 — Forma $\infty-\infty$ con razionalizzazione (applicativo)
+
+Calcolare $\displaystyle\lim_{x\to+\infty}\big(\sqrt{x^{2}+x}-x\big)$ e interpretarlo come asintoto.
+
+**Soluzione.** Forma $\infty-\infty$: razionalizziamo moltiplicando per il coniugato:
+
+$$\sqrt{x^{2}+x}-x=\frac{(x^{2}+x)-x^{2}}{\sqrt{x^{2}+x}+x}=\frac{x}{\sqrt{x^{2}+x}+x}.$$
+
+Per $x>0$, $\sqrt{x^{2}+x}=x\sqrt{1+1/x}$, quindi
+
+$$\frac{x}{x\sqrt{1+1/x}+x}=\frac{1}{\sqrt{1+1/x}+1}\;\xrightarrow[x\to+\infty]{}\;\frac{1}{1+1}=\frac12.$$
+
+Interpretazione: la funzione $g(x)=\sqrt{x^2+x}$ ha asintoto obliquo $y=x+\frac12$ per $x\to+\infty$, poiché $g(x)-x\to\frac12$ (qui $m=1$, $q=\frac12$). $\square$
 
 ---
 
-## 6. Grafico
+## 7. Visualizzazioni e interattività
+
+Il primo grafico mostra la funzione $\frac{\sin x}{x}$ (definita per continuità con valore $1$ in $x=0$). Osserva due fatti insieme: vicino a $x=0$ la curva "punta" esattamente a $1$ (il limite notevole), mentre per $x\to\pm\infty$ le oscillazioni si smorzano e la curva si schiaccia sulla retta $y=0$, che è il suo asintoto orizzontale. Nota anche che la curva *attraversa* infinite volte il proprio asintoto $y=0$: gli asintoti descrivono il comportamento al limite, non un divieto di contatto.
 
 ```plot
 {
-  "title": "sin(x)/x → 1 per x→0 e y→0 per x→±∞",
+  "title": "sin(x)/x: → 1 per x→0, e asintoto orizzontale y=0 per x→±∞",
   "fn": "(Math.abs(x) > 0.001) ? Math.sin(x) / x : 1",
-  "fn2": "1",
-  "domain": [-10, 10],
-  "yDomain": [-0.5, 1.5],
+  "fn2": "0",
+  "domain": [-12, 12],
+  "yDomain": [-0.4, 1.2],
   "label1": "sin(x)/x",
-  "label2": "y = 1 (asintoto orizzontale)"
+  "label2": "y = 0 (asintoto orizzontale)"
 }
 ```
 
----
-
-## 7. Elemento interattivo
-
-Lo slider mostra come $(1 + a/x)^x$ converge a $e^a$ al crescere di $x$. Per ogni valore fisso di $x$, la curva si stabilizza progressivamente attorno al valore $e^a$. Prova diversi valori di $a$: per $a=1$ il limite è $e \approx 2.718$, per $a=2$ è $e^2 \approx 7.389$, per $a=0.5$ è $\sqrt{e} \approx 1.649$.
+Il secondo elemento è **interattivo** e serve a *vedere* la convergenza $\big(1+\frac{a}{x}\big)^x\to e^a$. Muovendo lo slider cambi il parametro $a$; per ogni $a$ la curva, al crescere di $x$, si appiattisce verso il valore orizzontale $e^a$. Prova $a=1$ (la curva si stabilizza attorno a $e\approx 2{,}718$), $a=2$ (verso $e^2\approx 7{,}389$), $a=0{,}5$ (verso $\sqrt e\approx 1{,}649$). Manipolando $a$ percepisci qualcosa che una tabella di valori non trasmette: la stessa struttura "$(1+\text{piccolo})^{\text{grande}}$" produce l'intera famiglia delle potenze di $e$, con $a$ che regola l'esponente finale.
 
 ```slider
 {
-  "title": "(1 + a/x)ˣ → eᵃ per x→+∞ al variare di a",
+  "title": "(1 + a/x)^x converge a e^a per x→+∞",
   "fn": "Math.pow(1 + a / Math.max(x, 0.1), x)",
   "domain": [0.5, 30],
   "yDomain": [0, 20],
@@ -294,8 +362,8 @@ Lo slider mostra come $(1 + a/x)^x$ converge a $e^a$ al crescere di $x$. Per ogn
   "pmax": 3,
   "pdefault": 1,
   "pstep": 0.1,
-  "plabel": "Parametro a (limite = eᵃ)",
-  "label1": "(1+a/x)ˣ"
+  "plabel": "Parametro a (limite orizzontale = e^a)",
+  "label1": "(1 + a/x)^x"
 }
 ```
 
@@ -303,202 +371,202 @@ Lo slider mostra come $(1 + a/x)^x$ converge a $e^a$ al crescere di $x$. Per ogn
 
 ## 8. Errori comuni
 
-**Errore 1 — Usare i limiti notevoli con angoli in gradi invece di radianti.**
-Il limite $\lim_{x\to 0}\frac{\sin x}{x} = 1$ vale SOLO in radianti. In gradi il risultato è $\frac{\pi}{180} \approx 0.0175$, perché $\sin(x°) = \sin\!\left(\frac{\pi x}{180}\right)$ e il limite diventa $\frac{\pi}{180}$. In analisi matematica gli angoli sono **sempre** in radianti.
+### ❌ Usare i limiti notevoli trigonometrici in gradi
 
-**Errore 2 — Applicare $\frac{\sin x}{x} \to 1$ quando l'argomento non tende a 0 insieme a $x$.**
-Il limite $\lim_{x\to 0}\frac{\sin(2x^2+x)}{x}$ non vale 1. L'argomento del seno è $2x^2+x$, non $x$: bisogna riscrivere come $\frac{\sin(2x^2+x)}{2x^2+x} \cdot \frac{2x^2+x}{x} = 1 \cdot (2x+1) \to 1$. Occorre sempre adattare la forma.
+**Esempio sbagliato:** "In una calcolatrice in modalità gradi, $\frac{\sin x}{x}\to 1$."
+**Perché è sbagliato:** la dimostrazione usa l'area del settore $\frac{x}{2}$, valida solo se $x$ è in radianti. In gradi, $\sin(x°)=\sin\!\big(\frac{\pi x}{180}\big)$ e il limite diventa $\frac{\pi}{180}\approx 0{,}0175$.
+**Versione corretta:** in analisi gli angoli sono **sempre** in radianti; il limite vale $1$.
 
-**Errore 3 — Credere che il grafico non possa attraversare un asintoto orizzontale.**
-La definizione di asintoto riguarda il comportamento per $x \to \pm\infty$: il grafico può attraversare l'asintoto per valori finiti di $x$. Ad esempio, $\frac{\sin x}{x}$ attraversa infinitamente volte la retta $y=0$ (il suo asintoto orizzontale per $x\to\pm\infty$), pur tendendo a 0.
+### ❌ Applicare $\frac{\sin(\square)}{\square}\to 1$ quando l'argomento non tende a $0$ insieme al denominatore
 
-**Errore 4 — Cercare asintoti obliqui quando esiste un asintoto orizzontale.**
-Se $\lim_{x\to+\infty} f(x) = L$ finito, allora $m = \lim_{x\to+\infty} \frac{f(x)}{x} = 0$: non c'è asintoto obliquo con $m \neq 0$. L'asintoto orizzontale è il caso $m=0$ dell'asintoto obliquo.
+**Esempio sbagliato:** "$\lim_{x\to 0}\frac{\sin(2x^2+x)}{x}=1$ perché è la forma $\frac{\sin}{\cdot}$."
+**Perché è sbagliato:** l'argomento del seno è $2x^2+x$, diverso dal denominatore $x$.
+**Versione corretta:** ricostruisci la forma: $\frac{\sin(2x^2+x)}{2x^2+x}\cdot\frac{2x^2+x}{x}\to 1\cdot(2x+1)\big|_{x=0}=1$. Il risultato è $1$, ma solo dopo il riporto corretto — non per la ragione sbagliata.
 
-**Errore 5 — Dimenticare di controllare entrambe le direzioni per gli asintoti orizzontali.**
-Una funzione può avere asintoti orizzontali diversi per $x\to+\infty$ e $x\to-\infty$. Esempio: $\arctan(x)$ ha asintoto $y=\pi/2$ per $x\to+\infty$ e $y=-\pi/2$ per $x\to-\infty$. Bisogna sempre calcolare il limite in entrambe le direzioni.
+### ❌ Usare le equivalenze asintotiche dentro una somma o differenza
 
-**Errore 6 — Concludere che denominatore nullo implica sempre asintoto verticale.**
-Se il numeratore si annulla nello stesso punto del denominatore, il limite potrebbe essere finito (discontinuità eliminabile, non asintoto). Esempio: $\frac{x^2-1}{x-1}$ ha $x-1=0$ in $x=1$, ma il limite è 2 (non $\pm\infty$). Bisogna sempre fattorizzare e analizzare numeratore e denominatore insieme.
+**Esempio sbagliato:** "$\lim_{x\to 0}\frac{x-\sin x}{x^3}=\frac{x-x}{x^3}=0$."
+**Perché è sbagliato:** $\sin x\sim x$ vale solo in prodotti/quozienti; in una differenza cancella proprio il termine di ordine superiore che serve. Il vero comportamento è $x-\sin x\sim \frac{x^3}{6}$, quindi il limite è $\frac16$.
+**Versione corretta:** nelle somme/differenze usa gli sviluppi di Taylor (lezione 10), non le equivalenze grezze.
 
----
+### ❌ Credere che il grafico non possa attraversare un asintoto orizzontale
 
-## 9. Applicazioni reali
+**Esempio sbagliato:** "Se $y=0$ è asintoto, la curva non tocca mai l'asse $x$."
+**Perché è sbagliato:** l'asintoto vincola il comportamento solo per $x\to\pm\infty$. Per $x$ finito la curva può attraversarlo infinite volte, come $\frac{\sin x}{x}$.
+**Versione corretta:** l'asintoto è una tendenza al limite, non una barriera.
 
-**Segnali e comunicazioni — funzione sinc.** In elaborazione del segnale, la funzione $\text{sinc}(x) = \frac{\sin(\pi x)}{\pi x}$ è fondamentale nel teorema di campionamento di Nyquist-Shannon. Il suo valore in $x=0$ si definisce per continuità come il limite $\lim_{x\to 0}\frac{\sin(\pi x)}{\pi x} = 1$. Questa funzione descrive la risposta impulsiva di un filtro passa-basso ideale: ogni volta che si digitalizza un segnale audio, si comprime un'immagine o si codifica un video, la funzione sinc è implicita nel processo. Il campionamento a frequenza $f_s$ permette la ricostruzione esatta di segnali con frequenza $\leq f_s/2$ proprio grazie alle proprietà della funzione sinc.
+### ❌ Cercare un asintoto obliquo quando esiste quello orizzontale
 
-**Finanza — capitalizzazione continua.** Il limite $\lim_{n\to\infty}\left(1+\frac{r}{n}\right)^n = e^r$ è alla base della capitalizzazione continua degli interessi. Se un capitale $C_0$ cresce al tasso annuo $r$ capitalizzato $n$ volte l'anno, dopo un anno vale $C_0\left(1+\frac{r}{n}\right)^n$. Per $n\to\infty$ (capitalizzazione continua), diventa $C_0 e^r$. Questa formula è usata in tutta la finanza moderna: dalla valorizzazione di opzioni (formula di Black-Scholes) ai modelli di crescita economica, dalla gestione del rischio ai derivati finanziari.
+**Esempio sbagliato:** calcolare $m$ e $q$ per $f(x)=\frac{3x^2-1}{x^2+2}$ (che ha asintoto orizzontale $y=3$).
+**Perché è sbagliato:** se $\lim f(x)=\ell$ finito, allora $m=\lim\frac{f(x)}{x}=0$; l'obliquo con $m\neq 0$ non esiste.
+**Versione corretta:** calcola prima il limite all'infinito; se è finito, l'asintoto è orizzontale e ci si ferma lì.
 
-**Fisica — decadimento esponenziale e asintoti.** La quantità di una sostanza radioattiva segue $N(t) = N_0 e^{-\lambda t}$, dove $\lambda > 0$ è la costante di decadimento. La retta $N=0$ è l'asintoto orizzontale per $t\to+\infty$: la quantità si avvicina a zero senza mai raggiungerlo in tempo finito — un esempio perfetto di comportamento asintotico. Il numero $e$ entra nella formula precisamente attraverso il limite $\lim_{n\to\infty}(1+1/n)^n = e$: il decadimento "continuo" è il limite del decadimento a passi discreti.
+### ❌ Dedurre "denominatore nullo ⇒ asintoto verticale" senza controllare il numeratore
 
----
-
-## 10. Riepilogo tabellare
-
-| Limite notevole | Formula | Note |
-| --- | --- | --- |
-| Seno fondamentale | $\lim_{x\to 0}\frac{\sin x}{x} = 1$ | $x$ in radianti — fondamentale |
-| Coseno | $\lim_{x\to 0}\frac{1-\cos x}{x^2} = \frac{1}{2}$ | Equivale a $1-\cos x \sim x^2/2$ |
-| Numero $e$ (grande) | $\lim_{x\to+\infty}\left(1+\frac{1}{x}\right)^x = e$ | Forma per $x\to+\infty$ |
-| Numero $e$ (piccolo) | $\lim_{x\to 0}(1+x)^{1/x} = e$ | Forma equivalente per $x\to 0$ |
-| Generalizzato | $\lim_{x\to+\infty}\left(1+\frac{a}{x}\right)^x = e^a$ | Per ogni $a\in\mathbb{R}$ |
-| Logaritmo | $\lim_{x\to 0}\frac{\ln(1+x)}{x} = 1$ | Equivale a $\ln(1+x)\sim x$ |
-| Esponenziale | $\lim_{x\to 0}\frac{e^x-1}{x} = 1$ | Equivale a $e^x-1\sim x$ |
-| Asintoto orizzontale | $\lim_{x\to\pm\infty}f(x)=L$ | Retta $y=L$ |
-| Asintoto verticale | $\lim_{x\to a^\pm}f(x)=\pm\infty$ | Retta $x=a$ |
-| Asintoto obliquo ($m$) | $m=\lim_{x\to\infty}\frac{f(x)}{x}$ | Se $m\neq 0$ e finito |
-| Asintoto obliquo ($q$) | $q=\lim_{x\to\infty}[f(x)-mx]$ | Dopo aver trovato $m$ |
+**Esempio sbagliato:** "$\frac{x^2-1}{x-1}$ ha asintoto verticale in $x=1$ perché il denominatore si annulla."
+**Perché è sbagliato:** anche il numeratore si annulla in $x=1$; semplificando, $\frac{x^2-1}{x-1}=x+1\to 2$. È una discontinuità **eliminabile**, non un asintoto (collegamento con la lezione 4).
+**Versione corretta:** fattorizza numeratore e denominatore e studia il limite; l'asintoto verticale c'è solo se il limite è effettivamente infinito.
 
 ---
 
-## 11. Esercizi con soluzioni
+## 9. Collegamenti e applicazioni
+
+### Nella biblioteca
+
+- **Derivata: definizione** (Analisi, lezione 6): $\lim_{x\to 0}\frac{\sin x}{x}=1$ è esattamente il calcolo della derivata di $\sin$ in $0$; $\lim_{x\to 0}\frac{e^x-1}{x}=1$ dà la derivata di $e^x$ in $0$. I limiti notevoli sono derivate travestite.
+- **Studio di funzione** (Analisi, lezione 9): gli asintoti sono un capitolo obbligato dello studio completo del grafico, insieme a dominio, segno, monotonia e concavità.
+- **Formula di Taylor** (Analisi, lezione 10): le equivalenze asintotiche sono i primi termini degli sviluppi di Taylor; Taylor risolve i casi (somme/differenze) in cui le equivalenze grezze falliscono.
+- **Successioni** (Analisi, lezione 16): la forma $\big(1+\frac{a}{n}\big)^n\to e^a$ è la versione per successioni, base dell'interesse composto e delle stime di crescita.
+- **Serie di Taylor** (Analisi, lezione 19): $e^x-1\sim x$, $\ln(1+x)\sim x$ e $1-\cos x\sim x^2/2$ sono i troncamenti al primo ordine non nullo delle rispettive serie.
+
+### Nelle discipline
+
+- **Segnali — funzione sinc.** La funzione $\operatorname{sinc}(x)=\frac{\sin(\pi x)}{\pi x}$, con valore $1$ in $0$ definito per continuità dal limite notevole, è la risposta del filtro passa-basso ideale nel teorema di campionamento di Nyquist–Shannon. È implicita in ogni digitalizzazione audio/video.
+- **Finanza — capitalizzazione continua.** Da $\big(1+\frac{r}{n}\big)^n\to e^r$ segue che un capitale $C_0$ a tasso $r$ capitalizzato con continuità vale $C_0e^{rt}$ dopo tempo $t$. È il mattone della formula di Black–Scholes e dei modelli a tempo continuo.
+- **Fisica — decadimento e asintoti.** $N(t)=N_0e^{-\lambda t}$ ha asintoto orizzontale $N=0$ per $t\to+\infty$: la sostanza si avvicina a zero senza annullarsi in tempo finito. Il numero $e$ vi entra come limite del decadimento discreto reso continuo.
+- **Machine learning — approssimazioni al prim'ordine.** Le equivalenze $\ln(1+x)\sim x$ e $e^x-1\sim x$ giustificano le approssimazioni usate nelle funzioni di costo (log-loss) e nella stabilità numerica del softmax attorno all'origine.
+
+---
+
+## 10. Riepilogo
+
+| Concetto | Formula | Note |
+|---|---|---|
+| Seno fondamentale | $\lim_{x\to 0}\frac{\sin x}{x}=1$ | Solo in radianti; base della trig. differenziale |
+| Coseno | $\lim_{x\to 0}\frac{1-\cos x}{x^2}=\frac12$ | $1-\cos x\sim x^2/2$ |
+| Numero $e$ (all'∞) | $\lim_{x\to+\infty}\big(1+\frac1x\big)^x=e$ | Definizione di $e$ |
+| Numero $e$ (in 0) | $\lim_{t\to 0}(1+t)^{1/t}=e$ | Forma equivalente, $t=1/x$ |
+| Generalizzato | $\lim_{x\to+\infty}\big(1+\frac{a}{x}\big)^x=e^a$ | Via logaritmo (§5.1) |
+| Logaritmo | $\lim_{x\to 0}\frac{\ln(1+x)}{x}=1$ | $\ln(1+x)\sim x$ |
+| Esponenziale | $\lim_{x\to 0}\frac{e^x-1}{x}=1$ | $e^x-1\sim x$; inverso del log |
+| Potenza | $\lim_{x\to 0}\frac{(1+x)^\alpha-1}{x}=\alpha$ | $(1+x)^\alpha-1\sim \alpha x$ |
+| Regola equivalenze | $f\sim g \Leftrightarrow \lim\frac fg=1$ | Solo in prodotti/quozienti |
+| Asintoto orizzontale | $\lim_{x\to\pm\infty}f=\ell$ | Retta $y=\ell$; fino a due |
+| Asintoto verticale | $\lim_{x\to x_0^\pm}f=\pm\infty$ | Retta $x=x_0$; num. $\neq 0$ |
+| Asintoto obliquo | $m=\lim\frac{f}{x}$, $q=\lim(f-mx)$ | $m\neq 0$ finito; esclude l'orizz. |
+
+**Punti chiave da ricordare:** (1) i limiti notevoli trigonometrici richiedono i radianti; (2) le equivalenze asintotiche accelerano i calcoli ma valgono *solo* in prodotti e quozienti; (3) $e$ nasce dalla forma $1^\infty$ e le forme $1^\infty$ si risolvono passando al logaritmo; (4) gli asintoti si cercano nell'ordine verticali → orizzontali → (solo se manca l'orizzontale) obliqui.
+
+---
+
+## 11. Esercizi
+
+### Esercizio 1
+Calcola $\displaystyle\lim_{x\to 0}\frac{\sin(4x)}{3x}$.
 
 <details>
-<summary>Esercizio 1 — Limite notevole diretto</summary>
+<summary>Soluzione</summary>
 
-**Testo:** Calcola $\lim_{x\to 0} \dfrac{\sin(4x)}{3x}$.
-
-**Soluzione:**
-
-Riscriviamo moltiplicando e dividendo per 4:
-
-$$= \lim_{x\to 0} \frac{4}{3} \cdot \frac{\sin(4x)}{4x} = \frac{4}{3} \cdot 1 = \frac{4}{3}$$
-
-Il limite vale $\boxed{\dfrac{4}{3}}$.
+$$\frac{\sin(4x)}{3x}=\frac{4}{3}\cdot\frac{\sin(4x)}{4x}\;\xrightarrow[x\to 0]{}\;\frac43\cdot 1=\frac43.$$
 
 </details>
 
+### Esercizio 2
+Calcola $\displaystyle\lim_{x\to 0}\frac{\tan x}{x}$.
+
 <details>
-<summary>Esercizio 2 — Limite con tangente</summary>
+<summary>Soluzione</summary>
 
-**Testo:** Calcola $\lim_{x\to 0} \dfrac{\tan x}{x}$.
-
-**Soluzione:**
-
-Usiamo $\tan x = \frac{\sin x}{\cos x}$:
-
-$$\frac{\tan x}{x} = \frac{\sin x}{x} \cdot \frac{1}{\cos x}$$
-
-Per $x\to 0$: $\frac{\sin x}{x} \to 1$ e $\frac{1}{\cos x} \to \frac{1}{1} = 1$. Quindi il limite è $\boxed{1}$.
-
-Equivalentemente: $\tan x \sim x$ per $x \to 0$.
+$\tan x=\frac{\sin x}{\cos x}$, quindi $\frac{\tan x}{x}=\frac{\sin x}{x}\cdot\frac{1}{\cos x}\to 1\cdot\frac{1}{1}=1$. Dunque $\tan x\sim x$ per $x\to 0$.
 
 </details>
 
+### Esercizio 3
+Trova gli asintoti orizzontali di $f(x)=\dfrac{2x-1}{\sqrt{x^2+1}}$.
+
 <details>
-<summary>Esercizio 3 — Asintoto orizzontale con radice</summary>
+<summary>Soluzione</summary>
 
-**Testo:** Trovare gli asintoti orizzontali di $f(x) = \dfrac{2x-1}{\sqrt{x^2+1}}$.
-
-**Soluzione:**
-
-Per $x\to+\infty$ ($x>0$, quindi $\sqrt{x^2} = x$):
-
-$$\lim_{x\to+\infty} \frac{2x-1}{\sqrt{x^2+1}} = \lim_{x\to+\infty} \frac{x(2-1/x)}{x\sqrt{1+1/x^2}} = \frac{2-0}{\sqrt{1+0}} = 2$$
-
-Per $x\to-\infty$ ($x<0$, quindi $\sqrt{x^2} = -x$):
-
-$$\lim_{x\to-\infty} \frac{2x-1}{\sqrt{x^2+1}} = \lim_{x\to-\infty} \frac{x(2-1/x)}{-x\sqrt{1+1/x^2}} = \frac{2}{-1} = -2$$
-
-La funzione ha **due asintoti orizzontali**: $y=2$ (per $x\to+\infty$) e $y=-2$ (per $x\to-\infty$).
+Per $x\to+\infty$ ($\sqrt{x^2}=x$): $\dfrac{2x-1}{\sqrt{x^2+1}}=\dfrac{2-1/x}{\sqrt{1+1/x^2}}\to 2$. Per $x\to-\infty$ ($\sqrt{x^2}=-x$): $\dfrac{2-1/x}{-\sqrt{1+1/x^2}}\to -2$. Due asintoti orizzontali: $y=2$ (destra) e $y=-2$ (sinistra).
 
 </details>
 
+### Esercizio 4
+Trova l'asintoto obliquo di $f(x)=\dfrac{x^2-3x+1}{x+2}$ per $x\to+\infty$.
+
 <details>
-<summary>Esercizio 4 — Asintoto obliquo completo</summary>
+<summary>Soluzione</summary>
 
-**Testo:** Trovare l'asintoto obliquo di $f(x) = \dfrac{x^2 - 3x + 1}{x + 2}$ per $x\to+\infty$.
-
-**Soluzione:**
-
-$$m = \lim_{x\to+\infty} \frac{x^2-3x+1}{x(x+2)} = \lim_{x\to+\infty} \frac{1-3/x+1/x^2}{1+2/x} = 1$$
-
-$$q = \lim_{x\to+\infty} \left[\frac{x^2-3x+1}{x+2} - x\right] = \lim_{x\to+\infty} \frac{x^2-3x+1-x(x+2)}{x+2} = \lim_{x\to+\infty} \frac{-5x+1}{x+2} = -5$$
-
-L'asintoto obliquo è $y = x - 5$.
-
-*Verifica con divisione polinomiale:* $\frac{x^2-3x+1}{x+2} = x - 5 + \frac{11}{x+2}$. Per $x\to+\infty$, il resto $\to 0$. ✓
+$m=\lim\frac{x^2-3x+1}{x(x+2)}=1$. $q=\lim\Big[\frac{x^2-3x+1}{x+2}-x\Big]=\lim\frac{-5x+1}{x+2}=-5$. Asintoto: $y=x-5$. Verifica: $\frac{x^2-3x+1}{x+2}=x-5+\frac{11}{x+2}$, resto $\to 0$. ✓
 
 </details>
 
+### Esercizio 5
+Calcola $\displaystyle\lim_{x\to 0}\frac{e^{2x}-1}{\sin(3x)}$.
+
 <details>
-<summary>Esercizio 5 — Equivalenti asintotici</summary>
+<summary>Soluzione</summary>
 
-**Testo:** Calcola $\lim_{x\to 0} \dfrac{e^{2x} - 1}{\sin(3x)}$.
-
-**Soluzione:**
-
-Usiamo gli equivalenti per $x\to 0$: $e^{2x}-1 \sim 2x$ e $\sin(3x) \sim 3x$:
-
-$$\lim_{x\to 0} \frac{e^{2x}-1}{\sin(3x)} = \lim_{x\to 0} \frac{2x}{3x} = \frac{2}{3}$$
-
-*Verifica rigorosa:*
-
-$$\frac{e^{2x}-1}{\sin(3x)} = \frac{e^{2x}-1}{2x} \cdot \frac{3x}{\sin(3x)} \cdot \frac{2}{3} \to 1 \cdot 1 \cdot \frac{2}{3} = \frac{2}{3}$$
-
-Il limite vale $\boxed{\dfrac{2}{3}}$.
+Equivalenze in quoziente: $e^{2x}-1\sim 2x$, $\sin(3x)\sim 3x$. Quindi il limite è $\frac{2x}{3x}=\frac23$. Verifica: $\frac{e^{2x}-1}{2x}\cdot\frac{3x}{\sin 3x}\cdot\frac23\to\frac23$.
 
 </details>
 
+### Esercizio 6
+Trova tutti gli asintoti di $f(x)=\dfrac{x+1}{x^2-4}$.
+
 <details>
-<summary>Esercizio 6 — Trovare tutti gli asintoti</summary>
+<summary>Soluzione</summary>
 
-**Testo:** Trovare tutti gli asintoti di $f(x) = \dfrac{x^2}{x^2-1}$.
-
-**Soluzione:**
-
-**Asintoti verticali:** il denominatore $x^2-1 = (x-1)(x+1)$ si annulla in $x = \pm 1$.
-
-In $x=1$ e $x=-1$: il numeratore vale $1 \neq 0$, quindi il limite è $\pm\infty$. Entrambe sono asintoti verticali.
-
-**Asintoto orizzontale:**
-
-$$\lim_{x\to\pm\infty} \frac{x^2}{x^2-1} = \lim_{x\to\pm\infty} \frac{1}{1-1/x^2} = 1$$
-
-La retta $y=1$ è asintoto orizzontale (in entrambe le direzioni).
-
-**Asintoto obliquo:** poiché esiste l'asintoto orizzontale, $m = \lim f(x)/x = 0$: non c'è asintoto obliquo separato.
-
-**Riepilogo:** asintoti verticali $x=\pm 1$, asintoto orizzontale $y=1$.
+*Verticali:* $x^2-4=(x-2)(x+2)=0$ in $x=\pm2$; il numeratore vale $3$ e $-1$ (entrambi $\neq 0$), quindi $x=2$ e $x=-2$ sono asintoti verticali. *Orizzontale:* $\lim_{x\to\pm\infty}\frac{x+1}{x^2-4}=0$ (grado num. $<$ grado den.), quindi $y=0$. *Obliquo:* assente ($m=0$).
 
 </details>
 
+### Esercizio 7
+Calcola $\displaystyle\lim_{x\to+\infty}\Big(1-\frac{3}{x}\Big)^{2x}$.
+
 <details>
-<summary>Esercizio 7 — Limite con parametro negativo</summary>
+<summary>Soluzione</summary>
 
-**Testo:** Calcola $\lim_{x\to+\infty} \left(1 - \dfrac{3}{x}\right)^{2x}$.
-
-**Soluzione:**
-
-Questa è la forma $e^a$ con $a = -3$ e l'esponente $2x$ (non $x$).
-
-Usiamo il logaritmo: $L = \lim_{x\to+\infty} 2x \cdot \ln\!\left(1 - \frac{3}{x}\right)$.
-
-Per $x\to+\infty$: $\ln(1-3/x) \sim -3/x$, quindi:
-
-$$L = \lim_{x\to+\infty} 2x \cdot \left(-\frac{3}{x}\right) = -6$$
-
-Il limite originale è $e^L = \boxed{e^{-6}}$.
+Passiamo al logaritmo: $\ln L=\lim_{x\to+\infty}2x\ln\!\big(1-\frac3x\big)$. Con $\ln(1-3/x)\sim -3/x$: $\ln L=\lim 2x\cdot(-3/x)=-6$. Dunque $L=e^{-6}$.
 
 </details>
 
+### Esercizio 8
+Calcola $\displaystyle\lim_{x\to 0}\frac{1-\cos(2x)}{x^2}$.
+
 <details>
-<summary>Esercizio 8 — Limite notevole con coseno</summary>
+<summary>Soluzione</summary>
 
-**Testo:** Calcola $\lim_{x\to 0} \dfrac{1 - \cos(2x)}{x^2}$.
-
-**Soluzione:**
-
-Usiamo il limite notevole $\lim_{t\to 0}\frac{1-\cos t}{t^2} = \frac{1}{2}$ con $t = 2x$:
-
-$$\frac{1-\cos(2x)}{x^2} = \frac{1-\cos(2x)}{(2x)^2} \cdot \frac{(2x)^2}{x^2} = \frac{1-\cos(2x)}{(2x)^2} \cdot 4$$
-
-Per $x\to 0$: $2x\to 0$, quindi $\frac{1-\cos(2x)}{(2x)^2} \to \frac{1}{2}$.
-
-Il limite è $\frac{1}{2} \cdot 4 = \boxed{2}$.
-
-*Alternativa:* usando la formula trigonometrica $1-\cos(2x) = 2\sin^2(x)$:
-
-$$\frac{2\sin^2 x}{x^2} = 2\left(\frac{\sin x}{x}\right)^2 \to 2 \cdot 1^2 = 2$$
+Con $t=2x$: $\frac{1-\cos(2x)}{x^2}=\frac{1-\cos(2x)}{(2x)^2}\cdot 4\to \frac12\cdot 4=2$. Alternativa: $1-\cos(2x)=2\sin^2 x$, quindi $\frac{2\sin^2 x}{x^2}=2\big(\frac{\sin x}{x}\big)^2\to 2$.
 
 </details>
+
+### Esercizio 9
+Calcola $\displaystyle\lim_{x\to 0}\frac{x-\sin x}{x^3}$ e spiega perché la sostituzione $\sin x\sim x$ *non* si può usare qui.
+
+<details>
+<summary>Soluzione</summary>
+
+La differenza $x-\sin x$ è una somma algebrica: sostituire $\sin x\sim x$ darebbe $0$ al numeratore, cancellando l'informazione. Serve lo sviluppo di Taylor $\sin x=x-\frac{x^3}{6}+o(x^3)$ (lezione 10): allora $x-\sin x=\frac{x^3}{6}+o(x^3)$ e
+
+$$\frac{x-\sin x}{x^3}=\frac{\frac{x^3}{6}+o(x^3)}{x^3}\to\frac16.$$
+
+Il limite vale $\frac16$, non $0$: è l'esempio-tipo del divieto di §3.3.
+
+</details>
+
+### Esercizio 10
+Determina l'asintoto obliquo di $f(x)=\sqrt{x^2+3x}$ per $x\to+\infty$.
+
+<details>
+<summary>Soluzione</summary>
+
+$m=\lim_{x\to+\infty}\frac{\sqrt{x^2+3x}}{x}=\lim\sqrt{1+3/x}=1$. Poi $q=\lim\big[\sqrt{x^2+3x}-x\big]$; razionalizzando, $\sqrt{x^2+3x}-x=\frac{3x}{\sqrt{x^2+3x}+x}=\frac{3}{\sqrt{1+3/x}+1}\to\frac32$. Asintoto obliquo: $y=x+\frac32$.
+
+</details>
+
+---
+
+## 12. Fonti
+
+- **OpenStax, Calculus Volume 1** (ruolo: primaria) — sezioni usate: Cap. 2.2 (The Limit Laws / Squeeze Theorem), 2.5 (limiti all'infinito e asintoti orizzontali/verticali), 4.6 (asintoti e comportamento all'infinito, asintoti obliqui).
+  Note: la dimostrazione geometrica di $\sin x/x=1$ via teorema del confronto e la classificazione degli asintoti seguono l'impostazione OpenStax.
+
+- **A. Villanacci, Appunti di Matematica 1** (ruolo: appunti-prof) — sezioni usate: Cap. 6 (Limiti notevoli ed equivalenze asintotiche).
+  Note: fonte con priorità su notazione (x₀, ℓ) e convenzioni d'esame. Da qui il catalogo completo dei limiti notevoli e, soprattutto, l'uso sistematico delle **equivalenze asintotiche** ($f\sim g$) come strumento di calcolo primario, con la regola d'uso (ammesse solo in prodotti e quozienti) e la tecnica del passaggio al logaritmo per le forme $1^\infty$.
+
+### Discrepanze tra fonti
+
+Le due fonti concordano su tutti i valori dei limiti; la differenza rilevante per l'apprendimento è di **metodo di calcolo**:
+
+- **Equivalenze asintotiche vs riporti espliciti.** Villanacci imposta il calcolo delle forme $0/0$ tramite le equivalenze $f\sim g$, sostituendo direttamente i fattori (con la regola: solo in prodotti/quozienti). OpenStax, più cauto, tende a esplicitare ogni passaggio moltiplicando e dividendo per far comparire la forma notevole (come nelle "verifiche rigorose" degli esempi). Le due vie danno lo stesso risultato, ma la via delle equivalenze è nettamente più rapida ed è quella attesa agli esami di Villanacci. In questa lezione presentiamo entrambe: l'equivalenza per la rapidità, il riporto esplicito come verifica e come rete di sicurezza quando la regola d'uso rischia di essere violata (somme/differenze, dove rimandiamo a Taylor, lezione 10).
