@@ -83,40 +83,6 @@ function PrerequisitiBadge({ ids, lessonById, lang }) {
   );
 }
 
-// ── Blocco fonti integrate ─────────────────────────────────────────────────────
-
-const RUOLO_LABEL = {
-  'primaria':      { it: 'primaria',      en: 'primary'      },
-  'minore':        { it: 'minore',        en: 'secondary'    },
-  'appunti-prof':  { it: 'appunti prof.', en: 'lecture notes'},
-};
-
-function FontiSection({ fonti, lang }) {
-  if (!fonti || fonti.length === 0) return null;
-  return (
-    <aside className="kb-fonti">
-      <h2 className="kb-fonti__title">
-        {lang === 'it' ? '📚 Fonti' : '📚 Sources'}
-      </h2>
-      <ul className="kb-fonti__list">
-        {fonti.map((f, i) => {
-          const ruolo = RUOLO_LABEL[f.ruolo]?.[lang] ?? f.ruolo;
-          return (
-            <li key={i} className="kb-fonte-item">
-              <span className="kb-fonte-id">{f.id_fonte}</span>
-              <span className="kb-fonte-ruolo">{ruolo}</span>
-              {f.sezioni_coperte && (
-                <span className="kb-fonte-sezioni">{f.sezioni_coperte}</span>
-              )}
-              {f.note && <p className="kb-fonte-note">{f.note}</p>}
-            </li>
-          );
-        })}
-      </ul>
-    </aside>
-  );
-}
-
 // ── Componente principale ──────────────────────────────────────────────────────
 
 export default function LessonView({
@@ -132,7 +98,6 @@ export default function LessonView({
   const livello = lesson.livello ?? null;
   const stato   = lesson.stato   ?? null;
   const prereqs = Array.isArray(lesson.prerequisiti) ? lesson.prerequisiti : [];
-  const fonti   = Array.isArray(lesson.fonti_integrate) ? lesson.fonti_integrate : [];
 
   const livelloCfg = livello ? LIVELLO_LABEL[livello] : null;
   const statoCfg   = stato   ? STATO_LABEL[stato]     : null;
@@ -163,14 +128,6 @@ export default function LessonView({
           </div>
         </div>
 
-        {lesson.source_book && (
-          <div className="lesson-source">
-            <span className="lesson-source-label">{lang === 'it' ? 'Fonte:' : 'Source:'}</span>
-            {' '}<em>{lesson.source_book}</em>
-            {lesson.source_chapter && <> — {lesson.source_chapter}</>}
-          </div>
-        )}
-
         <div className="lesson-actions">
           <button
             className={`btn-action ${read ? 'btn-action--done' : ''}`}
@@ -196,8 +153,6 @@ export default function LessonView({
       <article className="lesson-content">
         <ReactMarkdown {...MD_PLUGINS}>{lesson.content}</ReactMarkdown>
       </article>
-
-      <FontiSection fonti={fonti} lang={lang} />
 
       {/* Punto di integrazione AI tutor — disabilitato */}
       {/* <AiTutor lesson={lesson} lang={lang} /> */}
