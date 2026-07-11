@@ -4,15 +4,15 @@ titolo: "Regole di derivazione"
 materia: analisi
 argomento: "Calcolo differenziale (una variabile)"
 modulo: "Calcolo delle derivate"
-livello: intermedio
-slug: 07-regole-derivazione
+livello: universitario
+slug: analisi-07-regole-derivazione
 
 subject: analisi
 topic_it: "Calcolo differenziale (una variabile)"
 topic_en: "Differential calculus (single variable)"
 title_it: "Regole di derivazione"
 title_en: "Differentiation rules"
-level: intermedio
+level: blue
 order: 7
 source_book: "OpenStax, Calculus Volume 1 (Cap. 3.3–3.9); A. Villanacci, Appunti di Matematica 1 (Cap. 8)"
 source_chapter: "OpenStax 3.3–3.9; Villanacci Cap. 8"
