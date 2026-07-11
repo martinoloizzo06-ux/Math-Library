@@ -9,6 +9,7 @@ level: purple
 order: 1
 source_book: "J.C. Hull, Options, Futures and Other Derivatives; Bodie, Kane & Marcus, Investments"
 source_chapter: "Cap. 1–2 — TVM"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — analogia concreta

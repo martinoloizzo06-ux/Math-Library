@@ -9,6 +9,7 @@ level: purple
 order: 2
 source_book: "J.C. Hull, Options, Futures and Other Derivatives; Bodie, Kane & Marcus, Investments"
 source_chapter: "Cap. 14 — Obbligazioni"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — analogia concreta

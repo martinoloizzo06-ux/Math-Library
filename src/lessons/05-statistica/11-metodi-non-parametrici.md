@@ -9,6 +9,7 @@ level: purple
 order: 11
 source_book: "L. Wasserman, All of Statistics; Casella & Berger, Statistical Inference"
 source_chapter: "Cap. 14 — Metodi non parametrici"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione

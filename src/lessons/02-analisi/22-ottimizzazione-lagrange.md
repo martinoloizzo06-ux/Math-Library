@@ -9,6 +9,7 @@ level: blue
 order: 22
 source_book: "J. Stewart, Calculus; MIT OCW 18.02"
 source_chapter: "Cap. 14 — Ottimizzazione"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — Trovare la vetta e camminare sul recinto

@@ -9,6 +9,7 @@ level: purple
 order: 1
 source_book: "L. Wasserman, All of Statistics; Casella & Berger, Statistical Inference"
 source_chapter: "Cap. 1 — Campioni e statistiche"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — perché campionare?

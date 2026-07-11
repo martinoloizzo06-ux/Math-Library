@@ -9,6 +9,7 @@ level: blue
 order: 13
 source_book: "Blitzstein & Hwang, Introduction to Probability; MIT OCW 6.041"
 source_chapter: "Cap. 12 — Processi di Poisson"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione

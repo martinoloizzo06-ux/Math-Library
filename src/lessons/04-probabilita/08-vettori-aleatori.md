@@ -9,6 +9,7 @@ level: blue
 order: 8
 source_book: "Blitzstein & Hwang, Introduction to Probability; MIT OCW 6.041"
 source_chapter: "Cap. 7 — Distribuzione congiunta"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione

@@ -9,6 +9,7 @@ level: blue
 order: 2
 source_book: "G. Strang, Introduction to Linear Algebra; MIT OCW 18.06"
 source_chapter: "Cap. 1–2 — Matrici"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — Perché le matrici?

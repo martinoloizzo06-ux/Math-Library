@@ -9,6 +9,7 @@ level: purple
 order: 3
 source_book: "L. Wasserman, All of Statistics; Casella & Berger, Statistical Inference"
 source_chapter: "Cap. 9 — MLE"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — quale parametro rende i dati più plausibili?

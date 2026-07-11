@@ -9,6 +9,7 @@ level: blue
 order: 15
 source_book: "G. Strang, Introduction to Linear Algebra; MIT OCW 18.06"
 source_chapter: "Cap. 7 — SVD"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione

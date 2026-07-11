@@ -9,6 +9,7 @@ level: purple
 order: 2
 source_book: "J.M. Wooldridge, Introductory Econometrics; B.E. Hansen, Econometrics"
 source_chapter: "Cap. 3–4 — Inferenza OLS"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — dal coefficiente al test

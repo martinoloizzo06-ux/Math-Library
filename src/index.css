@@ -590,6 +590,137 @@ a { color: inherit; }
 [data-theme="dark"] .badge--stato-bozza { background: #422006; color: #fbbf24; }
 [data-theme="dark"] .badge--stato-warn  { background: #431407; color: #fb923c; }
 
+/* ── KB: Checkpoint «Fermati e verifica» ─────────────────────────────────── */
+
+.checkpoint {
+  margin: 24px 0;
+  border: 1.5px solid var(--blue);
+  border-radius: var(--radius);
+  background: var(--blue-bg);
+  overflow: hidden;
+}
+
+.checkpoint--raw {
+  border-color: var(--border);
+  background: var(--surface);
+}
+
+.checkpoint__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--blue);
+  color: #fff;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+[data-theme="dark"] .checkpoint__header {
+  color: #e0f0ff;
+}
+
+.checkpoint__icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.checkpoint__domanda {
+  padding: 14px 18px 10px;
+}
+
+.checkpoint__domanda > *:last-child {
+  margin-bottom: 0;
+}
+
+.checkpoint__risposta-wrap {
+  border-top: 1px solid var(--blue);
+  margin: 0 14px 12px;
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.checkpoint__toggle {
+  cursor: pointer;
+  padding: 8px 0;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--primary);
+  list-style: none;
+  user-select: none;
+}
+
+.checkpoint__toggle::-webkit-details-marker { display: none; }
+
+.checkpoint__toggle::before {
+  content: '▶ ';
+  font-size: .7em;
+  vertical-align: middle;
+}
+
+details[open] .checkpoint__toggle::before {
+  content: '▼ ';
+}
+
+.checkpoint__risposta {
+  padding: 10px 4px 4px;
+  border-top: 1px dashed var(--border);
+  margin-top: 6px;
+}
+
+.checkpoint__risposta > *:last-child {
+  margin-bottom: 0;
+}
+
+/* ── KB: Dimostrazioni richiudibili (dim-tecnica) ────────────────────────── */
+
+details.dim-tecnica {
+  margin: 18px 0;
+  border-left: 3px solid var(--border);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--surface);
+  padding: 0 16px;
+}
+
+details.dim-tecnica > summary {
+  cursor: pointer;
+  padding: 10px 0;
+  font-size: .85rem;
+  font-style: italic;
+  color: var(--text-muted);
+  list-style: none;
+  user-select: none;
+}
+
+details.dim-tecnica > summary::-webkit-details-marker { display: none; }
+
+details.dim-tecnica > summary::before {
+  content: '▶ ';
+  font-size: .7em;
+  font-style: normal;
+  vertical-align: middle;
+}
+
+details[open].dim-tecnica > summary::before {
+  content: '▼ ';
+}
+
+details[open].dim-tecnica > summary {
+  margin-bottom: 4px;
+  border-bottom: 1px dashed var(--border);
+  padding-bottom: 8px;
+}
+
+[data-theme="dark"] details.dim-tecnica {
+  border-left-color: var(--border);
+  background: var(--surface);
+}
+
+[data-theme="dark"] details.dim-tecnica > summary {
+  color: var(--text-muted);
+}
+
 /* ── KB: Box prerequisiti ────────────────────────────────────────────────── */
 
 .kb-prerequisiti {

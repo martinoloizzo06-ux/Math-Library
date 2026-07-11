@@ -9,6 +9,7 @@ level: blue
 order: 13
 source_book: "J. Stewart, Calculus; MIT OCW 18.01"
 source_chapter: "Cap. 7 — Tecniche di integrazione"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — Smontare per integrare

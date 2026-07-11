@@ -9,6 +9,7 @@ level: blue
 order: 14
 source_book: "J. Stewart, Calculus; MIT OCW 18.01"
 source_chapter: "Cap. 6 — Applicazioni dell'integrale"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — Dalla somma all'area, dal piano allo spazio

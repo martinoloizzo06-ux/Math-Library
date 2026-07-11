@@ -9,6 +9,7 @@ level: blue
 order: 10
 source_book: "Blitzstein & Hwang, Introduction to Probability; MIT OCW 6.041"
 source_chapter: "Cap. 9 — Teorema centrale del limite"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione

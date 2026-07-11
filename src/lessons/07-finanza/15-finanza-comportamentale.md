@@ -9,6 +9,7 @@ level: purple
 order: 15
 source_book: "Bodie, Kane & Marcus, Investments"
 source_chapter: "Cap. 12 — Finanza comportamentale"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — analogia concreta

@@ -5,7 +5,7 @@ materia: probabilita
 argomento: "Variabili aleatorie"
 modulo: "Distribuzioni continue notevoli"
 livello: universitario
-stato: completa
+stato: da-rielaborare
 versione: "1.0"
 data_ultima_rielaborazione: "2026-07-10"
 

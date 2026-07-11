@@ -9,6 +9,7 @@ level: purple
 order: 9
 source_book: "J.C. Hull, Options, Futures and Other Derivatives"
 source_chapter: "Cap. 2–5 — Futures e forward"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — analogia concreta + perché si studia

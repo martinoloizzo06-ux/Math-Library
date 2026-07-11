@@ -9,6 +9,7 @@ level: purple
 order: 5
 source_book: "Bodie, Kane & Marcus, Investments; J.C. Hull, Options, Futures and Other Derivatives"
 source_chapter: "Cap. 9 — CAPM"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — perché il CAPM è rivoluzionario

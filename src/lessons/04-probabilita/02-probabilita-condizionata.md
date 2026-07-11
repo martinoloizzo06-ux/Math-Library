@@ -9,6 +9,7 @@ level: blue
 order: 2
 source_book: "Blitzstein & Hwang, Introduction to Probability; MIT OCW 6.041"
 source_chapter: "Cap. 2 — Probabilità condizionata"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione

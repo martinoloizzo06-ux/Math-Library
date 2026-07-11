@@ -9,6 +9,7 @@ level: purple
 order: 13
 source_book: "Bodie, Kane & Marcus, Investments"
 source_chapter: "Cap. 11 — EMH"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — analogia concreta + perché si studia

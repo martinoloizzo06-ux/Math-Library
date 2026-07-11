@@ -45,7 +45,7 @@ componenti_usati:
 
 versione: "2.0"
 data_ultima_rielaborazione: "2026-07-10"
-stato: completa
+stato: da-rielaborare
 sezioni_omesse: []
 ---
 

@@ -9,6 +9,7 @@ level: green
 order: 11
 source_book: "MIT OCW 18.01 (Precalcolo)"
 source_chapter: "Sezione 5 — Rette"
+stato: da-rielaborare
 ---
 
 ## Intuizione e motivazione

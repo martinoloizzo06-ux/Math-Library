@@ -5,7 +5,7 @@ materia: analisi
 argomento: "Calcolo differenziale (una variabile)"
 modulo: "Definizione e interpretazione geometrica"
 livello: universitario
-stato: completa
+stato: da-rielaborare
 versione: "2.0"
 data_ultima_rielaborazione: "2026-07-10"
 

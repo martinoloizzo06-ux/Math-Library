@@ -9,6 +9,7 @@ level: purple
 order: 2
 source_book: "L. Wasserman, All of Statistics; Casella & Berger, Statistical Inference"
 source_chapter: "Cap. 6–7 — Stima puntuale"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — cosa significa stimare bene?

@@ -9,6 +9,7 @@ level: blue
 order: 7
 source_book: "G. Strang, Introduction to Linear Algebra; MIT OCW 18.06"
 source_chapter: "Cap. 3–8 — Trasformazioni lineari"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — Funzioni che rispettano la struttura

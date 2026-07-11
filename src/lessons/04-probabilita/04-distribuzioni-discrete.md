@@ -9,6 +9,7 @@ level: blue
 order: 4
 source_book: "Blitzstein & Hwang, Introduction to Probability; MIT OCW 6.041"
 source_chapter: "Cap. 3–4 — Distribuzioni discrete"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — analogia concreta + perché si studia

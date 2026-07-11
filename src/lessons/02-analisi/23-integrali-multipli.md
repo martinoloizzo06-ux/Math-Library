@@ -9,6 +9,7 @@ level: blue
 order: 23
 source_book: "J. Stewart, Calculus; MIT OCW 18.02"
 source_chapter: "Cap. 15 — Integrali multipli"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — Volume come somma di colonnine

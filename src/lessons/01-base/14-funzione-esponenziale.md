@@ -9,6 +9,7 @@ level: green
 order: 14
 source_book: "MIT OCW 18.01 (Precalcolo)"
 source_chapter: "Sezione 6 — Esponenziale e logaritmo"
+stato: da-rielaborare
 ---
 
 ## Intuizione e motivazione

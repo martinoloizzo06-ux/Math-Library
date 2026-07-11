@@ -9,6 +9,7 @@ level: blue
 order: 11
 source_book: "J. Stewart, Calculus; MIT OCW 18.01"
 source_chapter: "Cap. 5 — Integrali"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — Ricostruire da una traccia

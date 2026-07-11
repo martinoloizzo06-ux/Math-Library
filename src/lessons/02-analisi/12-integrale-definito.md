@@ -9,6 +9,7 @@ level: blue
 order: 12
 source_book: "J. Stewart, Calculus; MIT OCW 18.01"
 source_chapter: "Cap. 5 — Il teorema fondamentale"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — Sommare infiniti rettangolini

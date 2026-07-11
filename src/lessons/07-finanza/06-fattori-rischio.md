@@ -9,6 +9,7 @@ level: purple
 order: 6
 source_book: "Bodie, Kane & Marcus, Investments; J.C. Hull, Options, Futures and Other Derivatives"
 source_chapter: "Cap. 10 — Modelli fattoriali"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — perché il CAPM da solo non basta

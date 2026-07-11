@@ -9,6 +9,7 @@ level: green
 order: 5
 source_book: "MIT OCW 18.01 (Precalcolo)"
 source_chapter: "Sezione 3 — Frazioni razionali"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione e motivazione

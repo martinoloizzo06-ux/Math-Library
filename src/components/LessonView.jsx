@@ -9,6 +9,7 @@ import Breadcrumb from './Breadcrumb.jsx';
 import MathPlot from './visual/MathPlot.jsx';
 import FunctionSlider from './visual/FunctionSlider.jsx';
 import NormalBell from './visual/NormalBell.jsx';
+import Checkpoint from './Checkpoint.jsx';
 
 const VISUAL = { plot: MathPlot, slider: FunctionSlider, normalbell: NormalBell };
 
@@ -18,6 +19,9 @@ function CustomPre({ children, ...props }) {
     const { className, children: code } = child.props;
     const match = /language-(\w+)/.exec(className || '');
     if (match) {
+      if (match[1] === 'checkpoint') {
+        return <Checkpoint source={String(code)} />;
+      }
       const Comp = VISUAL[match[1]];
       if (Comp) {
         try {
@@ -48,6 +52,7 @@ const STATO_LABEL = {
   completa:         { it: 'Completa',         en: 'Complete',      cls: 'badge--stato-ok'  },
   bozza:            { it: 'Bozza',            en: 'Draft',         cls: 'badge--stato-bozza' },
   'da-rielaborare': { it: 'Da rielaborare',   en: 'To revise',     cls: 'badge--stato-warn' },
+  'da-rivedere':    { it: 'Da rivedere',      en: 'To review',     cls: 'badge--stato-warn' },
 };
 
 // ── Box prerequisiti ───────────────────────────────────────────────────────────

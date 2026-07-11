@@ -9,6 +9,7 @@ level: green
 order: 21
 source_book: "MIT OCW 18.01 (Precalcolo)"
 source_chapter: "Sezione 7 — Triangoli"
+stato: da-rielaborare
 ---
 
 ## Intuizione e motivazione

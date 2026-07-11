@@ -9,6 +9,7 @@ level: purple
 order: 14
 source_book: "J.C. Hull, Options, Futures and Other Derivatives; Bodie, Kane & Marcus, Investments"
 source_chapter: "Cap. 4, 15 — Struttura a termine"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — analogia concreta + perché si studia

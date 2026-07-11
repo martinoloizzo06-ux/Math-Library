@@ -9,6 +9,7 @@ level: purple
 order: 11
 source_book: "J.M. Wooldridge, Introductory Econometrics; B.E. Hansen, Econometrics"
 source_chapter: "Cap. 13 — Metodi quasi-sperimentali"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — analogia concreta e perché si studia

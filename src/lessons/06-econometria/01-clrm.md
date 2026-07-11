@@ -9,6 +9,7 @@ level: purple
 order: 1
 source_book: "J.M. Wooldridge, Introductory Econometrics; B.E. Hansen, Econometrics"
 source_chapter: "Cap. 1–2 — CLRM"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — perché il modello lineare classico?

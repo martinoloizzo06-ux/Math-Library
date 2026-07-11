@@ -9,6 +9,7 @@ level: purple
 order: 8
 source_book: "J.M. Wooldridge, Introductory Econometrics; B.E. Hansen, Econometrics"
 source_chapter: "Cap. 13–14 — Dati panel"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — analogia concreta e perché si studia

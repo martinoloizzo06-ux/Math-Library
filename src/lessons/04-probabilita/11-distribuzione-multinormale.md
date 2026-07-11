@@ -9,6 +9,7 @@ level: blue
 order: 11
 source_book: "Blitzstein & Hwang, Introduction to Probability; MIT OCW 6.041"
 source_chapter: "Cap. 7 — Normale multivariata"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione

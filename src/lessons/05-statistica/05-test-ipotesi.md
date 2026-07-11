@@ -9,6 +9,7 @@ level: purple
 order: 5
 source_book: "L. Wasserman, All of Statistics; Casella & Berger, Statistical Inference"
 source_chapter: "Cap. 10 — Test di ipotesi"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — analogia concreta + perché si studia

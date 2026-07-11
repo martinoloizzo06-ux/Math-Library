@@ -9,6 +9,7 @@ level: blue
 order: 20
 source_book: "J. Stewart, Calculus; MIT OCW 18.02"
 source_chapter: "Cap. 14 — Derivate parziali"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — Una superficie come paesaggio

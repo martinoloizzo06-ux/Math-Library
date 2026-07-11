@@ -9,6 +9,7 @@ level: green
 order: 24
 source_book: "MIT OCW 18.01 (Precalcolo)"
 source_chapter: "Sezione 8 — Coniche"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione e motivazione

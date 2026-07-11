@@ -9,6 +9,7 @@ level: purple
 order: 4
 source_book: "Bodie, Kane & Marcus, Investments; J.C. Hull, Options, Futures and Other Derivatives"
 source_chapter: "Cap. 7–8 — Portafoglio"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — analogia concreta

@@ -9,6 +9,7 @@ level: blue
 order: 19
 source_book: "J. Stewart, Calculus; MIT OCW 18.01"
 source_chapter: "Cap. 11 — Serie di Taylor"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — Approssimare con polinomi

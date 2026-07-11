@@ -9,6 +9,7 @@ level: purple
 order: 12
 source_book: "L. Wasserman, All of Statistics; Casella & Berger, Statistical Inference"
 source_chapter: "Cap. 11 — Inferenza bayesiana"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione

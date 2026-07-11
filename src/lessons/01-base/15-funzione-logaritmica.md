@@ -9,6 +9,7 @@ level: green
 order: 15
 source_book: "MIT OCW 18.01 (Precalcolo)"
 source_chapter: "Sezione 6 — Logaritmi"
+stato: da-rielaborare
 ---
 
 ## Intuizione e motivazione

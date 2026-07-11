@@ -9,6 +9,7 @@ level: purple
 order: 7
 source_book: "J.C. Hull, Options, Futures and Other Derivatives"
 source_chapter: "Cap. 1, 9–10 — Opzioni"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — analogia concreta

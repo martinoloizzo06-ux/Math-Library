@@ -9,6 +9,7 @@ level: purple
 order: 8
 source_book: "J.C. Hull, Options, Futures and Other Derivatives"
 source_chapter: "Cap. 15 — Black-Scholes"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — analogia concreta

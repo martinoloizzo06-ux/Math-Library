@@ -9,6 +9,7 @@ level: purple
 order: 10
 source_book: "J.C. Hull, Options, Futures and Other Derivatives; Bodie, Kane & Marcus, Investments"
 source_chapter: "Cap. 21–22 — Risk Management"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — analogia concreta + perché si studia

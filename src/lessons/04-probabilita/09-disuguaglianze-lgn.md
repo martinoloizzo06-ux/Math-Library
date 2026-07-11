@@ -9,6 +9,7 @@ level: blue
 order: 9
 source_book: "Blitzstein & Hwang, Introduction to Probability; MIT OCW 6.041"
 source_chapter: "Cap. 9 — Convergenza e LGN"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione

@@ -9,6 +9,7 @@ level: green
 order: 2
 source_book: "MIT OCW 18.01 (Precalcolo)"
 source_chapter: "Sezione 2 — Operazioni e proprietà"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione e motivazione

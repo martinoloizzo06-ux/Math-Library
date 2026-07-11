@@ -9,6 +9,7 @@ level: purple
 order: 3
 source_book: "J.M. Wooldridge, Introductory Econometrics; B.E. Hansen, Econometrics"
 source_chapter: "Cap. 8 — Eteroschedasticità"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — la varianza non è sempre costante

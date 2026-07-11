@@ -9,6 +9,7 @@ level: blue
 order: 5
 source_book: "G. Strang, Introduction to Linear Algebra; MIT OCW 18.06"
 source_chapter: "Cap. 3 — Spazi vettoriali"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — Il mondo dei vettori che "restano nel loro mondo"

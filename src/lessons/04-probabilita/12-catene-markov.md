@@ -9,6 +9,7 @@ level: blue
 order: 12
 source_book: "Blitzstein & Hwang, Introduction to Probability; MIT OCW 6.041"
 source_chapter: "Cap. 11 — Catene di Markov"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione

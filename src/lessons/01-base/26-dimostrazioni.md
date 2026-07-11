@@ -9,6 +9,7 @@ level: green
 order: 26
 source_book: "MIT OCW 18.01 (Precalcolo)"
 source_chapter: "Appendice — Dimostrazioni"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione e motivazione

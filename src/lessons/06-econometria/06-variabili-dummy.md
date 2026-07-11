@@ -9,6 +9,7 @@ level: purple
 order: 6
 source_book: "J.M. Wooldridge, Introductory Econometrics; B.E. Hansen, Econometrics"
 source_chapter: "Cap. 7 — Variabili qualitative"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — analogia concreta

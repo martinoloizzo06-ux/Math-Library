@@ -9,6 +9,7 @@ level: purple
 order: 4
 source_book: "L. Wasserman, All of Statistics; Casella & Berger, Statistical Inference"
 source_chapter: "Cap. 8 — Intervalli di confidenza"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — stimare con onestà sull'incertezza

@@ -9,6 +9,7 @@ level: green
 order: 1
 source_book: "MIT OCW 18.01 (Precalcolo)"
 source_chapter: "Sezione 1 — Fondamenti numerici"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione e motivazione

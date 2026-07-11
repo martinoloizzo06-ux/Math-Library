@@ -9,6 +9,7 @@ level: blue
 order: 18
 source_book: "W. Rudin, Principles of Mathematical Analysis; MIT OCW 18.01"
 source_chapter: "Cap. 3 — Serie di potenze"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — Un polinomio infinito

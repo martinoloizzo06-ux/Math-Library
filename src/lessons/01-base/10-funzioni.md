@@ -9,6 +9,7 @@ level: green
 order: 10
 source_book: "MIT OCW 18.01 (Precalcolo)"
 source_chapter: "Sezione 5 — Funzioni"
+stato: da-rielaborare
 ---
 
 ## Intuizione e motivazione

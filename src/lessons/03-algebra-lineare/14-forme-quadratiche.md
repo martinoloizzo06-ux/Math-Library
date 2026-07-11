@@ -9,6 +9,7 @@ level: blue
 order: 14
 source_book: "G. Strang, Introduction to Linear Algebra; MIT OCW 18.06"
 source_chapter: "Cap. 6–7 — Matrici simmetriche"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione

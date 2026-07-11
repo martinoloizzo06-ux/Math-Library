@@ -9,6 +9,7 @@ level: blue
 order: 21
 source_book: "J. Stewart, Calculus; MIT OCW 18.02"
 source_chapter: "Cap. 14 — Gradiente e differenziale"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — La bussola della montagna

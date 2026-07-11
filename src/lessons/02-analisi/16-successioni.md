@@ -9,6 +9,7 @@ level: blue
 order: 16
 source_book: "W. Rudin, Principles of Mathematical Analysis; MIT OCW 18.01"
 source_chapter: "Cap. 3 — Successioni"
+stato: da-rielaborare
 ---
 
 ## 1. Intuizione — Una lista infinita di numeri
