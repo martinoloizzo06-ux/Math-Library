@@ -1,448 +1,416 @@
 ---
 id: analisi-14-applicazioni-integrale
+titolo: "Applicazioni dell'integrale"
+materia: analisi
+argomento: "Calcolo integrale (una variabile)"
+modulo: "Applicazioni dell'integrale"
+livello: universitario
+slug: analisi-14-applicazioni-integrale
+
+# legacy
 subject: analisi
 topic_it: Calcolo integrale (una variabile)
 topic_en: Integral calculus (one variable)
-title_it: Applicazioni dell'integrale (aree, volumi, valor medio)
-title_en: Applications of the integral (areas, volumes, average value)
+title_it: "Applicazioni dell'integrale (aree, volumi, valor medio, economia)"
+title_en: "Applications of the integral (areas, volumes, average value, economics)"
 level: blue
 order: 14
-source_book: "J. Stewart, Calculus; MIT OCW 18.01"
-source_chapter: "Cap. 6 — Applicazioni dell'integrale"
-stato: da-rielaborare
+source_book: "OpenStax, Calculus Vol. 1; A. Villanacci, Notes for Mathematics 1"
+source_chapter: "OpenStax Cap. 6 (aree, volumi, valor medio, applicazioni); TFC (lez.12)"
+
+prerequisiti:
+  - analisi-12-integrale-definito
+  - analisi-13-tecniche-integrazione
+  - analisi-04-continuita
+
+collegamenti:
+  - analisi-11-integrale-indefinito
+  - analisi-12-integrale-definito
+  - analisi-13-tecniche-integrazione
+  - analisi-15-integrali-impropri
+
+fonti_integrate:
+  - id_fonte: openstax-calculus-1
+    ruolo: primaria
+    sezioni_coperte: "Cap. 6 — area tra curve (6.1), volumi per sezioni/dischi/anelli (6.2), gusci cilindrici (6.3), valor medio (5.3), applicazioni fisiche ed economiche (6.5, 6.8)"
+    note: "struttura, ordine di esposizione e schema dell'elemento infinitesimo. Le applicazioni economiche (surplus, valore attuale di un flusso continuo, Gini) sono ricostruite con derivazione propria dallo schema dell'elemento infinitesimo, coerentemente con l'impostazione OpenStax (opzione A del curriculum)"
+  - id_fonte: villanacci-math1
+    ruolo: appunti-prof
+    sezioni_coperte: "TFC e teorema del valor medio integrale (base di valor medio e applicazioni); convenzioni notazionali d'esame"
+    note: "priorità su notazione e sul legame valor medio integrale ↔ teorema della media (lez.12)"
+
+versione: "3.0"
+data_ultima_rielaborazione: "2026-07-12"
+stato: completa
+
+componenti_usati:
+  - plot
+  - checkpoint
+
+sezioni_omesse: []
 ---
 
-## 1. Intuizione — Dalla somma all'area, dal piano allo spazio
+## 1. Motivazione e intuizione
 
-L'integrale nasce dal calcolo di aree, ma la sua potenza va molto oltre. Immagina di voler calcolare:
+Il [Teorema Fondamentale del Calcolo](/analisi/calcolo-integrale-una-variabile/12-integrale-definito) (lez.12) ci ha dato uno strumento potente, ma finora l'abbiamo usato quasi solo per calcolare aree sotto una curva. Quella però era solo la prima interpretazione. La vera portata dell'integrale è che risolve una **classe intera di problemi** che a prima vista non c'entrano nulla con le aree: il volume di un solido, la ricchezza media di una popolazione, il valore oggi di uno stipendio pagato per trent'anni, la disuguaglianza economica di un paese. Tutti questi problemi hanno la stessa struttura profonda, ed è questa struttura — non le singole formule — l'oggetto della lezione.
 
-- **L'area di un lago** con bordi a forma di curva — integrare la "larghezza" ad ogni altezza.
-- **Il volume di una cupola** — sommare l'area di ogni sezione orizzontale da terra alla sommità.
-- **La lunghezza di una strada sinuosa** su una mappa — sommare i contributi infinitesimi del percorso.
+Lo schema comune si chiama **metodo dell'elemento infinitesimo** e ha sempre quattro mosse:
 
-In tutti questi casi, la struttura è la stessa: si prende una quantità elementare (area di un rettangolo, area di un disco, lunghezza di un segmentino) e si somma su un continuum di posizioni — ovvero si integra.
+1. **Affetta.** Si divide il problema in tantissimi pezzetti, ciascuno così piccolo da poter essere trattato come «regolare»: un rettangolo sottile, un dischetto piatto, un istante di tempo. Il pezzetto sta in una posizione $x$ (o un istante $t$) e ha spessore infinitesimo $dx$.
+2. **Approssima.** Su un pezzetto la quantità che ci interessa (area, volume, valore) è quasi costante: la si stima con una formula elementare che dà il **contributo elementare** $dQ$. Per l'area di una striscia verticale è $dA=(\text{altezza})\cdot dx$; per un dischetto è $dV=(\text{area del cerchio})\cdot dx$; per il valore attuale è $dV=(\text{incasso in }dt)\cdot(\text{fattore di sconto})$.
+3. **Somma.** Si sommano i contributi di tutti i pezzetti.
+4. **Passa al limite.** Rendendo i pezzetti sempre più fini, la somma diventa un integrale: $Q=\int_a^b dQ$.
 
-Il calcolo integrale trasforma problemi geometrici e fisici tridimensionali in un'unica operazione: trovare la primitiva giusta e applicare il TFC.
+Le mosse 3 e 4 insieme *sono* la definizione dell'integrale come limite di somme di Riemann (lez.12): «$\int_a^b dQ$» è solo un'abbreviazione per «il limite della somma dei contributi elementari». Per questo l'integrale è lo strumento naturale di ogni problema di **accumulo**: qualunque grandezza che si costruisca sommando infiniti contributi piccoli, distribuiti lungo un intervallo, è un integrale.
 
----
+L'idea è antica: è il principio di **Cavalieri** (XVII secolo), «un solido è la somma delle sue fette». La novità del calcolo è aver reso quel «somma» un'operazione esatta e calcolabile grazie al TFC. In questa lezione impareremo a *tradurre* un problema concreto nel suo contributo elementare $dQ$ — è la parte creativa — e poi lasceremo che il TFC faccia il calcolo.
 
-## 2. Prerequisiti
+## 2. Teoria
 
-- Integrale definito e TFC: $\int_a^b f(x)\,dx = F(b) - F(a)$
-- Area di un rettangolo, volume di un cilindro, area di un cerchio
-- Derivate: regola della catena, derivata di funzioni composte
-- Relazione tra funzione e sua derivata (punti di incrocio, segno)
-- Teorema del valor medio per integrali
+### 2.1 Lo schema dell'elemento infinitesimo, preso sul serio
 
----
+Prima di applicarlo, mettiamo a fuoco cosa significa davvero scrivere $Q=\int_a^b dQ$, perché è un abuso di notazione comodo ma potenzialmente ingannevole.
 
-## 3. Teoria
+Supponiamo che una grandezza $Q$ si accumuli lungo $[a,b]$ e che, su un intervallino $[x,x+\Delta x]$, il contributo $\Delta Q$ sia approssimato da una **densità** $A(x)$ secondo
+$$\Delta Q = A(x)\,\Delta x + (\text{errore infinitesimo di ordine superiore a }\Delta x).$$
+La frase «di ordine superiore» significa che l'errore, diviso per $\Delta x$, tende a $0$ quando $\Delta x\to0$: è trascurabile rispetto al termine principale $A(x)\,\Delta x$. In notazione infinitesimale scriviamo il contributo elementare come $dQ=A(x)\,dx$. Sommando su tutti gli intervallini di una partizione e passando al limite si ottiene
+$$Q=\int_a^b A(x)\,dx.$$
+Il punto delicato — che dimostreremo con rigore in §3.1 — è che gli errori «di ordine superiore», pur essendo infiniti (uno per pezzetto), **si sommano a zero** nel limite: è questo che rende lecito il passaggio dalla somma approssimata all'integrale esatto. La regola operativa, quindi, è semplice: *trova il contributo elementare $dQ$ della forma «densità $\times\,dx$», poi integra*. Tutta la difficoltà di questi problemi è nel primo passo, geometrico o economico; il secondo è calcolo di lez.11–13.
 
-### Aree tra curve
+*Micro-esempio (perché lo schema funziona).* La massa di una sbarra $[0,L]$ con densità lineare $\rho(x)$ (massa per unità di lunghezza): su $[x,x+dx]$ la densità è quasi costante $=\rho(x)$, quindi il contributo è $dm=\rho(x)\,dx$, e la massa totale è $m=\int_0^L\rho(x)\,dx$. Lo stesso schema, con «densità» diversa, genererà aree, volumi e valori economici.
 
-Siano $f$ e $g$ continue su $[a, b]$ con $f(x) \geq g(x)$. L'**area della regione** compresa tra i due grafici è:
+### 2.2 Area tra due curve
 
-$$\boxed{A = \int_a^b [f(x) - g(x)]\,dx}$$
+Il primo uso geometrico. Siano $f,g$ continue su $[a,b]$ con $f(x)\ge g(x)$ su tutto l'intervallo. Vogliamo l'area della regione compresa **verticalmente** tra i due grafici.
 
-**Se le curve si intersecano** nell'intervallo, bisogna trovare i punti di incrocio, dividere l'integrale in sottointervalli e gestire il segno:
+Applichiamo lo schema. Affettiamo la regione con strisce verticali. Una striscia in posizione $x$, di spessore $dx$, è quasi un rettangolo: la sua **altezza** è la distanza verticale tra le curve, cioè $f(x)-g(x)$ (curva di sopra meno curva di sotto), e la sua **base** è $dx$. Il contributo elementare è dunque
+$$dA=\big[f(x)-g(x)\big]\,dx.$$
+Sommando e integrando:
+$$\boxed{\,A=\int_a^b\big[f(x)-g(x)\big]\,dx\,}\qquad(f\ge g\ \text{su }[a,b]).$$
+Nota che la formula usa la **differenza delle funzioni**, $f-g$, non la differenza degli integrali: l'altezza della striscia è un dato locale, punto per punto. Il segno è già sistemato dal fatto che $f\ge g$ rende $f-g\ge0$: stiamo davvero sommando altezze positive.
 
-$$A = \int_a^b \lvert f(x) - g(x)\rvert\,dx$$
+*Micro-esempio.* Area tra $y=x^2$ (sotto) e $y=2x$ (sopra). Intersezioni: $x^2=2x\Rightarrow x(x-2)=0\Rightarrow x=0,2$. Su $[0,2]$ verifichiamo in $x=1$: $2\cdot1=2>1=1^2$, quindi $2x\ge x^2$. Allora
+$$A=\int_0^2(2x-x^2)\,dx=\Big[x^2-\tfrac{x^3}{3}\Big]_0^2=4-\tfrac{8}{3}=\tfrac{4}{3}.$$
 
-**Integrazione rispetto a $y$:** quando le curve sono più naturalmente espresse come $x = h(y)$, si integra verticalmente:
+**Se le curve si incrociano** dentro $[a,b]$, la curva «di sopra» cambia. In quel caso non si può usare $\int(f-g)$ su tutto l'intervallo: bisogna trovare i punti d'incrocio, spezzare l'integrale e mettere in ciascun tratto la differenza «giusta» (sopra meno sotto). In modo compatto:
+$$A=\int_a^b\big|f(x)-g(x)\big|\,dx,$$
+dove il valore assoluto sceglie automaticamente il segno corretto in ogni tratto.
 
-$$A = \int_c^d [x_{\text{destra}}(y) - x_{\text{sinistra}}(y)]\,dy$$
+*Micro-esempio.* Area tra $y=\sin x$ e $y=\cos x$ su $[0,\pi/2]$. Si incrociano dove $\sin x=\cos x$, cioè $x=\pi/4$. Su $[0,\pi/4]$ è $\cos x\ge\sin x$; su $[\pi/4,\pi/2]$ è $\sin x\ge\cos x$. Quindi
+$$A=\int_0^{\pi/4}(\cos x-\sin x)\,dx+\int_{\pi/4}^{\pi/2}(\sin x-\cos x)\,dx=(\sqrt2-1)+(\sqrt2-1)=2\sqrt2-2.$$
+(Ogni integrale vale $\sqrt2-1$: i due tratti sono simmetrici.)
 
-### Volumi di solidi di rotazione
+```checkpoint
+[domanda]
+Perché l'area tra due curve è $\int_a^b(\text{sopra}-\text{sotto})\,dx$ e **non** $\big|\int_a^b f\,dx-\int_a^b g\,dx\big|$? In quale caso particolare le due espressioni coincidono, e perché in generale no?
 
-**Metodo dei dischi e degli anelli** (rotazione attorno all'asse $x$):
+[risposta]
+Perché l'area si costruisce sommando le **altezze locali** delle strisce, $f(x)-g(x)$, che devono essere *tutte positive* (è questo che rende «$f$ sopra, $g$ sotto» in ogni punto). L'espressione $\big|\int f-\int g\big|=\big|\int(f-g)\big|$ mette il valore assoluto **fuori** dall'integrale: se le curve si incrociano, i tratti in cui $f-g>0$ e quelli in cui $f-g<0$ si **cancellano parzialmente** dentro l'integrale, e il risultato sottostima l'area (arriva perfino a $0$ per regioni simmetriche non vuote). Con il valore assoluto **dentro**, $\int|f-g|$, ogni tratto contribuisce con la sua altezza positiva e nulla si cancella. Le due espressioni coincidono **solo** se $f-g$ ha segno costante su tutto $[a,b]$ (le curve non si incrociano all'interno): allora il modulo esterno e quello interno fanno la stessa cosa. In generale no, ed è per questo che il primo passo è sempre trovare i punti d'incrocio.
+```
 
-Ogni sezione perpendicolare all'asse $x$ è un disco di area $\pi R^2$ o un anello di area $\pi(R^2 - r^2)$:
+**Affettare in orizzontale.** A volte la regione è descritta più naturalmente da funzioni di $y$, cioè $x=$ (qualcosa di $y$). Allora si affetta con strisce *orizzontali* di spessore $dy$: la striscia ha lunghezza «curva a destra meno curva a sinistra» e
+$$A=\int_c^d\big[x_{\text{destra}}(y)-x_{\text{sinistra}}(y)\big]\,dy.$$
+È lo stesso schema con i ruoli di $x$ e $y$ scambiati; si sceglie l'orientamento che rende la regione descrivibile senza spezzarla.
 
-$$\boxed{V = \pi\int_a^b [R(x)^2 - r(x)^2]\,dx}$$
+*Micro-esempio.* Regione tra $x=y^2$ e $x=y+2$. Intersezioni: $y^2=y+2\Rightarrow y^2-y-2=0\Rightarrow y=-1,2$. Su $[-1,2]$ la retta $y+2$ sta a destra della parabola (in $y=0$: $2>0$). Quindi
+$$A=\int_{-1}^{2}\big[(y+2)-y^2\big]\,dy=\Big[\tfrac{y^2}{2}+2y-\tfrac{y^3}{3}\Big]_{-1}^{2}=\tfrac{9}{2}.$$
+Descrivere questa stessa regione in verticale avrebbe richiesto di spezzarla, perché il bordo inferiore cambia natura: l'affettamento orizzontale la evita.
 
-dove $R(x)$ è il raggio esterno e $r(x)$ il raggio interno (per la rotazione di una regione tra due curve). Se si ruota solo una curva, $r = 0$.
+### 2.3 Volumi di solidi di rotazione
 
-**Metodo dei gusci cilindrici** (utile soprattutto per rotazione attorno all'asse $y$ o quando l'integrale in $x$ è più semplice):
+Se ruotiamo una regione piana attorno a un asse, otteniamo un solido. Il suo volume è di nuovo un accumulo — di fette — e lo schema si applica identico, con una densità che ora è un'**area di sezione**.
 
-Ogni guscio cilindrico ha volume approssimato da $2\pi x \cdot h(x) \cdot dx$ (circonferenza × altezza × spessore):
+**Metodo dei dischi e degli anelli** (rotazione attorno all'asse $x$). Affettiamo il solido con piani perpendicolari all'asse $x$. La fetta in posizione $x$, di spessore $dx$, è un cilindretto molto piatto: un **disco**. Se la regione ruotata è quella sotto $y=R(x)$ (con $R(x)\ge0$), il disco ha raggio $R(x)$, quindi area di sezione $\pi R(x)^2$, e volume elementare
+$$dV=\pi R(x)^2\,dx\quad\Longrightarrow\quad V=\pi\int_a^b R(x)^2\,dx.$$
+Il fattore $\pi$ è l'area del cerchio, non un dettaglio ornamentale: senza di esso staremmo calcolando un'altra cosa. Se invece ruotiamo la regione *tra* due curve $R(x)\ge r(x)\ge0$, la sezione è un **anello** (una corona circolare) di area $\pi R(x)^2-\pi r(x)^2$:
+$$\boxed{\,V=\pi\int_a^b\big[R(x)^2-r(x)^2\big]\,dx\,}.$$
+Attenzione: si sottraggono le **aree** ($R^2-r^2$), non i raggi: $\pi(R-r)^2$ è un errore, perché non è l'area di nessun anello.
 
-$$\boxed{V = 2\pi\int_a^b x\cdot h(x)\,dx}$$
+*Micro-esempio (disco).* La regione sotto $y=\sqrt x$ su $[0,4]$ ruota attorno all'asse $x$. Raggio $R(x)=\sqrt x$:
+$$V=\pi\int_0^4(\sqrt x)^2\,dx=\pi\int_0^4 x\,dx=\pi\Big[\tfrac{x^2}{2}\Big]_0^4=8\pi.$$
 
-dove $h(x) = f(x) - g(x)$ è l'altezza del guscio.
+**Metodo dei gusci cilindrici** (comodo per rotazioni attorno all'asse $y$). Qui affettiamo la regione in strisce verticali *parallele* all'asse di rotazione. Ruotando la striscia in posizione $x$ (spessore $dx$, altezza $h(x)$) attorno all'asse $y$, essa spazza un sottile **guscio cilindrico**: un cilindro cavo di raggio $x$, altezza $h(x)$, parete di spessore $dx$. Srotolandolo diventa una lastra di dimensioni «circonferenza $\times$ altezza $\times$ spessore», quindi
+$$dV=2\pi x\cdot h(x)\cdot dx\quad\Longrightarrow\quad\boxed{\,V=2\pi\int_a^b x\,h(x)\,dx\,}.$$
+La derivazione rigorosa del volume del guscio (dove va a finire il termine $(dx)^2$) è in §3.2.
 
-**Quando usare quale metodo:**
-- Dischi/anelli: naturale quando l'asse di rotazione è lo stesso asse di integrazione
-- Gusci: naturale quando l'asse di rotazione è perpendicolare all'asse di integrazione
+*Micro-esempio (gusci).* La regione sotto $y=x^2$ su $[0,2]$ ruota attorno all'asse $y$. Guscio di raggio $x$, altezza $x^2$:
+$$V=2\pi\int_0^2 x\cdot x^2\,dx=2\pi\int_0^2 x^3\,dx=2\pi\Big[\tfrac{x^4}{4}\Big]_0^2=8\pi.$$
 
-### Lunghezza d'arco
+I due metodi non sono in competizione: sono due modi di affettare lo *stesso* solido, e danno lo stesso volume. Si sceglie quello che rende le fette descrivibili con una sola formula: dischi/anelli quando l'asse di rotazione **coincide** con l'asse lungo cui si integra, gusci quando l'asse di rotazione è **perpendicolare** ad esso.
 
-Il differenziale di lunghezza d'arco è $ds = \sqrt{(dx)^2 + (dy)^2} = \sqrt{1 + [f'(x)]^2}\,dx$ (pitagora infinitesimale).
+### 2.4 Valor medio di una funzione
 
-$$\boxed{L = \int_a^b \sqrt{1 + [f'(x)]^2}\,dx}$$
+Che cosa vuol dire «valore medio» di una grandezza che cambia con continuità — la temperatura di un giorno, la velocità di un viaggio, il reddito lungo una distribuzione? La media di un numero finito di valori è la loro somma diviso quanti sono. Per un continuo di valori $f(x)$ su $[a,b]$, la «somma» diventa un integrale e il «quanti sono» diventa la lunghezza $b-a$:
+$$\boxed{\,\bar f=\frac{1}{b-a}\int_a^b f(x)\,dx\,}.$$
+La lettura geometrica è netta: $\bar f$ è l'altezza del **rettangolo** che, sulla base $[a,b]$, ha esattamente la stessa area dell'integrale di $f$. Si «spiana» il profilo di $f$ in un livello costante che racchiude la medesima area.
 
-**In forma parametrica:** se la curva è $x = x(t)$, $y = y(t)$ per $t \in [\alpha, \beta]$:
+Questa non è una nuova definizione arbitraria: è il numero che compare nel **teorema del valor medio integrale** (lez.12), secondo cui, se $f$ è continua su $[a,b]$, esiste almeno un punto $c\in[a,b]$ con $f(c)=\bar f$. Cioè: una funzione continua *assume davvero* il proprio valor medio, in almeno un punto. Il collegamento è esatto: $\bar f$ è definito qui come media, e il teorema garantisce che quella media è un valore effettivamente raggiunto.
 
-$$L = \int_\alpha^\beta \sqrt{[x'(t)]^2 + [y'(t)]^2}\,dt$$
+*Micro-esempio.* Valor medio di $f(x)=\sin x$ su $[0,\pi]$:
+$$\bar f=\frac1\pi\int_0^\pi\sin x\,dx=\frac1\pi\big[-\cos x\big]_0^\pi=\frac1\pi(1+1)=\frac2\pi\approx0{,}637.$$
+Attenzione: $\bar f\neq\sin(\pi/2)=1$. Il valor medio non è il valore nel punto medio dell'intervallo, né il massimo: è l'integrale diviso per l'ampiezza. Il punto $c$ del teorema è $c=\arcsin\frac2\pi\approx0{,}69$, che sta in $[0,\pi]$ come promesso.
 
-### Valor medio di una funzione
+### 2.5 Applicazioni economiche
 
-Il **valor medio** di $f$ su $[a, b]$ è l'altezza del rettangolo con la stessa area dell'integrale:
+Qui lo schema dell'elemento infinitesimo mostra la sua vera generalità: la «densità» non è più geometrica ma economica, eppure la macchina è identica.
 
-$$\boxed{\bar{f} = \frac{1}{b-a}\int_a^b f(x)\,dx}$$
+**Surplus del consumatore e del produttore.** In un mercato, la **curva di domanda** $p=D(q)$ dice il prezzo che i consumatori sono disposti a pagare per la $q$-esima unità: è decrescente, perché le prime unità valgono di più. La **curva di offerta** $p=S(q)$ dice il prezzo minimo a cui i produttori sono disposti a vendere la $q$-esima unità: è crescente. Il mercato si equilibra alla quantità $q^*$ e prezzo $p^*$ in cui $D(q^*)=S(q^*)=p^*$.
 
-**Teorema del valor medio per gli integrali:** se $f$ è continua su $[a, b]$, esiste almeno un $c \in [a, b]$ tale che $f(c) = \bar{f}$.
+Applichiamo lo schema alla domanda. Sull'unità infinitesima tra $q$ e $q+dq$, i consumatori *sarebbero stati disposti* a pagare $D(q)\,dq$, ma ne pagano solo $p^*\,dq$ (tutti pagano il prezzo di equilibrio). Il **guadagno netto** su quel pezzetto è $[D(q)-p^*]\,dq$. Sommando su tutte le unità acquistate:
+$$\boxed{\,\text{CS}=\int_0^{q^*}\big[D(q)-p^*\big]\,dq\,}\qquad(\text{surplus del consumatore}).$$
+È l'area tra la curva di domanda e la retta orizzontale del prezzo: quanto la collettività dei consumatori «risparmia» rispetto a quello che avrebbe pagato. Simmetricamente, il **surplus del produttore** è l'area tra il prezzo e la curva di offerta:
+$$\text{PS}=\int_0^{q^*}\big[p^*-S(q)\big]\,dq.$$
 
-### Area di una superficie di rotazione
+*Micro-esempio.* Domanda $D(q)=20-q$, offerta $S(q)=2+q$. Equilibrio: $20-q=2+q\Rightarrow q^*=9$, $p^*=11$. Surplus del consumatore:
+$$\text{CS}=\int_0^{9}\big[(20-q)-11\big]\,dq=\int_0^9(9-q)\,dq=\Big[9q-\tfrac{q^2}{2}\Big]_0^9=81-\tfrac{81}{2}=\tfrac{81}{2}=40{,}5.$$
 
-La superficie generata ruotando il grafico di $f$ attorno all'asse $x$ tra $a$ e $b$:
+**Valore attuale di un flusso continuo di reddito.** Un capitale $C$ oggi, investito a tasso $r$ con **capitalizzazione continua**, dopo un tempo $t$ vale $C\,e^{rt}$; letto all'indietro, un incasso $C$ ricevuto tra $t$ anni vale **oggi** $C\,e^{-rt}$ (lo si «sconta», perché denaro futuro vale meno di denaro presente). Supponiamo ora un reddito che non arriva in un istante ma *fluisce* nel tempo a un tasso $f(t)$ (euro per anno). Sull'intervallino $[t,t+dt]$ l'incasso è $f(t)\,dt$; scontato al presente vale $f(t)e^{-rt}\,dt$. Sommando su $[0,T]$:
+$$\boxed{\,\text{PV}=\int_0^T f(t)\,e^{-rt}\,dt\,}\qquad(\text{valore attuale del flusso}).$$
+Il segno dell'esponente è **negativo**: si sconta, cioè si riporta indietro nel tempo. Un errore frequente è scrivere $e^{+rt}$, che invece *capitalizza* in avanti e darebbe il **valore futuro** $\text{FV}=\int_0^T f(t)e^{r(T-t)}\,dt$.
 
-$$S = 2\pi\int_a^b f(x)\sqrt{1 + [f'(x)]^2}\,dx$$
+*Micro-esempio.* Un investimento rende un flusso costante $f(t)=1000$ euro/anno per $T=5$ anni, tasso $r=0{,}04$ continuo. Valore attuale:
+$$\text{PV}=\int_0^5 1000\,e^{-0{,}04t}\,dt=1000\cdot\frac{1-e^{-0{,}2}}{0{,}04}=25000\,(1-e^{-0{,}2})\approx25000\cdot0{,}1813\approx4532\text{ euro}.$$
+Molto meno dei $5000$ euro nominali: lo sconto continuo erode il valore del denaro futuro.
 
----
+```checkpoint
+[domanda]
+Nel valore attuale $\text{PV}=\int_0^T f(t)\,e^{-rt}\,dt$: (a) cosa rappresenta economicamente il fattore $e^{-rt}$ e perché l'esponente è negativo? (b) Cosa cambierebbe, concettualmente, se scrivessi $e^{+rt}$?
 
-## 4. Derivazione — Formula del volume con i gusci
+[risposta]
+(a) $e^{-rt}$ è il **fattore di sconto**: converte un euro incassato all'istante $t$ nel suo valore *oggi*. Nasce dall'inverso della capitalizzazione continua $C\mapsto C\,e^{rt}$: se investire $C$ oggi lo fa diventare $C\,e^{rt}$ tra $t$ anni, allora un euro tra $t$ anni «vale» oggi $e^{-rt}$ euro, perché è quanto dovrei investire adesso per averne uno a scadenza. L'esponente è negativo perché il denaro futuro vale **meno** del presente (preferenza temporale + rendimento perso), e più è lontano nel tempo, più è scontato: $e^{-rt}\to0$ per $t$ grande. L'integrale somma i contributi elementari $f(t)\,dt$, ciascuno *già riportato al presente*. (b) Con $e^{+rt}$ non si sconterebbe ma si **capitalizzerebbe**: ogni incasso verrebbe proiettato in avanti anziché indietro, e l'integrale non darebbe più il valore attuale bensì una grandezza legata al valore futuro. È esattamente l'errore di segno da evitare: cambia la direzione temporale del calcolo.
+```
 
-Deriviamo la formula $V = 2\pi\int_a^b x\,f(x)\,dx$ dalla definizione.
+**Disuguaglianza: il coefficiente di Gini (cenno).** Ordinando la popolazione dal più povero al più ricco, la **curva di Lorenz** $L(x)$ dice quale frazione del reddito totale è posseduta dalla frazione più povera $x$ della popolazione ($0\le x\le1$). L'uguaglianza perfetta corrisponde alla diagonale $L(x)=x$ (il $20\%$ più povero possiede il $20\%$ del reddito). Più la curva di Lorenz «sprofonda» sotto la diagonale, più il reddito è concentrato. Il **coefficiente di Gini** misura questa concentrazione come area, normalizzata:
+$$G=\frac{\text{area tra diagonale e Lorenz}}{\text{area sotto la diagonale}}=\frac{\int_0^1\big[x-L(x)\big]\,dx}{1/2}=2\int_0^1\big[x-L(x)\big]\,dx.$$
+Vale $G=0$ per l'uguaglianza perfetta (Lorenz $=$ diagonale, area nulla) e tende a $1$ per la massima concentrazione. È di nuovo un'area tra due curve (§2.2), riletta come indice economico.
 
-Consideriamo un guscio cilindrico sottile di raggio $x$, altezza $f(x)$ e spessore infinitesimo $dx$.
+### 2.6 Lunghezza di un arco di curva
 
-Il volume di un cilindro pieno di raggio $x + dx$ e altezza $f(x)$ è $\pi(x+dx)^2 f(x)$.
-Il volume del cilindro interno di raggio $x$ è $\pi x^2 f(x)$.
+Chiudiamo con un'ultima applicazione geometrica, che mostra lo schema con una densità di tipo diverso. Quanto è lungo il grafico di $f$ tra $a$ e $b$? Affettiamo la curva in tratti corrispondenti a $[x,x+dx]$. Un trattino è quasi un segmento con base orizzontale $dx$ e dislivello verticale $dy=f'(x)\,dx$; per il teorema di Pitagora la sua lunghezza è
+$$ds=\sqrt{(dx)^2+(dy)^2}=\sqrt{1+\big[f'(x)\big]^2}\,dx.$$
+Sommando:
+$$L=\int_a^b\sqrt{1+\big[f'(x)\big]^2}\,dx.$$
+Qui la «densità» è $\sqrt{1+f'^2}$, che pesa quanto ripida è la curva: dove $f$ è piatta ($f'\approx0$) il fattore vale $\approx1$ e la lunghezza è quasi $dx$; dove è ripida, il fattore cresce. Va sottolineato che $L\neq\int f'\,dx$: quell'integrale darebbe solo la variazione verticale $f(b)-f(a)$, non la lunghezza del percorso.
 
-Il volume del guscio è la differenza:
-$$dV = \pi[(x+dx)^2 - x^2]f(x) = \pi[2x\,dx + (dx)^2]f(x) \approx 2\pi x\,f(x)\,dx$$
+*Micro-esempio.* Lunghezza di $f(x)=\tfrac23 x^{3/2}$ su $[0,3]$. Qui $f'(x)=x^{1/2}$, quindi $1+f'^2=1+x$ e
+$$L=\int_0^3\sqrt{1+x}\,dx=\Big[\tfrac23(1+x)^{3/2}\Big]_0^3=\tfrac23(8-1)=\tfrac{14}{3}.$$
 
-(abbiamo trascurato $(dx)^2$ che è infinitesimo di ordine superiore).
-
-Il volume totale si ottiene sommando (integrando) su $[a, b]$:
-
-$$V = \int_a^b dV = 2\pi\int_a^b x\,f(x)\,dx \quad \blacksquare$$
-
-Alternativamente, il guscio ha:
-- Circonferenza: $2\pi x$
-- Altezza: $f(x)$
-- Spessore: $dx$
-
-quindi $dV = \text{(circonferenza)} \times \text{(altezza)} \times \text{(spessore)} = 2\pi x\,f(x)\,dx$.
-
----
-
-## 5. Esempi
-
-**Esempio 1 — Area tra parabola e retta**
-
-Trovare l'area tra $y = x^2$ e $y = 2x$.
-
-Intersezioni: $x^2 = 2x \Rightarrow x(x-2) = 0 \Rightarrow x = 0,\; x = 2$.
-
-Su $[0,2]$: $2x \geq x^2$ (verifica in $x=1$: $2 > 1$).
-
-$$A = \int_0^2(2x - x^2)\,dx = \left[x^2 - \frac{x^3}{3}\right]_0^2 = 4 - \frac{8}{3} = \frac{4}{3}$$
-
----
-
-**Esempio 2 — Area con più intersezioni**
-
-Trovare l'area tra $y = \sin x$ e $y = \cos x$ su $[0, \pi]$.
-
-Intersezione: $\sin x = \cos x \Rightarrow \tan x = 1 \Rightarrow x = \pi/4$.
-
-Su $[0, \pi/4]$: $\cos x \geq \sin x$. Su $[\pi/4, \pi]$: $\sin x \geq \cos x$.
-
-$$A = \int_0^{\pi/4}(\cos x - \sin x)\,dx + \int_{\pi/4}^{\pi}(\sin x - \cos x)\,dx$$
-
-$$= \Big[\sin x + \cos x\Big]_0^{\pi/4} + \Big[-\cos x - \sin x\Big]_{\pi/4}^{\pi}$$
-
-$$= (\sqrt{2}-1) + (1-(-\sqrt{2})) \cdot \text{... } = \sqrt{2}-1+1+\sqrt{2} = 2\sqrt{2}$$
-
----
-
-**Esempio 3 — Volume per dischi: $y=\sqrt{x}$ ruotata attorno all'asse $x$**
-
-La regione sotto $y = \sqrt{x}$ per $x \in [0, 4]$ ruota attorno all'asse $x$.
-
-Sezione circolare di raggio $R(x) = \sqrt{x}$:
-
-$$V = \pi\int_0^4 (\sqrt{x})^2\,dx = \pi\int_0^4 x\,dx = \pi\left[\frac{x^2}{2}\right]_0^4 = 8\pi$$
-
----
-
-**Esempio 4 — Volume per anelli: regione tra due curve**
-
-Trovare il volume del solido generato dalla rotazione attorno all'asse $x$ della regione tra $y = \sqrt{x}$ e $y = x$ per $x \in [0, 1]$.
-
-Su $[0,1]$: $\sqrt{x} \geq x$. Raggio esterno $R = \sqrt{x}$, interno $r = x$.
-
-$$V = \pi\int_0^1[(\sqrt{x})^2 - x^2]\,dx = \pi\int_0^1(x - x^2)\,dx = \pi\left[\frac{x^2}{2} - \frac{x^3}{3}\right]_0^1 = \frac{\pi}{6}$$
-
----
-
-**Esempio 5 — Volume per gusci: rotazione attorno all'asse $y$**
-
-Trovare il volume del solido generato dalla rotazione attorno all'asse $y$ della regione sotto $y = x^2$ per $x \in [0, 2]$.
-
-Usiamo i gusci (raggio $x$, altezza $x^2$):
-
-$$V = 2\pi\int_0^2 x \cdot x^2\,dx = 2\pi\int_0^2 x^3\,dx = 2\pi\left[\frac{x^4}{4}\right]_0^2 = 2\pi \cdot 4 = 8\pi$$
-
----
-
-**Esempio 6 — Lunghezza d'arco**
-
-Calcolare la lunghezza del grafico di $f(x) = \frac{2}{3}x^{3/2}$ per $x \in [0, 3]$.
-
-$f'(x) = x^{1/2} = \sqrt{x}$, quindi $1 + [f'(x)]^2 = 1 + x$.
-
-$$L = \int_0^3 \sqrt{1+x}\,dx = \left[\frac{2}{3}(1+x)^{3/2}\right]_0^3 = \frac{2}{3}(8 - 1) = \frac{14}{3}$$
-
----
-
-**Esempio 7 — Valor medio**
-
-Trovare il valor medio di $f(x) = \sin x$ su $[0, \pi]$.
-
-$$\bar{f} = \frac{1}{\pi}\int_0^\pi \sin x\,dx = \frac{1}{\pi}\Big[-\cos x\Big]_0^\pi = \frac{1}{\pi}(1+1) = \frac{2}{\pi} \approx 0.637$$
-
-Il punto $c$: $\sin c = \frac{2}{\pi} \Rightarrow c = \arcsin\frac{2}{\pi} \approx 0.69 \in [0, \pi]$.
-
----
-
-**Esempio 8 — Integrazione rispetto a $y$**
-
-Trovare l'area della regione delimitata da $x = y^2$ e $x = y + 2$.
-
-Intersezioni: $y^2 = y + 2 \Rightarrow y^2 - y - 2 = 0 \Rightarrow y = -1,\; y = 2$.
-
-Su $[-1, 2]$: $x_{\text{destra}} = y+2$, $x_{\text{sinistra}} = y^2$.
-
-$$A = \int_{-1}^2(y+2-y^2)\,dy = \left[\frac{y^2}{2}+2y-\frac{y^3}{3}\right]_{-1}^2 = (2+4-\frac{8}{3}) - (\frac{1}{2}-2+\frac{1}{3}) = \frac{9}{2}$$
-
----
-
-## 6. Grafico
-
-Visualizza l'area tra $f(x) = x$ e $g(x) = x^2$ su $[0, 1]$. La regione verde rappresenta l'integrale $\int_0^1(x-x^2)\,dx = 1/6$.
+Ecco la regione dell'esempio introduttivo dell'area, tra $y=x$ e $y=x^2$ su $[0,1]$: l'area vale $\int_0^1(x-x^2)\,dx=\tfrac16$.
 
 ```plot
-{"title":"Area tra y=x e y=x²","fn":"x","fn2":"x*x","domain":[-0.5,1.5],"yDomain":[-0.2,1.2],"label1":"y=x","label2":"y=x²"}
+{"title":"Area tra y=x e y=x²","fn":"x","fn2":"x*x","domain":[-0.3,1.3],"yDomain":[-0.2,1.2],"label1":"y=x","label2":"y=x²"}
 ```
 
----
+## 3. Dimostrazioni
 
-## 7. Slider — Volume di un solido di rotazione
+Le formule di questa lezione derivano tutte dallo stesso schema. Dimostriamo qui i due punti dove lo schema richiede una giustificazione non ovvia: che «sommare i contributi elementari $A(x)\,dx$» dia davvero l'integrale (§3.1), e che il volume del guscio cilindrico sia esattamente $2\pi x\,h\,dx$ una volta scartato il termine di ordine superiore (§3.2). Le altre formule (area tra curve, valor medio, applicazioni economiche) sono applicazioni dirette di §3.1 con densità diverse, e non richiedono una dimostrazione separata.
 
-Varia l'esponente $n$ della curva $y = x^n$ ruotata attorno all'asse $x$ su $[0, 1]$: il volume è $\pi\int_0^1 x^{2n}\,dx = \frac{\pi}{2n+1}$.
+### 3.1 Il metodo delle sezioni (Cavalieri) è rigoroso
 
-```slider
-{"title":"Curva y=xⁿ che genera un solido di rotazione","fn":"Math.pow(x, a)","domain":[0,1],"yDomain":[-0.1,1.2],"pname":"a","pmin":0.5,"pmax":4,"pdefault":1,"pstep":0.25,"plabel":"n","label1":"y=xⁿ"}
-```
+**Enunciato.** Sia $S$ un solido compreso tra i piani $x=a$ e $x=b$, e sia $A(x)$ l'area della sua sezione con il piano perpendicolare all'asse $x$ in posizione $x$. Se $A$ è **continua** su $[a,b]$, allora il volume di $S$ è
+$$V=\int_a^b A(x)\,dx.$$
+(Con $A(x)=\pi R(x)^2$ o $A(x)=\pi[R^2-r^2]$ si ottengono dischi e anelli; con $A(x)=f(x)-g(x)$, in dimensione una in meno, si ottiene l'area tra curve. La struttura della dimostrazione è la stessa.)
 
-Con $n=1$ (retta): volume = $\pi/3$ (cono). Con $n=0.5$ (radice): volume = $\pi/2$ (paraboloide). Al crescere di $n$ la curva si appiattisce e il volume diminuisce.
+**Dimostrazione.** Prendiamo una partizione di $[a,b]$ in $n$ intervallini $[x_{i-1},x_i]$ tramite punti $a=x_0<x_1<\dots<x_n=b$, e indichiamo con $\Delta x_i=x_i-x_{i-1}$ l'ampiezza dell'$i$-esimo. Concentriamoci sulla fetta di solido compresa tra $x_{i-1}$ e $x_i$.
 
----
+*Passo 1 — incastro tra due cilindretti.* Poiché $A$ è continua sull'intervallo chiuso e limitato $[x_{i-1},x_i]$, per il [teorema di Weierstrass](/analisi/calcolo-differenziale-una-variabile/08-teoremi-differenziale) essa vi assume un valore minimo $m_i=A(\xi_i)$ e un valore massimo $M_i=A(\eta_i)$, in opportuni punti $\xi_i,\eta_i$ dell'intervallino. La fetta *contiene* allora il cilindretto di sezione costante $m_i$ e altezza $\Delta x_i$, ed *è contenuta* nel cilindretto di sezione $M_i$ e stessa altezza. Passando ai volumi (che per un cilindro sono sezione $\times$ altezza):
+$$m_i\,\Delta x_i\ \le\ V_i\ \le\ M_i\,\Delta x_i,$$
+dove $V_i$ è il volume della fetta $i$-esima.
 
-## 8. Errori comuni
+*Passo 2 — somma su tutte le fette.* Sommando queste disuguaglianze per $i=1,\dots,n$ e usando che $V=\sum_i V_i$ (il volume è additivo sulle fette):
+$$\sum_{i=1}^n m_i\,\Delta x_i\ \le\ V\ \le\ \sum_{i=1}^n M_i\,\Delta x_i.$$
+Ma la somma a sinistra è esattamente una **somma inferiore di Darboux** della funzione $A$ sulla partizione scelta, e quella a destra una **somma superiore** (lez.12): $m_i$ e $M_i$ sono per costruzione l'inf e il sup di $A$ su ciascun intervallino.
 
-**Errore 1 — Non determinare quale curva sta sopra**
+*Passo 3 — passaggio al limite.* La funzione $A$ è continua, dunque [integrabile](/analisi/calcolo-integrale-una-variabile/12-integrale-definito) su $[a,b]$ (lez.12): al raffinarsi della partizione le sue somme inferiori e superiori tendono **entrambe** allo stesso limite, cioè $\int_a^b A(x)\,dx$. Il volume $V$ è un numero *fisso* schiacciato tra queste due somme per ogni partizione; poiché i due estremi convergono allo stesso valore, per il teorema del confronto ($V$ è costretto tra due successioni con lo stesso limite) si conclude
+$$V=\int_a^b A(x)\,dx.\qquad\blacksquare$$
 
-- Sbagliato: $\int_0^2 (x^2 - 2x)\,dx$ senza verificare il segno
-- Corretto: su $[0,2]$, $2x \geq x^2$ (il valore $x^2-2x = x(x-2) \leq 0$). Quindi l'integrale per l'area è $\int_0^2(2x-x^2)\,dx$
+Questo è ciò che, informalmente, chiamiamo «$V=\int dV$ con $dV=A(x)\,dx$»: la scrittura infinitesimale è un riassunto di questo incastro tra somme inferiori e superiori. La stima quantitativa che garantisce che il divario tra le due somme si chiude — la parte più tecnica — è isolata qui sotto.
 
-Verificare sempre in un punto interno quale funzione è maggiore.
+<details class="dim-tecnica">
+<summary>Perché il divario superiore−inferiore tende a zero (stima con la continuità uniforme)</summary>
 
----
+Il Passo 3 usa che $\sum M_i\Delta x_i-\sum m_i\Delta x_i\to0$. Vediamolo direttamente. La differenza è
+$$\sum_{i=1}^n (M_i-m_i)\,\Delta x_i=\sum_{i=1}^n\big[A(\eta_i)-A(\xi_i)\big]\,\Delta x_i.$$
+La funzione $A$ è continua sull'intervallo chiuso e limitato $[a,b]$, quindi vi è **uniformemente continua** (teorema di Heine–Cantor): fissato $\varepsilon>0$, esiste $\delta>0$ tale che $|s-t|<\delta$ implica $|A(s)-A(t)|<\dfrac{\varepsilon}{b-a}$, **con lo stesso $\delta$ valido ovunque** sull'intervallo. Prendiamo una partizione con tutti gli intervallini di ampiezza $\Delta x_i<\delta$. Allora $\xi_i,\eta_i$ stanno nello stesso intervallino, dunque $|\eta_i-\xi_i|<\delta$ e $M_i-m_i=A(\eta_i)-A(\xi_i)<\dfrac{\varepsilon}{b-a}$. Perciò
+$$\sum_{i=1}^n (M_i-m_i)\,\Delta x_i<\frac{\varepsilon}{b-a}\sum_{i=1}^n\Delta x_i=\frac{\varepsilon}{b-a}\,(b-a)=\varepsilon.$$
+Essendo $\varepsilon$ arbitrario, il divario tra somma superiore e inferiore si può rendere piccolo a piacere: le due somme hanno lo stesso limite, e il volume $V$, incastrato in mezzo, coincide con esso. È lo stesso argomento che in lez.12 dimostra l'integrabilità delle funzioni continue, applicato qui alla densità $A$.
+</details>
 
-**Errore 2 — Non trovare tutti i punti di intersezione**
+### 3.2 Il volume del guscio cilindrico
 
-Se $f$ e $g$ si incrociano più volte, bisogna suddividere l'integrale. Calcolare $\int_a^b [f-g]\,dx$ quando le curve si incrociano nell'interno dà un risultato sbagliato (le aree si cancellano parzialmente).
+**Enunciato.** Un guscio cilindrico di raggio interno $x$, spessore $dx$ e altezza $h$ ha volume $dV=2\pi x\,h\,dx$ a meno di infinitesimi di ordine superiore, da cui $V=2\pi\int_a^b x\,h(x)\,dx$.
 
----
+**Dimostrazione.** Il guscio è la differenza tra due cilindri pieni coassiali di altezza $h$: quello esterno di raggio $x+dx$ e quello interno di raggio $x$. Il volume di un cilindro pieno è (area di base) $\times$ altezza $=\pi(\text{raggio})^2\,h$. Quindi
+$$dV=\pi(x+dx)^2\,h-\pi x^2\,h=\pi h\big[(x+dx)^2-x^2\big]=\pi h\big[2x\,dx+(dx)^2\big]=2\pi x\,h\,dx+\pi h\,(dx)^2.$$
+Il primo termine, $2\pi x\,h\,dx$, è proporzionale a $dx$; il secondo, $\pi h\,(dx)^2$, è proporzionale a $(dx)^2$, ed è quindi un **infinitesimo di ordine superiore**: diviso per $dx$ tende a $0$ quando $dx\to0$. Nel senso reso rigoroso in §3.1, i termini di ordine superiore sommati su tutte le fette contribuiscono $0$ al limite; sopravvive solo la parte lineare. Dunque il contributo elementare da integrare è $2\pi x\,h\,dx$, e sommando su $[a,b]$ (con $h=h(x)$):
+$$V=2\pi\int_a^b x\,h(x)\,dx.\qquad\blacksquare$$
+La lettura mnemonica «circonferenza $\times$ altezza $\times$ spessore» $=2\pi x\cdot h\cdot dx$ non è un caso: srotolando il guscio sottile si ottiene proprio una lastra rettangolare di quelle tre dimensioni, e il termine $(dx)^2$ scartato è l'errore che si commette trattando il guscio curvo come una lastra piatta — errore che sparisce nel limite.
 
-**Errore 3 — Dimenticare il $\pi$ nella formula dei dischi**
+## 4. Esempi
 
-- Sbagliato: $V = \int_a^b [f(x)]^2\,dx$
-- Corretto: $V = \pi\int_a^b [f(x)]^2\,dx$
+Gli esempi sono ordinati per tipo e difficoltà crescente. In ciascuno, la parte creativa è **individuare il contributo elementare $dQ$**; il calcolo poi usa le tecniche di lez.11–13.
 
-Il fattore $\pi$ viene dall'area del cerchio $A = \pi r^2$.
+**Esempio 1 (area, curve che si incrociano).** Area della regione chiusa tra $y=4-x^2$ e $y=x+2$.
 
----
+*Strategia:* trovare gli incroci, decidere chi sta sopra, integrare la differenza.
+Intersezioni: $4-x^2=x+2\Rightarrow x^2+x-2=0\Rightarrow(x+2)(x-1)=0\Rightarrow x=-2,1$. In $x=0$: la parabola vale $4$, la retta $2$, quindi $4-x^2\ge x+2$ su $[-2,1]$. Allora
+$$A=\int_{-2}^{1}\big[(4-x^2)-(x+2)\big]\,dx=\int_{-2}^1(2-x-x^2)\,dx=\Big[2x-\tfrac{x^2}{2}-\tfrac{x^3}{3}\Big]_{-2}^1.$$
+Calcolando i due valori dell'antiderivata: in $x=1$ vale $2-\tfrac12-\tfrac13=\tfrac76$; in $x=-2$ vale $-4-2+\tfrac83=-\tfrac{10}{3}=-\tfrac{20}{6}$. La differenza è $\tfrac76-\big(-\tfrac{20}{6}\big)=\tfrac{27}{6}=\tfrac92$.
+*Errore da evitare:* saltare la verifica del segno e scrivere $(x+2)-(4-x^2)$, ottenendo $-\tfrac92$: un'area non può essere negativa; il segno segnala che si è invertito sopra e sotto.
 
-**Errore 4 — Elevare al quadrato erroneamente nella formula degli anelli**
+**Esempio 2 (area, affettamento orizzontale).** Area tra $x=y^2-2$ e $x=y$.
 
-- Sbagliato: $V = \pi\int_a^b [R(x) - r(x)]^2\,dx$
-- Corretto: $V = \pi\int_a^b [R(x)^2 - r(x)^2]\,dx$
+*Strategia:* le curve sono funzioni di $y$; conviene affettare in orizzontale. Intersezioni: $y^2-2=y\Rightarrow y^2-y-2=0\Rightarrow y=-1,2$. In $y=0$: la retta dà $x=0$, la parabola $x=-2$, quindi $y$ (retta) sta a destra. Allora
+$$A=\int_{-1}^{2}\big[y-(y^2-2)\big]\,dy=\int_{-1}^2(y-y^2+2)\,dy=\Big[\tfrac{y^2}{2}-\tfrac{y^3}{3}+2y\Big]_{-1}^2=\tfrac{10}{3}-\big(-\tfrac{7}{6}\big)=\tfrac92.$$
+*Osservazione:* in verticale la stessa regione avrebbe richiesto di spezzare l'integrale, perché il bordo inferiore passa da un ramo all'altro della parabola. Scegliere l'affettamento giusto è metà del lavoro.
 
-Non si sottrae il raggio, si sottraggono le aree dei cerchi.
+**Esempio 3 (volume per anelli).** La regione tra $y=\sqrt x$ e $y=x$ su $[0,1]$ ruota attorno all'asse $x$.
 
----
+*Strategia:* su $[0,1]$ è $\sqrt x\ge x$ (in $x=\tfrac14$: $\tfrac12>\tfrac14$), quindi ruotando si forma un anello con raggio esterno $R=\sqrt x$ e interno $r=x$:
+$$V=\pi\int_0^1\big[(\sqrt x)^2-x^2\big]\,dx=\pi\int_0^1(x-x^2)\,dx=\pi\Big[\tfrac{x^2}{2}-\tfrac{x^3}{3}\Big]_0^1=\frac{\pi}{6}.$$
+*Errore da evitare:* scrivere $\pi\int(\sqrt x-x)^2\,dx$ (raggi sottratti e poi elevati): si devono sottrarre le **aree** $R^2-r^2$, non i raggi.
 
-**Errore 5 — Sbagliare la formula della lunghezza d'arco**
+**Esempio 4 (volume per gusci con integrazione per parti).** La regione sotto $y=\sin x$ su $[0,\pi]$ ruota attorno all'asse $y$.
 
-- Sbagliato: $L = \int_a^b f'(x)\,dx$ (questa è solo la variazione verticale)
-- Corretto: $L = \int_a^b \sqrt{1+[f'(x)]^2}\,dx$
+*Strategia:* l'asse di rotazione ($y$) è perpendicolare all'asse d'integrazione: gusci. Raggio $x$, altezza $\sin x$:
+$$V=2\pi\int_0^\pi x\sin x\,dx.$$
+L'integrale si fa [per parti](/analisi/calcolo-integrale-una-variabile/13-tecniche-integrazione) (lez.13) con $u=x$, $dv=\sin x\,dx$, quindi $v=-\cos x$:
+$$\int_0^\pi x\sin x\,dx=\big[-x\cos x\big]_0^\pi+\int_0^\pi\cos x\,dx=\pi+\big[\sin x\big]_0^\pi=\pi+0=\pi.$$
+Dunque $V=2\pi\cdot\pi=2\pi^2$.
 
-La lunghezza combina variazione orizzontale e verticale (teorema di Pitagora).
+**Esempio 5 (volume della sfera, derivazione).** Ricavare $V=\tfrac43\pi R^3$ con il metodo dei dischi.
 
----
+*Strategia:* la sfera è generata ruotando il semicerchio $y=\sqrt{R^2-x^2}$ (con $x\in[-R,R]$) attorno all'asse $x$. Ogni disco ha raggio $\sqrt{R^2-x^2}$, area di sezione $\pi(R^2-x^2)$:
+$$V=\pi\int_{-R}^{R}(R^2-x^2)\,dx=\pi\Big[R^2x-\tfrac{x^3}{3}\Big]_{-R}^{R}=\pi\Big[\big(R^3-\tfrac{R^3}{3}\big)-\big(-R^3+\tfrac{R^3}{3}\big)\Big]=\pi\cdot\tfrac{4R^3}{3}=\frac{4}{3}\pi R^3.$$
+Una formula «geometrica» nota, ricavata come puro accumulo di fette.
 
-**Errore 6 — Confondere valor medio con valore in un punto**
+**Esempio 6 (valor medio e teorema della media).** Valor medio di $f(x)=e^x$ su $[0,2]$ e il punto $c$ garantito.
 
-- Sbagliato: "il valor medio di $\sin x$ su $[0,\pi]$ è $\sin(\pi/2) = 1$"
-- Corretto: $\bar{f} = \frac{2}{\pi} \approx 0.637 \neq 1$
+$$\bar f=\frac12\int_0^2 e^x\,dx=\frac12\big[e^x\big]_0^2=\frac{e^2-1}{2}\approx3{,}19.$$
+Il punto $c$ del teorema della media risolve $e^c=\bar f$, cioè $c=\ln\dfrac{e^2-1}{2}\approx1{,}16$, che sta in $[0,2]$. *Nota:* $\bar f\approx3{,}19$ è maggiore del valore nel punto medio $e^1\approx2{,}72$, perché $e^x$ è convessa e «pesa» di più verso destra.
 
-Il valor medio è un integrale diviso per la lunghezza dell'intervallo, non il valore in un punto particolare.
+**Esempio 7 (economia: surplus totale).** Domanda $D(q)=100-2q$, offerta $S(q)=20+q$. Calcolare equilibrio, surplus del consumatore e del produttore.
 
----
+Equilibrio: $100-2q=20+q\Rightarrow 80=3q\Rightarrow q^*=\tfrac{80}{3}$, $p^*=20+\tfrac{80}{3}=\tfrac{140}{3}$.
+$$\text{CS}=\int_0^{q^*}\big[(100-2q)-p^*\big]\,dq=\int_0^{80/3}\Big(100-\tfrac{140}{3}-2q\Big)\,dq=\int_0^{80/3}\Big(\tfrac{160}{3}-2q\Big)\,dq.$$
+$$=\Big[\tfrac{160}{3}q-q^2\Big]_0^{80/3}=\tfrac{160}{3}\cdot\tfrac{80}{3}-\Big(\tfrac{80}{3}\Big)^2=\tfrac{12800}{9}-\tfrac{6400}{9}=\tfrac{6400}{9}\approx711{,}1.$$
+*Interpretazione:* la curva di domanda è una retta e il prezzo è orizzontale, quindi CS è l'area di un triangolo di base $q^*=\tfrac{80}{3}$ e altezza $D(0)-p^*=100-\tfrac{140}{3}=\tfrac{160}{3}$: $\tfrac12\cdot\tfrac{80}{3}\cdot\tfrac{160}{3}=\tfrac{6400}{9}$. L'integrale conferma la geometria.
 
-**Errore 7 — Non controllare le unità nel volume**
+**Esempio 8 (economia: valore attuale di un flusso crescente).** Un progetto genera un flusso di reddito $f(t)=1000+200t$ euro/anno per $T=10$ anni, con tasso continuo $r=0{,}05$. Calcolarne il valore attuale.
 
-Se si lavora con lunghezze in cm, il volume viene in cm³, non in cm. Un errore frequente è trattare il volume come se fosse bidimensionale.
+$$\text{PV}=\int_0^{10}(1000+200t)\,e^{-0{,}05t}\,dt.$$
+Spezziamo in due. Il primo pezzo, $\int_0^{10}1000\,e^{-0{,}05t}\,dt=1000\cdot\dfrac{1-e^{-0{,}5}}{0{,}05}=20000(1-e^{-0{,}5})$. Il secondo richiede l'integrazione per parti; lo isoliamo nel blocco tecnico.
 
----
+<details class="dim-tecnica">
+<summary>Calcolo di $\int_0^{10}200t\,e^{-0{,}05t}\,dt$ per parti</summary>
 
-## 9. Applicazioni reali
+Poniamo $u=200t$, $dv=e^{-0{,}05t}\,dt$, dunque $du=200\,dt$ e $v=-\dfrac{1}{0{,}05}e^{-0{,}05t}=-20\,e^{-0{,}05t}$:
+$$\int_0^{10}200t\,e^{-0{,}05t}\,dt=\Big[-4000t\,e^{-0{,}05t}\Big]_0^{10}+\int_0^{10}4000\,e^{-0{,}05t}\,dt.$$
+Il termine di bordo: in $t=10$ vale $-40000\,e^{-0{,}5}$, in $t=0$ vale $0$; quindi $-40000\,e^{-0{,}5}$. L'integrale residuo: $4000\cdot\dfrac{1-e^{-0{,}5}}{0{,}05}=80000(1-e^{-0{,}5})$. In totale
+$$\int_0^{10}200t\,e^{-0{,}05t}\,dt=-40000\,e^{-0{,}5}+80000(1-e^{-0{,}5})=80000-120000\,e^{-0{,}5}.$$
+</details>
 
-**Ingegneria civile — Calcolo dei volumi di terra.** I progetti stradali e di costruzione richiedono di calcolare quanto materiale rimuovere (scavo) o aggiungere (riempimento). Il profilo del terreno è descritto da una funzione $h(x)$ e il volume di terra in una sezione è calcolato con integrali. Gli ingegneri usano la regola di Cavalieri: $V = \int A(x)\,dx$ dove $A(x)$ è l'area della sezione trasversale.
+Sommando i due pezzi, con $e^{-0{,}5}\approx0{,}6065$:
+$$\text{PV}=20000(1-e^{-0{,}5})+80000-120000\,e^{-0{,}5}=100000-140000\,e^{-0{,}5}\approx100000-84910\approx15090\text{ euro}.$$
+Il flusso nominale totale sarebbe $\int_0^{10}(1000+200t)\,dt=1000\cdot10+200\cdot50=20000$ euro: lo sconto continuo lo riduce a circa $15090$ euro di valore odierno.
 
-**Medicina — Gittata cardiaca.** Tramite il **metodo della diluizione dell'indicatore**, si inietta una sostanza nel sangue e si misura la concentrazione $c(t)$ nel tempo. La gittata cardiaca è $CO = \frac{D}{\int_0^\infty c(t)\,dt}$ dove $D$ è la dose. L'integrale al denominatore — calcolato numericamente — misura quanto a lungo la sostanza rimane nel circolo sanguigno.
+## 5. Collegamenti e riepilogo
 
-**Fisica — Centro di massa.** Per un oggetto con densità di massa lineare $\rho(x)$ (massa per unità di lunghezza), il centro di massa si trova a:
-$$\bar{x} = \frac{\int_a^b x\,\rho(x)\,dx}{\int_a^b \rho(x)\,dx}$$
-Questa formula è esattamente analoga al valor medio, con $\rho$ come "peso". La progettazione di strutture stabili richiede di calcolare questi centri di massa con precisione.
+**Idea centrale.** Ogni grandezza che si costruisce **accumulando contributi infinitesimi** distribuiti lungo un intervallo è un integrale. Il lavoro concettuale è sempre lo stesso: affettare, trovare il contributo elementare $dQ=(\text{densità})\cdot(\text{spessore})$, integrare. La densità cambia natura — altezza di striscia, area di sezione, incasso scontato — ma la macchina è unica, e il TFC (lez.12) esegue il calcolo.
 
----
+**Collegamenti.**
+- **[Integrale definito e TFC](/analisi/calcolo-integrale-una-variabile/12-integrale-definito)** (lez.12): è il fondamento. Il valor medio è il numero del teorema della media integrale; il metodo delle sezioni (§3.1) è una diretta applicazione dell'integrabilità delle funzioni continue e delle somme di Darboux.
+- **[Tecniche di integrazione](/analisi/calcolo-integrale-una-variabile/13-tecniche-integrazione)** (lez.13): senza per parti e sostituzione, molti di questi integrali (volume di $x\sin x$, valore attuale $t\,e^{-rt}$) resterebbero bloccati. Le applicazioni sono il banco di prova delle tecniche.
+- **[Integrali impropri](/analisi/calcolo-integrale-una-variabile/15-integrali-impropri)** (lez.15): il passo successivo. Il valore attuale di una **rendita perpetua** ($T\to\infty$) è $\int_0^\infty f(t)e^{-rt}\,dt$, un integrale improprio; e la gittata cardiaca in medicina è $\int_0^\infty c(t)\,dt$. La convergenza di questi integrali è il tema della prossima lezione.
+- **Probabilità e statistica:** il **valore atteso** di una variabile continua, $E[X]=\int x\,f(x)\,dx$, è un valor medio pesato dalla densità — lo stesso schema di §2.4 con peso $f(x)$. Il coefficiente di Gini (§2.5) è un'area tra curve. Il ponte con la probabilità passa da qui.
+- **Finanza:** valore attuale e valore futuro di flussi continui sono la versione «a tempo continuo» delle formule di attualizzazione discrete; ritornano nel calcolo del prezzo di obbligazioni e nella valutazione di progetti d'investimento (VAN).
 
-## 10. Riepilogo
+**Formule chiave.**
 
-| Applicazione | Formula | Note |
-| --- | --- | --- |
-| Area tra curve | $A = \int_a^b [f(x)-g(x)]\,dx$ | con $f \geq g$ su $[a,b]$ |
-| Area rispetto a $y$ | $A = \int_c^d [x_D(y)-x_S(y)]\,dy$ | curve espresse come $x=h(y)$ |
-| Volume (dischi/anelli) | $V = \pi\int_a^b [R^2-r^2]\,dx$ | rotazione attorno asse $x$ |
-| Volume (gusci) | $V = 2\pi\int_a^b x\,h(x)\,dx$ | rotazione attorno asse $y$ |
-| Lunghezza d'arco | $L = \int_a^b \sqrt{1+[f'(x)]^2}\,dx$ | Pitagora infinitesimale |
-| Valor medio | $\bar{f} = \frac{1}{b-a}\int_a^b f(x)\,dx$ | TVM garantisce $f(c)=\bar{f}$ |
+| Grandezza | Contributo elementare $dQ$ | Formula |
+|---|---|---|
+| Area tra curve ($f\ge g$) | $(f-g)\,dx$ | $A=\int_a^b(f-g)\,dx$ |
+| Area (affettamento in $y$) | $(x_{\text{dx}}-x_{\text{sx}})\,dy$ | $A=\int_c^d(x_{\text{dx}}-x_{\text{sx}})\,dy$ |
+| Volume (dischi/anelli, asse $x$) | $\pi(R^2-r^2)\,dx$ | $V=\pi\int_a^b(R^2-r^2)\,dx$ |
+| Volume (gusci, asse $y$) | $2\pi x\,h(x)\,dx$ | $V=2\pi\int_a^b x\,h(x)\,dx$ |
+| Valor medio | — | $\bar f=\tfrac{1}{b-a}\int_a^b f\,dx$ |
+| Lunghezza d'arco | $\sqrt{1+f'^2}\,dx$ | $L=\int_a^b\sqrt{1+f'^2}\,dx$ |
+| Surplus consumatore | $[D(q)-p^*]\,dq$ | $\text{CS}=\int_0^{q^*}[D-p^*]\,dq$ |
+| Surplus produttore | $[p^*-S(q)]\,dq$ | $\text{PS}=\int_0^{q^*}[p^*-S]\,dq$ |
+| Valore attuale (flusso) | $f(t)e^{-rt}\,dt$ | $\text{PV}=\int_0^T f(t)e^{-rt}\,dt$ |
 
----
+## 6. Esercizi
 
-## 11. Esercizi
+Le soluzioni sono complete e nascoste: prova prima da solo, poi apri per confrontare il procedimento (non solo il risultato).
 
 <details>
-<summary>Esercizio 1 — Area tra parabola e retta</summary>
+<summary>Esercizio 1 (area, introduttivo) — Trovare l'area tra $y=x^2$ e $y=x+2$.</summary>
 
-Trovare l'area della regione chiusa tra $y = 4 - x^2$ e $y = x + 2$.
-
-**Soluzione:**
-
-Intersezioni: $4-x^2 = x+2 \Rightarrow x^2+x-2=0 \Rightarrow (x+2)(x-1)=0 \Rightarrow x=-2,\;x=1$.
-
-Su $[-2,1]$: $4-x^2 \geq x+2$ (verifica in $x=0$: $4>2$).
-
-$$A = \int_{-2}^1[(4-x^2)-(x+2)]\,dx = \int_{-2}^1(2-x-x^2)\,dx = \left[2x-\frac{x^2}{2}-\frac{x^3}{3}\right]_{-2}^1$$
-
-$$= (2-\frac{1}{2}-\frac{1}{3})-(-4-2+\frac{8}{3}) = \frac{7}{6}+6-\frac{8}{3} = \frac{7}{6}+\frac{36}{6}-\frac{16}{6} = \frac{27}{6} = \frac{9}{2}$$
-
+Intersezioni: $x^2=x+2\Rightarrow x^2-x-2=0\Rightarrow(x-2)(x+1)=0\Rightarrow x=-1,2$. In $x=0$: la retta vale $2>0$, quindi $x+2\ge x^2$ su $[-1,2]$.
+$$A=\int_{-1}^{2}\big[(x+2)-x^2\big]\,dx=\Big[\tfrac{x^2}{2}+2x-\tfrac{x^3}{3}\Big]_{-1}^{2}=\tfrac{10}{3}-\big(-\tfrac{7}{6}\big)=\frac{9}{2}.$$
 </details>
 
 <details>
-<summary>Esercizio 2 — Volume per dischi</summary>
+<summary>Esercizio 2 (area con incrocio, standard) — Area tra $y=x^3$ e $y=x$ su $[-1,1]$.</summary>
 
-La regione delimitata da $y = x^2$ e $y = 4$ viene ruotata attorno all'asse $y$. Trovare il volume.
-
-**Soluzione:**
-
-In termini di $y$: $x = \sqrt{y}$ (raggio del disco). $y$ varia da 0 a 4.
-
-$$V = \pi\int_0^4 (\sqrt{y})^2\,dy = \pi\int_0^4 y\,dy = \pi\left[\frac{y^2}{2}\right]_0^4 = 8\pi$$
-
+Le curve si incrociano in $x=-1,0,1$ (da $x^3=x\Rightarrow x(x^2-1)=0$). Su $[-1,0]$ è $x^3\ge x$ (in $x=-\tfrac12$: $-\tfrac18>-\tfrac12$); su $[0,1]$ è $x\ge x^3$. Per simmetria i due tratti danno lo stesso contributo:
+$$A=\int_{-1}^{0}(x^3-x)\,dx+\int_0^1(x-x^3)\,dx=\tfrac14+\tfrac14=\frac12.$$
+Usare $\int_{-1}^1(x-x^3)\,dx=0$ sarebbe l'errore tipico: la funzione è dispari e le aree si cancellano.
 </details>
 
 <details>
-<summary>Esercizio 3 — Volume per gusci</summary>
+<summary>Esercizio 3 (volume dischi, standard) — La regione sotto $y=\sqrt{x}$ su $[0,4]$ ruota attorno all'asse $x$. Volume?</summary>
 
-La regione sotto $y = \sin x$ per $x \in [0, \pi]$ viene ruotata attorno all'asse $y$. Trovare il volume.
-
-**Soluzione:**
-
-Usiamo i gusci (raggio $x$, altezza $\sin x$):
-
-$$V = 2\pi\int_0^\pi x\sin x\,dx$$
-
-Integriamo per parti: $u=x$, $dv=\sin x\,dx$ → $v=-\cos x$:
-
-$$V = 2\pi\left(\left[-x\cos x\right]_0^\pi + \int_0^\pi\cos x\,dx\right) = 2\pi\left(\pi + \Big[\sin x\Big]_0^\pi\right) = 2\pi(\pi + 0) = 2\pi^2$$
-
+Dischi di raggio $\sqrt x$:
+$$V=\pi\int_0^4(\sqrt x)^2\,dx=\pi\int_0^4 x\,dx=\pi\Big[\tfrac{x^2}{2}\Big]_0^4=8\pi.$$
 </details>
 
 <details>
-<summary>Esercizio 4 — Confronto fra metodi</summary>
+<summary>Esercizio 4 (volume, dischi in $y$) — La regione tra $y=x^2$ e $y=4$ ruota attorno all'asse $y$. Volume?</summary>
 
-La regione tra $y=x$ e $y=x^2$ (per $x\in[0,1]$) viene ruotata attorno all'asse $x$. Trovare il volume usando il metodo degli anelli.
-
-**Soluzione:**
-
-$R(x) = x$ (raggio esterno), $r(x) = x^2$ (raggio interno):
-
-$$V = \pi\int_0^1(x^2 - x^4)\,dx = \pi\left[\frac{x^3}{3}-\frac{x^5}{5}\right]_0^1 = \pi\left(\frac{1}{3}-\frac{1}{5}\right) = \frac{2\pi}{15}$$
-
+Conviene affettare in $y$: la sezione a quota $y$ è un disco di raggio $x=\sqrt y$, con $y\in[0,4]$.
+$$V=\pi\int_0^4(\sqrt y)^2\,dy=\pi\int_0^4 y\,dy=\pi\Big[\tfrac{y^2}{2}\Big]_0^4=8\pi.$$
 </details>
 
 <details>
-<summary>Esercizio 5 — Lunghezza d'arco</summary>
+<summary>Esercizio 5 (volume gusci) — La regione sotto $y=x^2$ su $[0,2]$ ruota attorno all'asse $y$. Volume (con i gusci) e verifica.</summary>
 
-Calcolare la lunghezza del grafico di $f(x) = \ln(\cos x)$ per $x \in [0, \pi/4]$.
-
-**Soluzione:**
-
-$f'(x) = \dfrac{-\sin x}{\cos x} = -\tan x$, quindi $[f'(x)]^2 = \tan^2 x$.
-
-$1 + \tan^2 x = \sec^2 x$, quindi $\sqrt{1+[f'(x)]^2} = \lvert\sec x\rvert = \sec x$ (su $[0,\pi/4]$, $\sec x > 0$).
-
-$$L = \int_0^{\pi/4}\sec x\,dx = \Big[\ln\lvert\sec x+\tan x\rvert\Big]_0^{\pi/4} = \ln(\sqrt{2}+1) - \ln(1) = \ln(\sqrt{2}+1)$$
-
+Gusci di raggio $x$, altezza $x^2$:
+$$V=2\pi\int_0^2 x\cdot x^2\,dx=2\pi\int_0^2 x^3\,dx=2\pi\Big[\tfrac{x^4}{4}\Big]_0^2=8\pi.$$
+*Verifica con i dischi in $y$:* la regione ruotata è tra la parabola e la retta $x=2$; in $y$ è un anello con $R=2$, $r=\sqrt y$, $y\in[0,4]$: $V=\pi\int_0^4(4-y)\,dy=\pi[4y-\tfrac{y^2}{2}]_0^4=\pi(16-8)=8\pi$. Coincide.
 </details>
 
 <details>
-<summary>Esercizio 6 — Valor medio e TVM</summary>
+<summary>Esercizio 6 (lunghezza d'arco) — Lunghezza di $f(x)=\ln(\cos x)$ su $[0,\pi/4]$.</summary>
 
-Trovare il valor medio di $f(x) = e^x$ su $[0, 2]$ e il punto $c$ garantito dal teorema.
-
-**Soluzione:**
-
-$$\bar{f} = \frac{1}{2}\int_0^2 e^x\,dx = \frac{1}{2}\Big[e^x\Big]_0^2 = \frac{e^2-1}{2} \approx 3.19$$
-
-Punto $c$: $e^c = \dfrac{e^2-1}{2} \Rightarrow c = \ln\dfrac{e^2-1}{2} \approx \ln(3.19) \approx 1.16 \in [0,2]$.
-
+$f'(x)=\dfrac{-\sin x}{\cos x}=-\tan x$, quindi $1+f'^2=1+\tan^2x=\sec^2x$ e $\sqrt{1+f'^2}=\sec x$ (positivo su $[0,\pi/4]$).
+$$L=\int_0^{\pi/4}\sec x\,dx=\big[\ln|\sec x+\tan x|\big]_0^{\pi/4}=\ln(\sqrt2+1)-\ln1=\ln(\sqrt2+1).$$
 </details>
 
 <details>
-<summary>Esercizio 7 — Area rispetto a y</summary>
+<summary>Esercizio 7 (valor medio) — Valor medio di $f(x)=\dfrac{1}{x}$ su $[1,e]$, e punto $c$ della media.</summary>
 
-Trovare l'area della regione delimitata da $x = y^2 - 2$ e $x = y$ (integrate rispetto a $y$).
-
-**Soluzione:**
-
-Intersezioni: $y^2-2 = y \Rightarrow y^2-y-2=0 \Rightarrow y=-1,\;y=2$.
-
-Su $[-1,2]$: $x_D = y$, $x_S = y^2-2$ (verifica in $y=0$: $0 > -2$).
-
-$$A = \int_{-1}^2 (y - y^2+2)\,dy = \left[\frac{y^2}{2}-\frac{y^3}{3}+2y\right]_{-1}^2 = (2-\frac{8}{3}+4)-(\frac{1}{2}+\frac{1}{3}-2) = \frac{9}{2}$$
-
+$$\bar f=\frac{1}{e-1}\int_1^e\frac1x\,dx=\frac{1}{e-1}\big[\ln x\big]_1^e=\frac{1}{e-1}\approx0{,}582.$$
+Punto $c$: $\dfrac1c=\dfrac{1}{e-1}\Rightarrow c=e-1\approx1{,}718\in[1,e]$.
 </details>
 
 <details>
-<summary>Esercizio 8 — Volume di una sfera</summary>
+<summary>Esercizio 8 (economia, surplus) — Domanda $D(q)=50-q^2$, prezzo di equilibrio $p^*=25$. Surplus del consumatore.</summary>
 
-Derivare la formula $V = \frac{4}{3}\pi R^3$ del volume della sfera di raggio $R$ usando il metodo dei dischi.
+La quantità di equilibrio risolve $D(q^*)=p^*$: $50-q^2=25\Rightarrow q^2=25\Rightarrow q^*=5$.
+$$\text{CS}=\int_0^{5}\big[(50-q^2)-25\big]\,dq=\int_0^5(25-q^2)\,dq=\Big[25q-\tfrac{q^3}{3}\Big]_0^5=125-\tfrac{125}{3}=\frac{250}{3}\approx83{,}3.$$
+</details>
 
-**Soluzione:**
+<details>
+<summary>Esercizio 9 (economia, valore attuale) — Flusso costante $f(t)=5000$ euro/anno per $T=8$ anni, $r=0{,}03$ continuo. Valore attuale, e confronto col nominale.</summary>
 
-La sfera è il solido ottenuto ruotando il semicerchio $y = \sqrt{R^2-x^2}$ attorno all'asse $x$ per $x \in [-R, R]$.
+$$\text{PV}=\int_0^8 5000\,e^{-0{,}03t}\,dt=5000\cdot\frac{1-e^{-0{,}24}}{0{,}03}=\frac{5000}{0{,}03}(1-e^{-0{,}24}).$$
+Con $e^{-0{,}24}\approx0{,}7866$: $\text{PV}\approx166667\cdot0{,}2134\approx35563$ euro. Il flusso nominale è $5000\cdot8=40000$ euro: lo sconto ne toglie circa $4400$.
+</details>
 
-Raggio di ogni sezione: $r(x) = \sqrt{R^2-x^2}$.
+<details>
+<summary>Esercizio 10 (economia, Gini — avanzato) — La curva di Lorenz di un paese è $L(x)=x^2$. Calcolare il coefficiente di Gini.</summary>
 
-$$V = \pi\int_{-R}^R (R^2-x^2)\,dx = \pi\left[R^2 x - \frac{x^3}{3}\right]_{-R}^R = \pi\left[(R^3-\frac{R^3}{3})-(-R^3+\frac{R^3}{3})\right]$$
-
-$$= \pi\left[\frac{2R^3}{3}+\frac{2R^3}{3}\right] = \pi\cdot\frac{4R^3}{3} = \frac{4\pi R^3}{3} \quad \blacksquare$$
-
+$$G=2\int_0^1\big[x-L(x)\big]\,dx=2\int_0^1(x-x^2)\,dx=2\Big[\tfrac{x^2}{2}-\tfrac{x^3}{3}\Big]_0^1=2\cdot\tfrac16=\frac13.$$
+Un Gini di $\tfrac13\approx0{,}33$: disuguaglianza moderata. Con $L(x)=x$ (uguaglianza perfetta) si otterrebbe $G=0$; con Lorenz molto incurvata verso il basso, $G\to1$. *Nota:* la curva di Lorenz deve sempre stare sotto la diagonale e passare per $(0,0)$ e $(1,1)$, come fa $x^2$.
 </details>
