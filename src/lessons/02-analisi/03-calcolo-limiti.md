@@ -41,15 +41,15 @@ fonti_integrate:
   - id_fonte: villanacci-math1
     ruolo: appunti-prof
     sezioni_coperte: "Cap. 6 (algebra dei limiti, forme indeterminate, equivalenze asintotiche, gerarchia degli infiniti)"
-    note: "priorità per notazione da esame (x₀, ℓ), impostazione algebrica delle forme indeterminate, equivalenze asintotiche come strumento primario"
+    note: "priorità per notazione da esame (x₀, ℓ), impostazione algebrica delle forme indeterminate, equivalenze asintotiche come strumento primario; ordine dei metodi allineato alla priorità d'esame (via algebrico-asintotica prima, De l'Hôpital come controllo)"
 
-versione: "2.0"
-data_ultima_rielaborazione: "2026-07-10"
-stato: da-rielaborare
+versione: "3.0"
+data_ultima_rielaborazione: "2026-07-12"
+stato: completa
 
 componenti_usati:
   - plot
-  - slider
+  - checkpoint
 
 sezioni_omesse: []
 ---
@@ -62,25 +62,13 @@ La risposta ha due facce. La prima è un teorema di **compositività**: il limit
 
 La seconda faccia è più interessante, ed è il vero cuore del calcolo differenziale. A volte lo smontaggio produce un simbolo *privo di significato*: $\frac{0}{0}$, $\frac{\infty}{\infty}$, $0\cdot\infty$, $\infty - \infty$. Sono le **forme indeterminate**. "Indeterminata" non vuol dire "impossibile": vuol dire che il valore limite *non è deciso* dai soli limiti dei pezzi. Prendi $\frac{0}{0}$: numeratore e denominatore corrono entrambi verso zero, e il rapporto misura *chi corre più veloce*. Se il numeratore è più rapido, il rapporto tende a $0$; se lo è il denominatore, tende a $\infty$; se corrono alla pari, tende a una costante finita. Il simbolo $\frac{0}{0}$ non contiene questa informazione — la velocità sì.
 
-Non è un caso di scuola. La velocità istantanea $\lim_{h\to 0}\frac{s(t_0+h)-s(t_0)}{h}$ è una forma $\frac{0}{0}$; la pendenza di una tangente è una forma $\frac{0}{0}$; l'elasticità di una domanda in economia è una forma $\frac{0}{0}$. Storicamente, imparare a "sbrogliare" questi rapporti — prima con l'astuzia algebrica, poi con la regola che Guillaume de l'Hôpital pubblicò nel 1696 (su risultati di Johann Bernoulli) — è stato il gesto che ha fatto nascere l'Analisi come tecnica di calcolo. Questa lezione raccoglie l'intero arsenale: le leggi algebriche, i teoremi che le puntellano (confronto, permanenza del segno), i limiti notevoli e le equivalenze asintotiche, la gerarchia delle velocità, e la regola di De l'Hôpital.
+Non è un caso di scuola. La velocità istantanea $\lim_{h\to 0}\frac{s(t_0+h)-s(t_0)}{h}$ è una forma $\frac{0}{0}$; la pendenza di una tangente è una forma $\frac{0}{0}$; l'elasticità di una domanda in economia è una forma $\frac{0}{0}$. Storicamente, imparare a "sbrogliare" questi rapporti — prima con l'astuzia algebrica, poi con la regola che Guillaume de l'Hôpital pubblicò nel 1696 (su risultati di Johann Bernoulli) — è stato il gesto che ha fatto nascere l'Analisi come tecnica di calcolo. Questa lezione raccoglie l'intero arsenale, nell'ordine in cui conviene impugnarlo agli esami: le leggi algebriche e le manipolazioni, i limiti notevoli e le equivalenze asintotiche, la gerarchia delle velocità, i teoremi che puntellano tutto (confronto, permanenza del segno) e, per ultima, la regola di De l'Hôpital come controllo di sicurezza.
 
 ---
 
-## 2. Prerequisiti
+## 2. Teoria
 
-- **[Concetto di limite — approccio intuitivo](analisi-01-limite-intuitivo)** — l'immagine "$x$ vicino a $x_0$ implica $f(x)$ vicino a $\ell$" e i limiti unilaterali e all'infinito, di cui qui useremo il calcolo.
-- **[Definizione rigorosa ε–δ del limite](analisi-02-limite-epsilon-delta)** — è il fondamento su cui si dimostrano le leggi algebriche (il §4.3 di quella lezione — limite della somma — è il primo mattone di questa).
-- **[Prodotti notevoli](base-04-prodotti-notevoli)** — differenza di quadrati e scomposizioni, indispensabili per le forme $\frac{0}{0}$ polinomiali e per la razionalizzazione.
-- **[Frazioni algebriche](base-05-frazioni-algebriche)** — minimo comune denominatore e semplificazione, il motore delle forme $\infty - \infty$.
-- **[Funzione logaritmica](base-15-funzione-logaritmica)** — proprietà di $\ln$, usate per ricondurre le forme di potenza ($1^\infty$, $0^0$, $\infty^0$) a forme razionali.
-
-Un avviso: la **regola di De l'Hôpital** (§3.9, §4.4) usa le derivate, che saranno definite rigorosamente nella **[lezione sulla derivata](analisi-06-derivata-definizione)**. La presentiamo qui perché è lo strumento naturale per le forme indeterminate, ma la sua *dimostrazione* dipende da risultati che vedrai formalizzati più avanti; puoi usarla come strumento fin da subito.
-
----
-
-## 3. Teoria completa
-
-### 3.1 L'algebra dei limiti
+### 2.1 L'algebra dei limiti
 
 **Teorema (leggi algebriche dei limiti).** Siano $f, g$ definite vicino a $x_0$ (punto di accumulazione del dominio comune), e supponiamo
 $$\lim_{x\to x_0} f(x) = \ell \in \mathbb{R}, \qquad \lim_{x\to x_0} g(x) = m \in \mathbb{R}$$
@@ -92,13 +80,15 @@ $$\lim_{x\to x_0} \frac{f(x)}{g(x)} = \frac{\ell}{m}\quad (\text{se } m \neq 0),
 
 $$\lim_{x\to x_0} \sqrt[n]{f(x)} = \sqrt[n]{\ell}\quad (\ell \ge 0 \text{ se } n \text{ pari}).$$
 
-**Come si legge.** Ogni riga dice la stessa cosa in forme diverse: "il limite *commuta* con l'operazione". Il simbolo $\ell \pm m$ a destra è un numero *già determinato* dai limiti dei pezzi; l'ipotesi cruciale, scritta in chiaro, è che $\ell$ e $m$ siano **finiti** (e $m \neq 0$ per il quoziente). È esattamente quando questa ipotesi cade — un limite infinito, o $m = 0$ — che le regole smettono di valere direttamente e compaiono le forme indeterminate (§3.2).
+**Come si legge.** Ogni riga dice la stessa cosa in forme diverse: "il limite *commuta* con l'operazione". Il simbolo $\ell \pm m$ a destra è un numero *già determinato* dai limiti dei pezzi; l'ipotesi cruciale, scritta in chiaro, è che $\ell$ e $m$ siano **finiti** (e $m \neq 0$ per il quoziente). È esattamente quando questa ipotesi cade — un limite infinito, o $m = 0$ — che le regole smettono di valere direttamente e compaiono le forme indeterminate (§2.2).
 
-**Perché ha questa struttura.** La legge della somma non è un assioma: si dimostra dalla definizione $\varepsilon$–$\delta$ (§4.1), spezzando la tolleranza $\varepsilon$ in due metà $\varepsilon/2$, una per $f$ e una per $g$. La legge del prodotto usa lo stesso spirito con un aggiustamento tecnico (i fattori vanno tenuti limitati). Da queste due discendono tutte le altre: la potenza è un prodotto ripetuto, il quoziente è un prodotto per il reciproco.
+**Perché ha questa struttura.** La legge della somma non è un assioma: si dimostra dalla definizione $\varepsilon$–$\delta$ (§3.1), spezzando la tolleranza $\varepsilon$ in due metà $\varepsilon/2$, una per $f$ e una per $g$. La legge del prodotto usa lo stesso spirito con un aggiustamento tecnico (i fattori vanno tenuti limitati). Da queste due discendono tutte le altre: la potenza è un prodotto ripetuto, il quoziente è un prodotto per il reciproco.
 
 **Conseguenza operativa (sostituzione diretta).** Se $f$ è una funzione costruita da polinomi, radici, esponenziali e logaritmi con le operazioni sopra, e se $x_0$ appartiene al suo dominio "senza problemi", allora $\lim_{x\to x_0} f(x) = f(x_0)$: basta sostituire. Questa è, anticipando, la definizione di **continuità** (lezione 4). Il calcolo dei limiti diventa interessante *proprio* nei punti in cui la sostituzione fallisce.
 
-### 3.2 L'aritmetica estesa e le sette forme indeterminate
+*Micro-esempio.* $\lim_{x\to 2}(x^3 - 5x + 1)$: polinomio, sostituzione diretta lecita, $= 8 - 10 + 1 = -1$. Invece $\lim_{x\to 3}\frac{x^2-9}{x-3}$: la sostituzione dà $\frac00$ — la legge del quoziente non si applica ($m = 0$) e serve lavorare la funzione (Esempio 1).
+
+### 2.2 L'aritmetica estesa e le sette forme indeterminate
 
 Molti limiti coinvolgono $+\infty$ o $-\infty$. Possiamo estendere le operazioni a questi simboli, ma solo in parte. Le combinazioni **determinate** (il risultato è forzato, qualunque siano le funzioni) sono, per $a\in\mathbb{R}$:
 
@@ -115,30 +105,39 @@ $$\frac{0}{0}, \qquad \frac{\infty}{\infty}, \qquad 0\cdot\infty, \qquad \infty 
 
 In ciascuna, il valore del limite **non** è deciso dai simboli: dipende dalle funzioni concrete. Che $\frac{0}{0}$ sia davvero indeterminata si vede con un esempio triplo: per $x\to 0$,
 $$\frac{x}{x}\to 1, \qquad \frac{x^2}{x}\to 0, \qquad \frac{x}{x^2}\to +\infty.$$
-Tre volte la forma è $\frac{0}{0}$, tre risultati diversi. Ecco perché serve *lavorare* la funzione: fattorizzare, razionalizzare, usare equivalenze o De l'Hôpital.
+Tre volte la forma è $\frac{0}{0}$, tre risultati diversi. Ecco perché serve *lavorare* la funzione: fattorizzare, razionalizzare, usare equivalenze o — come ultima carta — De l'Hôpital.
 
-### 3.3 Teorema di permanenza del segno
+```checkpoint
+[domanda]
+Classifica queste forme, senza calcolare nulla: (a) $\lim_{x\to 0^+}\frac{\cos x}{x}$; (b) $\lim_{x\to +\infty}\frac{\ln x}{x}$; (c) $\lim_{x\to 0^+}(1+x)^{1/x}$. Quali sono indeterminate?
+[risposta]
+(a) $\frac{1}{0^+} = +\infty$: forma **determinata** (il numeratore tende a $1 \neq 0$), nessun lavoro da fare. (b) $\frac{+\infty}{+\infty}$: **indeterminata** (la risolverà la gerarchia del §2.7: vale $0$). (c) base $\to 1$, esponente $\to +\infty$: forma $1^{\infty}$, **indeterminata** (è il limite di Nepero travestito: vale $e$). Il primo gesto davanti a ogni limite è sempre questo: sostituire mentalmente e classificare.
+```
 
-**Teorema.** Se $\lim_{x\to x_0} f(x) = \ell$ con $\ell > 0$, allora esiste un intorno bucato di $x_0$ in cui $f(x) > 0$. (Simmetricamente per $\ell < 0$.)
+### 2.3 Rapporti di polinomi all'infinito: la regola dei gradi massimi
 
-**Lettura.** Il segno del limite si "propaga" a tutto un intorno: se una funzione tende a un numero positivo, *vicino* al punto è positiva. È il ponte tra un'informazione puntuale (il limite) e un'informazione locale (il segno in un intorno), e sarà usato costantemente — per esempio per dividere per $g(x)$ sapendo che non si annulla, o negli studi di funzione.
+Il primo attrezzo algebrico per la forma $\frac{\infty}{\infty}$. Consideriamo $\displaystyle\lim_{x\to+\infty}\frac{a_p x^{p} + \dots + a_0}{b_q x^{q} + \dots + b_0}$, con $a_p, b_q\neq 0$.
 
-### 3.4 Teorema del confronto (dei "due carabinieri")
+**Derivazione.** Raccogliamo la potenza dominante *in alto e in basso*:
+$$\frac{a_p x^{p} + \dots}{b_q x^{q} + \dots} = \frac{x^{p}\big(a_p + \tfrac{a_{p-1}}{x} + \dots\big)}{x^{q}\big(b_q + \tfrac{b_{q-1}}{x} + \dots\big)} = x^{\,p-q}\cdot\frac{a_p + o(1)}{b_q + o(1)},$$
+dove $o(1)$ raccoglie i termini che tendono a $0$ (ognuno è del tipo $\frac{c}{x^k}\to 0$, aritmetica estesa del §2.2). Passando al limite, la frazione tende a $\frac{a_p}{b_q}$ per le leggi algebriche, e il fattore $x^{p-q}$ decide:
 
-**Teorema (squeeze).** Se in un intorno bucato di $x_0$ vale
-$$g(x) \le f(x) \le h(x), \qquad \text{e} \qquad \lim_{x\to x_0} g(x) = \lim_{x\to x_0} h(x) = \ell,$$
-allora anche $\lim_{x\to x_0} f(x) = \ell$.
+$$\lim_{x\to+\infty}\frac{P(x)}{Q(x)} = \begin{cases} \pm\infty & p > q \ (\text{numeratore vince, segno di } a_p/b_q),\\[2pt] \dfrac{a_p}{b_q} & p = q,\\[2pt] 0 & p < q \ (\text{denominatore vince}). \end{cases}$$
 
-**Lettura e nome.** Due funzioni (i "carabinieri" $g$ e $h$) che convergono allo stesso $\ell$ costringono la funzione in mezzo (l'"arrestato" $f$) a convergere anche lei: non ha via di fuga. È lo strumento principe quando $f$ è troppo complicata per un attacco diretto ma è *incastrata* tra due funzioni semplici. Il caso d'oro: $-|x| \le x\sin\frac1x \le |x|$ forza $\lim_{x\to 0} x\sin\frac1x = 0$ pur oscillando la funzione infinite volte (Esempio 4).
+È la "regola rapida dei gradi massimi": all'infinito conta solo il termine di grado più alto di ciascun polinomio.
 
-### 3.5 Cambio di variabile (limite di funzione composta)
+*Micro-esempio.* $\lim_{x\to+\infty}\frac{5x^2 - x}{2x^2 + 7} = \frac{5}{2}$ (gradi uguali, rapporto dei coefficienti dominanti); $\lim_{x\to+\infty}\frac{x^2}{x^3+1} = 0$ (denominatore di grado maggiore).
+
+### 2.4 Cambio di variabile (limite di funzione composta)
 
 **Teorema.** Se $\lim_{x\to x_0} g(x) = t_0$ e $\lim_{t\to t_0} f(t) = \ell$, e $f$ è continua in $t_0$ oppure $g(x)\neq t_0$ vicino a $x_0$, allora
 $$\lim_{x\to x_0} f\big(g(x)\big) = \ell.$$
 
-**Uso pratico.** Permette la **sostituzione** $t = g(x)$: per calcolare $\lim_{x\to 0}\frac{\sin(3x)}{3x}$ si pone $t = 3x$ (con $t\to 0$) e ci si riconduce al limite notevole $\lim_{t\to 0}\frac{\sin t}{t} = 1$. È lo stesso gesto della sostituzione negli integrali, ed è ciò che rende i limiti notevoli così potenti: una volta noto uno "schema", lo si applica a ogni argomento che tende al punto giusto.
+**Uso pratico.** Permette la **sostituzione** $t = g(x)$: ci si riconduce a un limite già noto valutato nella nuova variabile. È lo stesso gesto della sostituzione negli integrali, ed è ciò che rende i limiti notevoli così potenti: una volta noto uno "schema", lo si applica a ogni argomento che tende al punto giusto.
 
-### 3.6 Limiti notevoli fondamentali
+*Micro-esempio.* $\lim_{x\to 0}\frac{\sin(3x)}{3x}$: pongo $t = 3x$ (con $t\to 0$ quando $x \to 0$) e ottengo $\lim_{t\to 0}\frac{\sin t}{t} = 1$. Da cui anche $\lim_{x\to 0}\frac{\sin(3x)}{x} = \lim_{x\to 0} 3\cdot\frac{\sin(3x)}{3x} = 3$.
+
+### 2.5 Limiti notevoli fondamentali
 
 Alcuni limiti non si riducono ad altri con l'algebra: vanno stabiliti una volta (con la geometria, con le successioni o con gli sviluppi) e poi usati come *mattoni*. I principali, per $x\to 0$:
 
@@ -149,147 +148,187 @@ $$\lim_{x\to 0}\frac{e^{x}-1}{x} = 1, \qquad \lim_{x\to 0}\frac{\ln(1+x)}{x} = 1
 e, per $x\to\pm\infty$, la definizione stessa del numero di Nepero:
 $$\lim_{x\to\pm\infty}\left(1+\frac1x\right)^{x} = e.$$
 
-Il primo (seno su angolo) lo deriviamo nel §5.2; il trattamento completo di tutti questi — con dimostrazioni e asintoti — è nella **[lezione sui limiti notevoli e gli asintoti](analisi-05-limiti-notevoli-asintoti)**. Qui ci interessano come *strumenti* per sciogliere forme indeterminate.
+Il primo (seno su angolo) lo dimostriamo nel §3.4; il trattamento completo di tutti questi — con dimostrazioni, la generalizzazione $\big(1+\frac{a}{x}\big)^x \to e^a$ (con grafico manipolabile) e gli asintoti — è nella **[lezione sui limiti notevoli e gli asintoti](analisi-05-limiti-notevoli-asintoti)**. Qui ci interessano come *strumenti* per sciogliere forme indeterminate.
 
-### 3.7 Equivalenze asintotiche
+### 2.6 Equivalenze asintotiche
 
 Diciamo che $f$ è **asintoticamente equivalente** a $g$ per $x\to x_0$, e scriviamo $f(x)\sim g(x)$, se
 $$\lim_{x\to x_0}\frac{f(x)}{g(x)} = 1.$$
 Dai limiti notevoli, per $x\to 0$:
 $$\sin x \sim x, \quad \tan x \sim x, \quad 1-\cos x \sim \frac{x^2}{2}, \quad e^{x}-1 \sim x, \quad \ln(1+x)\sim x, \quad (1+x)^{\alpha}-1 \sim \alpha x.$$
 
-**Regola d'oro.** Dentro un **prodotto** o un **quoziente** si può sostituire un fattore con un suo equivalente, senza cambiare il limite. **Non** lo si può fare dentro una **somma** o **differenza**: lì il termine trascurato può essere proprio quello che decide il risultato. Esempio del trabocchetto: $\lim_{x\to 0}\frac{\tan x - \sin x}{x^3}$ vale $\frac12$, ma sostituire $\tan x\sim x$ e $\sin x \sim x$ darebbe $\frac{x-x}{x^3} = 0$: sbagliato, perché la differenza $x - x$ cancella proprio l'informazione utile. Le equivalenze sono affilate; vanno maneggiate solo dove la regola le autorizza.
+**Regola d'oro.** Dentro un **prodotto** o un **quoziente** si può sostituire un fattore con un suo equivalente, senza cambiare il limite (la giustificazione è immediata: moltiplicare per $\frac{f}{g}\to 1$ non altera il limite, per la legge del prodotto). **Non** lo si può fare dentro una **somma** o **differenza**: lì il termine trascurato può essere proprio quello che decide il risultato. Esempio del trabocchetto: $\lim_{x\to 0}\frac{\tan x - \sin x}{x^3}$ vale $\frac12$, ma sostituire $\tan x\sim x$ e $\sin x \sim x$ darebbe $\frac{x-x}{x^3} = 0$: sbagliato, perché la differenza $x - x$ cancella proprio l'informazione utile. Le equivalenze sono affilate; vanno maneggiate solo dove la regola le autorizza.
 
-### 3.8 Gerarchia degli infiniti e degli infinitesimi
+*Micro-esempio.* $\lim_{x\to 0}\frac{\sin(2x)\,\ln(1+x)}{x^2}$: tutto dentro un quoziente di prodotti, quindi sostituisco $\sin(2x)\sim 2x$ e $\ln(1+x)\sim x$: $\frac{2x\cdot x}{x^2} = 2$. Lecito e immediato.
+
+```checkpoint
+[domanda]
+Nel limite $\lim_{x\to 0}\frac{e^{x}-1-x}{x^2}$ un compagno sostituisce $e^x - 1 \sim x$ e ottiene $\frac{x - x}{x^2} = 0$. Il risultato vero è $\frac12$. Dov'è l'errore?
+[risposta]
+Ha usato l'equivalenza dentro una **differenza**: $e^x - 1 - x$ è una somma algebrica, non un prodotto o quoziente. L'equivalenza $e^x - 1 \sim x$ dice solo che il rapporto tende a $1$, cioè $e^x - 1 = x + (\text{resto più piccolo di } x)$: sottraendo $x$, sopravvive proprio il resto, che l'equivalenza non descrive. La regola d'oro: equivalenti solo dentro prodotti e quozienti; nelle somme serve altro (algebra fine, De l'Hôpital, o gli sviluppi di Taylor che verranno).
+```
+
+### 2.7 Gerarchia degli infiniti e degli infinitesimi
 
 Per $x\to +\infty$ tutte queste funzioni tendono a $+\infty$, ma a *velocità* diverse. Scrivendo $a \ll b$ per "$a$ è trascurabile rispetto a $b$", cioè $\lim \frac{a}{b} = 0$:
 
 $$\ln x \ll x^{\alpha} \ll x^{n} \ll a^{x} \ll x^{x} \qquad (\alpha,\, n > 0,\ a>1,\ \alpha<n).$$
 
-In parole: il logaritmo cresce più lentamente di ogni potenza; ogni potenza più lentamente di ogni esponenziale; l'esponenziale più lentamente di $x^x$. Nelle forme $\frac{\infty}{\infty}$ **vince la funzione più in alto nella gerarchia**: $\lim_{x\to+\infty}\frac{x^{100}}{e^{x}} = 0$ perché $e^x$ domina. La stessa gerarchia, letta per $x\to 0^+$, ordina gli infinitesimi (le potenze $x^n$ con $n$ grande tendono a $0$ più in fretta).
+In parole: il logaritmo cresce più lentamente di ogni potenza; ogni potenza più lentamente di ogni esponenziale; l'esponenziale più lentamente di $x^x$. Nelle forme $\frac{\infty}{\infty}$ **vince la funzione più in alto nella gerarchia**. La stessa gerarchia, letta per $x\to 0^+$, ordina gli infinitesimi (le potenze $x^n$ con $n$ grande tendono a $0$ più in fretta).
 
-### 3.9 Regola di De l'Hôpital
+*Micro-esempio.* $\lim_{x\to+\infty}\frac{x^{100}}{e^{x}} = 0$: per quanto $100$ sia grande, $e^x$ è più in alto nella gerarchia e vince. Simmetricamente $\lim_{x\to+\infty}\frac{x^{0{,}01}}{\ln x} = +\infty$: anche una potenza minuscola batte il logaritmo.
+
+```checkpoint
+[domanda]
+Senza calcoli, decidi il valore di: (a) $\lim_{x\to+\infty}\frac{2^x}{x^{1000}}$; (b) $\lim_{x\to+\infty}\frac{(\ln x)^{5}}{\sqrt{x}}$.
+[risposta]
+(a) $+\infty$: esponenziale contro potenza, vince l'esponenziale (è più in alto nella gerarchia), e sta al numeratore. (b) $0$: ogni potenza del logaritmo resta sotto ogni potenza positiva di $x$ — infatti $(\ln x)^5 \ll x^{\alpha}$ per qualunque $\alpha > 0$, e qui $\alpha = \tfrac12$. Regola pratica: individua chi è più in alto nella gerarchia; se sta al denominatore il limite è $0$, se sta al numeratore è $\pm\infty$.
+```
+
+### 2.8 Teorema di permanenza del segno
+
+**Teorema.** Se $\lim_{x\to x_0} f(x) = \ell$ con $\ell > 0$, allora esiste un intorno bucato di $x_0$ in cui $f(x) > 0$. (Simmetricamente per $\ell < 0$.)
+
+**Lettura.** Il segno del limite si "propaga" a tutto un intorno: se una funzione tende a un numero positivo, *vicino* al punto è positiva. È il ponte tra un'informazione puntuale (il limite) e un'informazione locale (il segno in un intorno), e sarà usato costantemente — per esempio per dividere per $g(x)$ sapendo che non si annulla, o negli studi di funzione. Dimostrazione nel §3.3.
+
+### 2.9 Teorema del confronto (dei "due carabinieri")
+
+**Teorema (squeeze).** Se in un intorno bucato di $x_0$ vale
+$$g(x) \le f(x) \le h(x), \qquad \text{e} \qquad \lim_{x\to x_0} g(x) = \lim_{x\to x_0} h(x) = \ell,$$
+allora anche $\lim_{x\to x_0} f(x) = \ell$.
+
+**Lettura e nome.** Due funzioni (i "carabinieri" $g$ e $h$) che convergono allo stesso $\ell$ costringono la funzione in mezzo (l'"arrestato" $f$) a convergere anche lei: non ha via di fuga. È lo strumento principe quando $f$ è troppo complicata per un attacco diretto ma è *incastrata* tra due funzioni semplici — tipicamente quando c'è di mezzo un fattore oscillante ma **limitato**.
+
+*Micro-esempio.* $\lvert\sin\frac1x\rvert \le 1$ dà $-\lvert x\rvert \le x\sin\frac1x \le \lvert x\rvert$: i carabinieri $\pm\lvert x\rvert$ tendono a $0$, quindi $\lim_{x\to 0} x\sin\frac1x = 0$, pur oscillando la funzione infinite volte (grafico all'Esempio 4).
+
+### 2.10 Ridurre le forme "esotiche" a $\frac00$ o $\frac{\infty}{\infty}$
+
+Le uniche forme che sappiamo attaccare direttamente (con l'algebra, le equivalenze o De l'Hôpital) sono $\frac00$ e $\frac{\infty}{\infty}$. Le altre quattro si *convertono*:
+
+- **$0\cdot\infty$**: scrivi $f\cdot g = \dfrac{f}{1/g}$ (diventa $\frac00$) oppure $\dfrac{g}{1/f}$ (diventa $\frac{\infty}{\infty}$). Scegli la versione che si lavora meglio.
+- **$\infty - \infty$**: porta a denominatore comune, oppure razionalizza (se ci sono radici). Il risultato è tipicamente $\frac00$.
+- **$1^{\infty},\ 0^{0},\ \infty^{0}$** (potenze $f^{g}$): prendi il logaritmo. Posto $A = \lim f^{g}$, si ha
+$$\ln A = \lim\, g\cdot\ln f,$$
+che è una forma $0\cdot\infty$: la si converte come sopra, si calcola $\ln A$, e infine $A = e^{\ln A}$.
+
+Questo schema — *tutte le strade portano a $\frac00$* — è la mappa mentale da tenere: davanti a una forma indeterminata, prima la si riconduce a un rapporto, poi si sceglie l'arma (algebra, equivalenze, gerarchia; De l'Hôpital in ultima istanza).
+
+### 2.11 Regola di De l'Hôpital (l'ultima carta)
 
 **Teorema (De l'Hôpital).** Siano $f, g$ derivabili in un intorno bucato di $x_0$ con $g'(x)\neq 0$ lì, e supponiamo che $\frac{f(x)}{g(x)}$ sia della forma $\frac{0}{0}$ o $\frac{\infty}{\infty}$ per $x\to x_0$. Se esiste (finito o infinito)
 $$\lim_{x\to x_0}\frac{f'(x)}{g'(x)} = L, \qquad\text{allora}\qquad \lim_{x\to x_0}\frac{f(x)}{g(x)} = L.$$
 
 **Ipotesi da verificare, sempre, prima di applicare.** (1) La forma è *davvero* $\frac{0}{0}$ o $\frac{\infty}{\infty}$ — non un'altra. (2) $f$ e $g$ sono derivabili vicino a $x_0$. (3) Il limite del rapporto delle *derivate* esiste: se non esiste, la regola **non dice nulla** (non che il limite di partenza non esista). Vale anche per $x_0 = \pm\infty$. Si può **iterare**: se $\frac{f'}{g'}$ è ancora indeterminata e le ipotesi reggono, si riapplica.
 
-**Che cosa fa.** Trasforma il rapporto delle funzioni nel rapporto delle loro *velocità di variazione* (le derivate). Ha senso: una forma $\frac{0}{0}$ è una gara di velocità, e le derivate misurano proprio la velocità. La dimostrazione (§4.4) rende preciso questo, tramite il teorema di Cauchy.
+**Che cosa fa.** Trasforma il rapporto delle funzioni nel rapporto delle loro *velocità di variazione* (le derivate). Ha senso: una forma $\frac00$ è una gara di velocità, e le derivate misurano proprio la velocità. La dimostrazione (§3.5) rende preciso questo, tramite il teorema di Cauchy.
+
+**Due avvertenze di metodo.** Primo: la regola usa le derivate, che saranno definite rigorosamente nella **[lezione sulla derivata](analisi-06-derivata-definizione)**; la presentiamo qui perché è lo strumento naturale per le forme indeterminate, e puoi usarla come strumento fin da subito (l'ordine logico è risolto nel §3.5). Secondo: negli scritti d'esame la via attesa è quella **algebrico-asintotica** (fattorizzazioni, notevoli, equivalenze, gerarchia — §2.3–2.7), perché rende visibile la struttura del limite; De l'Hôpital è la verifica di sicurezza o l'ultima risorsa quando l'algebra non morde. Per questo l'abbiamo messa in fondo all'arsenale.
 
 ---
 
-## 4. Dimostrazioni
+## 3. Dimostrazioni
 
-### 4.1 Limite della somma e del prodotto
+### 3.1 Limite della somma e del prodotto
 
-**Somma.** Che $\lim_{x\to x_0}[f+g] = \ell + m$ è stato dimostrato nella **[lezione ε–δ](analisi-02-limite-epsilon-delta)** (§4.3): dato $\varepsilon$, si chiede a $f$ di stare entro $\varepsilon/2$ da $\ell$ e a $g$ entro $\varepsilon/2$ da $m$; la disuguaglianza triangolare chiude. Lo riprendiamo qui solo come premessa al prodotto.
+**Somma.** Che $\lim_{x\to x_0}[f+g] = \ell + m$ è stato dimostrato nella **[lezione ε–δ](analisi-02-limite-epsilon-delta)** (§3.3): dato $\varepsilon$, si chiede a $f$ di stare entro $\varepsilon/2$ da $\ell$ e a $g$ entro $\varepsilon/2$ da $m$; la disuguaglianza triangolare chiude. Lo riprendiamo qui solo come premessa al prodotto.
 
-**Prodotto.** Vogliamo $\lim_{x\to x_0}[f\,g] = \ell m$. Dato $\varepsilon > 0$, dobbiamo rendere piccolo $\lvert f(x)g(x) - \ell m\rvert$. Il trucco è **sommare e sottrarre** un termine ponte $\ell\, g(x)$:
+**Prodotto — l'idea.** Vogliamo $\lim_{x\to x_0}[f\,g] = \ell m$, cioè rendere piccolo $\lvert f(x)g(x) - \ell m\rvert$. Il problema: la differenza mescola *due* variazioni contemporanee ($f$ che si scosta da $\ell$ e $g$ da $m$). Il trucco è **sommare e sottrarre** un termine ponte $\ell\, g(x)$, che le separa:
 $$f(x)g(x) - \ell m = \big[f(x) - \ell\big]g(x) + \ell\big[g(x) - m\big].$$
+Ora ogni addendo contiene *una sola* variazione: la prima moltiplicata per $g(x)$ (che vicino a $x_0$ è limitata, perché converge), la seconda per la costante $\ell$. Ciascuna si controlla con la definizione di limite; il budget $\varepsilon$ si spezza a metà come per la somma. Il termine ponte è la stessa idea del "sommo e sottraggo" che ricorre in tutta l'Analisi: spezza una differenza difficile in due differenze controllabili.
+
+<details class="dim-tecnica">
+<summary>Dettaglio tecnico — espandi la verifica</summary>
+
 Per la disuguaglianza triangolare,
 $$\lvert f(x)g(x) - \ell m\rvert \le \lvert f(x) - \ell\rvert\,\lvert g(x)\rvert + \lvert \ell\rvert\,\lvert g(x) - m\rvert.$$
-Ora controlliamo i due addendi. Poiché $g(x)\to m$, esiste un intorno in cui $\lvert g(x)\rvert < \lvert m\rvert + 1$ (è limitata vicino a $x_0$). Scegliamo $\delta$ così che valgano insieme, sull'intorno bucato:
+
+Controlliamo i due addendi. Poiché $g(x)\to m$, applicando la definizione con tolleranza $1$ esiste un intorno bucato in cui $\lvert g(x) - m\rvert < 1$, dunque $\lvert g(x)\rvert \le \lvert m\rvert + \lvert g(x) - m\rvert < \lvert m\rvert + 1$: $g$ è limitata vicino a $x_0$. Dato $\varepsilon > 0$, scegliamo ora $\delta$ (minimo dei tre raggi coinvolti) così che sull'intorno bucato valgano insieme:
 $$\lvert f(x) - \ell\rvert < \frac{\varepsilon}{2(\lvert m\rvert + 1)}, \qquad \lvert g(x) - m\rvert < \frac{\varepsilon}{2(\lvert \ell\rvert + 1)}.$$
+
 Allora il primo addendo è $< \frac{\varepsilon}{2(\lvert m\rvert+1)}\cdot(\lvert m\rvert+1) = \frac{\varepsilon}{2}$ e il secondo è $\le \lvert\ell\rvert\cdot\frac{\varepsilon}{2(\lvert\ell\rvert+1)} < \frac{\varepsilon}{2}$. La somma è $< \varepsilon$. $\blacksquare$
 
-**Commento.** Il "$+1$" nei denominatori è un'astuzia per evitare la divisione per zero quando $\ell$ o $m$ sono nulli. Il termine ponte $\ell g(x)$ è la stessa idea del "sommo e sottraggo" che ricorre in tutta l'Analisi: si spezza una differenza difficile in due differenze controllabili.
+*Nota sul "$+1$" nei denominatori:* è un'astuzia per evitare la divisione per zero quando $\ell$ o $m$ sono nulli, e per far tornare pulite le maggiorazioni.
 
-### 4.2 Teorema del confronto
+</details>
+
+### 3.2 Teorema del confronto
 
 **Ipotesi:** $g(x)\le f(x)\le h(x)$ vicino a $x_0$, e $g(x), h(x)\to \ell$. **Tesi:** $f(x)\to\ell$.
 
-Dato $\varepsilon > 0$. Poiché $g\to\ell$, esiste $\delta_1$ tale che $0 < \lvert x - x_0\rvert < \delta_1 \Rightarrow \ell - \varepsilon < g(x)$. Poiché $h\to\ell$, esiste $\delta_2$ tale che $0 < \lvert x - x_0\rvert < \delta_2 \Rightarrow h(x) < \ell + \varepsilon$. Sia $\delta = \min\{\delta_1, \delta_2, \delta_3\}$, dove $\delta_3$ delimita l'intorno in cui vale la catena $g\le f\le h$. Allora, per $0 < \lvert x - x_0\rvert < \delta$:
+**Dimostrazione.** Dato $\varepsilon > 0$. Poiché $g\to\ell$, esiste $\delta_1$ tale che $0 < \lvert x - x_0\rvert < \delta_1 \Rightarrow \ell - \varepsilon < g(x)$ (è metà della definizione di limite per $g$: ci serve solo la disuguaglianza dal basso). Poiché $h\to\ell$, esiste $\delta_2$ tale che $0 < \lvert x - x_0\rvert < \delta_2 \Rightarrow h(x) < \ell + \varepsilon$ (l'altra metà, dall'alto). Sia $\delta = \min\{\delta_1, \delta_2, \delta_3\}$, dove $\delta_3$ delimita l'intorno in cui vale la catena $g\le f\le h$. Allora, per $0 < \lvert x - x_0\rvert < \delta$:
 $$\ell - \varepsilon < g(x) \le f(x) \le h(x) < \ell + \varepsilon,$$
 cioè $\lvert f(x) - \ell\rvert < \varepsilon$. $\blacksquare$
 
 **Commento.** La dimostrazione è quasi un gioco di incastri: le due disuguaglianze esterne (da $g$ e da $h$) *diventano* la banda $\lvert f - \ell\rvert < \varepsilon$ una volta infilata $f$ in mezzo. Nessuna informazione su $f$ è servita, se non che sta tra i due carabinieri.
 
-### 4.3 Teorema di permanenza del segno
+### 3.3 Teorema di permanenza del segno
 
 **Ipotesi:** $\lim_{x\to x_0} f(x) = \ell > 0$. **Tesi:** $f > 0$ in un intorno bucato di $x_0$.
 
-Applichiamo la definizione con la scelta furba $\varepsilon = \dfrac{\ell}{2} > 0$. Esiste $\delta$ tale che $0 < \lvert x - x_0\rvert < \delta$ implica $\lvert f(x) - \ell\rvert < \frac{\ell}{2}$, cioè
+**Dimostrazione.** Applichiamo la definizione con la scelta furba $\varepsilon = \dfrac{\ell}{2} > 0$ (lecita perché $\ell > 0$). Esiste $\delta$ tale che $0 < \lvert x - x_0\rvert < \delta$ implica $\lvert f(x) - \ell\rvert < \frac{\ell}{2}$, cioè
 $$\ell - \frac{\ell}{2} < f(x) < \ell + \frac{\ell}{2} \quad\Longrightarrow\quad f(x) > \frac{\ell}{2} > 0. \qquad \blacksquare$$
 
-**Commento.** Scegliere $\varepsilon = \ell/2$ è la mossa chiave: garantisce che la banda attorno a $\ell$ resti *tutta* sopra lo zero. È lo stesso stile della dimostrazione dell'unicità del limite (lezione 2, §4.1): un $\varepsilon$ tarato sulla mezza distanza.
+**Commento.** Scegliere $\varepsilon = \ell/2$ è la mossa chiave: garantisce che la banda attorno a $\ell$ resti *tutta* sopra lo zero. È lo stesso stile della dimostrazione dell'unicità del limite (lezione 2, §3.1): un $\varepsilon$ tarato sulla mezza distanza.
 
-### 4.4 Regola di De l'Hôpital (caso $\frac00$) via teorema di Cauchy
+### 3.4 Il limite notevole $\dfrac{\sin x}{x}\to 1$ (confronto geometrico)
+
+**Dimostrazione.** Per $0 < x < \frac{\pi}{2}$, confrontiamo tre aree nel cerchio unitario: il triangolo $OAP$, il settore circolare $OAP$, il triangolo $OAT$ (con $T$ sulla tangente). Le tre figure sono una dentro l'altra, quindi le aree sono ordinate:
+$$\underbrace{\tfrac12\sin x}_{\text{triangolo}} \;\le\; \underbrace{\tfrac12 x}_{\text{settore}} \;\le\; \underbrace{\tfrac12\tan x}_{\text{triangolo}}.$$
+
+Moltiplico per $2$ e divido per $\sin x > 0$ (positivo nell'intervallo considerato, quindi le disuguaglianze non si ribaltano):
+$$1 \le \frac{x}{\sin x} \le \frac{1}{\cos x} \quad\Longrightarrow\quad \cos x \le \frac{\sin x}{x} \le 1,$$
+dove il passaggio finale prende i reciproci dei tre membri (tutti positivi), il che inverte l'ordine delle disuguaglianze. Per $x\to 0^+$ si ha $\cos x\to 1$; i due "carabinieri" $\cos x$ e $1$ tendono entrambi a $1$, quindi per il teorema del confronto (§3.2)
+$$\lim_{x\to 0^+}\frac{\sin x}{x} = 1.$$
+Poiché $\frac{\sin x}{x}$ è **pari** (numeratore e denominatore cambiano entrambi segno per $x \mapsto -x$, e il rapporto resta uguale), il limite sinistro coincide col destro e il limite bilatero vale $1$. $\blacksquare$
+
+**Commento.** È il capostipite: da esso, per composizione ed equivalenza, discendono $\frac{\tan x}{x}\to 1$, $\frac{1-\cos x}{x^2}\to\frac12$ e l'intera famiglia trigonometrica. La derivazione completa della famiglia è nella **[lezione dedicata](analisi-05-limiti-notevoli-asintoti)**.
+
+### 3.5 Regola di De l'Hôpital (caso $\frac00$) via teorema di Cauchy
 
 **Teorema di Cauchy (valor medio generalizzato).** Se $f, g$ sono continue su $[x_0, x]$, derivabili su $(x_0, x)$ e $g'\neq 0$ lì, esiste $c\in(x_0, x)$ con
 $$\frac{f(x) - f(x_0)}{g(x) - g(x_0)} = \frac{f'(c)}{g'(c)}.$$
 
-**Applicazione.** Sia $\frac{f}{g}$ della forma $\frac00$ in $x_0$: possiamo *definire* (o è già) $f(x_0) = g(x_0) = 0$. Allora, per ogni $x$ vicino a $x_0$, il teorema di Cauchy dà un $c = c(x)$ tra $x_0$ e $x$ con
+**L'idea.** Se la forma è $\frac00$, possiamo definire (o è già) $f(x_0) = g(x_0) = 0$: allora $\frac{f(x)}{g(x)}$ coincide con il rapporto degli *incrementi* $\frac{f(x)-f(x_0)}{g(x)-g(x_0)}$, e il teorema di Cauchy lo converte nel rapporto delle *derivate* in un punto intermedio $c$. Quando $x$ si schiaccia su $x_0$, anche $c$ (intrappolato in mezzo) ci si schiaccia: il limite del rapporto delle funzioni diventa il limite del rapporto delle derivate.
+
+<details class="dim-tecnica">
+<summary>Dettaglio tecnico — espandi la verifica</summary>
+
+Sia $\frac{f}{g}$ della forma $\frac00$ in $x_0$: poniamo (o è già) $f(x_0) = g(x_0) = 0$, il che non cambia il limite (che ignora il valore nel punto, clausola $0 < \lvert x - x_0\rvert$). Per ogni $x$ vicino a $x_0$, il teorema di Cauchy applicato all'intervallo tra $x_0$ e $x$ dà un $c = c(x)$ strettamente compreso tra i due, con
+
 $$\frac{f(x)}{g(x)} = \frac{f(x) - f(x_0)}{g(x) - g(x_0)} = \frac{f'(c)}{g'(c)}.$$
-Quando $x\to x_0$, il punto $c$ è schiacciato tra $x_0$ e $x$, quindi $c\to x_0$ (teorema del confronto applicato a $\lvert c - x_0\rvert < \lvert x - x_0\rvert$). Perciò
-$$\lim_{x\to x_0}\frac{f(x)}{g(x)} = \lim_{x\to x_0}\frac{f'(c)}{g'(c)} = \lim_{c\to x_0}\frac{f'(c)}{g'(c)} = L. \qquad \blacksquare$$
 
-**Commento.** Il teorema di Cauchy fa tutto il lavoro: converte il rapporto delle funzioni (in $x$) nel rapporto delle derivate (in un punto interno $c$). Il resto è il confronto che trascina $c$ verso $x_0$. Si vede anche *perché* serve $g'\neq 0$: è ciò che rende lecita la divisione a destra.
+(La divisione a sinistra è lecita: $g(x) \neq 0$ vicino a $x_0$, altrimenti per il teorema di Rolle $g'$ si annullerebbe da qualche parte, contro l'ipotesi $g' \neq 0$.)
 
----
+Quando $x\to x_0$, il punto $c$ è schiacciato tra $x_0$ e $x$: da $\lvert c - x_0\rvert < \lvert x - x_0\rvert$ e dal teorema del confronto segue $c\to x_0$. Poiché per ipotesi $\lim_{t\to x_0}\frac{f'(t)}{g'(t)} = L$, il cambio di variabile (§2.4, con $t = c(x) \neq x_0$) dà
 
-## 5. Derivazioni
+$$\lim_{x\to x_0}\frac{f(x)}{g(x)} = \lim_{x\to x_0}\frac{f'(c(x))}{g'(c(x))} = L. \qquad \blacksquare$$
 
-### 5.1 Rapporti di polinomi all'infinito
+</details>
 
-**Punto di partenza.** $\displaystyle\lim_{x\to+\infty}\frac{a_p x^{p} + \dots + a_0}{b_q x^{q} + \dots + b_0}$, con $a_p, b_q\neq 0$. È una forma $\frac{\infty}{\infty}$.
-
-**Passaggi.** Raccogliamo la potenza dominante *in alto e in basso*, cioè dividiamo numeratore e denominatore per $x^{q}$ (il grado del denominatore):
-$$\frac{a_p x^{p} + \dots}{b_q x^{q} + \dots} = \frac{x^{p}\big(a_p + \tfrac{a_{p-1}}{x} + \dots\big)}{x^{q}\big(b_q + \tfrac{b_{q-1}}{x} + \dots\big)} = x^{\,p-q}\cdot\frac{a_p + o(1)}{b_q + o(1)},$$
-dove $o(1)$ raccoglie i termini che tendono a $0$. Passando al limite, la frazione tende a $\frac{a_p}{b_q}$, e il fattore $x^{p-q}$ decide:
-
-**Risultato.**
-$$\lim_{x\to+\infty}\frac{P(x)}{Q(x)} = \begin{cases} \pm\infty & p > q \ (\text{numeratore vince, segno di } a_p/b_q),\\[2pt] \dfrac{a_p}{b_q} & p = q,\\[2pt] 0 & p < q \ (\text{denominatore vince}). \end{cases}$$
-
-È la "regola rapida dei gradi massimi": all'infinito conta solo il termine di grado più alto di ciascun polinomio.
-
-### 5.2 Il limite notevole $\dfrac{\sin x}{x}\to 1$ (confronto geometrico)
-
-**Punto di partenza.** Per $0 < x < \frac{\pi}{2}$, confrontiamo tre aree nel cerchio unitario: il triangolo $OAP$, il settore circolare $OAP$, il triangolo $OAT$ (con $T$ sulla tangente). Geometricamente,
-$$\underbrace{\tfrac12\sin x}_{\text{triangolo}} \;\le\; \underbrace{\tfrac12 x}_{\text{settore}} \;\le\; \underbrace{\tfrac12\tan x}_{\text{triangolo}}.$$
-
-**Passaggi.** Moltiplico per $2$ e divido per $\sin x > 0$:
-$$1 \le \frac{x}{\sin x} \le \frac{1}{\cos x} \quad\Longrightarrow\quad \cos x \le \frac{\sin x}{x} \le 1.$$
-Per $x\to 0^+$ si ha $\cos x\to 1$; i due "carabinieri" $\cos x$ e $1$ tendono entrambi a $1$, quindi per il teorema del confronto (§3.4)
-$$\lim_{x\to 0^+}\frac{\sin x}{x} = 1.$$
-Poiché $\frac{\sin x}{x}$ è **pari** (numeratore e denominatore cambiano entrambi segno), il limite sinistro coincide e il limite bilatero vale $1$. $\blacksquare$
-
-**Risultato e commento.** $\lim_{x\to 0}\frac{\sin x}{x} = 1$. È il capostipite: da esso, per composizione ed equivalenza, discendono $\frac{\tan x}{x}\to 1$, $\frac{1-\cos x}{x^2}\to\frac12$ e l'intera famiglia trigonometrica. La derivazione completa e gli altri notevoli sono nella **[lezione dedicata](analisi-05-limiti-notevoli-asintoti)**.
-
-### 5.3 Ridurre le forme "esotiche" a $\frac00$ o $\frac{\infty}{\infty}$
-
-Le uniche forme che sappiamo attaccare direttamente (con De l'Hôpital o le equivalenze) sono $\frac00$ e $\frac{\infty}{\infty}$. Le altre quattro si *convertono*:
-
-- **$0\cdot\infty$**: scrivi $f\cdot g = \dfrac{f}{1/g}$ (diventa $\frac00$) oppure $\dfrac{g}{1/f}$ (diventa $\frac{\infty}{\infty}$). Scegli la versione che si deriva meglio.
-- **$\infty - \infty$**: porta a denominatore comune, oppure razionalizza (se ci sono radici). Il risultato è tipicamente $\frac00$.
-- **$1^{\infty},\ 0^{0},\ \infty^{0}$** (potenze $f^{g}$): prendi il logaritmo. Posto $A = \lim f^{g}$, si ha
-$$\ln A = \lim\, g\cdot\ln f,$$
-che è una forma $0\cdot\infty$: la si converte come sopra, si calcola $\ln A$, e infine $A = e^{\ln A}$.
-
-Questo schema — *tutte le strade portano a $\frac00$* — è la mappa mentale da tenere: davanti a una forma indeterminata, prima la si riconduce a un rapporto, poi si sceglie l'arma (algebra, equivalenze, De l'Hôpital).
+**Commento.** Il teorema di Cauchy fa tutto il lavoro: converte il rapporto delle funzioni (in $x$) nel rapporto delle derivate (in un punto interno $c$). Il resto è il confronto che trascina $c$ verso $x_0$. Si vede anche *perché* serve $g'\neq 0$: è ciò che rende lecita la divisione. Il caso $\frac{\infty}{\infty}$ richiede una variante tecnica dello stesso argomento e lo assumiamo senza dimostrazione.
 
 ---
 
-## 6. Esempi
+## 4. Esempi
 
 ### Esempio 1 — $\frac00$ per fattorizzazione
 
 $$\lim_{x\to 3}\frac{x^2 - 9}{x - 3}.$$
 Sostituendo $3$: $\frac00$. Fattorizzo la differenza di quadrati $x^2 - 9 = (x-3)(x+3)$:
 $$= \lim_{x\to 3}\frac{(x-3)(x+3)}{x-3} = \lim_{x\to 3}(x+3) = 6.$$
-*Perché è lecito semplificare $x-3$:* nell'intorno bucato è $x\neq 3$, quindi $x - 3\neq 0$ e la cancellazione è legittima (§3.4 di lezione 2, clausola $0 < \lvert x - x_0\rvert$).
+*Perché è lecito semplificare $x-3$:* nell'intorno bucato è $x\neq 3$, quindi $x - 3\neq 0$ e la cancellazione è legittima (lezione 2, clausola $0 < \lvert x - x_0\rvert$).
 
 ### Esempio 2 — $\frac00$ per razionalizzazione
 
 $$\lim_{x\to 0}\frac{\sqrt{1+x} - 1}{x}.$$
 Forma $\frac00$. Moltiplico per il coniugato $\sqrt{1+x}+1$:
 $$= \lim_{x\to 0}\frac{(1+x) - 1}{x\big(\sqrt{1+x}+1\big)} = \lim_{x\to 0}\frac{1}{\sqrt{1+x}+1} = \frac12.$$
-*Nota:* questo è, in anticipo, il valore della derivata di $\sqrt{1+x}$ in $0$; coincide anche con l'equivalenza $(1+x)^{1/2}-1\sim\frac12 x$ (§3.7).
+*Nota:* questo è, in anticipo, il valore della derivata di $\sqrt{1+x}$ in $0$; coincide anche con l'equivalenza $(1+x)^{1/2}-1\sim\frac12 x$ (§2.6).
 
 ### Esempio 3 — $\frac{\infty}{\infty}$ per gradi massimi
 
 $$\lim_{x\to+\infty}\frac{4x^3 - 2x + 1}{3x^3 + x^2}.$$
-Grado uguale in alto e in basso ($p = q = 3$): per il §5.1 il limite è il rapporto dei coefficienti dominanti,
+Grado uguale in alto e in basso ($p = q = 3$): per il §2.3 il limite è il rapporto dei coefficienti dominanti,
 $$= \frac{4}{3}.$$
 Verifica dividendo per $x^3$: $\dfrac{4 - 2/x^2 + 1/x^3}{3 + 1/x}\to\dfrac{4}{3}$.
 
@@ -298,21 +337,33 @@ Verifica dividendo per $x^3$: $\dfrac{4 - 2/x^2 + 1/x^3}{3 + 1/x}\to\dfrac{4}{3}
 $$\lim_{x\to 0} x\sin\frac1x.$$
 La sostituzione non funziona ($\sin\frac1x$ non ha limite: oscilla). Ma $\lvert\sin\frac1x\rvert\le 1$, quindi
 $$-\lvert x\rvert \le x\sin\frac1x \le \lvert x\rvert.$$
-I carabinieri $\pm\lvert x\rvert$ tendono entrambi a $0$; per il §3.4 il limite è $0$. L'oscillazione infinita è "spenta" dal fattore $x$ che va a zero.
+I carabinieri $\pm\lvert x\rvert$ tendono entrambi a $0$; per il §2.9 il limite è $0$. L'oscillazione infinita è "spenta" dal fattore $x$ che va a zero.
 
-### Esempio 5 — Limite notevole per sostituzione
+```plot
+{"fn": "x*Math.sin(1/x)", "fn2": "Math.abs(x)", "domain": [-0.6, 0.6], "yDomain": [-0.6, 0.6], "title": "x sin(1/x) intrappolata tra +|x| e -|x|", "label1": "x sin(1/x)", "label2": "y = |x| (carabiniere)"}
+```
+
+*Come leggerlo:* la funzione oscilla infinite volte vicino a $0$, ma resta *intrappolata* tra $y = \lvert x\rvert$ e $y = -\lvert x\rvert$, che si chiudono a imbuto verso l'origine. Il limite è schiacciato a $0$.
+
+### Esempio 5 — Limite notevole ed equivalenza (con controllo De l'Hôpital)
 
 $$\lim_{x\to 0}\frac{1-\cos x}{x^2}.$$
-Uso l'equivalenza $1-\cos x\sim\frac{x^2}{2}$ (§3.7), lecita perché è un *quoziente*:
+Uso l'equivalenza $1-\cos x\sim\frac{x^2}{2}$ (§2.6), lecita perché è un *quoziente*:
 $$= \lim_{x\to 0}\frac{x^2/2}{x^2} = \frac12.$$
-*Alternativa con De l'Hôpital:* $\frac{\sin x}{2x}\to\frac12$ (una sola applicazione). Le due strade concordano.
+*Controllo con De l'Hôpital:* forma $\frac00$, derivo sopra e sotto: $\frac{\sin x}{2x}$ — ancora $\frac00$, riapplico: $\frac{\cos x}{2}\to\frac12$. Le due strade concordano; la via asintotica è più rapida e più trasparente.
+
+> ⚠️ **Errore comune — sostituire equivalenti dentro una somma o differenza.** $\sin x\sim x$ e $\tan x\sim x$ sono validi, ma in $\frac{\tan x - \sin x}{x^3}$ sostituirli dà $\frac{x-x}{x^3}=0$, mentre il valore vero è $\frac12$ (Esercizio 7). Le equivalenze si usano solo dentro prodotti e quozienti (§2.6): nella differenza, il termine cancellato è proprio quello che decide.
+
+> ⚠️ **Errore comune — fermarsi alla prima applicazione di De l'Hôpital se la forma resta indeterminata.** Come appena visto, $\frac{\sin x}{2x}$ è ancora $\frac00$: se le ipotesi reggono, si **riapplica**. Un altro caso a due passaggi è $\frac{e^x - 1 - x}{x^2} \to \frac{e^x - 1}{2x} \to \frac{e^x}{2} \to \frac12$.
 
 ### Esempio 6 — $0\cdot\infty$ ridotta e risolta
 
 $$\lim_{x\to 0^+} x\ln x.$$
-Forma $0\cdot(-\infty)$. La riscrivo come $\dfrac{\ln x}{1/x}$ (forma $\frac{-\infty}{+\infty}$) e applico De l'Hôpital:
+Forma $0\cdot(-\infty)$. La riscrivo come $\dfrac{\ln x}{1/x}$ (forma $\frac{-\infty}{+\infty}$, §2.10) e applico De l'Hôpital:
 $$= \lim_{x\to 0^+}\frac{1/x}{-1/x^2} = \lim_{x\to 0^+}(-x) = 0.$$
-Interpretazione con la gerarchia (§3.8): la potenza $x$ "vince" sul logaritmo, quindi il prodotto tende a $0$.
+Interpretazione con la gerarchia (§2.7): la potenza $x$ "vince" sul logaritmo, quindi il prodotto tende a $0$.
+
+> ⚠️ **Errore comune — applicare De l'Hôpital male o a sproposito.** Tre trappole. (1) *Non verificare la forma:* la regola vale solo per $\frac00$ e $\frac{\infty}{\infty}$; su $\lim_{x\to 0}\frac{\sin x}{x+1}$ il denominatore tende a $1$, si sostituisce e viene $0$ — derivare sopra e sotto darebbe $1$, sbagliato. (2) *Derivare come un quoziente:* si derivano numeratore e denominatore **separatamente** ($\frac{f'}{g'}$), *non* con la regola $\frac{f'g-fg'}{g^2}$. (3) *Credere che la regola decida sempre:* se $\lim\frac{f'}{g'}$ non esiste, la regola non dice nulla — $\lim_{x\to+\infty}\frac{x+\sin x}{x}=1$ (basta dividere per $x$), ma $\frac{f'}{g'} = \frac{1+\cos x}{1}$ oscilla senza limite. Lì serve l'algebra, non De l'Hôpital.
 
 ### Esempio 7 — $\infty - \infty$ per razionalizzazione
 
@@ -323,110 +374,67 @@ Divido sopra e sotto per $x > 0$ (con $\sqrt{x^2} = x$):
 $$= \lim_{x\to+\infty}\frac{1}{\sqrt{1+1/x}+1} = \frac{1}{1+1} = \frac12.$$
 La differenza di due infiniti dà un valore *finito*: il caso più insidioso di $\infty - \infty$.
 
+> ⚠️ **Errore comune — credere che $0\cdot\infty$ o $\infty-\infty$ abbiano un valore fisso.** Sono *indeterminate*: $x\cdot\frac1x\to 1$, $x^2\cdot\frac1x\to\infty$, $\frac{1}{x^2}\cdot x\to 0$ sono tutte $0\cdot\infty$ con esiti diversi; e qui $\infty - \infty$ ha dato $\frac12$, ma $\sqrt{x^2+3x}-\sqrt{x^2-x}$ dà $2$ (Esercizio 6) e $x^2 - x$ dà $+\infty$. Vanno sempre ricondotte a un rapporto e lavorate.
+
 ### Esempio 8 — $1^{\infty}$ e $0^{0}$ con il logaritmo
 
-**(a)** $\displaystyle\lim_{x\to+\infty}\left(1 + \frac3x\right)^{x}$. Forma $1^{\infty}$. Posto $A$ il limite, $\ln A = \lim_{x\to+\infty} x\ln\!\left(1+\frac3x\right)$. Usando $\ln(1+t)\sim t$ con $t = 3/x\to 0$:
+**(a)** $\displaystyle\lim_{x\to+\infty}\left(1 + \frac3x\right)^{x}$. Forma $1^{\infty}$. Posto $A$ il limite, $\ln A = \lim_{x\to+\infty} x\ln\!\left(1+\frac3x\right)$. Usando $\ln(1+t)\sim t$ con $t = 3/x\to 0$ (equivalenza dentro un prodotto, lecita):
 $$\ln A = \lim_{x\to+\infty} x\cdot\frac3x = 3 \quad\Longrightarrow\quad A = e^{3}.$$
-(Coerente con $\big(1+\frac1u\big)^{u}\to e$ posto $u = x/3$.)
+(Coerente con $\big(1+\frac1u\big)^{u}\to e$ posto $u = x/3$; il caso generale $\big(1+\frac{a}{x}\big)^x \to e^a$, con grafico manipolabile, è nella **[lezione sui limiti notevoli](analisi-05-limiti-notevoli-asintoti)**.)
 
 **(b)** $\displaystyle\lim_{x\to 0^+} x^{x}$. Forma $0^{0}$. $\ln A = \lim_{x\to 0^+} x\ln x = 0$ (Esempio 6), quindi $A = e^{0} = 1$.
 
----
-
-## 7. Visualizzazioni e interattività
-
-### 7.1 Una forma $\frac00$ "riempie il buco"
-
-Il grafico di $\dfrac{e^{x}-1-x}{x^2}$ ha in $x=0$ una forma $\frac00$; il limite vale $\frac12$, e la curva passa senza scosse per quel valore (il buco è "riempibile per continuità"). La retta $y=\frac12$ è il valore verso cui punta.
-
-```plot
-{"fn": "(Math.abs(x) > 0.03) ? (Math.exp(x) - 1 - x)/(x*x) : NaN", "fn2": "0.5", "domain": [-3, 3], "yDomain": [-0.2, 1.5], "title": "(e^x - 1 - x)/x^2 -> 1/2 in x=0 (forma 0/0)", "label1": "(e^x-1-x)/x^2", "label2": "y = 1/2"}
-```
-
-### 7.2 Il confronto in azione: $x\sin\frac1x$ tra i due carabinieri
-
-La funzione oscilla infinite volte vicino a $0$, ma resta *intrappolata* tra $y = \lvert x\rvert$ e $y = -\lvert x\rvert$, che si chiudono a imbuto verso l'origine. Il limite è schiacciato a $0$.
-
-```plot
-{"fn": "x*Math.sin(1/x)", "fn2": "Math.abs(x)", "domain": [-0.6, 0.6], "yDomain": [-0.6, 0.6], "title": "x sin(1/x) intrappolata tra +|x| e -|x|", "label1": "x sin(1/x)", "label2": "y = |x| (carabiniere)"}
-```
-
-### 7.3 Manipolabile: la gara di velocità nel limite di Nepero
-
-Muovi il parametro $a$ e osserva $\big(1+\frac{a}{x}\big)^{x}$ per $x$ grande: il valore limite è $e^{a}$ (per $a=1$ vale $e\approx 2{,}718$; per $a=2$ vale $e^2\approx 7{,}39$). È la forma $1^{\infty}$ resa visibile: la base tende a $1$, l'esponente a $\infty$, e il risultato dipende da *come* corrono l'una contro l'altro — cioè da $a$.
-
-```slider
-{"fn": "Math.pow(1 + a/x, x)", "pname": "a", "pmin": 0, "pmax": 3, "pstep": 0.5, "pdefault": 1, "plabel": "a  (il limite per x grande vale e^a)", "domain": [1, 30], "yDomain": [0, 25], "title": "(1 + a/x)^x tende a e^a  (forma 1^infinito)"}
-```
+> ⚠️ **Errore comune — applicare De l'Hôpital direttamente alle forme di potenza $1^{\infty}$, $0^0$, $\infty^0$.** Non sono rapporti: la regola non c'entra. Prima il logaritmo ($\lim f^{g} = e^{\lim g\ln f}$), che le converte in $0\cdot\infty$; poi la conversione a rapporto (§2.10); solo a quel punto gli strumenti per $\frac00$/$\frac{\infty}{\infty}$ diventano applicabili.
 
 ---
 
-## 8. Errori comuni
-
-**1. Applicare De l'Hôpital senza verificare la forma.** La regola vale *solo* per $\frac00$ e $\frac{\infty}{\infty}$. Su $\lim_{x\to 0}\frac{\sin x}{x+1}$ il denominatore tende a $1$: si sostituisce e si ottiene $\frac{0}{1}=0$. Derivare sopra e sotto darebbe $\frac{\cos 0}{1}=1$, sbagliato. Prima si *classifica* la forma, poi si sceglie lo strumento.
-
-**2. Derivare come un quoziente.** In De l'Hôpital si derivano numeratore e denominatore **separatamente**, ottenendo $\frac{f'}{g'}$ — *non* si applica la regola del quoziente $\frac{f'g-fg'}{g^2}$. Confonderle è un errore che produce risultati completamente errati.
-
-**3. Sostituire equivalenti dentro una somma o differenza.** $\sin x\sim x$ e $\tan x\sim x$ sono validi, ma in $\frac{\tan x - \sin x}{x^3}$ sostituirli dà $\frac{x-x}{x^3}=0$, mentre il valore vero è $\frac12$. Le equivalenze si usano solo dentro prodotti e quozienti (§3.7).
-
-**4. Credere che $0\cdot\infty$, $\infty-\infty$ abbiano un valore fisso.** Sono *indeterminate*: $x\cdot\frac1x\to 1$, $x^2\cdot\frac1x\to\infty$, $\frac{1}{x^2}\cdot x\to 0$ sono tutte $0\cdot\infty$ con esiti diversi. Vanno sempre ricondotte a un rapporto e lavorate.
-
-**5. Fermarsi alla prima applicazione se resta indeterminata.** Se dopo De l'Hôpital la forma è ancora $\frac00$ (o $\frac{\infty}{\infty}$) e le ipotesi reggono, si **riapplica**. Es.: $\frac{e^x-1-x}{x^2}$ richiede due passaggi.
-
-**6. Applicare De l'Hôpital alle potenze $1^{\infty}$, $0^0$, $\infty^0$ direttamente.** Non sono rapporti. Prima il logaritmo ($\lim f^{g} = e^{\lim g\ln f}$), che porta a $0\cdot\infty$; solo dopo il rapporto è trattabile.
-
-**7. Dimenticare che De l'Hôpital può "non decidere".** Se $\lim\frac{f'}{g'}$ *non esiste* (per oscillazione), la regola non è applicabile e **non** implica che $\lim\frac{f}{g}$ non esista. Esempio classico: $\lim_{x\to+\infty}\frac{x+\sin x}{x}=1$ (basta dividere), ma $\frac{f'}{g'} = \frac{1+\cos x}{1}$ non ha limite. Qui serve l'algebra, non De l'Hôpital.
-
----
-
-## 9. Collegamenti e applicazioni
+## 5. Collegamenti e riepilogo
 
 ### Nella biblioteca
 
-- **[Definizione ε–δ del limite](analisi-02-limite-epsilon-delta)** — è la fonte del rigore: ogni legge algebrica di questa lezione (§4.1–4.3) si dimostra da lì.
-- **[Continuità e teoremi fondamentali](analisi-04-continuita)** — la "sostituzione diretta" (§3.1) è *esattamente* la definizione di continuità; questa lezione ne è la controparte computazionale.
-- **[Limiti notevoli e asintoti](analisi-05-limiti-notevoli-asintoti)** — sviluppa i limiti del §3.6 (dimostrazioni complete) e usa il §5.1 per gli asintoti orizzontali e obliqui.
-- **[Derivata: definizione e significato](analisi-06-derivata-definizione)** — la derivata *è* una forma $\frac00$ ($\lim_{h\to 0}\frac{f(x_0+h)-f(x_0)}{h}$); qui abbiamo imparato a scioglierla, e la derivata a sua volta alimenta De l'Hôpital (una bella circolarità, risolta dall'ordine logico del §4.4).
-- **[Successioni e loro limiti](analisi-16-successioni)** — le stesse leggi algebriche valgono per le successioni; la gerarchia degli infiniti (§3.8) governa la convergenza di rapporti come $\frac{n!}{n^n}$ o $\frac{2^n}{n^2}$.
+- **[Definizione ε–δ del limite](analisi-02-limite-epsilon-delta)** — è la fonte del rigore: ogni legge algebrica di questa lezione (§3.1–3.3) si dimostra da lì.
+- **[Continuità e teoremi fondamentali](analisi-04-continuita)** — la "sostituzione diretta" (§2.1) è *esattamente* la definizione di continuità; questa lezione ne è la controparte computazionale.
+- **[Limiti notevoli e asintoti](analisi-05-limiti-notevoli-asintoti)** — sviluppa i limiti del §2.5 (dimostrazioni complete, incluso $\big(1+\frac{a}{x}\big)^x \to e^a$ con grafico manipolabile) e usa la regola dei gradi massimi (§2.3) per gli asintoti orizzontali e obliqui.
+- **[Derivata: definizione e significato](analisi-06-derivata-definizione)** — la derivata *è* una forma $\frac00$ ($\lim_{h\to 0}\frac{f(x_0+h)-f(x_0)}{h}$); qui abbiamo imparato a scioglierla, e la derivata a sua volta alimenta De l'Hôpital (una bella circolarità, risolta dall'ordine logico del §3.5).
+- **[Successioni e loro limiti](analisi-16-successioni)** — le stesse leggi algebriche valgono per le successioni; la gerarchia degli infiniti (§2.7) governa la convergenza di rapporti come $\frac{n!}{n^n}$ o $\frac{2^n}{n^2}$.
 
 ### Nelle altre discipline
 
-- **Fisica — limite non-relativistico.** L'energia cinetica relativistica $E_k = mc^2(\gamma - 1)$, con $\gamma = (1-v^2/c^2)^{-1/2}$, deve ridursi a $\frac12 mv^2$ per $v\ll c$. Il calcolo è una forma $\infty\cdot 0$ risolta dall'equivalenza $(1+t)^{\alpha}-1\sim\alpha t$ del §3.7.
+- **Fisica — limite non-relativistico.** L'energia cinetica relativistica $E_k = mc^2(\gamma - 1)$, con $\gamma = (1-v^2/c^2)^{-1/2}$, deve ridursi a $\frac12 mv^2$ per $v\ll c$. Il calcolo è una forma $\infty\cdot 0$ risolta dall'equivalenza $(1+t)^{\alpha}-1\sim\alpha t$ del §2.6.
 - **Economia — elasticità.** L'elasticità della domanda è il limite del rapporto tra variazione percentuale della quantità e del prezzo quando entrambe tendono a zero: una forma $\frac00$ che coincide con la derivata logaritmica $\frac{d\ln q}{d\ln p}$. È il calcolo dei limiti applicato alle decisioni di prezzo.
-- **Ingegneria del segnale — funzione sinc.** $\operatorname{sinc}(x) = \frac{\sin(\pi x)}{\pi x}$ ha in $x=0$ una forma $\frac00$ che vale $1$ per il limite notevole del §5.2; descrive la risposta di un filtro passa-basso ideale e sta dietro ogni campionamento audio/immagine.
-- **Informatica — analisi asintotica.** La gerarchia degli infiniti (§3.8) è la stessa che ordina la complessità degli algoritmi: $O(\log n) \ll O(n) \ll O(n^2) \ll O(2^n)$. Confrontare due algoritmi è calcolare un limite di rapporto.
+- **Ingegneria del segnale — funzione sinc.** $\operatorname{sinc}(x) = \frac{\sin(\pi x)}{\pi x}$ ha in $x=0$ una forma $\frac00$ che vale $1$ per il limite notevole del §3.4; descrive la risposta di un filtro passa-basso ideale e sta dietro ogni campionamento audio/immagine.
+- **Informatica — analisi asintotica.** La gerarchia degli infiniti (§2.7) è la stessa che ordina la complessità degli algoritmi: $O(\log n) \ll O(n) \ll O(n^2) \ll O(2^n)$. Confrontare due algoritmi è calcolare un limite di rapporto.
 
----
+### Riepilogo
 
-## 10. Riepilogo
-
-Abbiamo trasformato il limite da oggetto da *dimostrare* (lezione 2) a oggetto da *calcolare*. La regola generale: prima prova la sostituzione diretta; se produce un simbolo con senso, hai finito; se produce una forma indeterminata, riconducila a $\frac00$ o $\frac{\infty}{\infty}$ e scegli lo strumento.
+Abbiamo trasformato il limite da oggetto da *dimostrare* (lezione 2) a oggetto da *calcolare*. La regola generale: prima prova la sostituzione diretta; se produce un simbolo con senso, hai finito; se produce una forma indeterminata, riconducila a $\frac00$ o $\frac{\infty}{\infty}$ e scegli lo strumento — in ordine di priorità: algebra, equivalenze/notevoli, gerarchia, De l'Hôpital.
 
 **Idee fondamentali.**
 
-- Le **leggi algebriche** (§3.1) valgono con limiti *finiti*: rendono il calcolo compositivo.
+- Le **leggi algebriche** (§2.1) valgono con limiti *finiti*: rendono il calcolo compositivo.
 - Le **sette forme indeterminate** sono le zone in cui le leggi cadono; il valore dipende dalle *velocità* delle funzioni, non dai simboli.
-- **Teorema del confronto** e **permanenza del segno** sono i puntelli teorici; il primo è l'arma contro le oscillazioni.
-- **Limiti notevoli** ed **equivalenze asintotiche** sono scorciatoie potenti — le equivalenze solo dentro prodotti/quozienti.
+- **Limiti notevoli** ed **equivalenze asintotiche** sono lo strumento primario — le equivalenze solo dentro prodotti/quozienti.
 - La **gerarchia degli infiniti** decide ogni $\frac{\infty}{\infty}$ per ispezione.
-- **De l'Hôpital** converte il rapporto delle funzioni in quello delle derivate; va applicata solo dopo aver verificato le ipotesi, e può iterarsi.
+- **Teorema del confronto** e **permanenza del segno** sono i puntelli teorici; il primo è l'arma contro le oscillazioni.
+- **De l'Hôpital** converte il rapporto delle funzioni in quello delle derivate; va applicata solo dopo aver verificato le ipotesi, può iterarsi, ed è l'ultima carta — non la prima.
 
 **Schema operativo.**
 
 | Forma di partenza | Prima mossa | Strumento tipico |
 |---|---|---|
-| valore definito | sostituzione diretta | leggi algebriche (§3.1) |
+| valore definito | sostituzione diretta | leggi algebriche (§2.1) |
 | $\frac00$ (polinomi) | fattorizza e semplifica | prodotti notevoli |
 | $\frac00$ (radici) | razionalizza (coniugato) | — |
-| $\frac00$ / $\frac{\infty}{\infty}$ (generale) | equivalenze o De l'Hôpital | §3.7 / §3.9 |
-| $\frac{\infty}{\infty}$ (polinomi) | gradi massimi | §5.1 |
-| $0\cdot\infty$ | riscrivi come rapporto | poi De l'Hôpital |
+| $\frac00$ / $\frac{\infty}{\infty}$ (generale) | equivalenze e notevoli | §2.5–2.6; De l'Hôpital in riserva (§2.11) |
+| $\frac{\infty}{\infty}$ (polinomi) | gradi massimi | §2.3 |
+| $\frac{\infty}{\infty}$ (misto log/potenze/exp) | gerarchia | §2.7 |
+| $0\cdot\infty$ | riscrivi come rapporto | §2.10 |
 | $\infty - \infty$ | denom. comune / coniugato | riduci a $\frac00$ |
 | $1^{\infty},\,0^0,\,\infty^0$ | logaritmo | $e^{\lim g\ln f}$ |
 
 ---
 
-## 11. Esercizi
+## 6. Esercizi
 
 > Le soluzioni sono complete e commentate. Prova ciascun esercizio prima di aprirle.
 
@@ -463,7 +471,7 @@ Risultato: $\boxed{\tfrac16}$.
 
 *De l'Hôpital* ($\frac00$): $\frac{\sin x}{2x}$, ancora $\frac00$, di nuovo $\frac{\cos x}{2}\to\frac12$.
 
-Risultato: $\boxed{\tfrac12}$. Le due strade concordano, come deve essere.
+Risultato: $\boxed{\tfrac12}$. Le due strade concordano, come deve essere; quella asintotica è la via attesa agli scritti.
 </details>
 
 **Esercizio 4.** Calcola $\displaystyle\lim_{x\to+\infty}\frac{x^3 + 2x - 1}{2x^4 - x^2 + 3}$.
@@ -471,7 +479,7 @@ Risultato: $\boxed{\tfrac12}$. Le due strade concordano, come deve essere.
 <details>
 <summary>Soluzione</summary>
 
-Grado del numeratore $3$ < grado del denominatore $4$: per il §5.1 il limite è $0$. Conferma dividendo per $x^4$:
+Grado del numeratore $3$ < grado del denominatore $4$: per il §2.3 il limite è $0$. Conferma dividendo per $x^4$:
 $$\frac{1/x + 2/x^3 - 1/x^4}{2 - 1/x^2 + 3/x^4}\to\frac{0}{2}=0.$$
 Risultato: $\boxed{0}$.
 </details>
@@ -481,7 +489,7 @@ Risultato: $\boxed{0}$.
 <details>
 <summary>Soluzione</summary>
 
-Poiché $\lvert\cos\frac1x\rvert\le 1$, vale $-x^2\le x^2\cos\frac1x\le x^2$. I carabinieri $\pm x^2$ tendono a $0$, quindi per il §3.4 il limite è $\boxed{0}$. Il fattore $x^2$ "spegne" l'oscillazione di $\cos\frac1x$.
+Poiché $\lvert\cos\frac1x\rvert\le 1$, vale $-x^2\le x^2\cos\frac1x\le x^2$. I carabinieri $\pm x^2$ tendono a $0$, quindi per il §2.9 il limite è $\boxed{0}$. Il fattore $x^2$ "spegne" l'oscillazione di $\cos\frac1x$.
 </details>
 
 ### Avanzati
@@ -498,7 +506,7 @@ $$= \frac{4}{\sqrt{1+3/x}+\sqrt{1-1/x}}\xrightarrow{x\to+\infty}\frac{4}{1+1}=2.
 Risultato: $\boxed{2}$.
 </details>
 
-**Esercizio 7.** Calcola $\displaystyle\lim_{x\to 0}\frac{\tan x - \sin x}{x^3}$. (Attenzione: è il trabocchetto del §3.7.)
+**Esercizio 7.** Calcola $\displaystyle\lim_{x\to 0}\frac{\tan x - \sin x}{x^3}$. (Attenzione: è il trabocchetto del §2.6.)
 
 <details>
 <summary>Soluzione</summary>
@@ -519,15 +527,5 @@ Risultato: $\boxed{\tfrac12}$. Ora le equivalenze sono usate dentro un *prodotto
 
 Forma $1^{\infty}$. Posto $A$ il limite, $\ln A = \lim_{n\to+\infty} n\ln\!\big(1+\frac{r}{n}\big)$. Con $\ln(1+t)\sim t$ e $t = r/n\to 0$:
 $$\ln A = \lim_{n\to+\infty} n\cdot\frac{r}{n} = r \quad\Longrightarrow\quad A = \boxed{e^{r}}.$$
-È la formula dell'interesse composto continuo: passando da $n$ finito a "istantaneo", il montante di $1$ euro diventa $e^{r}$. La stessa idea del limite di Nepero (§3.6), applicata alla finanza.
+È la formula dell'interesse composto continuo: passando da $n$ finito a "istantaneo", il montante di $1$ euro diventa $e^{r}$. La stessa idea del limite di Nepero (§2.5), applicata alla finanza.
 </details>
-
----
-
-## 12. Fonti
-
-**Fonte primaria (leggi algebriche, confronto, De l'Hôpital):** *OpenStax, Calculus Volume 1*, Cap. 2.3 "The Limit Laws" (leggi algebriche, teorema dello squeeze) e Cap. 4.8 "L'Hôpital's Rule" (regola via teorema di Cauchy, forme indeterminate di potenza tramite logaritmo). Da qui provengono la formulazione delle leggi, la dimostrazione del prodotto col termine ponte (§4.1) e l'impianto di De l'Hôpital (§4.4).
-
-**Fonte appunti-prof (impostazione algebrica, equivalenze, gerarchia):** *A. Villanacci, Notes for Mathematics 1*, Cap. 6. Da qui provengono la **notazione da esame** ($x_0$, $\ell$), l'organizzazione delle sette forme indeterminate come "gara di velocità", le **equivalenze asintotiche** come strumento primario (§3.7), la **gerarchia degli infiniti** (§3.8) e la regola dei gradi massimi (§5.1). Priorità per notazione e metodo, coerentemente con gli esami.
-
-**Differenza tra fonti rilevante per l'apprendimento.** OpenStax e Villanacci risolvono le *stesse* forme indeterminate ma con **strategie prioritarie diverse**, e la differenza conta per come imposterai gli esercizi (e gli esami). OpenStax, di tradizione anglosassone, mette **De l'Hôpital** al centro: è lo strumento di default per $\frac00$ e $\frac{\infty}{\infty}$. Villanacci, come gran parte della tradizione italiana, privilegia le **manipolazioni algebriche, i limiti notevoli e le equivalenze asintotiche**, tenendo De l'Hôpital come arma secondaria (e talvolta, agli scritti, esplicitamente scoraggiata perché "nasconde" la struttura del limite). Non è un disaccordo sul *risultato* — è un disaccordo sul *metodo preferito*, che ha conseguenze concrete: un esercizio come l'Esercizio 7 va idealmente risolto con le equivalenze dentro un prodotto (metodo Villanacci), non con tre applicazioni di De l'Hôpital. Abbiamo presentato entrambe le vie di proposito; per l'esame, la via algebrico-asintotica è quella attesa, e De l'Hôpital resta il controllo di sicurezza.
