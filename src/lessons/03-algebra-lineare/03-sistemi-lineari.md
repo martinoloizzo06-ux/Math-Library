@@ -1,516 +1,344 @@
 ---
 id: algebra-03-sistemi-lineari
+titolo: "Sistemi lineari e metodo di Gauss"
+materia: algebra-lineare
+argomento: "Fondamenti"
+modulo: "Vettori, matrici e sistemi lineari"
+livello: universitario
+slug: algebra-03-sistemi-lineari
+
+# legacy
 subject: algebra-lineare
 topic_it: Fondamenti
 topic_en: Foundations
-title_it: Sistemi lineari e metodo di Gauss
-title_en: Linear systems and Gaussian elimination
+title_it: "Sistemi lineari e metodo di Gauss"
+title_en: "Linear systems and Gaussian elimination"
 level: blue
 order: 3
-source_book: "G. Strang, Introduction to Linear Algebra; MIT OCW 18.06"
-source_chapter: "Cap. 2 — Eliminazione di Gauss"
-stato: da-rielaborare
+source_book: "A. Villanacci, Basic Linear Algebra, Metric Spaces, Differential Calculus and Nonlinear Programming (appunti); S. Axler, Linear Algebra Done Right (4ª ed.); D. Austin, Understanding Linear Algebra"
+source_chapter: "Sistemi lineari, eliminazione di Gauss, forma a scalini, struttura dell'insieme delle soluzioni"
+
+prerequisiti:
+  - algebra-01-vettori
+  - algebra-02-matrici
+
+collegamenti:
+  - algebra-02-matrici
+  - algebra-04-rango-rouche-capelli
+  - algebra-05-spazi-vettoriali
+  - algebra-06-indipendenza-basi
+  - algebra-08-determinanti
+
+fonti_integrate:
+  - id_fonte: villanacci-math2
+    ruolo: primaria
+    sezioni_coperte: "Sistemi lineari, forma matriciale A x = b, eliminazione di Gauss, sistemi omogenei, struttura delle soluzioni"
+    note: "appunti-prof: notazione, convenzioni d'esame; classificazione compatibile/incompatibile"
+  - id_fonte: austin-ula
+    ruolo: secondaria
+    sezioni_coperte: "Interpretazione geometrica (intersezione di rette/piani), forma a scalini ridotta, variabili libere e pivot"
+    note: "visualizzazione geometrica e lettura per colonne"
+  - id_fonte: axler-ladr
+    ruolo: secondaria
+    sezioni_coperte: "Insieme delle soluzioni come traslato del nucleo; soluzione generale = particolare + omogenea"
+    note: "rigore sulla struttura affine dell'insieme delle soluzioni"
+  - id_fonte: cherney-linalg
+    ruolo: secondaria
+    sezioni_coperte: "Operazioni elementari sulle righe, esempi risolti, sistemi parametrici"
+    note: "esempi supplementari"
+
+versione: "3.0"
+data_ultima_rielaborazione: "2026-07-13"
+stato: completa
+
+componenti_usati:
+  - slider
+  - checkpoint
+
+sezioni_omesse: []
 ---
 
-## 1. Intuizione — Il problema fondamentale
+## 1. Motivazione e intuizione
 
-Hai 3 incognite ($x$, $y$, $z$) e 3 condizioni (equazioni). Quand'è che riesci a trovare i valori? La risposta non è sempre "sì": a volte le condizioni si contraddicono (impossibile), a volte si sovrappongono (infinite soluzioni), a volte c'è esattamente una via d'uscita (soluzione unica).
+Quasi ogni domanda quantitativa che inizia con «trova i valori che soddisfano contemporaneamente queste condizioni» è, sotto la superficie, un sistema di equazioni lineari. Un'azienda vuole sapere quante unità di due prodotti produrre per usare esattamente le ore-macchina e le ore-lavoro disponibili; un chimico cerca i coefficienti che bilanciano una reazione; un economista impone che l'offerta eguagli la domanda su più mercati simultaneamente. In tutti questi casi le incognite compaiono solo elevate alla prima potenza e solo sommate tra loro: nessun prodotto tra incognite, nessun quadrato. Questa restrizione — la **linearità** — è ciò che rende il problema completamente risolvibile con un unico algoritmo meccanico.
 
-Pensa a tre piani nello spazio tridimensionale. Ogni equazione lineare in $x,y,z$ descrive un piano. Il "punto soluzione" è dove i tre piani si incrociano. Se i piani si incrociano in un punto solo: una soluzione. Se tutti e tre contengono la stessa retta: infinite soluzioni. Se due sono paralleli: nessuna soluzione.
+L'intuizione geometrica è la porta d'ingresso. Un'equazione lineare in due incognite, come $2x + 3y = 5$, descrive una **retta** nel piano. Due equazioni descrivono due rette, e risolvere il sistema significa cercare i punti che stanno su entrambe: la loro intersezione. Qui si vedono già i tre destini possibili di ogni sistema lineare. Le due rette possono incrociarsi in un punto (una soluzione), possono essere la stessa retta scritta in due modi (infinite soluzioni), oppure possono essere parallele e distinte (nessuna soluzione). Non esistono altri casi: due rette nel piano non possono incontrarsi in esattamente due punti. Salendo a tre incognite, ogni equazione diventa un **piano** nello spazio, e risolvere il sistema significa intersecare piani; ma la trichotomia resta identica — un punto, infiniti punti, oppure il vuoto.
 
-L'**eliminazione di Gauss** è il metodo sistematico per risolvere qualsiasi sistema lineare, indipendentemente dal numero di equazioni e incognite. È l'algoritmo fondamentale dell'algebra lineare — inventato da Gauss nel 1800 e ancora oggi al cuore di ogni software di calcolo numerico.
+Il problema è che «disegnare e guardare dove si incrociano» non è un metodo: fallisce con quattro incognite, dove non c'è più un disegno, e fallisce quando i numeri non sono comodi. Serve una procedura algebrica che dia sempre la risposta corretta, in un numero finito di passi, qualunque sia la dimensione. Questa procedura è l'**eliminazione di Gauss**. L'idea di fondo è semplice e potente: trasformare il sistema in uno più semplice ma con *esattamente le stesse soluzioni*, ripetendo mosse che non alterano l'insieme delle risposte, fino a raggiungere una forma «a gradini» in cui la soluzione si legge quasi direttamente. È l'algoritmo più usato del calcolo scientifico — dentro ogni software che risolve sistemi, dalla previsione strutturale di un ponte alla ricostruzione di una TAC.
 
----
+Storicamente il metodo porta il nome di Carl Friedrich Gauss, che lo usò intorno al 1810 per calcolare l'orbita dell'asteroide Cerere a partire da poche osservazioni, ma tecniche di eliminazione equivalenti comparivano già nel testo cinese *Jiuzhang Suanshu* («I nove capitoli sull'arte matematica»), oltre duemila anni fa. La forma sistematica e la notazione matriciale che usiamo oggi sono però un prodotto dell'algebra lineare moderna, ed è in quel linguaggio — matrici e vettori, non liste di equazioni — che il metodo mostra tutta la sua eleganza.
 
-## 2. Prerequisiti
+## 2. Teoria
 
-- Operazioni elementari su numeri reali (somme, prodotti, divisioni)
-- Matrici: nozione di riga, colonna, elemento $a_{ij}$ (lezione precedente)
-- Prodotto matrice-vettore $A\mathbf{x}$
-- Nozione di variabile e incognita
+### 2.1 Sistema lineare e sua forma matriciale
 
----
+Un **sistema di $m$ equazioni lineari in $n$ incognite** $x_1, x_2, \ldots, x_n$ è una lista di $m$ condizioni:
 
-## 3. Teoria
+$$\begin{cases} a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n = b_1 \\ a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n = b_2 \\ \qquad\qquad\vdots \\ a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n = b_m \end{cases}$$
 
-### Sistema lineare: definizione
+I numeri $a_{ij}$ sono i **coefficienti** (il primo indice $i$ dice a quale equazione appartengono, il secondo $j$ a quale incognita moltiplicano), i numeri $b_i$ sono i **termini noti**, e $x_j$ sono le incognite che vogliamo determinare. «Lineare» significa proprio questo: ogni incognita compare al più elevata alla prima potenza e non moltiplicata per un'altra incognita.
 
-Un **sistema di $m$ equazioni in $n$ incognite** $x_1, x_2, \ldots, x_n$ ha la forma:
+Raccogliendo i coefficienti in una matrice $A$, le incognite in un vettore $\mathbf{x}$ e i termini noti in un vettore $\mathbf{b}$, tutto il sistema si comprime nell'unica scrittura
 
-$$\begin{cases} a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n = b_1 \\ a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n = b_2 \\ \vdots \\ a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n = b_m \end{cases}$$
+$$A\mathbf{x} = \mathbf{b}, \qquad A \in \mathbb{R}^{m\times n},\ \ \mathbf{x}\in\mathbb{R}^n,\ \ \mathbf{b}\in\mathbb{R}^m.$$
 
-I numeri $a_{ij}$ sono i **coefficienti**, i numeri $b_i$ sono i **termini noti**, e $x_j$ sono le **incognite**.
+Questa non è solo un'abbreviazione: è la stessa lezione precedente sul prodotto matrice-vettore. La riga $i$-esima di $A\mathbf{x}$ è il prodotto scalare tra la riga $i$ di $A$ e il vettore $\mathbf{x}$, e imporre che valga $b_i$ ricostruisce esattamente l'equazione $i$-esima. C'è però una seconda lettura, quella *per colonne*, che sarà decisiva più avanti: $A\mathbf{x}$ è la combinazione lineare delle colonne di $A$ con pesi $x_1, \ldots, x_n$. Quindi risolvere $A\mathbf{x} = \mathbf{b}$ significa chiedersi: **con quali pesi devo combinare le colonne di $A$ per ottenere $\mathbf{b}$?**
 
-**Forma matriciale compatta:** $A\mathbf{x} = \mathbf{b}$, con $A \in \mathbb{R}^{m\times n}$, $\mathbf{x} \in \mathbb{R}^n$, $\mathbf{b} \in \mathbb{R}^m$.
+*Micro-esempio.* Il sistema $\begin{cases} x + 2y = 5 \\ 3x + y = 10\end{cases}$ diventa $A\mathbf{x}=\mathbf{b}$ con $A = \begin{psmallmatrix}1 & 2\\ 3 & 1\end{psmallmatrix}$, $\mathbf{x}=\begin{psmallmatrix}x\\y\end{psmallmatrix}$, $\mathbf{b}=\begin{psmallmatrix}5\\10\end{psmallmatrix}$. Nella lettura per colonne cerchiamo $x\begin{psmallmatrix}1\\3\end{psmallmatrix} + y\begin{psmallmatrix}2\\1\end{psmallmatrix} = \begin{psmallmatrix}5\\10\end{psmallmatrix}$.
 
-**Sistema omogeneo:** $A\mathbf{x} = \mathbf{0}$ — il termine noto è il vettore zero. Ha sempre almeno la soluzione banale $\mathbf{x} = \mathbf{0}$.
+Un caso speciale importante è il **sistema omogeneo** $A\mathbf{x} = \mathbf{0}$, in cui tutti i termini noti sono nulli. Un sistema omogeneo non è mai impossibile: ha sempre almeno la **soluzione banale** $\mathbf{x} = \mathbf{0}$ (combinare le colonne con pesi tutti nulli dà il vettore nullo). La domanda interessante sarà se ne possiede *altre* oltre a quella.
 
-### Matrice aumentata
+### 2.2 Matrice aumentata e operazioni elementari
 
-Per l'eliminazione di Gauss si lavora sulla **matrice aumentata**, che combina la matrice dei coefficienti e il vettore dei termini noti:
+Per eseguire il metodo conviene abbandonare i simboli $x, y, z$ — che sono solo etichette — e lavorare sulla tabella dei numeri. La **matrice aumentata** affianca ai coefficienti la colonna dei termini noti, separata da una barra:
 
-$$[A\mid\mathbf{b}] = \left(\begin{array}{cccc|c} a_{11} & a_{12} & \cdots & a_{1n} & b_1 \\ a_{21} & a_{22} & \cdots & a_{2n} & b_2 \\ \vdots & & \ddots & \vdots & \vdots \\ a_{m1} & a_{m2} & \cdots & a_{mn} & b_m \end{array}\right)$$
+$$[A\mid\mathbf{b}] = \left(\begin{array}{cccc|c} a_{11} & a_{12} & \cdots & a_{1n} & b_1 \\ a_{21} & a_{22} & \cdots & a_{2n} & b_2 \\ \vdots & & \ddots & \vdots & \vdots \\ a_{m1} & a_{m2} & \cdots & a_{mn} & b_m \end{array}\right).$$
 
-### Operazioni elementari sulle righe
+Ogni riga di questa tabella *è* un'equazione. Manipolare il sistema in modo da non cambiarne le soluzioni corrisponde ad applicare alle righe le tre **operazioni elementari**:
 
-Le seguenti operazioni non modificano le soluzioni del sistema:
-
-| Operazione | Notazione | Descrizione |
+| Operazione | Notazione | Che cosa fa |
 | --- | --- | --- |
-| Scambio | $R_i \leftrightarrow R_j$ | Scambia la riga $i$ con la riga $j$ |
-| Scalatura | $R_i \leftarrow c\,R_i$, $c\neq 0$ | Moltiplica la riga $i$ per uno scalare non zero |
-| Eliminazione | $R_i \leftarrow R_i + c\,R_j$ | Somma alla riga $i$ un multiplo della riga $j$ |
+| Scambio | $R_i \leftrightarrow R_j$ | scambia due righe (riordina le equazioni) |
+| Scalatura | $R_i \leftarrow c\,R_i$, con $c\neq 0$ | moltiplica un'equazione per una costante non nulla |
+| Eliminazione | $R_i \leftarrow R_i + c\,R_j$ | somma a un'equazione un multiplo di un'altra |
 
-### Forma a scalini (Row Echelon Form — REF)
+Il punto cruciale, che dimostreremo nella Sezione 3, è che **nessuna di queste tre operazioni altera l'insieme delle soluzioni**: il sistema prima e dopo ha esattamente le stesse risposte. Sono reversibili (ogni mossa si può disfare), e questa reversibilità è la ragione profonda per cui non si perdono né si guadagnano soluzioni. La condizione $c \neq 0$ nella scalatura è essenziale: moltiplicare un'equazione per zero la cancellerebbe, distruggendo informazione.
 
-Una matrice è in **forma a scalini** se:
-1. Tutte le righe nulle (se presenti) stanno in fondo.
-2. Il primo elemento non zero di ogni riga (**pivot**) si trova a destra del pivot della riga precedente.
+*Micro-esempio.* Applicare $R_2 \leftarrow R_2 - 3R_1$ alla matrice aumentata di $\begin{cases}x+2y=5\\3x+y=10\end{cases}$ significa: alla seconda equazione tolgo tre volte la prima. La riga $(3,1\mid 10)$ diventa $(3-3,\,1-6\mid 10-15) = (0,-5\mid -5)$. L'incognita $x$ è stata eliminata dalla seconda equazione — l'obiettivo di ogni passo di Gauss.
 
-$$\begin{pmatrix} \bullet & * & * & * \\ 0 & \bullet & * & * \\ 0 & 0 & \bullet & * \\ 0 & 0 & 0 & 0 \end{pmatrix}$$
+### 2.3 Forma a scalini e pivot
 
-dove $\bullet$ indica un pivot (non zero) e $*$ indica un elemento qualsiasi.
+L'eliminazione mira a una forma standard. Una matrice è in **forma a scalini** (in inglese *row echelon form*, REF) quando ha l'aspetto di una scalinata discendente:
 
-### Forma ridotta a scalini (RREF)
+$$\begin{pmatrix} \boxed{p_1} & * & * & * \\ 0 & \boxed{p_2} & * & * \\ 0 & 0 & \boxed{p_3} & * \\ 0 & 0 & 0 & 0 \end{pmatrix}$$
 
-La **forma ridotta** (Reduced Row Echelon Form) richiede in più:
-- Ogni pivot è uguale a $1$.
-- Ogni pivot è l'unico elemento non zero nella sua colonna.
+Precisamente, servono due condizioni: le eventuali righe interamente nulle stanno tutte in fondo; e in ogni riga non nulla il primo elemento diverso da zero — detto **pivot** — si trova strettamente più a destra del pivot della riga sopra. Gli $*$ sono numeri qualsiasi, i pivot $p_k$ sono per definizione diversi da zero.
 
-La RREF è **unica** per ogni matrice.
+Il pivot è il concetto organizzatore di tutta la lezione. Ogni colonna che contiene un pivot corrisponde a un'incognita **vincolata** — il suo valore resta determinato dalle altre; ogni colonna *senza* pivot corrisponde a una **variabile libera**, che può assumere qualsiasi valore reale. Contare i pivot, quindi, risponde da solo alla domanda «quante soluzioni ha il sistema». Il numero di pivot è un invariante della matrice così importante da avere un nome proprio, il **rango**, che sarà l'oggetto della prossima lezione.
 
-### Algoritmo di eliminazione di Gauss
+Spingendo l'eliminazione un passo oltre si ottiene la **forma ridotta a scalini** (*reduced row echelon form*, RREF), che richiede in più che ogni pivot valga esattamente $1$ e sia l'unico elemento non nullo della propria colonna (azzerato sopra e sotto). La RREF ha una proprietà notevole: è **unica**: partendo da una data matrice, per quante strade diverse la si riduca, si arriva sempre alla stessa RREF. In RREF la soluzione si legge senza alcun conto aggiuntivo.
 
-**Fase 1 — Eliminazione in avanti** (porta alla REF):
-1. Trova il pivot nella colonna più a sinistra.
-2. Usa scambi di righe se necessario per portare il pivot in cima.
-3. Elimina gli elementi sotto il pivot con operazioni $R_i \leftarrow R_i - \frac{a_{ij}}{a_{jj}}R_j$.
-4. Ripeti per la sottomatrice rimanente.
+### 2.4 L'algoritmo di eliminazione di Gauss
 
-**Fase 2 — Sostituzione all'indietro** (trova le soluzioni):
-Dalla forma a scalini, risolvi dall'ultima equazione verso la prima.
+Il metodo procede in due tempi.
 
-Alternativa: **Gauss-Jordan** — porta tutto in RREF eliminando anche sopra i pivot, poi la soluzione si legge direttamente.
+**Discesa (eliminazione in avanti).** Si scende colonna per colonna, da sinistra. Nella colonna corrente si individua un pivot (se l'elemento in posizione naturale è zero, si porta su con uno scambio $R_i \leftrightarrow R_j$ una riga che abbia lì un numero non nullo). Poi, con operazioni $R_i \leftarrow R_i - \frac{a_{ik}}{p}R_{\text{pivot}}$, si azzerano tutti gli elementi *sotto* il pivot. Si passa alla sottomatrice rimanente e si ripete. Al termine la matrice è in forma a scalini.
 
-### Classificazione dei sistemi
+**Risalita (sostituzione all'indietro).** Dalla forma a scalini si parte dall'ultima equazione non banale — che coinvolge poche incognite — la si risolve, e si sostituisce il valore trovato risalendo verso l'alto, un'equazione alla volta. In alternativa si continua l'eliminazione anche sopra i pivot (metodo di **Gauss–Jordan**) fino alla RREF, e a quel punto la soluzione si legge direttamente senza sostituzioni.
 
-Dopo l'eliminazione, si verificano tre casi:
+*Micro-esempio.* Ridotto il sistema alla forma a scalini con ultima riga $5z = -10$, la risalita dà subito $z = -2$; sostituendo nella riga sopra si ricava $y$, e infine dalla prima riga $x$. Ogni passo usa solo valori già calcolati.
 
-**Caso 1 — Soluzione unica:** ogni colonna delle incognite contiene un pivot. Il sistema è compatibile e determinato. $\text{rk}(A) = n$.
-
-**Caso 2 — Infinite soluzioni:** alcune colonne non hanno pivot. Le incognite corrispondenti a colonne senza pivot si chiamano **variabili libere** (o parametriche) e possono assumere qualsiasi valore reale. Il numero di variabili libere è $n - \text{rk}(A)$.
-
-**Caso 3 — Nessuna soluzione (sistema incompatibile):** compare una riga nella forma aumentata del tipo:
-
-$$[0 \; 0 \; \cdots \; 0 \mid c], \quad c \neq 0$$
-
-Questa corrisponde all'equazione $0 = c$: contraddizione.
-
----
-
-## 4. Derivazione — Perché le operazioni elementari preservano le soluzioni?
-
-Dimostriamo per l'operazione più importante: $R_i \leftarrow R_i + c\,R_j$.
-
-La riga $i$ del sistema originale corrisponde all'equazione:
-
-$$a_{i1}x_1 + a_{i2}x_2 + \cdots + a_{in}x_n = b_i \qquad (*)$$
-
-La riga $j$ corrisponde a:
-
-$$a_{j1}x_1 + a_{j2}x_2 + \cdots + a_{jn}x_n = b_j \qquad (**)$$
-
-Dopo l'operazione $R_i \leftarrow R_i + c\,R_j$, la nuova riga $i$ corrisponde a:
-
-$$(a_{i1}+c\,a_{j1})x_1 + \cdots + (a_{in}+c\,a_{jn})x_n = b_i + c\,b_j$$
-
-**Direzione $\Rightarrow$:** Sia $\mathbf{x}^*$ soluzione del sistema originale (soddisfa sia $(*)$ che $(**)$). Allora soddisfa anche la nuova equazione, perché sommando $c$ volte l'equazione $(**)$ all'equazione $(*)$ otteniamo un'equazione ancora vera.
-
-**Direzione $\Leftarrow$:** Sia $\mathbf{x}^*$ soluzione del sistema modificato (soddisfa la nuova riga $i$ e la riga $j$ invariata). Allora soddisfa anche la riga $i$ originale, perché sottraendo $c$ volte l'equazione $(**)$ dalla nuova riga $i$ si recupera l'equazione $(*)$.
-
-Quindi i due sistemi hanno **esattamente le stesse soluzioni**. $\square$
-
----
-
-## 5. Esempi
-
-**Esempio 1 — Sistema con soluzione unica (3×3)**
-
-$$\begin{cases} x + 2y + z = 2 \\ 3x + 8y + z = 12 \\ 4y + z = 2 \end{cases}$$
-
-Matrice aumentata:
-
-$$\left(\begin{array}{ccc|c}1&2&1&2\\3&8&1&12\\0&4&1&2\end{array}\right)$$
-
-$R_2 \leftarrow R_2 - 3R_1$:
-
-$$\left(\begin{array}{ccc|c}1&2&1&2\\0&2&-2&6\\0&4&1&2\end{array}\right)$$
-
-$R_3 \leftarrow R_3 - 2R_2$:
-
-$$\left(\begin{array}{ccc|c}1&2&1&2\\0&2&-2&6\\0&0&5&-10\end{array}\right)$$
-
-Sostituzione all'indietro:
-
-- Riga 3: $5z = -10 \implies z = -2$
-- Riga 2: $2y - 2(-2) = 6 \implies 2y = 2 \implies y = 1$
-- Riga 1: $x + 2(1) + (-2) = 2 \implies x = 2$
-
-**Soluzione unica:** $(x, y, z) = (2, 1, -2)$
-
----
-
-**Esempio 2 — Sistema con infinite soluzioni**
-
-$$\begin{cases} x + 2y - z = 1 \\ 2x + 4y - 2z = 2 \\ x - y + z = 0 \end{cases}$$
-
-Matrice aumentata, dopo $R_2 \leftarrow R_2 - 2R_1$ e $R_3 \leftarrow R_3 - R_1$:
-
-$$\left(\begin{array}{ccc|c}1&2&-1&1\\0&0&0&0\\0&-3&2&-1\end{array}\right)$$
-
-Scambio $R_2 \leftrightarrow R_3$:
-
-$$\left(\begin{array}{ccc|c}1&2&-1&1\\0&-3&2&-1\\0&0&0&0\end{array}\right)$$
-
-Due pivot: colonne 1 e 2. La colonna 3 non ha pivot: $z = t$ è **variabile libera**.
-
-- Riga 2: $-3y + 2t = -1 \implies y = \frac{1+2t}{3}$
-- Riga 1: $x = 1 - 2y + t = 1 - \frac{2(1+2t)}{3} + t = \frac{3-2-4t+3t}{3} = \frac{1-t}{3}$
-
-**Infinite soluzioni:** $\left(\frac{1-t}{3},\; \frac{1+2t}{3},\; t\right)$ per $t \in \mathbb{R}$.
-
----
-
-**Esempio 3 — Sistema incompatibile**
-
-$$\begin{cases} x + y = 1 \\ 2x + 2y = 5 \end{cases}$$
-
-$R_2 \leftarrow R_2 - 2R_1$:
-
-$$\left(\begin{array}{cc|c}1&1&1\\0&0&3\end{array}\right)$$
-
-La seconda riga dà $0 = 3$: **contraddizione**. Nessuna soluzione.
-
----
-
-**Esempio 4 — Sistema $2\times 3$ con 1 variabile libera**
-
-$$\begin{cases} x + 2y + 3z = 4 \\ 2x + 5y + 8z = 11 \end{cases}$$
-
-$R_2 \leftarrow R_2 - 2R_1$:
-
-$$\left(\begin{array}{ccc|c}1&2&3&4\\0&1&2&3\end{array}\right)$$
-
-Pivot in colonne 1 e 2. Variabile libera: $z = t$.
-
-- $y = 3 - 2t$
-- $x = 4 - 2y - 3z = 4 - 2(3-2t) - 3t = -2 + t$
-
-**Soluzione:** $(-2+t,\; 3-2t,\; t)$ per $t\in\mathbb{R}$.
-
----
-
-**Esempio 5 — Metodo Gauss-Jordan (RREF)**
-
-Risolvere $\begin{cases}2x + y = 5\\ x + 3y = 10\end{cases}$.
-
-Matrice aumentata: $\left(\begin{array}{cc|c}2&1&5\\1&3&10\end{array}\right)$
-
-$R_1 \leftrightarrow R_2$: $\left(\begin{array}{cc|c}1&3&10\\2&1&5\end{array}\right)$
-
-$R_2 \leftarrow R_2 - 2R_1$: $\left(\begin{array}{cc|c}1&3&10\\0&-5&-15\end{array}\right)$
-
-$R_2 \leftarrow -\frac{1}{5}R_2$: $\left(\begin{array}{cc|c}1&3&10\\0&1&3\end{array}\right)$
-
-$R_1 \leftarrow R_1 - 3R_2$: $\left(\begin{array}{cc|c}1&0&1\\0&1&3\end{array}\right)$ ← RREF
-
-**Soluzione:** $x=1$, $y=3$ (leggibile direttamente).
-
----
-
-**Esempio 6 — Sistema omogeneo**
-
-$$A = \begin{pmatrix}1&2&-1\\2&4&-2\end{pmatrix}, \quad A\mathbf{x} = \mathbf{0}$$
-
-$R_2 \leftarrow R_2 - 2R_1$: $\begin{pmatrix}1&2&-1\\0&0&0\end{pmatrix}$
-
-Una sola equazione non banale: $x_1 + 2x_2 - x_3 = 0$.
-
-Variabili libere: $x_2 = s$, $x_3 = t$. Allora $x_1 = -2s + t$.
-
-$$\mathbf{x} = s\begin{pmatrix}-2\\1\\0\end{pmatrix} + t\begin{pmatrix}1\\0\\1\end{pmatrix}, \quad s,t\in\mathbb{R}$$
-
----
-
-**Esempio 7 — Sistema parametrico**
-
-Per quale valore di $k$ il sistema ha soluzioni infinite?
-
-$$\begin{cases} x + ky = 2 \\ kx + y = 2 \end{cases}$$
-
-Matrice aumentata, $R_2 \leftarrow R_2 - kR_1$:
-
-$$\left(\begin{array}{cc|c}1&k&2\\0&1-k^2&2-2k\end{array}\right)$$
-
-Infinite soluzioni: il secondo pivot è zero e il termine noto è zero:
-
-$1-k^2 = 0$ e $2-2k = 0 \implies k=1$.
-
-(Per $k=-1$: $1-k^2=0$ ma $2-2(-1)=4\neq0$ — sistema incompatibile.)
-
----
-
-**Esempio 8 — Sistema sovradeterminato ($m > n$)**
-
-$$\begin{cases} x + y = 1 \\ x - y = 3 \\ 2x + y = 5 \end{cases}$$
-
-Matrice aumentata, applicando $R_2 \leftarrow R_2 - R_1$ e $R_3 \leftarrow R_3 - 2R_1$:
-
-$$\left(\begin{array}{cc|c}1&1&1\\0&-2&2\\0&-1&3\end{array}\right)$$
-
-$R_3 \leftarrow R_3 - \frac{1}{2}R_2$: $\left(\begin{array}{cc|c}1&1&1\\0&-2&2\\0&0&2\end{array}\right)$
-
-Riga 3: $0=2$ — **nessuna soluzione**.
-
-Le 3 rette non passano per un punto comune.
-
----
-
-## 6. Grafico
-
-```plot
-{"title":"Intersezione di due rette (soluzione unica)","fn":"(5-2*x)/3","fn2":"(10-x)/3","domain":[-2,6],"yDomain":[-1,5],"label1":"2x+3y=5","label2":"x+3y=10"}
+```checkpoint
+{"domanda":"Durante l'eliminazione ottieni la riga $(0\\ 0\\ 0 \\mid 4)$ nella matrice aumentata. Che cosa puoi concludere immediatamente sul sistema, senza continuare i conti?","risposta":"Quella riga rappresenta l'equazione $0\\cdot x_1 + \\cdots + 0\\cdot x_n = 4$, cioè $0 = 4$: una contraddizione. Nessuna scelta delle incognite può renderla vera, quindi il sistema è **incompatibile** (nessuna soluzione). È il segnale definitivo di incompatibilità: un pivot nella colonna dei termini noti. Basta questa riga per fermarsi e concludere."}
 ```
 
----
+### 2.5 Classificazione: i tre destini di un sistema
 
-## 7. Interattivo — Rette parallele vs intersecanti
+Portato il sistema in forma a scalini, il numero e la posizione dei pivot determinano completamente quante soluzioni esistono. Sia $r$ il numero di pivot nella parte dei coefficienti (il rango di $A$) e $n$ il numero di incognite.
+
+**Incompatibile (nessuna soluzione).** Compare un pivot nella colonna dei termini noti, cioè una riga del tipo $(0\ 0\ \cdots\ 0 \mid c)$ con $c \neq 0$. L'equazione $0 = c$ è impossibile. Geometricamente: rette o piani senza alcun punto comune.
+
+**Compatibile determinato (una sola soluzione).** Nessuna riga impossibile e *ogni* colonna delle incognite ha un pivot, cioè $r = n$. Non ci sono variabili libere: ogni incognita è vincolata a un unico valore. Geometricamente: le rette/piani si incrociano in un punto solo.
+
+**Compatibile indeterminato (infinite soluzioni).** Nessuna riga impossibile ma alcune colonne non hanno pivot, cioè $r < n$. Le $n - r$ incognite corrispondenti alle colonne senza pivot sono **variabili libere**: scegliendo per esse un valore arbitrario, tutte le altre restano determinate. L'insieme delle soluzioni è infinito, con $n - r$ «gradi di libertà».
+
+*Micro-esempio.* In un sistema con $n = 3$ incognite ridotto a due pivot ($r = 2$), c'è $3 - 2 = 1$ variabile libera: le soluzioni formano una retta nello spazio, parametrizzata da un unico parametro $t$.
+
+Questa tabella anticipa il teorema di Rouché–Capelli (prossima lezione), che riformula la stessa trichotomia confrontando il rango di $A$ con quello della matrice aumentata $[A\mid\mathbf{b}]$: il sistema è compatibile se e solo se i due ranghi coincidono.
+
+### 2.6 Un elemento interattivo: quando la soluzione «scappa all'infinito»
+
+Il seguente cursore mostra due rette, $x + y = 2$ (fissa) e $x + a\,y = 3$, al variare del coefficiente $a$. La loro intersezione è la soluzione del sistema. Muovendo $a$ verso $1$ le due rette diventano quasi parallele e il punto d'incontro si allontana verso l'infinito: è la transizione visiva tra «soluzione unica» e «sistema senza soluzione».
 
 ```slider
-{"title":"Sistema: x+y=2, x+ay=3 (a varia)","fn":"2-x","fn2":"(3-x)/a","domain":[-1,4],"yDomain":[-2,4],"pname":"a","pmin":0.5,"pmax":2,"pdefault":1.5,"pstep":0.1,"plabel":"a","label1":"x+y=2","label2":"x+ay=3"}
+{"title":"Sistema x+y=2 e x+a·y=3: l'intersezione è la soluzione (parametro: coefficiente a)","fn":"2-x","fn2":"(3-x)/a","domain":[-4,6],"yDomain":[-4,6],"pname":"a","pmin":0.4,"pmax":2,"pdefault":1.5,"pstep":0.1,"plabel":"coefficiente a della seconda equazione","label1":"retta x + y = 2","label2":"retta x + a·y = 3"}
 ```
 
-Osserva: quando le due rette si avvicinano al parallelo ($a \to 1$), il punto d'intersezione si allontana verso l'infinito.
+Quando $a = 1$ le rette sono $x+y=2$ e $x+y=3$: parallele e distinte, nessun punto in comune, il sistema è incompatibile. Per ogni $a \neq 1$ esiste un unico punto d'intersezione, la cui coordinata $x = \frac{2a-3}{a-1}$ cresce senza limite man mano che $a$ si avvicina a $1$. Questo illustra anche un fenomeno numerico reale, il **malcondizionamento**: quando due equazioni sono «quasi» dipendenti, la soluzione diventa enormemente sensibile a piccole variazioni dei coefficienti.
 
----
+## 3. Dimostrazioni
 
-## 8. Errori comuni
+### 3.1 Le operazioni elementari preservano l'insieme delle soluzioni
 
-**Errore 1 — Sbagliare il segno nell'eliminazione.**
-Quando si fa $R_i \leftarrow R_i - c\,R_j$, il segno del termine noto segue la stessa operazione. Esempio: $R_2 \leftarrow R_2 - 3R_1$ va applicata anche al termine noto, non solo ai coefficienti.
+Questo è il teorema che rende legittimo tutto il metodo: se ogni mossa conserva le soluzioni, allora il sistema finale, per quanto trasformato, ha le stesse risposte di quello di partenza. Dimostriamo l'affermazione per l'operazione di eliminazione $R_i \leftarrow R_i + c\,R_j$ (con $i \neq j$), che è la più delicata; scambio e scalatura sono più semplici e li trattiamo nella parte tecnica.
 
-**Errore 2 — Dimenticare di aggiornare tutti gli elementi della riga.**
-L'operazione $R_i \leftarrow R_i + c\,R_j$ modifica **tutti** gli elementi della riga $i$, incluso il termine noto. Spesso si aggiorna solo il coefficiente target.
+Indichiamo con $E_i(\mathbf{x})$ e $E_j(\mathbf{x})$ le equazioni $i$ e $j$, dove
+$$E_i:\quad a_{i1}x_1 + \cdots + a_{in}x_n = b_i, \qquad E_j:\quad a_{j1}x_1 + \cdots + a_{jn}x_n = b_j.$$
+Dopo la mossa, l'equazione $i$ è sostituita da $E_i' : \ E_i + c\,E_j$, cioè
+$$(a_{i1}+c\,a_{j1})x_1 + \cdots + (a_{in}+c\,a_{jn})x_n = b_i + c\,b_j,$$
+mentre tutte le altre equazioni, inclusa $E_j$, restano invariate. Dobbiamo mostrare che un vettore $\mathbf{x}^*$ risolve il sistema originale se e solo se risolve quello modificato. Poiché le due liste di equazioni differiscono solo nella riga $i$ (e la riga $j$ è comune a entrambe), basta ragionare su quella riga, tenendo presente che in entrambi i sistemi vale $E_j$.
 
-**Errore 3 — Confondere "matrice coefficienti" con "matrice aumentata".**
-Il teorema di Rouché-Capelli confronta i ranghi di $A$ e $[A\mid\mathbf{b}]$. Dimenticare di augmentare la matrice porta a conclusioni errate sulla compatibilità.
+**($\Rightarrow$) Se $\mathbf{x}^*$ risolve l'originale, risolve il modificato.** Per ipotesi $\mathbf{x}^*$ soddisfa $E_i$ e $E_j$, ossia il lato sinistro di $E_i$ valutato in $\mathbf{x}^*$ dà $b_i$ e quello di $E_j$ dà $b_j$. Il lato sinistro di $E_i'$ è, per costruzione, il lato sinistro di $E_i$ più $c$ volte quello di $E_j$; valutato in $\mathbf{x}^*$ dà quindi $b_i + c\,b_j$, che è proprio il lato destro di $E_i'$. Dunque $\mathbf{x}^*$ soddisfa $E_i'$, e poiché soddisfa già tutte le altre equazioni (immutate), risolve il sistema modificato.
 
-**Errore 4 — Dichiarare infinite soluzioni senza identificare le variabili libere.**
-Trovare infinite soluzioni non basta: bisogna parametrizzare esplicitamente la soluzione generale usando le variabili libere.
+**($\Leftarrow$) Se $\mathbf{x}^*$ risolve il modificato, risolve l'originale.** Ora $\mathbf{x}^*$ soddisfa $E_i'$ e $E_j$. Osserviamo che l'equazione originale si riscrive come $E_i = E_i' - c\,E_j$, perché sottrarre $c\,E_j$ da $E_i'$ annulla esattamente ciò che l'operazione aveva aggiunto. Valutando in $\mathbf{x}^*$: il lato sinistro di $E_i'$ dà $b_i + c\,b_j$, quello di $E_j$ dà $b_j$, quindi il lato sinistro di $E_i$ dà $(b_i + c\,b_j) - c\,b_j = b_i$. Dunque $\mathbf{x}^*$ soddisfa $E_i$ e, di conseguenza, l'intero sistema originale.
 
-**Errore 5 — Dividere per un'espressione che potrebbe essere zero.**
-Nei sistemi parametrici, dividere per $(k-2)$ durante l'eliminazione è valido solo se $k \neq 2$. Il caso $k=2$ va trattato separatamente.
+Le due implicazioni insieme dicono che i due sistemi hanno **identico insieme di soluzioni**. La chiave è che la mossa è invertibile: la sua inversa è $R_i \leftarrow R_i - c\,R_j$, dello stesso tipo, il che rende simmetriche le due direzioni. $\blacksquare$
 
-**Errore 6 — Fermarsi alla forma a scalini invece della RREF.**
-La forma a scalini mostra la struttura ma richiede sostituzione all'indietro. Se si vuole la soluzione direttamente, portare in RREF (Gauss-Jordan).
+<details class="dim-tecnica">
+<summary>Scambio e scalatura: perché anche queste due preservano le soluzioni</summary>
 
-**Errore 7 — Credere che un sistema $m \times n$ con $m > n$ sia sempre compatibile.**
-Avere più equazioni che incognite non garantisce una soluzione: le equazioni extra potrebbero essere incompatibili con le altre.
+**Scambio $R_i \leftrightarrow R_j$.** Un vettore $\mathbf{x}^*$ risolve un sistema se e solo se soddisfa *tutte* le sue equazioni. Scambiare l'ordine di due equazioni non cambia l'insieme delle equazioni da soddisfare — cambia solo la sequenza in cui sono elencate. Poiché la nozione di soluzione non dipende dall'ordine («$\mathbf{x}^*$ le soddisfa tutte» è insensibile a come le numeriamo), l'insieme delle soluzioni è identico. L'operazione è la propria inversa: applicandola due volte si torna al punto di partenza.
 
----
+**Scalatura $R_i \leftarrow c\,R_i$ con $c \neq 0$.** L'equazione $E_i:\ \sum_k a_{ik}x_k = b_i$ diventa $c\,E_i:\ \sum_k (c\,a_{ik})x_k = c\,b_i$. Per un dato $\mathbf{x}^*$, chiamiamo $L$ il valore del lato sinistro di $E_i$. Allora $\mathbf{x}^*$ soddisfa $E_i$ significa $L = b_i$, mentre soddisfa $c\,E_i$ significa $cL = c\,b_i$. Poiché $c \neq 0$, possiamo dividere: $cL = c\,b_i \iff L = b_i$. Le due condizioni sono quindi equivalenti, e nessun'altra equazione è toccata. L'inversa è $R_i \leftarrow \frac{1}{c}R_i$, ben definita proprio perché $c \neq 0$.
 
-## 9. Applicazioni reali
+Se fosse $c = 0$ l'equivalenza cadrebbe: l'equazione diventerebbe $0 = 0$, vera per ogni $\mathbf{x}$, e si perderebbe l'informazione contenuta in $E_i$ — ecco perché la scalatura per zero è vietata.
 
-**Bilanciamento di equazioni chimiche.** Bilanciare $\text{CH}_4 + O_2 \to CO_2 + H_2O$ significa trovare coefficienti interi positivi che soddisfino la conservazione degli atomi — un sistema lineare nelle incognite (i coefficienti). L'eliminazione di Gauss trova automaticamente la soluzione minima.
+</details>
 
-**Calcolo strutturale in ingegneria.** Una struttura (ponte, edificio, aereo) è modellata come rete di elementi. L'equilibrio di ogni nodo produce un'equazione lineare in termini delle forze interne. Con centinaia di nodi, il sistema ha centinaia di equazioni e va risolto numericamente con Gauss. Ogni calcolo strutturale che garantisce la sicurezza di un edificio usa questo algoritmo.
+### 3.2 Struttura dell'insieme delle soluzioni: generale = particolare + omogenea
 
-**Tomografia computerizzata (TAX/CT scan).** Il corpo umano viene attraversato da raggi X da migliaia di angolazioni diverse. Ogni raggio misura l'assorbimento totale lungo la sua traiettoria — un'equazione lineare nelle densità dei tessuti. Ricostruire l'immagine 3D significa risolvere un sistema gigantesco (milioni di equazioni). L'algoritmo di Gauss è alla base della medicina moderna.
+Il secondo risultato spiega *la forma* dell'insieme delle soluzioni quando queste sono infinite, ed è il ponte verso gli spazi vettoriali.
 
----
+**Teorema.** Sia $A\mathbf{x} = \mathbf{b}$ un sistema compatibile e sia $\mathbf{x}_p$ una sua soluzione qualsiasi (una **soluzione particolare**). Allora l'insieme di *tutte* le soluzioni è
+$$\{\, \mathbf{x}_p + \mathbf{x}_h \ :\ \mathbf{x}_h \text{ risolve il sistema omogeneo } A\mathbf{x} = \mathbf{0} \,\}.$$
+In parole: ogni soluzione si ottiene sommando alla soluzione particolare una soluzione del sistema omogeneo associato, e ogni somma di questo tipo è a sua volta soluzione.
 
-## 10. Riepilogo
+*Dimostrazione.* Usiamo la linearità del prodotto matrice-vettore, cioè $A(\mathbf{u}+\mathbf{v}) = A\mathbf{u} + A\mathbf{v}$ (proprietà stabilita nella lezione sulle matrici).
 
-| Forma della matrice | Descrizione |
+Mostriamo le due inclusioni. Primo, ogni $\mathbf{x}_p + \mathbf{x}_h$ è soluzione: infatti
+$$A(\mathbf{x}_p + \mathbf{x}_h) = A\mathbf{x}_p + A\mathbf{x}_h = \mathbf{b} + \mathbf{0} = \mathbf{b},$$
+avendo usato $A\mathbf{x}_p = \mathbf{b}$ (particolare) e $A\mathbf{x}_h = \mathbf{0}$ (omogenea). Secondo, ogni soluzione ha quella forma: sia $\mathbf{x}^*$ una soluzione arbitraria, dunque $A\mathbf{x}^* = \mathbf{b}$. Poniamo $\mathbf{x}_h := \mathbf{x}^* - \mathbf{x}_p$. Allora
+$$A\mathbf{x}_h = A(\mathbf{x}^* - \mathbf{x}_p) = A\mathbf{x}^* - A\mathbf{x}_p = \mathbf{b} - \mathbf{b} = \mathbf{0},$$
+quindi $\mathbf{x}_h$ risolve l'omogeneo, e per costruzione $\mathbf{x}^* = \mathbf{x}_p + \mathbf{x}_h$. Le due inclusioni chiudono la dimostrazione. $\blacksquare$
+
+L'interpretazione geometrica è che l'insieme delle soluzioni non è un sottospazio vettoriale (non contiene l'origine, salvo il caso $\mathbf{b}=\mathbf{0}$) ma un suo **traslato**: si prende l'insieme delle soluzioni omogenee — che, lo vedremo, è un sottospazio, il *nucleo* di $A$ — e lo si sposta rigidamente del vettore $\mathbf{x}_p$. Ne segue un corollario utile: un sistema compatibile ha soluzione unica se e solo se il suo omogeneo associato ha solo la soluzione banale $\mathbf{x}_h = \mathbf{0}$.
+
+```checkpoint
+{"domanda":"Un sistema $A\\mathbf{x}=\\mathbf{b}$ ha $\\mathbf{x}_p=(1,0,2)$ come soluzione, e il sistema omogeneo associato ha soluzioni $t\\,(1,-1,1)$ al variare di $t\\in\\mathbb{R}$. Scrivi tutte le soluzioni del sistema completo e di' quante sono.","risposta":"Per il teorema, ogni soluzione è $\\mathbf{x}_p+\\mathbf{x}_h$, cioè $(1,0,2)+t\\,(1,-1,1)=(1+t,\\,-t,\\,2+t)$ per $t\\in\\mathbb{R}$. Sono **infinite** (una retta nello spazio, con un grado di libertà): la soluzione omogenea non banale segnala la presenza di una variabile libera. Verifica veloce: per $t=0$ si riottiene $\\mathbf{x}_p=(1,0,2)$."}
+```
+
+## 4. Esempi
+
+**Esempio 1 — Soluzione unica ($3\times 3$).** Risolviamo
+$$\begin{cases} x + 2y + z = 2 \\ 3x + 8y + z = 12 \\ \phantom{3x + {}}4y + z = 2. \end{cases}$$
+Matrice aumentata e discesa. Con $R_2 \leftarrow R_2 - 3R_1$:
+$$\left(\begin{array}{ccc|c}1&2&1&2\\3&8&1&12\\0&4&1&2\end{array}\right)\to\left(\begin{array}{ccc|c}1&2&1&2\\0&2&-2&6\\0&4&1&2\end{array}\right).$$
+Con $R_3 \leftarrow R_3 - 2R_2$:
+$$\to\left(\begin{array}{ccc|c}1&2&1&2\\0&2&-2&6\\0&0&5&-10\end{array}\right).$$
+Tre pivot in tre colonne di incognite: soluzione unica. Risalita: dalla terza riga $5z = -10 \Rightarrow z = -2$; dalla seconda $2y - 2(-2) = 6 \Rightarrow y = 1$; dalla prima $x + 2 - 2 = 2 \Rightarrow x = 2$. **Soluzione:** $(x,y,z) = (2,1,-2)$.
+
+**Esempio 2 — Infinite soluzioni ($3\times 3$).** Il sistema
+$$\begin{cases} x + 2y - z = 1 \\ 2x + 4y - 2z = 2 \\ x - y + z = 0 \end{cases}$$
+ha la seconda equazione uguale al doppio della prima. Con $R_2 \leftarrow R_2 - 2R_1$ e $R_3 \leftarrow R_3 - R_1$, poi $R_2 \leftrightarrow R_3$:
+$$\left(\begin{array}{ccc|c}1&2&-1&1\\0&-3&2&-1\\0&0&0&0\end{array}\right).$$
+Due pivot (colonne 1 e 2), la colonna 3 è libera: $z = t$. Dalla seconda riga $-3y + 2t = -1 \Rightarrow y = \frac{1+2t}{3}$; dalla prima $x = 1 - 2y + t = \frac{1-t}{3}$. **Soluzione:** $\left(\frac{1-t}{3},\ \frac{1+2t}{3},\ t\right)$, $t\in\mathbb{R}$.
+
+**Esempio 3 — Nessuna soluzione.** Per $\begin{cases}x+y=1\\ 2x+2y=5\end{cases}$, l'operazione $R_2 \leftarrow R_2 - 2R_1$ produce la riga $(0\ 0\mid 3)$, cioè $0=3$. **Sistema incompatibile.** Le due rette $x+y=1$ e $x+y=\tfrac{5}{2}$ sono parallele.
+
+**Esempio 4 — Sistema omogeneo e sue soluzioni non banali.** Per $A = \begin{psmallmatrix}1&2&-1\\ 2&4&-2\end{psmallmatrix}$, il sistema $A\mathbf{x}=\mathbf{0}$ dopo $R_2 \leftarrow R_2 - 2R_1$ si riduce all'unica equazione $x_1 + 2x_2 - x_3 = 0$. Due variabili libere $x_2 = s$, $x_3 = t$ danno $x_1 = -2s + t$, quindi
+$$\mathbf{x} = s\begin{psmallmatrix}-2\\1\\0\end{psmallmatrix} + t\begin{psmallmatrix}1\\0\\1\end{psmallmatrix},\quad s,t\in\mathbb{R}.$$
+L'insieme delle soluzioni è un piano per l'origine: infinite soluzioni oltre a quella banale.
+
+**Esempio 5 — Gauss–Jordan (lettura diretta in RREF).** Per $\begin{cases}2x + y = 5\\ x + 3y = 10\end{cases}$ portiamo tutto in RREF:
+$$\left(\begin{array}{cc|c}2&1&5\\1&3&10\end{array}\right)\xrightarrow{R_1\leftrightarrow R_2}\left(\begin{array}{cc|c}1&3&10\\2&1&5\end{array}\right)\xrightarrow{R_2-2R_1}\left(\begin{array}{cc|c}1&3&10\\0&-5&-15\end{array}\right)$$
+$$\xrightarrow{-\frac15 R_2}\left(\begin{array}{cc|c}1&3&10\\0&1&3\end{array}\right)\xrightarrow{R_1-3R_2}\left(\begin{array}{cc|c}1&0&1\\0&1&3\end{array}\right).$$
+La RREF dà **direttamente** $x = 1$, $y = 3$, senza sostituzioni.
+
+**Esempio 6 — Sistema parametrico.** Per quali $k$ il sistema $\begin{cases}x + ky = 2\\ kx + y = 2\end{cases}$ ha infinite soluzioni? Con $R_2 \leftarrow R_2 - kR_1$:
+$$\left(\begin{array}{cc|c}1&k&2\\0&1-k^2&2-2k\end{array}\right).$$
+La seconda riga è $(1-k^2)y = 2-2k = 2(1-k)$. Se $1 - k^2 \neq 0$ (cioè $k \neq \pm 1$) c'è un unico $y$: soluzione unica. Se $k = 1$: la riga diventa $0 = 0$, sempre vera, e resta una variabile libera → **infinite soluzioni**. Se $k = -1$: la riga diventa $0 = 4$ → **nessuna soluzione**. Il valore che dà infinite soluzioni è dunque $k = 1$.
+
+**Esempio 7 — Sovradeterminato ($m > n$) e incompatibile.** Tre rette per due incognite:
+$$\begin{cases}x + y = 1\\ x - y = 3\\ 2x + y = 5.\end{cases}$$
+Con $R_2 \leftarrow R_2 - R_1$, $R_3 \leftarrow R_3 - 2R_1$, poi $R_3 \leftarrow R_3 - \tfrac12 R_2$:
+$$\left(\begin{array}{cc|c}1&1&1\\0&-2&2\\0&0&2\end{array}\right).$$
+L'ultima riga è $0 = 2$: **incompatibile**. Avere più equazioni che incognite non garantisce compatibilità — le tre rette non hanno un punto comune. (Le prime due si incrociano in $(2,-1)$, che non soddisfa la terza: $2\cdot 2 + (-1) = 3 \neq 5$.)
+
+**Esempio 8 — Soluzione generale = particolare + omogenea (applicazione del Teorema 3.2).** Per $A = \begin{psmallmatrix}1&-1&2\\ 2&-2&4\end{psmallmatrix}$, $\mathbf{b} = \begin{psmallmatrix}3\\6\end{psmallmatrix}$, dopo $R_2 \leftarrow R_2 - 2R_1$ resta la sola equazione $x_1 - x_2 + 2x_3 = 3$. Una soluzione particolare (con $x_2=x_3=0$) è $\mathbf{x}_p = (3,0,0)$; le soluzioni omogenee sono $s(1,1,0) + t(-2,0,1)$. Per il teorema:
+$$\mathbf{x} = \begin{psmallmatrix}3\\0\\0\end{psmallmatrix} + s\begin{psmallmatrix}1\\1\\0\end{psmallmatrix} + t\begin{psmallmatrix}-2\\0\\1\end{psmallmatrix},\quad s,t\in\mathbb{R}.$$
+
+## 5. Collegamenti e riepilogo
+
+Questa lezione è lo snodo operativo del modulo. Poggia sul **prodotto matrice-vettore** e sulla sua linearità, introdotti in [algebra-02-matrici], che qui usiamo sia per comprimere il sistema in $A\mathbf{x}=\mathbf{b}$ sia per dimostrare la struttura affine delle soluzioni. Il conteggio dei pivot che abbiamo usato per classificare i sistemi è esattamente la nozione di **rango**, formalizzata nella lezione successiva [algebra-04-rango-rouche-capelli], dove la trichotomia diventa il teorema di Rouché–Capelli espresso come confronto $\operatorname{rk}(A)$ contro $\operatorname{rk}([A\mid\mathbf{b}])$. L'insieme delle soluzioni omogenee, che qui appare come «combinazioni di vettori con parametri liberi», è il **nucleo** di $A$ e sarà riconosciuto come sottospazio vettoriale in [algebra-05-spazi-vettoriali]; il numero di variabili libere è la sua **dimensione**, tema di [algebra-06-indipendenza-basi] e del teorema di nullità più rango. Infine, la condizione di soluzione unica per ogni $\mathbf{b}$ nel caso quadrato si legherà all'invertibilità della matrice e al **determinante** di [algebra-08-determinanti].
+
+Fuori dall'algebra lineare, l'eliminazione di Gauss è l'algoritmo che sta dentro ogni calcolo scientifico che risolve equazioni di equilibrio: strutture in ingegneria, circuiti in elettrotecnica, reti di flusso in economia, ricostruzione d'immagine nelle TAC. In economia, i modelli input-output di Leontief e la ricerca di prezzi di equilibrio su più mercati sono sistemi lineari risolti esattamente con questo metodo; il fenomeno del malcondizionamento visto nel cursore è ciò che rende delicate, nella pratica, queste soluzioni.
+
+**Idee chiave da ricordare.** Un sistema lineare si scrive $A\mathbf{x}=\mathbf{b}$; le operazioni elementari sulle righe trasformano la matrice aumentata *senza cambiare le soluzioni*; l'eliminazione porta alla forma a scalini, dove i **pivot** decidono tutto. Con $r$ pivot e $n$ incognite: se compare $0=c\neq 0$ il sistema è impossibile; se $r=n$ la soluzione è unica; se $r<n$ ci sono $n-r$ variabili libere e infinite soluzioni. La soluzione generale di un sistema compatibile è **una particolare più tutte le omogenee**.
+
+| Situazione in forma a scalini | Numero di soluzioni |
 | --- | --- |
-| Matrice aumentata $[A\mid\mathbf{b}]$ | Sistema nella forma tabellare |
-| Forma a scalini (REF) | Pivot sotto-diagonali eliminati |
-| Forma ridotta (RREF) | Pivot = 1, azzerati sopra e sotto |
+| Pivot nella colonna dei termini noti ($0=c$, $c\neq0$) | nessuna (incompatibile) |
+| Nessun $0=c$, e $r = n$ (pivot in ogni colonna incognita) | esattamente una |
+| Nessun $0=c$, e $r < n$ | infinite, con $n-r$ variabili libere |
 
-| Caso | Condizione | Soluzioni |
-| --- | --- | --- |
-| Compatibile determinato | $\text{rk}(A) = \text{rk}([A\mid\mathbf{b}]) = n$ | Una sola |
-| Compatibile indeterminato | $\text{rk}(A) = \text{rk}([A\mid\mathbf{b}]) < n$ | Infinite ($\infty^{n-r}$) |
-| Incompatibile | $\text{rk}(A) < \text{rk}([A\mid\mathbf{b}])$ | Nessuna |
+## 6. Esercizi
 
-| Operazione sulle righe | Effetto sulle soluzioni |
-| --- | --- |
-| $R_i \leftrightarrow R_j$ | Invariate |
-| $R_i \leftarrow c\,R_i$, $c\neq 0$ | Invariate |
-| $R_i \leftarrow R_i + c\,R_j$ | Invariate |
+<details class="dim-tecnica">
+<summary>Esercizio 1 — Eliminazione di Gauss, sistema $3\times 3$</summary>
 
----
+Risolvere $\begin{cases} x + y - z = 2 \\ 2x + y + z = 7 \\ x - y + 2z = 3.\end{cases}$
 
-## 11. Esercizi
-
-<details>
-<summary>Esercizio 1 — Eliminazione di Gauss (sistema 3×3)</summary>
-
-Risolvere:
-
-$$\begin{cases} x + y - z = 2 \\ 2x + y + z = 7 \\ x - y + 2z = 3 \end{cases}$$
-
-**Soluzione:**
-
-Matrice aumentata; $R_2 \leftarrow R_2 - 2R_1$, $R_3 \leftarrow R_3 - R_1$:
-
-$$\left(\begin{array}{ccc|c}1&1&-1&2\\0&-1&3&3\\0&-2&3&1\end{array}\right)$$
-
-$R_3 \leftarrow R_3 - 2R_2$:
-
-$$\left(\begin{array}{ccc|c}1&1&-1&2\\0&-1&3&3\\0&0&-3&-5\end{array}\right)$$
-
-Sostituzione all'indietro:
-- $-3z = -5 \implies z = \frac{5}{3}$
-- $-y + 3\cdot\frac{5}{3} = 3 \implies -y = -2 \implies y = 2$
-- $x + 2 - \frac{5}{3} = 2 \implies x = \frac{5}{3}$
-
-**Soluzione:** $(x,y,z) = \left(\frac{5}{3},\; 2,\; \frac{5}{3}\right)$
+**Soluzione.** Con $R_2 \leftarrow R_2 - 2R_1$, $R_3 \leftarrow R_3 - R_1$, poi $R_3 \leftarrow R_3 - 2R_2$:
+$$\left(\begin{array}{ccc|c}1&1&-1&2\\0&-1&3&3\\0&0&-3&-5\end{array}\right).$$
+Risalita: $-3z = -5 \Rightarrow z = \tfrac53$; $-y + 3\cdot\tfrac53 = 3 \Rightarrow y = 2$; $x + 2 - \tfrac53 = 2 \Rightarrow x = \tfrac53$. **Soluzione:** $\left(\tfrac53,\,2,\,\tfrac53\right)$.
 
 </details>
 
-<details>
-<summary>Esercizio 2 — Sistema con variabile libera</summary>
+<details class="dim-tecnica">
+<summary>Esercizio 2 — Due variabili libere</summary>
 
-Trovare la soluzione generale di:
+Trovare la soluzione generale di $\begin{cases}x + 2y - z = 3\\ 2x + 4y - 2z = 6.\end{cases}$
 
-$$\begin{cases} x + 2y - z = 3 \\ 2x + 4y - 2z = 6 \end{cases}$$
-
-**Soluzione:**
-
-$R_2 \leftarrow R_2 - 2R_1$: $\left(\begin{array}{ccc|c}1&2&-1&3\\0&0&0&0\end{array}\right)$
-
-Una sola equazione: $x = 3 - 2y + z$. Variabili libere: $y = s$, $z = t$.
-
-**Soluzione:** $(3-2s+t,\; s,\; t)$ per $s, t \in \mathbb{R}$.
-
-Infinità di tipo $\infty^2$ (due variabili libere).
+**Soluzione.** $R_2 \leftarrow R_2 - 2R_1$ dà la riga nulla $(0\,0\,0\mid 0)$: resta solo $x + 2y - z = 3$. Un pivot, tre incognite, quindi $3-1=2$ variabili libere: $y = s$, $z = t$, e $x = 3 - 2s + t$. **Soluzione:** $(3-2s+t,\ s,\ t)$, $s,t\in\mathbb{R}$ (infinità di tipo $\infty^2$).
 
 </details>
 
-<details>
-<summary>Esercizio 3 — Verifica incompatibilità</summary>
+<details class="dim-tecnica">
+<summary>Esercizio 3 — Riconoscere l'incompatibilità</summary>
 
-Mostrare che il sistema è incompatibile:
+Mostrare che $\begin{cases} x - y + z = 2 \\ 2x - 2y + 2z = 5 \\ 3x - 3y + 3z = 7 \end{cases}$ non ha soluzioni.
 
-$$\begin{cases} x - y + z = 2 \\ 2x - 2y + 2z = 5 \\ 3x - 3y + 3z = 7 \end{cases}$$
-
-**Soluzione:**
-
-$R_2 \leftarrow R_2 - 2R_1$: riga $[0\;0\;0\mid 1]$ — contraddizione, sistema incompatibile.
-
-Il sistema ha tutte le equazioni proporzionali tra i coefficienti ma termini noti non proporzionali (la retta descrivibile dall'equazione $x-y+z=c$ non può avere $c=2,5/2,7/3$ contemporaneamente).
+**Soluzione.** I lati sinistri sono l'uno il doppio, l'altro il triplo del primo, ma i termini noti no. Con $R_2 \leftarrow R_2 - 2R_1$ compare $(0\,0\,0\mid 1)$, cioè $0=1$: **incompatibile**. Nessun valore di $x-y+z$ può valere contemporaneamente $2$, $\tfrac52$ e $\tfrac73$.
 
 </details>
 
-<details>
-<summary>Esercizio 4 — Gauss-Jordan (RREF)</summary>
+<details class="dim-tecnica">
+<summary>Esercizio 4 — Gauss–Jordan fino alla RREF</summary>
 
-Portare in RREF e trovare la soluzione di:
+Portare in RREF e risolvere $\begin{cases}x + 2y = 5\\ 3x + y = 10.\end{cases}$
 
-$$\begin{cases} x + 2y = 5 \\ 3x + y = 10 \end{cases}$$
-
-**Soluzione:**
-
-$\left(\begin{array}{cc|c}1&2&5\\3&1&10\end{array}\right) \xrightarrow{R_2-3R_1} \left(\begin{array}{cc|c}1&2&5\\0&-5&-5\end{array}\right) \xrightarrow{-\frac{1}{5}R_2} \left(\begin{array}{cc|c}1&2&5\\0&1&1\end{array}\right) \xrightarrow{R_1-2R_2} \left(\begin{array}{cc|c}1&0&3\\0&1&1\end{array}\right)$
-
+**Soluzione.**
+$$\left(\begin{array}{cc|c}1&2&5\\3&1&10\end{array}\right)\xrightarrow{R_2-3R_1}\left(\begin{array}{cc|c}1&2&5\\0&-5&-5\end{array}\right)\xrightarrow{-\frac15 R_2}\left(\begin{array}{cc|c}1&2&5\\0&1&1\end{array}\right)\xrightarrow{R_1-2R_2}\left(\begin{array}{cc|c}1&0&3\\0&1&1\end{array}\right).$$
 **Soluzione:** $x = 3$, $y = 1$.
 
 </details>
 
-<details>
-<summary>Esercizio 5 — Sistema omogeneo</summary>
+<details class="dim-tecnica">
+<summary>Esercizio 5 — Nucleo di una matrice</summary>
 
-Trovare il nucleo (soluzione del sistema omogeneo) per:
+Trovare tutte le soluzioni di $A\mathbf{x}=\mathbf{0}$ per $A = \begin{psmallmatrix}1&2&3\\ 2&4&6\\ 1&0&1\end{psmallmatrix}$.
 
-$$A = \begin{pmatrix}1&2&3\\2&4&6\\1&0&1\end{pmatrix}$$
-
-**Soluzione:**
-
-$R_2 \leftarrow R_2 - 2R_1$, $R_3 \leftarrow R_3 - R_1$:
-
-$$\begin{pmatrix}1&2&3\\0&0&0\\0&-2&-2\end{pmatrix} \xrightarrow{R_2\leftrightarrow R_3} \begin{pmatrix}1&2&3\\0&-2&-2\\0&0&0\end{pmatrix}$$
-
-Pivot in colonne 1 e 2. Variabile libera: $z = t$.
-
-- Riga 2: $-2y - 2t = 0 \implies y = -t$
-- Riga 1: $x + 2(-t) + 3t = 0 \implies x = -t$
-
-$$\ker(A) = \text{span}\left\{\begin{pmatrix}-1\\-1\\1\end{pmatrix}\right\}$$
-
-$\dim(\ker A) = 1 = n - \text{rk}(A) = 3 - 2 = 1$ ✓
+**Soluzione.** $R_2 \leftarrow R_2 - 2R_1$, $R_3 \leftarrow R_3 - R_1$, poi $R_2 \leftrightarrow R_3$:
+$$\begin{psmallmatrix}1&2&3\\0&-2&-2\\0&0&0\end{psmallmatrix}.$$
+Due pivot (colonne 1,2), $z = t$ libera. Dalla seconda riga $-2y - 2t = 0 \Rightarrow y = -t$; dalla prima $x + 2(-t) + 3t = 0 \Rightarrow x = -t$. Quindi $\mathbf{x} = t\,(-1,-1,1)$, $t\in\mathbb{R}$. La dimensione dello spazio delle soluzioni è $1 = n - r = 3 - 2$, coerente col conteggio dei pivot.
 
 </details>
 
-<details>
-<summary>Esercizio 6 — Sistema con parametro</summary>
+<details class="dim-tecnica">
+<summary>Esercizio 6 — Discussione con parametro</summary>
 
-Per quali valori di $k$ il sistema ha: (a) soluzione unica, (b) infinite soluzioni, (c) nessuna soluzione?
+Per quali $k$ il sistema $\begin{cases}x + y = 3\\ x + ky = 5\end{cases}$ ha (a) soluzione unica, (b) infinite, (c) nessuna?
 
-$$\begin{cases} x + y = 3 \\ x + ky = 5 \end{cases}$$
-
-**Soluzione:**
-
-$R_2 \leftarrow R_2 - R_1$: $\left(\begin{array}{cc|c}1&1&3\\0&k-1&2\end{array}\right)$
-
-(a) **Soluzione unica:** $k-1 \neq 0 \implies k \neq 1$. Allora $y = \frac{2}{k-1}$, $x = 3 - y$.
-
-(b) **Infinite soluzioni:** $k-1=0$ e $2=0$ — impossibile, non esiste $k$ per questo caso.
-
-(c) **Nessuna soluzione:** $k=1$ (allora $k-1=0$ ma $2\neq 0$).
+**Soluzione.** $R_2 \leftarrow R_2 - R_1$: $\left(\begin{smallmatrix}1&1&\mid&3\\0&k-1&\mid&2\end{smallmatrix}\right)$, cioè $(k-1)y = 2$. **(a)** Se $k \neq 1$: $y = \tfrac{2}{k-1}$ e $x = 3 - y$ — soluzione unica. **(b)** Infinite soluzioni richiederebbero $k-1=0$ e $2=0$ insieme: impossibile, non esiste alcun $k$. **(c)** Se $k = 1$: la riga è $0 = 2$ — nessuna soluzione. Questo sistema non ammette mai il caso «infinite».
 
 </details>
 
-<details>
-<summary>Esercizio 7 — Soluzione generale = particolare + omogenea</summary>
+<details class="dim-tecnica">
+<summary>Esercizio 7 — Applicare la struttura generale = particolare + omogenea</summary>
 
-Trovare la soluzione generale di $A\mathbf{x} = \mathbf{b}$ per:
+Data $A = \begin{psmallmatrix}1&-1&2\\ 2&-2&4\end{psmallmatrix}$ e $\mathbf{b} = \begin{psmallmatrix}3\\6\end{psmallmatrix}$, scrivere la soluzione generale come $\mathbf{x}_p$ più le soluzioni omogenee, e verificare con $s=t=0$.
 
-$$A = \begin{pmatrix}1&-1&2\\2&-2&4\end{pmatrix}, \quad \mathbf{b} = \begin{pmatrix}3\\6\end{pmatrix}$$
-
-**Soluzione:**
-
-$R_2 \leftarrow R_2 - 2R_1$: $\left(\begin{array}{ccc|c}1&-1&2&3\\0&0&0&0\end{array}\right)$
-
-Una equazione: $x_1 = 3 + x_2 - 2x_3$. Variabili libere: $x_2 = s$, $x_3 = t$.
-
-Soluzione particolare (con $s=t=0$): $\mathbf{x}_p = (3, 0, 0)$.
-
-Soluzione omogenea: $s(1,1,0) + t(-2,0,1)$.
-
-**Soluzione generale:**
-
-$$\mathbf{x} = \begin{pmatrix}3\\0\\0\end{pmatrix} + s\begin{pmatrix}1\\1\\0\end{pmatrix} + t\begin{pmatrix}-2\\0\\1\end{pmatrix}, \quad s,t\in\mathbb{R}$$
+**Soluzione.** $R_2 \leftarrow R_2 - 2R_1$ lascia $x_1 - x_2 + 2x_3 = 3$. Particolare: $\mathbf{x}_p = (3,0,0)$. Omogenee: da $x_1 = x_2 - 2x_3$ con $x_2=s$, $x_3=t$ si ha $s(1,1,0)+t(-2,0,1)$. Generale:
+$$\mathbf{x} = (3,0,0) + s(1,1,0) + t(-2,0,1),\quad s,t\in\mathbb{R}.$$
+Verifica: per $s=t=0$ si ottiene $(3,0,0)$ e $A(3,0,0)^\top = (3,6)^\top = \mathbf{b}$ ✓.
 
 </details>
 
-<details>
-<summary>Esercizio 8 — Sistema 4×4</summary>
+<details class="dim-tecnica">
+<summary>Esercizio 8 — Sistema $4\times 4$ e incompatibilità nascosta</summary>
 
-Risolvere:
+Discutere $\begin{cases} x_1 + x_2 + x_3 + x_4 = 4 \\ x_1 + 2x_2 + x_3 = 3 \\ x_1 + x_3 + x_4 = 3 \\ 2x_1 + x_2 + x_4 = 4.\end{cases}$
 
-$$\begin{cases} x_1 + x_2 + x_3 + x_4 = 4 \\ x_1 + 2x_2 + x_3 = 3 \\ x_1 + x_3 + x_4 = 3 \\ 2x_1 + x_2 + x_4 = 4 \end{cases}$$
-
-**Soluzione:**
-
-Matrice aumentata, eliminazione completa (ometto i passaggi intermedi):
-
-$R_2 \leftarrow R_2-R_1$: $[0,1,0,-1\mid -1]$
-
-$R_3 \leftarrow R_3-R_1$: $[0,0,0,0\mid -1]$ — **contraddizione!**
-
-Il sistema è incompatibile.
-
-(Verifica: le righe 1 e 3 differiscono solo per $x_2 - x_2 = 0$ a sinistra ma $4-3=1$ a destra — assurdo se $x_2$ contribuisce diversamente.)
+**Soluzione.** Confrontiamo la prima e la terza equazione: sottraendo, $R_3 \leftarrow R_3 - R_1$ dà $(0\,{-1}\,0\,0\mid -1)$, cioè $-x_2 = -1$, quindi $x_2 = 1$. Ora la seconda con $R_2 \leftarrow R_2 - R_1$ dà $(0\,1\,0\,{-1}\mid -1)$, cioè $x_2 - x_4 = -1 \Rightarrow x_4 = x_2 + 1 = 2$. Sostituendo nella quarta, $R_4 \leftarrow R_4 - 2R_1$ dà $(0\,{-1}\,{-2}\,{-1}\mid -4)$, cioè $-x_2 - 2x_3 - x_4 = -4 \Rightarrow -1 - 2x_3 - 2 = -4 \Rightarrow x_3 = \tfrac12$. Infine dalla prima $x_1 = 4 - x_2 - x_3 - x_4 = 4 - 1 - \tfrac12 - 2 = \tfrac12$. **Soluzione unica:** $\left(\tfrac12,\,1,\,\tfrac12,\,2\right)$. (Verifica sulla terza: $\tfrac12 + \tfrac12 + 2 = 3$ ✓.)
 
 </details>
