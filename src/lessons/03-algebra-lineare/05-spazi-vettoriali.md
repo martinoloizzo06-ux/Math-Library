@@ -49,7 +49,7 @@ fonti_integrate:
 versione: "3.0"
 data_ultima_rielaborazione: "2026-07-13"
 stato: completa
-
+profondita: approfondita
 componenti_usati:
   - slider
   - checkpoint
@@ -127,7 +127,11 @@ Vale la pena capire perché (S1) è indispensabile e non ridondante. Si potrebbe
 Geometricamente, in $\mathbb{R}^2$ i sottospazi sono soltanto tre tipi di oggetti: il sottospazio nullo $\{\mathbf{0}\}$ (il solo punto origine), le rette passanti per l'origine, e l'intero $\mathbb{R}^2$. In $\mathbb{R}^3$ si aggiungono i piani per l'origine. Il filo conduttore è netto: *un sottospazio deve sempre passare per l'origine*. Ogni retta o piano che non contiene l'origine è, al più, la traslazione di un sottospazio, ma non un sottospazio.
 
 ```checkpoint
-{"domanda": "L'insieme $W=\\{(x,y,z)\\in\\mathbb{R}^3 : x+y+z=0\\}$ è un sottospazio di $\\mathbb{R}^3$? E l'insieme $U=\\{(x,y,z): x+y+z=1\\}$?", "risposta": "$W$ sì: contiene $(0,0,0)$ perché $0+0+0=0$; se $x_1+y_1+z_1=0$ e $x_2+y_2+z_2=0$ allora la loro somma soddisfa $(x_1+x_2)+(y_1+y_2)+(z_1+z_2)=0$, e ogni multiplo $c(x,y,z)$ dà $cx+cy+cz=c\\cdot 0=0$. È un piano per l'origine. $U$ no: $(0,0,0)$ non appartiene perché $0\\neq 1$; già (S1) fallisce. $U$ è il piano $x+y+z=1$, che è $W$ traslato e non passa per l'origine."}
+[domanda]
+L'insieme $W=\{(x,y,z)\in\mathbb{R}^3 : x+y+z=0\}$ è un sottospazio di $\mathbb{R}^3$? E l'insieme $U=\{(x,y,z): x+y+z=1\}$?
+
+[risposta]
+$W$ sì: contiene $(0,0,0)$ perché $0+0+0=0$; se $x_1+y_1+z_1=0$ e $x_2+y_2+z_2=0$ allora la loro somma soddisfa $(x_1+x_2)+(y_1+y_2)+(z_1+z_2)=0$, e ogni multiplo $c(x,y,z)$ dà $cx+cy+cz=c\cdot 0=0$. È un piano per l'origine. $U$ no: $(0,0,0)$ non appartiene perché $0\neq 1$; già (S1) fallisce. $U$ è il piano $x+y+z=1$, che è $W$ traslato e non passa per l'origine.
 ```
 
 ### 2.4 Span: costruire sottospazi dai vettori
@@ -145,7 +149,11 @@ A parole: lo span raccoglie ogni vettore che si possa ottenere combinando linear
 Lo span è il ponte esatto verso il rango della lezione precedente. Ricorda la lettura del prodotto matrice-vettore per colonne: $A\mathbf{x}$ è la combinazione lineare delle colonne di $A$ con coefficienti le componenti di $\mathbf{x}$. Quindi l'immagine $\operatorname{Im}(A)=\{A\mathbf{x}:\mathbf{x}\in\mathbb{R}^n\}$ è *esattamente lo span delle colonne* di $A$. Il rango, che avevamo definito come numero di pivot, misura quante di quelle colonne sono davvero indipendenti — cioè, come vedremo nella prossima lezione, la dimensione dello span che esse generano. Immagine e nucleo, che nella lezione sul rango erano insiemi utili, si rivelano ora due sottospazi: il primo un sottospazio di $\mathbb{R}^m$ (lo spazio d'arrivo), il secondo un sottospazio di $\mathbb{R}^n$ (lo spazio di partenza).
 
 ```checkpoint
-{"domanda": "Sia $A$ una matrice $3\\times 2$. In quale spazio vive $\\operatorname{Im}(A)$ e in quale vive $\\ker(A)$? Di quali vettori è lo span, l'immagine?", "risposta": "$A$ manda vettori di $\\mathbb{R}^2$ in vettori di $\\mathbb{R}^3$. Perciò $\\operatorname{Im}(A)=\\{A\\mathbf{x}:\\mathbf{x}\\in\\mathbb{R}^2\\}$ è un sottospazio di $\\mathbb{R}^3$ (lo spazio d'arrivo), ed è lo span delle $2$ colonne di $A$, ciascuna un vettore di $\\mathbb{R}^3$. Il nucleo $\\ker(A)=\\{\\mathbf{x}\\in\\mathbb{R}^2:A\\mathbf{x}=\\mathbf{0}\\}$ è invece un sottospazio di $\\mathbb{R}^2$ (lo spazio di partenza)."}
+[domanda]
+Sia $A$ una matrice $3\times 2$. In quale spazio vive $\operatorname{Im}(A)$ e in quale vive $\ker(A)$? Di quali vettori è lo span, l'immagine?
+
+[risposta]
+$A$ manda vettori di $\mathbb{R}^2$ in vettori di $\mathbb{R}^3$. Perciò $\operatorname{Im}(A)=\{A\mathbf{x}:\mathbf{x}\in\mathbb{R}^2\}$ è un sottospazio di $\mathbb{R}^3$ (lo spazio d'arrivo), ed è lo span delle $2$ colonne di $A$, ciascuna un vettore di $\mathbb{R}^3$. Il nucleo $\ker(A)=\{\mathbf{x}\in\mathbb{R}^2:A\mathbf{x}=\mathbf{0}\}$ è invece un sottospazio di $\mathbb{R}^2$ (lo spazio di partenza).
 ```
 
 ### 2.5 Un sottospazio deve passare per l'origine: la lezione dello slider

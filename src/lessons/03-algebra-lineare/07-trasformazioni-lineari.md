@@ -49,7 +49,7 @@ fonti_integrate:
 versione: "3.0"
 data_ultima_rielaborazione: "2026-07-13"
 stato: completa
-
+profondita: approfondita
 componenti_usati:
   - slider
   - checkpoint
@@ -120,7 +120,11 @@ Entrambi sono sottospazi — il nucleo di $V$, l'immagine di $W$ — e la dimost
 *Micro-esempio.* La proiezione sull'asse $x$, $T(x,y)=(x,0)$, ha per nucleo l'asse $y$ (tutti i punti $(0,y)$ vengono schiacciati nell'origine) e per immagine l'asse $x$ (i soli punti raggiunti sono $(x,0)$). Entrambi sono rette per l'origine, cioè sottospazi di dimensione $1$; e $1+1=2=\dim\mathbb{R}^2$, un'anticipazione del teorema che segue.
 
 ```checkpoint
-{"domanda": "Per la proiezione $T(x,y,z)=(x,y,0)$ di $\\mathbb{R}^3$ in sé, che cosa sono $\\ker(T)$ e $\\operatorname{Im}(T)$, e di che dimensione sono?", "risposta": "$\\ker(T)$ è l'insieme dei $(x,y,z)$ con $(x,y,0)=(0,0,0)$, cioè $x=y=0$: è l'asse $z$, $\\ker(T)=\\{(0,0,z)\\}$, dimensione $1$. $\\operatorname{Im}(T)$ è l'insieme dei punti raggiunti, cioè tutti i $(x,y,0)$: il piano $z=0$, dimensione $2$. Verifica: $\\dim\\ker(T)+\\dim\\operatorname{Im}(T)=1+2=3=\\dim\\mathbb{R}^3$."}
+[domanda]
+Per la proiezione $T(x,y,z)=(x,y,0)$ di $\mathbb{R}^3$ in sé, che cosa sono $\ker(T)$ e $\operatorname{Im}(T)$, e di che dimensione sono?
+
+[risposta]
+$\ker(T)$ è l'insieme dei $(x,y,z)$ con $(x,y,0)=(0,0,0)$, cioè $x=y=0$: è l'asse $z$, $\ker(T)=\{(0,0,z)\}$, dimensione $1$. $\operatorname{Im}(T)$ è l'insieme dei punti raggiunti, cioè tutti i $(x,y,0)$: il piano $z=0$, dimensione $2$. Verifica: $\dim\ker(T)+\dim\operatorname{Im}(T)=1+2=3=\dim\mathbb{R}^3$.
 ```
 
 ### 2.4 Il teorema fondamentale delle applicazioni lineari
@@ -144,7 +148,11 @@ L'**iniettività** equivale alla banalità del nucleo: $T$ è iniettiva se e sol
 Una trasformazione lineare che sia al tempo stesso iniettiva e suriettiva si dice **isomorfismo**: è una corrispondenza biunivoca che preserva la struttura lineare, e ammette un'inversa $T^{-1}$ anch'essa lineare. Per una $T\colon\mathbb{R}^n\to\mathbb{R}^n$ (partenza e arrivo della stessa dimensione), essere un isomorfismo equivale all'invertibilità della matrice $A$, cioè — come vedremo nella prossima lezione — al fatto che il suo determinante sia diverso da zero. Un isomorfismo dichiara che due spazi sono «la stessa cosa» dal punto di vista lineare, pur potendo apparire diversi: per esempio $P_2$ e $\mathbb{R}^3$ sono isomorfi, tramite la trasformazione che manda un polinomio nella terna dei suoi coefficienti.
 
 ```checkpoint
-{"domanda": "Una trasformazione lineare $T\\colon\\mathbb{R}^4\\to\\mathbb{R}^4$ ha matrice $A$ con $\\operatorname{rk}(A)=4$. È iniettiva? Suriettiva? Un isomorfismo? E se invece fosse $T\\colon\\mathbb{R}^4\\to\\mathbb{R}^3$ con $\\operatorname{rk}(A)=3$?", "risposta": "Primo caso: $n=m=4$ e rango $4$. Iniettiva sì ($\\operatorname{rk}=n=4$, nucleo banale); suriettiva sì ($\\operatorname{rk}=m=4$, immagine tutto $\\mathbb{R}^4$); dunque isomorfismo, e $A$ è invertibile. Secondo caso: $T\\colon\\mathbb{R}^4\\to\\mathbb{R}^3$ con rango $3$. Suriettiva sì ($\\operatorname{rk}=m=3$). Iniettiva no: $\\dim\\ker=n-\\operatorname{rk}=4-3=1>0$. Non è un isomorfismo (gli spazi hanno dimensioni diverse, non potrebbe esserlo)."}
+[domanda]
+Una trasformazione lineare $T\colon\mathbb{R}^4\to\mathbb{R}^4$ ha matrice $A$ con $\operatorname{rk}(A)=4$. È iniettiva? Suriettiva? Un isomorfismo? E se invece fosse $T\colon\mathbb{R}^4\to\mathbb{R}^3$ con $\operatorname{rk}(A)=3$?
+
+[risposta]
+Primo caso: $n=m=4$ e rango $4$. Iniettiva sì ($\operatorname{rk}=n=4$, nucleo banale); suriettiva sì ($\operatorname{rk}=m=4$, immagine tutto $\mathbb{R}^4$); dunque isomorfismo, e $A$ è invertibile. Secondo caso: $T\colon\mathbb{R}^4\to\mathbb{R}^3$ con rango $3$. Suriettiva sì ($\operatorname{rk}=m=3$). Iniettiva no: $\dim\ker=n-\operatorname{rk}=4-3=1>0$. Non è un isomorfismo (gli spazi hanno dimensioni diverse, non potrebbe esserlo).
 ```
 
 ### 2.6 Geometria, composizione e lo slider

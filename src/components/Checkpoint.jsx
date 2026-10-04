@@ -13,14 +13,21 @@ const MD = {
 const DOMANDA_MARKER  = '[domanda]';
 const RISPOSTA_MARKER = '[risposta]';
 
-export default function Checkpoint({ source }) {
+export default function Checkpoint({ source, lessonId }) {
   const raw = source || '';
   const di = raw.indexOf(DOMANDA_MARKER);
   const ri = raw.indexOf(RISPOSTA_MARKER);
 
-  // Fallback: nessun marcatore riconosciuto
+  // Nessun marcatore riconosciuto: l'unica sintassi ammessa è [domanda]/[risposta]
   if (di === -1 && ri === -1) {
-    return <pre className="checkpoint checkpoint--raw">{raw}</pre>;
+    if (import.meta.env.DEV) {
+      console.warn(`[Checkpoint] blocco non valido${lessonId ? ` in "${lessonId}"` : ''}: usa [domanda] e [risposta]. Inizio blocco: ${raw.trim().slice(0, 80)}`);
+    }
+    return (
+      <div className="checkpoint checkpoint--error" role="alert">
+        <strong>Checkpoint non valido:</strong> usa [domanda] e [risposta]
+      </div>
+    );
   }
 
   let domanda = '';

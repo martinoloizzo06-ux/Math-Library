@@ -50,7 +50,7 @@ fonti_integrate:
 versione: "3.0"
 data_ultima_rielaborazione: "2026-07-13"
 stato: completa
-
+profondita: approfondita
 componenti_usati:
   - slider
   - checkpoint
@@ -129,7 +129,11 @@ Il metodo procede in due tempi.
 *Micro-esempio.* Ridotto il sistema alla forma a scalini con ultima riga $5z = -10$, la risalita dà subito $z = -2$; sostituendo nella riga sopra si ricava $y$, e infine dalla prima riga $x$. Ogni passo usa solo valori già calcolati.
 
 ```checkpoint
-{"domanda":"Durante l'eliminazione ottieni la riga $(0\\ 0\\ 0 \\mid 4)$ nella matrice aumentata. Che cosa puoi concludere immediatamente sul sistema, senza continuare i conti?","risposta":"Quella riga rappresenta l'equazione $0\\cdot x_1 + \\cdots + 0\\cdot x_n = 4$, cioè $0 = 4$: una contraddizione. Nessuna scelta delle incognite può renderla vera, quindi il sistema è **incompatibile** (nessuna soluzione). È il segnale definitivo di incompatibilità: un pivot nella colonna dei termini noti. Basta questa riga per fermarsi e concludere."}
+[domanda]
+Durante l'eliminazione ottieni la riga $(0\ 0\ 0 \mid 4)$ nella matrice aumentata. Che cosa puoi concludere immediatamente sul sistema, senza continuare i conti?
+
+[risposta]
+Quella riga rappresenta l'equazione $0\cdot x_1 + \cdots + 0\cdot x_n = 4$, cioè $0 = 4$: una contraddizione. Nessuna scelta delle incognite può renderla vera, quindi il sistema è **incompatibile** (nessuna soluzione). È il segnale definitivo di incompatibilità: un pivot nella colonna dei termini noti. Basta questa riga per fermarsi e concludere.
 ```
 
 ### 2.5 Classificazione: i tre destini di un sistema
@@ -204,7 +208,11 @@ quindi $\mathbf{x}_h$ risolve l'omogeneo, e per costruzione $\mathbf{x}^* = \mat
 L'interpretazione geometrica è che l'insieme delle soluzioni non è un sottospazio vettoriale (non contiene l'origine, salvo il caso $\mathbf{b}=\mathbf{0}$) ma un suo **traslato**: si prende l'insieme delle soluzioni omogenee — che, lo vedremo, è un sottospazio, il *nucleo* di $A$ — e lo si sposta rigidamente del vettore $\mathbf{x}_p$. Ne segue un corollario utile: un sistema compatibile ha soluzione unica se e solo se il suo omogeneo associato ha solo la soluzione banale $\mathbf{x}_h = \mathbf{0}$.
 
 ```checkpoint
-{"domanda":"Un sistema $A\\mathbf{x}=\\mathbf{b}$ ha $\\mathbf{x}_p=(1,0,2)$ come soluzione, e il sistema omogeneo associato ha soluzioni $t\\,(1,-1,1)$ al variare di $t\\in\\mathbb{R}$. Scrivi tutte le soluzioni del sistema completo e di' quante sono.","risposta":"Per il teorema, ogni soluzione è $\\mathbf{x}_p+\\mathbf{x}_h$, cioè $(1,0,2)+t\\,(1,-1,1)=(1+t,\\,-t,\\,2+t)$ per $t\\in\\mathbb{R}$. Sono **infinite** (una retta nello spazio, con un grado di libertà): la soluzione omogenea non banale segnala la presenza di una variabile libera. Verifica veloce: per $t=0$ si riottiene $\\mathbf{x}_p=(1,0,2)$."}
+[domanda]
+Un sistema $A\mathbf{x}=\mathbf{b}$ ha $\mathbf{x}_p=(1,0,2)$ come soluzione, e il sistema omogeneo associato ha soluzioni $t\,(1,-1,1)$ al variare di $t\in\mathbb{R}$. Scrivi tutte le soluzioni del sistema completo e di' quante sono.
+
+[risposta]
+Per il teorema, ogni soluzione è $\mathbf{x}_p+\mathbf{x}_h$, cioè $(1,0,2)+t\,(1,-1,1)=(1+t,\,-t,\,2+t)$ per $t\in\mathbb{R}$. Sono **infinite** (una retta nello spazio, con un grado di libertà): la soluzione omogenea non banale segnala la presenza di una variabile libera. Verifica veloce: per $t=0$ si riottiene $\mathbf{x}_p=(1,0,2)$.
 ```
 
 ## 4. Esempi

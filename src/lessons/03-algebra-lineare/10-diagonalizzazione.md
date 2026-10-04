@@ -26,7 +26,7 @@ collegamenti:
   - algebra-07-trasformazioni-lineari
   - algebra-09-autovalori-autovettori
   - algebra-14-forme-quadratiche
-  - analisi-24-serie-taylor-maclaurin
+  - analisi-19-serie-taylor
 
 fonti_integrate:
   - id_fonte: villanacci-math2
@@ -49,7 +49,7 @@ fonti_integrate:
 versione: "3.0"
 data_ultima_rielaborazione: "2026-07-13"
 stato: completa
-
+profondita: approfondita
 componenti_usati:
   - slider
   - checkpoint
@@ -73,7 +73,7 @@ Il guadagno non è solo calcolistico, è concettuale. Diagonalizzare significa *
 
 ### 2.1 Similitudine: la stessa trasformazione in coordinate diverse
 
-Prima di diagonalizzare, chiariamo cosa significa «cambiare coordinate» per una matrice. Se $P$ è invertibile, le sue colonne formano una base, e $P^{-1}\mathbf{x}$ sono le coordinate del vettore $\mathbf{x}$ rispetto a quella base $[algebra-06-indipendenza-basi]$.
+Prima di diagonalizzare, chiariamo cosa significa «cambiare coordinate» per una matrice. Se $P$ è invertibile, le sue colonne formano una base, e $P^{-1}\mathbf{x}$ sono le coordinate del vettore $\mathbf{x}$ rispetto a quella base [Indipendenza lineare, basi e dimensione](/algebra-lineare/spazi-vettoriali/06-indipendenza-basi).
 
 **Definizione (similitudine).** Due matrici $A,B\in M_{n,n}(\mathbb{R})$ sono **simili** se esiste una matrice invertibile $P$ tale che
 $$B=P^{-1}AP.$$
@@ -104,7 +104,11 @@ Riletto attraverso le molteplicità della lezione precedente, il criterio divent
 *Micro-esempio.* $\begin{psmallmatrix}4&1\\2&3\end{psmallmatrix}$ ha autovalori distinti $2$ e $5$: diagonalizzabile. Invece $\begin{psmallmatrix}2&1\\0&2\end{psmallmatrix}$ ha $\lambda=2$ con $m_a=2$ ma $m_g=1$: **non** diagonalizzabile, le manca un autovettore.
 
 ```checkpoint
-{"domanda": "Una matrice $3\\times 3$ ha autovalori $2, 2, 5$; l'autospazio di $\\lambda=2$ ha dimensione $1$. La matrice è diagonalizzabile?", "risposta": "No. Per $\\lambda=2$ si ha $m_a=2$ (compare due volte come radice) ma $m_g=1$ (autospazio di dimensione $1$). Poiché $m_g<m_a$, l'autospazio non è pieno: si contano solo $1+1=2$ autovettori indipendenti in totale, meno dei $3$ necessari. Non c'è una base di autovettori, quindi la matrice non è diagonalizzabile."}
+[domanda]
+Una matrice $3\times 3$ ha autovalori $2, 2, 5$; l'autospazio di $\lambda=2$ ha dimensione $1$. La matrice è diagonalizzabile?
+
+[risposta]
+No. Per $\lambda=2$ si ha $m_a=2$ (compare due volte come radice) ma $m_g=1$ (autospazio di dimensione $1$). Poiché $m_g<m_a$, l'autospazio non è pieno: si contano solo $1+1=2$ autovettori indipendenti in totale, meno dei $3$ necessari. Non c'è una base di autovettori, quindi la matrice non è diagonalizzabile.
 ```
 
 ### 2.4 La procedura
@@ -121,7 +125,7 @@ Il vero potere della diagonalizzazione emerge nel calcolo. Da $A=P\Lambda P^{-1}
 $$A^k=P\Lambda^k P^{-1},\qquad\Lambda^k=\operatorname{diag}(\lambda_1^k,\dots,\lambda_n^k),$$
 perché nei prodotti ripetuti i fattori interni $P^{-1}P=I$ si elidono a catena (dimostrazione in §3). Elevare a potenza una matrice diventa elevare a potenza $n$ numeri scalari.
 
-Questo si estende a qualunque funzione esprimibile come serie di potenze $[analisi-24-serie-taylor-maclaurin]$: se $f$ è una tale funzione, allora
+Questo si estende a qualunque funzione esprimibile come serie di potenze [Serie di Taylor e di MacLaurin](/analisi/successioni-e-serie/19-serie-taylor): se $f$ è una tale funzione, allora
 $$f(A)=P\,f(\Lambda)\,P^{-1},\qquad f(\Lambda)=\operatorname{diag}\big(f(\lambda_1),\dots,f(\lambda_n)\big).$$
 Il caso più importante è l'**esponenziale di matrice**, definito dalla serie $e^{tA}=\sum_{k\ge0}\frac{t^k A^k}{k!}$, che diagonalizzato dà
 $$e^{tA}=P\,\operatorname{diag}\big(e^{t\lambda_1},\dots,e^{t\lambda_n}\big)\,P^{-1}.$$
@@ -134,7 +138,11 @@ Lo slider mostra il principio del disaccoppiamento in tempo discreto: lo stato $
 ```
 
 ```checkpoint
-{"domanda": "Perché $A^k=P\\Lambda^k P^{-1}$ e non $A^k=(P\\Lambda)^k$?", "risposta": "Perché $A^k=(P\\Lambda P^{-1})(P\\Lambda P^{-1})\\cdots(P\\Lambda P^{-1})$ con $k$ fattori: ogni coppia interna $P^{-1}P$ vale $I$ e si elide, lasciando $P\\Lambda^k P^{-1}$. Restano solo la $P$ iniziale e la $P^{-1}$ finale, con $\\Lambda^k$ in mezzo. La forma $(P\\Lambda)^k$ sarebbe sbagliata perché non tiene conto delle traduzioni di ritorno intermedie."}
+[domanda]
+Perché $A^k=P\Lambda^k P^{-1}$ e non $A^k=(P\Lambda)^k$?
+
+[risposta]
+Perché $A^k=(P\Lambda P^{-1})(P\Lambda P^{-1})\cdots(P\Lambda P^{-1})$ con $k$ fattori: ogni coppia interna $P^{-1}P$ vale $I$ e si elide, lasciando $P\Lambda^k P^{-1}$. Restano solo la $P$ iniziale e la $P^{-1}$ finale, con $\Lambda^k$ in mezzo. La forma $(P\Lambda)^k$ sarebbe sbagliata perché non tiene conto delle traduzioni di ritorno intermedie.
 ```
 
 ---
@@ -159,7 +167,7 @@ Questo dimostra il **criterio fondamentale** (§2.3): $A$ è diagonalizzabile se
 
 Scriviamo il polinomio caratteristico di $B$ e sostituiamo $B=P^{-1}AP$. Poiché $\lambda I=P^{-1}(\lambda I)P$ (l'identità commuta con tutto), possiamo raccogliere:
 $$B-\lambda I=P^{-1}AP-P^{-1}(\lambda I)P=P^{-1}(A-\lambda I)P.$$
-Applichiamo ora la moltiplicatività del determinante $[algebra-08-determinanti]$ e la regola $\det(P^{-1})=1/\det(P)$:
+Applichiamo ora la moltiplicatività del determinante [Determinanti](/algebra-lineare/spazi-vettoriali/08-determinanti) e la regola $\det(P^{-1})=1/\det(P)$:
 $$\det(B-\lambda I)=\det(P^{-1})\det(A-\lambda I)\det(P)=\frac{1}{\det(P)}\det(A-\lambda I)\det(P)=\det(A-\lambda I).$$
 I due polinomi coincidono. $\blacksquare$
 
@@ -207,7 +215,7 @@ Il calcolo diretto avrebbe richiesto nove moltiplicazioni matriciali.
 
 ## 5. Collegamenti e riepilogo
 
-La diagonalizzazione è il punto in cui gli autovalori $[algebra-09-autovalori-autovettori]$ smettono di essere un calcolo isolato e diventano un cambio di prospettiva. Poggia sull'idea di base $[algebra-06-indipendenza-basi]$ — diagonalizzare significa trovare una base di autovettori — e sul cambio di coordinate delle trasformazioni lineari $[algebra-07-trasformazioni-lineari]$, di cui la similitudine $B=P^{-1}AP$ è l'espressione matriciale. Il criterio di diagonalizzabilità rende operativa la distinzione tra molteplicità algebrica e geometrica: il caso $m_g<m_a$ è precisamente l'ostacolo, la «carenza di autovettori» che manda alla forma di Jordan. Guardando avanti, per le matrici simmetriche il teorema spettrale garantirà non solo la diagonalizzabilità ma la possibilità di scegliere $P$ ortogonale, con conseguenze sulle forme quadratiche e sulla classificazione dei punti critici in ottimizzazione $[algebra-14-forme-quadratiche]$. L'estensione alle funzioni di matrice, in particolare all'esponenziale, poggia sulle serie di potenze $[analisi-24-serie-taylor-maclaurin]$ e apre la porta ai sistemi differenziali lineari, ai processi di Markov e a ogni modello di evoluzione lineare.
+La diagonalizzazione è il punto in cui gli autovalori [Autovalori e autovettori](/algebra-lineare/autovalori-e-diagonalizzazione/09-autovalori-autovettori) smettono di essere un calcolo isolato e diventano un cambio di prospettiva. Poggia sull'idea di base [Indipendenza lineare, basi e dimensione](/algebra-lineare/spazi-vettoriali/06-indipendenza-basi) — diagonalizzare significa trovare una base di autovettori — e sul cambio di coordinate delle trasformazioni lineari [Trasformazioni lineari](/algebra-lineare/spazi-vettoriali/07-trasformazioni-lineari), di cui la similitudine $B=P^{-1}AP$ è l'espressione matriciale. Il criterio di diagonalizzabilità rende operativa la distinzione tra molteplicità algebrica e geometrica: il caso $m_g<m_a$ è precisamente l'ostacolo, la «carenza di autovettori» che manda alla forma di Jordan. Guardando avanti, per le matrici simmetriche il teorema spettrale garantirà non solo la diagonalizzabilità ma la possibilità di scegliere $P$ ortogonale, con conseguenze sulle forme quadratiche e sulla classificazione dei punti critici in ottimizzazione [Matrici simmetriche e forme quadratiche](/algebra-lineare/autovalori-e-diagonalizzazione/14-forme-quadratiche). L'estensione alle funzioni di matrice, in particolare all'esponenziale, poggia sulle serie di potenze [Serie di Taylor e di MacLaurin](/analisi/successioni-e-serie/19-serie-taylor) e apre la porta ai sistemi differenziali lineari, ai processi di Markov e a ogni modello di evoluzione lineare.
 
 L'essenziale da trattenere. $A$ è diagonalizzabile quando è simile a una diagonale, $A=P\Lambda P^{-1}$: le colonne di $P$ sono autovettori, la diagonale di $\Lambda$ i corrispondenti autovalori. Ciò accade se e solo se esiste una base di $n$ autovettori indipendenti, equivalentemente se per ogni autovalore $m_g=m_a$ e le molteplicità sommano a $n$; condizione sufficiente comoda è avere $n$ autovalori distinti. Matrici simili condividono polinomio caratteristico, autovalori, traccia e determinante. Il vantaggio pratico è il calcolo: $A^k=P\Lambda^k P^{-1}$ e, più in generale, $f(A)=Pf(\Lambda)P^{-1}$ per ogni funzione analitica, con l'esponenziale $e^{tA}=P\operatorname{diag}(e^{t\lambda_i})P^{-1}$ che risolve $\dot{\mathbf{x}}=A\mathbf{x}$. In ogni sistema evolutivo, diagonalizzare disaccoppia le variabili in modi indipendenti e l'autovalore dominante in modulo ne governa il destino a lungo termine.
 

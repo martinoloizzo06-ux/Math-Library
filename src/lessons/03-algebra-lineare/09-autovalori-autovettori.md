@@ -49,7 +49,7 @@ fonti_integrate:
 versione: "3.0"
 data_ultima_rielaborazione: "2026-07-13"
 stato: completa
-
+profondita: approfondita
 componenti_usati:
   - slider
   - checkpoint
@@ -86,7 +86,7 @@ dove l'identità $I$ serve a poter sottrarre $\lambda$ (uno scalare) da $A$ (una
 
 ### 2.2 Il polinomio caratteristico
 
-Perché $(A-\lambda I)\mathbf{v}=\mathbf{0}$ ammetta soluzioni non nulle, la matrice $A-\lambda I$ deve essere singolare: un sistema omogeneo ha soluzioni oltre a quella banale se e solo se la matrice dei coefficienti non è invertibile. Per il criterio del determinante $[algebra-08-determinanti]$, questo accade esattamente quando
+Perché $(A-\lambda I)\mathbf{v}=\mathbf{0}$ ammetta soluzioni non nulle, la matrice $A-\lambda I$ deve essere singolare: un sistema omogeneo ha soluzioni oltre a quella banale se e solo se la matrice dei coefficienti non è invertibile. Per il criterio del determinante [Determinanti](/algebra-lineare/spazi-vettoriali/08-determinanti), questo accade esattamente quando
 
 $$p(\lambda)=\det(A-\lambda I)=0.$$
 
@@ -99,7 +99,11 @@ dove $\operatorname{tr}(A)=a+d$ è la **traccia** (somma degli elementi diagonal
 *Micro-esempio.* Per $A=\begin{psmallmatrix}4&1\\2&3\end{psmallmatrix}$: $\operatorname{tr}(A)=7$, $\det(A)=10$, quindi $p(\lambda)=\lambda^2-7\lambda+10=(\lambda-2)(\lambda-5)$. Gli autovalori sono $2$ e $5$.
 
 ```checkpoint
-{"domanda": "Perché gli autovalori di $A$ sono esattamente le radici dell'equazione $\\det(A-\\lambda I)=0$, e non semplicemente i valori che rendono $(A-\\lambda I)\\mathbf{v}=\\mathbf{0}$?", "risposta": "Un autovettore è per definizione un vettore $\\mathbf{v}\\neq\\mathbf{0}$ nel nucleo di $A-\\lambda I$. Il sistema omogeneo $(A-\\lambda I)\\mathbf{v}=\\mathbf{0}$ ha soluzioni non nulle se e solo se $A-\\lambda I$ è singolare, e per il criterio del determinante ciò equivale a $\\det(A-\\lambda I)=0$. Quindi $\\lambda$ è autovalore esattamente quando annulla il polinomio caratteristico."}
+[domanda]
+Perché gli autovalori di $A$ sono esattamente le radici dell'equazione $\det(A-\lambda I)=0$, e non semplicemente i valori che rendono $(A-\lambda I)\mathbf{v}=\mathbf{0}$?
+
+[risposta]
+Un autovettore è per definizione un vettore $\mathbf{v}\neq\mathbf{0}$ nel nucleo di $A-\lambda I$. Il sistema omogeneo $(A-\lambda I)\mathbf{v}=\mathbf{0}$ ha soluzioni non nulle se e solo se $A-\lambda I$ è singolare, e per il criterio del determinante ciò equivale a $\det(A-\lambda I)=0$. Quindi $\lambda$ è autovalore esattamente quando annulla il polinomio caratteristico.
 ```
 
 ### 2.3 Autospazi
@@ -109,7 +113,7 @@ Una volta trovato un autovalore $\lambda_0$, i suoi autovettori non sono isolati
 **Definizione (autospazio).** L'**autospazio** associato a $\lambda_0$ è
 $$V_{\lambda_0}=\ker(A-\lambda_0 I)=\{\mathbf{v}\in\mathbb{R}^n:\ A\mathbf{v}=\lambda_0\mathbf{v}\}.$$
 
-È un sottospazio perché nucleo di una matrice $[algebra-07-trasformazioni-lineari]$, e per un autovalore è sempre almeno di dimensione $1$ (contiene un autovettore non nullo). Ogni multiplo non nullo di un autovettore è ancora un autovettore con lo stesso autovalore: gli autovettori sono definiti «a meno di scala», e parlare di *direzione* invariante è più corretto che parlare di un singolo vettore.
+È un sottospazio perché nucleo di una matrice [Trasformazioni lineari](/algebra-lineare/spazi-vettoriali/07-trasformazioni-lineari), e per un autovalore è sempre almeno di dimensione $1$ (contiene un autovettore non nullo). Ogni multiplo non nullo di un autovettore è ancora un autovettore con lo stesso autovalore: gli autovettori sono definiti «a meno di scala», e parlare di *direzione* invariante è più corretto che parlare di un singolo vettore.
 
 *Micro-esempio.* Per $\lambda_2=5$ della matrice precedente, $A-5I=\begin{psmallmatrix}-1&1\\2&-2\end{psmallmatrix}$; il nucleo è la retta $v_1=v_2$, cioè $V_5=\operatorname{span}\{(1,1)\}$, un autospazio di dimensione $1$.
 
@@ -129,7 +133,11 @@ la cui parte destra dimostreremo in §3. La geometria non può mai superare l'al
 *Micro-esempio.* La matrice $J=\begin{psmallmatrix}2&1\\0&2\end{psmallmatrix}$ ha $p(\lambda)=(2-\lambda)^2$, dunque $\lambda=2$ con $m_a=2$. Ma $J-2I=\begin{psmallmatrix}0&1\\0&0\end{psmallmatrix}$ ha nucleo di dimensione $1$ (solo i multipli di $(1,0)$), quindi $m_g=1<2$. È il prototipo di matrice non diagonalizzabile.
 
 ```checkpoint
-{"domanda": "La matrice $\\begin{pmatrix}5&1\\\\0&5\\end{pmatrix}$ ha un solo autovalore $\\lambda=5$. Quanto valgono $m_a$ e $m_g$? Cosa implica il confronto?", "risposta": "Il polinomio caratteristico è $(5-\\lambda)^2$, quindi $m_a=2$. L'autospazio è il nucleo di $\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$, cioè $\\operatorname{span}\\{(1,0)\\}$, di dimensione $1$: dunque $m_g=1$. Poiché $m_g<m_a$, l'autovalore è carente di autovettori e la matrice non è diagonalizzabile."}
+[domanda]
+La matrice $\begin{pmatrix}5&1\\0&5\end{pmatrix}$ ha un solo autovalore $\lambda=5$. Quanto valgono $m_a$ e $m_g$? Cosa implica il confronto?
+
+[risposta]
+Il polinomio caratteristico è $(5-\lambda)^2$, quindi $m_a=2$. L'autospazio è il nucleo di $\begin{pmatrix}0&1\\0&0\end{pmatrix}$, cioè $\operatorname{span}\{(1,0)\}$, di dimensione $1$: dunque $m_g=1$. Poiché $m_g<m_a$, l'autovalore è carente di autovettori e la matrice non è diagonalizzabile.
 ```
 
 ### 2.5 Traccia, determinante e proprietà delle potenze
@@ -156,7 +164,7 @@ Gli autovettori di $A$ restano autovettori di ogni potenza $A^k$, con autovalore
 
 Le matrici simmetriche ($A=A^T$) godono di proprietà spettrali eccezionali, che ne fanno le protagoniste delle applicazioni (covarianza in statistica, forme quadratiche, energia in fisica).
 
-Se $A=A^T$ è reale, allora tutti i suoi autovalori sono **reali**, e autovettori associati ad autovalori **distinti** sono **ortogonali** (non solo indipendenti). Questo è un caso particolarissimo: per una matrice generica gli autovettori di autovalori diversi sono indipendenti, ma quasi mai perpendicolari. La dimostrazione dell'ortogonalità è in §3; l'importanza di questo fatto emergerà con il teorema spettrale nella lezione sulle forme quadratiche $[algebra-14-forme-quadratiche]$.
+Se $A=A^T$ è reale, allora tutti i suoi autovalori sono **reali**, e autovettori associati ad autovalori **distinti** sono **ortogonali** (non solo indipendenti). Questo è un caso particolarissimo: per una matrice generica gli autovettori di autovalori diversi sono indipendenti, ma quasi mai perpendicolari. La dimostrazione dell'ortogonalità è in §3; l'importanza di questo fatto emergerà con il teorema spettrale nella lezione sulle forme quadratiche [Matrici simmetriche e forme quadratiche](/algebra-lineare/autovalori-e-diagonalizzazione/14-forme-quadratiche).
 
 *Micro-esempio.* $A=\begin{psmallmatrix}3&1\\1&3\end{psmallmatrix}$ è simmetrica: autovalori $2$ e $4$ (reali), con autovettori $(1,-1)$ e $(1,1)$; il loro prodotto scalare $1\cdot1+(-1)\cdot1=0$ conferma l'ortogonalità.
 
@@ -202,7 +210,7 @@ Queste due identità valgono anche quando gli autovalori sono complessi: compare
 
 <details class="dim-tecnica"><summary>Dimostrazione: $m_g(\lambda_0)\le m_a(\lambda_0)$</summary>
 
-Sia $\lambda_0$ un autovalore con molteplicità geometrica $g=m_g(\lambda_0)=\dim V_{\lambda_0}$. Scegliamo una base $\mathbf{w}_1,\dots,\mathbf{w}_g$ dell'autospazio $V_{\lambda_0}$ e completiamola a una base $\mathbf{w}_1,\dots,\mathbf{w}_g,\mathbf{w}_{g+1},\dots,\mathbf{w}_n$ di tutto $\mathbb{R}^n$ (è sempre possibile, per il completamento a base $[algebra-06-indipendenza-basi]$).
+Sia $\lambda_0$ un autovalore con molteplicità geometrica $g=m_g(\lambda_0)=\dim V_{\lambda_0}$. Scegliamo una base $\mathbf{w}_1,\dots,\mathbf{w}_g$ dell'autospazio $V_{\lambda_0}$ e completiamola a una base $\mathbf{w}_1,\dots,\mathbf{w}_g,\mathbf{w}_{g+1},\dots,\mathbf{w}_n$ di tutto $\mathbb{R}^n$ (è sempre possibile, per il completamento a base [Indipendenza lineare, basi e dimensione](/algebra-lineare/spazi-vettoriali/06-indipendenza-basi)).
 
 Rispetto a questa base, la matrice che rappresenta la trasformazione $\mathbf{x}\mapsto A\mathbf{x}$ ha una struttura a blocchi. Infatti $A\mathbf{w}_j=\lambda_0\mathbf{w}_j$ per $j=1,\dots,g$ (i primi $g$ vettori sono autovettori), quindi le prime $g$ colonne della matrice rappresentativa $B$ contengono $\lambda_0$ sulla diagonale e zeri altrove nelle prime $g$ righe:
 $$B=\begin{pmatrix}\lambda_0 I_g & * \\ 0 & C\end{pmatrix},$$
@@ -252,7 +260,7 @@ Il fatto che gli autovalori di una matrice simmetrica reale siano essi stessi re
 
 ## 5. Collegamenti e riepilogo
 
-Gli autovalori intrecciano tutti i fili dell'algebra lineare costruiti finora. Nascono dal determinante $[algebra-08-determinanti]$, che fornisce il test di singolarità $\det(A-\lambda I)=0$ da cui si estrae il polinomio caratteristico; vivono nei nuclei $\ker(A-\lambda I)$, cioè negli autospazi, ereditando dalla teoria delle trasformazioni lineari $[algebra-07-trasformazioni-lineari]$ il fatto di essere sottospazi; e la loro indipendenza per autovalori distinti si appoggia al concetto di base $[algebra-06-indipendenza-basi]$. Il legame più profondo è però con la lezione successiva: quando gli autovettori sono abbastanza numerosi da formare una base — cioè quando per ogni autovalore $m_g=m_a$ — la matrice si può *diagonalizzare*, riscrivere cioè come una semplice scala lungo assi propri. Il caso $m_g<m_a$ dell'Esempio 7 è precisamente l'ostacolo alla diagonalizzazione. Per le matrici simmetriche, gli autovettori ortogonali di §2.6 conducono al teorema spettrale e alla classificazione delle forme quadratiche $[algebra-14-forme-quadratiche]$, con applicazione diretta all'ottimizzazione multivariata (segno dell'Hessiana) e alla PCA in statistica.
+Gli autovalori intrecciano tutti i fili dell'algebra lineare costruiti finora. Nascono dal determinante [Determinanti](/algebra-lineare/spazi-vettoriali/08-determinanti), che fornisce il test di singolarità $\det(A-\lambda I)=0$ da cui si estrae il polinomio caratteristico; vivono nei nuclei $\ker(A-\lambda I)$, cioè negli autospazi, ereditando dalla teoria delle trasformazioni lineari [Trasformazioni lineari](/algebra-lineare/spazi-vettoriali/07-trasformazioni-lineari) il fatto di essere sottospazi; e la loro indipendenza per autovalori distinti si appoggia al concetto di base [Indipendenza lineare, basi e dimensione](/algebra-lineare/spazi-vettoriali/06-indipendenza-basi). Il legame più profondo è però con la lezione successiva: quando gli autovettori sono abbastanza numerosi da formare una base — cioè quando per ogni autovalore $m_g=m_a$ — la matrice si può *diagonalizzare*, riscrivere cioè come una semplice scala lungo assi propri. Il caso $m_g<m_a$ dell'Esempio 7 è precisamente l'ostacolo alla diagonalizzazione. Per le matrici simmetriche, gli autovettori ortogonali di §2.6 conducono al teorema spettrale e alla classificazione delle forme quadratiche [Matrici simmetriche e forme quadratiche](/algebra-lineare/autovalori-e-diagonalizzazione/14-forme-quadratiche), con applicazione diretta all'ottimizzazione multivariata (segno dell'Hessiana) e alla PCA in statistica.
 
 L'essenziale da trattenere. Un autovettore è una direzione che $A$ non ruota, solo scala del fattore $\lambda$ (l'autovalore): $A\mathbf{v}=\lambda\mathbf{v}$ con $\mathbf{v}\ne\mathbf{0}$. Gli autovalori sono le radici del polinomio caratteristico $p(\lambda)=\det(A-\lambda I)$, di grado $n$; per il $2\times 2$, $p(\lambda)=\lambda^2-\operatorname{tr}(A)\lambda+\det(A)$. A ogni autovalore corrisponde l'autospazio $V_\lambda=\ker(A-\lambda I)$, di dimensione $m_g$ compresa fra $1$ e la molteplicità algebrica $m_a$. Somma e prodotto degli autovalori danno traccia e determinante: $\sum\lambda_i=\operatorname{tr}(A)$, $\prod\lambda_i=\det(A)$; in particolare $0$ è autovalore se e solo se $A$ è singolare. Le potenze si iterano senza sforzo: $A^k\mathbf{v}=\lambda^k\mathbf{v}$, e l'autovalore dominante governa l'evoluzione dei sistemi iterati. Autovettori di autovalori distinti sono indipendenti; per le matrici simmetriche sono anche ortogonali e gli autovalori sono reali.
 

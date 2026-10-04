@@ -46,7 +46,7 @@ fonti_integrate:
 versione: "3.0"
 data_ultima_rielaborazione: "2026-07-11"
 stato: completa
-
+profondita: approfondita
 componenti_usati:
   - plot
   - slider
@@ -103,7 +103,7 @@ La funzione appena vista coincide, fuori da $x=1$, con la retta $x+1$: immagina 
 
 ### 2.1 Definizione informale di limite
 
-Cominciamo, come fecero i matematici prima dell'Ottocento, con una definizione **intuitiva**. La renderemo rigorosa nella [lezione sulla definizione ε–δ](/analisi/limiti-e-continuita/analisi-02-limite-epsilon-delta).
+Cominciamo, come fecero i matematici prima dell'Ottocento, con una definizione **intuitiva**. La renderemo rigorosa nella [lezione sulla definizione ε–δ](/analisi/limiti-e-continuita/02-limite-epsilon-delta).
 
 **Definizione (informale).** Sia $f$ una funzione definita in un intorno di $a$, tranne eventualmente in $a$ stesso. Diciamo che il **limite di $f(x)$ per $x$ che tende ad $a$ è $L$**, e scriviamo
 
@@ -152,7 +152,7 @@ $$\forall r > 0 \quad \mathring{I}_r(a) \cap D \neq \varnothing.$$
 
 In parole: comunque piccolo scelga il raggio $r$, dentro il "cerchietto bucato" attorno ad $a$ trovo sempre qualche punto del dominio. Si dimostra che questo equivale a chiedere che ogni intorno di $a$ contenga *infiniti* punti di $D$. Il punto $a$ **non** deve appartenere a $D$: nell'esempio $\tfrac{x^2-1}{x-1}$ il punto $1$ non sta nel dominio, ma è punto di accumulazione, e proprio per questo il limite in $1$ ha senso.
 
-Il concetto opposto è quello di **punto isolato**: $a \in D$ è isolato se esiste un intorno che, tolto $a$, non contiene altri punti di $D$. In un punto isolato non si può parlare di limite (non c'è nessun corridoio), ma — vedremo nella [lezione sulla continuità](/analisi/limiti-e-continuita/analisi-04-continuita) — la funzione risulta automaticamente continua lì.
+Il concetto opposto è quello di **punto isolato**: $a \in D$ è isolato se esiste un intorno che, tolto $a$, non contiene altri punti di $D$. In un punto isolato non si può parlare di limite (non c'è nessun corridoio), ma — vedremo nella [lezione sulla continuità](/analisi/limiti-e-continuita/04-continuita) — la funzione risulta automaticamente continua lì.
 
 *Micro-esempio.* $D = \{0\} \cup [1,2]$. Il punto $0$ è isolato (l'intorno $(-\tfrac12, \tfrac12)$ bucato non contiene punti di $D$): nessun limite in $0$. I punti $1$, $1{,}5$, $2$ sono di accumulazione: lì i limiti hanno senso. Anche $a=1$ visto "da fuori" lo sarebbe se non appartenesse a $D$: l'appartenenza non c'entra.
 
@@ -234,7 +234,7 @@ Qui, al contrario, $a$ è finito ma è il *valore* della funzione a divergere. I
 
 *Micro-esempio.* $\lim_{x\to 0}\tfrac{1}{x^2} = +\infty$ (limite infinito in un punto finito: asintoto verticale $x=0$); $\lim_{x\to+\infty}\tfrac{1}{x^2} = 0$ (limite finito all'infinito: asintoto orizzontale $y=0$). Stessa funzione, due fenomeni distinti.
 
-Una lettura unificata è possibile e molto elegante: introducendo l'idea di "intorno di $+\infty$" come una semiretta $(M, +\infty)$, tutti questi casi (limite finito in un punto, limite finito all'infinito, limite infinito, ecc.) diventano istanze di **un'unica** definizione: *per ogni intorno del valore-limite, esiste un intorno del punto tale che la funzione mandi il secondo dentro il primo*. È l'impostazione degli appunti del corso, e la incontreremo in forma rigorosa nella [lezione ε–δ](/analisi/limiti-e-continuita/analisi-02-limite-epsilon-delta). Vale la pena tenerla a mente fin d'ora perché rivela che "tendere a $2$", "tendere a $+\infty$" e "$x \to -\infty$" sono la stessa idea vista con lenti diverse.
+Una lettura unificata è possibile e molto elegante: introducendo l'idea di "intorno di $+\infty$" come una semiretta $(M, +\infty)$, tutti questi casi (limite finito in un punto, limite finito all'infinito, limite infinito, ecc.) diventano istanze di **un'unica** definizione: *per ogni intorno del valore-limite, esiste un intorno del punto tale che la funzione mandi il secondo dentro il primo*. È l'impostazione degli appunti del corso, e la incontreremo in forma rigorosa nella [lezione ε–δ](/analisi/limiti-e-continuita/02-limite-epsilon-delta). Vale la pena tenerla a mente fin d'ora perché rivela che "tendere a $2$", "tendere a $+\infty$" e "$x \to -\infty$" sono la stessa idea vista con lenti diverse.
 
 ### 2.7 Regola operativa: limiti razionali all'infinito
 
@@ -294,7 +294,7 @@ Falso in generale. Il limite non dice nulla sul valore nel punto: f(a) potrebbe 
 
 ### 2.9 Verso la definizione rigorosa: il gioco delle due distanze
 
-Chiudiamo la teoria trasformando l'intuizione in un controllo quantitativo — il ponte diretto verso la [definizione ε–δ](/analisi/limiti-e-continuita/analisi-02-limite-epsilon-delta). Prendiamo la funzione lineare $f(x) = 2x + 1$ e il punto $a = 3$.
+Chiudiamo la teoria trasformando l'intuizione in un controllo quantitativo — il ponte diretto verso la [definizione ε–δ](/analisi/limiti-e-continuita/02-limite-epsilon-delta). Prendiamo la funzione lineare $f(x) = 2x + 1$ e il punto $a = 3$.
 
 **Passo 1 — evidenza numerica.** Compiliamo una tabella di valori attorno a $3$, da entrambi i lati:
 
@@ -402,7 +402,7 @@ $$\lim_{x \to 2} (x^2 + 3x - 1) = 2^2 + 3\cdot 2 - 1 = 4 + 6 - 1 = 9.$$
 
 *Commento:* qui limite e valore coincidono. Attenzione a non generalizzare: la sostituzione funziona **perché** la funzione è continua, non perché "si fa sempre così".
 
-> ⚠️ **Errore comune — credere che sostituire sia sempre lecito.** "$\lim_{x\to 0}\tfrac{\sin x}{x} = \tfrac{\sin 0}{0} = \tfrac{0}{0}$, quindi non esiste": falso. La sostituzione diretta funziona *solo* per le funzioni continue nel punto. Una forma indeterminata $\tfrac{0}{0}$ non è una conclusione: è il segnale che il metodo banale non basta e serve un'altra tecnica (quel limite vale $1$, [lezione sui limiti notevoli](/analisi/limiti-e-continuita/analisi-05-limiti-notevoli-asintoti)).
+> ⚠️ **Errore comune — credere che sostituire sia sempre lecito.** "$\lim_{x\to 0}\tfrac{\sin x}{x} = \tfrac{\sin 0}{0} = \tfrac{0}{0}$, quindi non esiste": falso. La sostituzione diretta funziona *solo* per le funzioni continue nel punto. Una forma indeterminata $\tfrac{0}{0}$ non è una conclusione: è il segnale che il metodo banale non basta e serve un'altra tecnica (quel limite vale $1$, [lezione sui limiti notevoli](/analisi/limiti-e-continuita/05-limiti-notevoli-asintoti)).
 
 ### Esempio 2 — Forma $0/0$ con fattorizzazione (introduttivo)
 
@@ -453,7 +453,7 @@ Calcolare $\lim_{x \to 2} \dfrac{x^2 - 4}{x - 2}$ e riconoscerne il significato.
 
 $$\lim_{x \to 2} \frac{(x-2)(x+2)}{x-2} = \lim_{x \to 2}(x+2) = 4.$$
 
-*Commento:* questo limite ha la forma $\lim_{x\to c}\tfrac{x^n - c^n}{x - c}$, che vale $n\,c^{n-1}$. Con $n = 2$, $c = 2$: $2\cdot 2^{1} = 4$. Non è una coincidenza: è **la definizione della derivata** di $x^2$ nel punto $2$. Il limite è il meccanismo che dà senso alla derivata — filo che riprenderemo nella [lezione sulla derivata](/analisi/derivate/analisi-06-derivata-definizione).
+*Commento:* questo limite ha la forma $\lim_{x\to c}\tfrac{x^n - c^n}{x - c}$, che vale $n\,c^{n-1}$. Con $n = 2$, $c = 2$: $2\cdot 2^{1} = 4$. Non è una coincidenza: è **la definizione della derivata** di $x^2$ nel punto $2$. Il limite è il meccanismo che dà senso alla derivata — filo che riprenderemo nella [lezione sulla derivata](/analisi/calcolo-differenziale-una-variabile/06-derivata-definizione).
 
 La stessa struttura si può *manipolare*: la funzione $\dfrac{x^a-1}{x-1}$ ha in $x=1$ una forma $\tfrac{0}{0}$ e il suo limite vale esattamente $a$ (è la derivata di $x^a$ in $x=1$). Muovi lo slider e osserva la curva vicino a $x=1$: al crescere di $a$ la curva "punta" verso un'ordinata più alta nel punto forato. Stai vedendo, in diretta, il limite cambiare al variare del parametro.
 

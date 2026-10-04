@@ -49,7 +49,7 @@ fonti_integrate:
 versione: "3.0"
 data_ultima_rielaborazione: "2026-07-13"
 stato: completa
-
+profondita: approfondita
 componenti_usati:
   - slider
   - checkpoint
@@ -131,7 +131,11 @@ e vale la formula analoga sviluppando lungo una colonna. Il fattore $(-1)^{i+j}$
 *Micro-esempio.* Sviluppando $\det\begin{psmallmatrix}1&2&3\\0&4&5\\0&0&6\end{psmallmatrix}$ lungo la prima colonna, restano solo il termine $(1,1)$: $1\cdot\det\begin{psmallmatrix}4&5\\0&6\end{psmallmatrix}=1\cdot24=24$. È il prodotto della diagonale, come vedremo per ogni matrice triangolare.
 
 ```checkpoint
-{"domanda": "Nello sviluppo di Laplace, qual è il segno che moltiplica il minore in posizione (2,3), cioè il segno del cofattore $C_{23}$?", "risposta": "Il segno è $(-1)^{2+3}=(-1)^5=-1$, quindi negativo. La posizione (2,3) sta su una casella '$-$' della scacchiera dei segni: $C_{23}=-M_{23}$."}
+[domanda]
+Nello sviluppo di Laplace, qual è il segno che moltiplica il minore in posizione (2,3), cioè il segno del cofattore $C_{23}$?
+
+[risposta]
+Il segno è $(-1)^{2+3}=(-1)^5=-1$, quindi negativo. La posizione (2,3) sta su una casella '$-$' della scacchiera dei segni: $C_{23}=-M_{23}$.
 ```
 
 ### 2.4 Le proprietà strutturali
@@ -155,7 +159,11 @@ non $c\det(A)$. L'esponente è la dimensione. Analogamente il determinante **non
 *Micro-esempio.* Se $A$ è $3\times 3$ con $\det(A)=5$, allora $\det(2A)=2^{3}\cdot5=40$.
 
 ```checkpoint
-{"domanda": "Sia $A$ una matrice $3\\times 3$ con $\\det(A)=4$. Quanto valgono $\\det(2A)$ e $\\det(A^{-1})$?", "risposta": "$\\det(2A)=2^{3}\\det(A)=8\\cdot 4=32$, perché ciascuna delle 3 colonne porta fuori un fattore 2. E $\\det(A^{-1})=1/\\det(A)=1/4$, dalla moltiplicatività applicata a $AA^{-1}=I$."}
+[domanda]
+Sia $A$ una matrice $3\times 3$ con $\det(A)=4$. Quanto valgono $\det(2A)$ e $\det(A^{-1})$?
+
+[risposta]
+$\det(2A)=2^{3}\det(A)=8\cdot 4=32$, perché ciascuna delle 3 colonne porta fuori un fattore 2. E $\det(A^{-1})=1/\det(A)=1/4$, dalla moltiplicatività applicata a $AA^{-1}=I$.
 ```
 
 ### 2.5 Il criterio di invertibilità e la geometria
@@ -238,7 +246,7 @@ Dimostriamo che $\det(A)=0$ se e solo se le colonne di $A$ sono linearmente dipe
 
 **($\Leftarrow$) Colonne dipendenti $\Rightarrow$ $\det(A)=0$.** Se le colonne sono dipendenti, una di esse, diciamo $\mathbf{a}_j$, è combinazione lineare delle altre: $\mathbf{a}_j=\sum_{k\ne j}\lambda_k\mathbf{a}_k$. Usando ripetutamente l'invarianza di 3.2, sottraiamo da $\mathbf{a}_j$ ciascun multiplo $\lambda_k\mathbf{a}_k$ senza alterare il determinante; al termine la colonna $j$ è diventata il vettore nullo. Una colonna nulla forza $\det(A)=0$ (multilinearità con fattore $0$). $\blacksquare$
 
-**($\Rightarrow$) Colonne indipendenti $\Rightarrow$ $\det(A)\ne 0$.** Se le colonne sono indipendenti, formano una base di $\mathbb{R}^n$ (sono $n$ vettori indipendenti in dimensione $n$, per il risultato della lezione sulle basi $[algebra-06-indipendenza-basi]$). Allora $A$ è invertibile, cioè esiste $B$ con $AB=I$. Per la moltiplicatività (3.4),
+**($\Rightarrow$) Colonne indipendenti $\Rightarrow$ $\det(A)\ne 0$.** Se le colonne sono indipendenti, formano una base di $\mathbb{R}^n$ (sono $n$ vettori indipendenti in dimensione $n$, per il risultato della lezione sulle basi [Indipendenza lineare, basi e dimensione](/algebra-lineare/spazi-vettoriali/06-indipendenza-basi)). Allora $A$ è invertibile, cioè esiste $B$ con $AB=I$. Per la moltiplicatività (3.4),
 $$\det(A)\det(B)=\det(AB)=\det(I)=1,$$
 e un prodotto che vale $1$ ha entrambi i fattori diversi da zero. Quindi $\det(A)\ne 0$. $\blacksquare$
 
@@ -321,9 +329,9 @@ Il volume è $\lvert-3\rvert=3$; il segno negativo segnala che la terna $(\mathb
 
 ## 5. Collegamenti e riepilogo
 
-Il determinante chiude e unifica il filo conduttore dei moduli precedenti. Il criterio di §2.5 aggiunge un tassello alla catena di equivalenze già incontrata con il rango e le basi: alle condizioni «colonne indipendenti», «rango massimo», «nucleo banale», «sistema con soluzione unica» si affianca ora «determinante non nullo», con il vantaggio di essere un *singolo numero* calcolabile direttamente. In questo senso il determinante è il compagno quantitativo del teorema di Rouché–Capelli $[algebra-04-rango-rouche-capelli]$ e del concetto di base $[algebra-06-indipendenza-basi]$: dove quelli descrivono *quante* soluzioni, il determinante fornisce la diagnosi immediata *se* la matrice è regolare.
+Il determinante chiude e unifica il filo conduttore dei moduli precedenti. Il criterio di §2.5 aggiunge un tassello alla catena di equivalenze già incontrata con il rango e le basi: alle condizioni «colonne indipendenti», «rango massimo», «nucleo banale», «sistema con soluzione unica» si affianca ora «determinante non nullo», con il vantaggio di essere un *singolo numero* calcolabile direttamente. In questo senso il determinante è il compagno quantitativo del teorema di Rouché–Capelli [Rango e teorema di Rouché-Capelli](/algebra-lineare/fondamenti/04-rango-rouche-capelli) e del concetto di base [Indipendenza lineare, basi e dimensione](/algebra-lineare/spazi-vettoriali/06-indipendenza-basi): dove quelli descrivono *quante* soluzioni, il determinante fornisce la diagnosi immediata *se* la matrice è regolare.
 
-Il legame con le trasformazioni lineari $[algebra-07-trasformazioni-lineari]$ è geometrico: la matrice associata a una trasformazione ha per determinante il fattore di scala dei volumi e, nel segno, l'informazione sull'orientazione. Una trasformazione con determinante nullo è precisamente una che comprime lo spazio in dimensione inferiore — nucleo non banale, immagine di dimensione minore — riconnettendo il determinante al teorema fondamentale $\dim\ker+\dim\operatorname{Im}=\dim V$. Guardando avanti, il determinante è lo strumento con cui si costruisce il **polinomio caratteristico** $\det(A-\lambda I)$, la porta d'ingresso agli autovalori e autovettori $[algebra-09-autovalori-autovettori]$: le radici di quel polinomio sono gli scalari per cui $A-\lambda I$ diventa singolare, cioè annulla il determinante. Fuori dall'algebra lineare, il determinante ricompare come **Jacobiano** nel cambio di variabili degli integrali multipli, dove $\lvert\det J\rvert$ è il fattore di correzione dei volumi infinitesimi — la stessa idea di «scala dei volumi», portata al livello locale del calcolo differenziale.
+Il legame con le trasformazioni lineari [Trasformazioni lineari](/algebra-lineare/spazi-vettoriali/07-trasformazioni-lineari) è geometrico: la matrice associata a una trasformazione ha per determinante il fattore di scala dei volumi e, nel segno, l'informazione sull'orientazione. Una trasformazione con determinante nullo è precisamente una che comprime lo spazio in dimensione inferiore — nucleo non banale, immagine di dimensione minore — riconnettendo il determinante al teorema fondamentale $\dim\ker+\dim\operatorname{Im}=\dim V$. Guardando avanti, il determinante è lo strumento con cui si costruisce il **polinomio caratteristico** $\det(A-\lambda I)$, la porta d'ingresso agli autovalori e autovettori [Autovalori e autovettori](/algebra-lineare/autovalori-e-diagonalizzazione/09-autovalori-autovettori): le radici di quel polinomio sono gli scalari per cui $A-\lambda I$ diventa singolare, cioè annulla il determinante. Fuori dall'algebra lineare, il determinante ricompare come **Jacobiano** nel cambio di variabili degli integrali multipli, dove $\lvert\det J\rvert$ è il fattore di correzione dei volumi infinitesimi — la stessa idea di «scala dei volumi», portata al livello locale del calcolo differenziale.
 
 L'essenziale da trattenere. Il determinante è l'unica funzione multilineare alternante normalizzata sulle colonne; da questi tre assiomi discende ogni formula. Geometricamente è il volume con segno del parallelepipedo delle colonne, e quindi il fattore di scala dei volumi della trasformazione associata. Si calcola con $ad-bc$ nel $2\times 2$, con Sarrus nel $3\times 3$, con lo sviluppo di Laplace $\sum_j(-1)^{i+j}a_{ij}M_{ij}$ in generale — scegliendo la linea con più zeri — o, in modo efficiente, riducendo a triangolare e moltiplicando la diagonale. Le proprietà chiave sono $\det(AB)=\det(A)\det(B)$, $\det(A^T)=\det(A)$, $\det(cA)=c^n\det(A)$, $\det(A^{-1})=1/\det(A)$. Il criterio fondamentale è $A$ invertibile $\iff\det(A)\ne 0$. Quando $\det(A)\ne 0$, Cramer dà $x_j=\det(A_j)/\det(A)$ e l'inversa è $A^{-1}=\operatorname{adj}(A)/\det(A)$.
 

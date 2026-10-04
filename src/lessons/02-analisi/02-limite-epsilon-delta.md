@@ -48,7 +48,7 @@ fonti_integrate:
 versione: "3.0"
 data_ultima_rielaborazione: "2026-07-11"
 stato: completa
-
+profondita: approfondita
 componenti_usati:
   - plot
   - checkpoint
