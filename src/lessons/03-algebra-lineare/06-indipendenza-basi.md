@@ -49,7 +49,7 @@ fonti_integrate:
 versione: "3.0"
 data_ultima_rielaborazione: "2026-07-13"
 stato: completa
-
+profondita: approfondita
 componenti_usati:
   - slider
   - checkpoint
@@ -140,7 +140,11 @@ $$
 Una volta stabilita la dimensione $n=\dim(V)$, molte verifiche si semplificano drasticamente, grazie a una serie di equivalenze che dimostreremo nella sezione 3: in uno spazio di dimensione $n$, un insieme di *esattamente* $n$ vettori indipendenti è automaticamente una base (genera senza bisogno di verificarlo), e un insieme di *esattamente* $n$ generatori è automaticamente indipendente. Inoltre più di $n$ vettori sono sempre dipendenti, e meno di $n$ vettori non possono generare. La dimensione fa da «soglia» che governa che cosa è possibile.
 
 ```checkpoint
-{"domanda": "In $\\mathbb{R}^3$, i tre vettori $(1,0,0)$, $(0,1,0)$, $(1,1,0)$ formano una base? E se sostituisco il terzo con $(0,0,1)$?", "risposta": "No, il primo terzetto non è una base: $(1,1,0)=(1,0,0)+(0,1,0)$, quindi i tre sono dipendenti. Generano solo il piano $z=0$ (dimensione $2$), non tutto $\\mathbb{R}^3$. Con $(0,0,1)$ al posto del terzo, invece, i vettori sono $(1,0,0),(0,1,0),(0,0,1)$: la base canonica, indipendente e generatrice. Poiché $\\dim(\\mathbb{R}^3)=3$, tre vettori indipendenti sono automaticamente una base."}
+[domanda]
+In $\mathbb{R}^3$, i tre vettori $(1,0,0)$, $(0,1,0)$, $(1,1,0)$ formano una base? E se sostituisco il terzo con $(0,0,1)$?
+
+[risposta]
+No, il primo terzetto non è una base: $(1,1,0)=(1,0,0)+(0,1,0)$, quindi i tre sono dipendenti. Generano solo il piano $z=0$ (dimensione $2$), non tutto $\mathbb{R}^3$. Con $(0,0,1)$ al posto del terzo, invece, i vettori sono $(1,0,0),(0,1,0),(0,0,1)$: la base canonica, indipendente e generatrice. Poiché $\dim(\mathbb{R}^3)=3$, tre vettori indipendenti sono automaticamente una base.
 ```
 
 ### 2.5 Rango e nullità come dimensioni
@@ -163,7 +167,11 @@ dove $n$ è il numero di colonne, cioè la dimensione dello spazio di partenza. 
 *Micro-esempio.* Per $A=\begin{psmallmatrix}1&2&3\\0&1&1\end{psmallmatrix}$: due pivot, quindi rango $2$ e $\dim\operatorname{Im}(A)=2$ (l'immagine è tutto $\mathbb{R}^2$); una variabile libera, quindi $\dim\ker(A)=1$. Verifica: $2+1=3$, il numero di colonne.
 
 ```checkpoint
-{"domanda": "Una matrice $A$ è $4\\times 6$ e ha rango $3$. Qual è la dimensione del nucleo? Quante colonne di $A$ sono indipendenti, e le sue colonne possono generare tutto $\\mathbb{R}^4$?", "risposta": "Per nullità più rango, $\\dim\\ker(A)=n-\\operatorname{rk}(A)=6-3=3$. Le colonne indipendenti sono $\\operatorname{rk}(A)=3$. No, le colonne non possono generare $\\mathbb{R}^4$: la loro span è $\\operatorname{Im}(A)$, che ha dimensione $3<4$, quindi è un sottospazio proprio di $\\mathbb{R}^4$ (un iperpiano-immagine di dimensione $3$)."}
+[domanda]
+Una matrice $A$ è $4\times 6$ e ha rango $3$. Qual è la dimensione del nucleo? Quante colonne di $A$ sono indipendenti, e le sue colonne possono generare tutto $\mathbb{R}^4$?
+
+[risposta]
+Per nullità più rango, $\dim\ker(A)=n-\operatorname{rk}(A)=6-3=3$. Le colonne indipendenti sono $\operatorname{rk}(A)=3$. No, le colonne non possono generare $\mathbb{R}^4$: la loro span è $\operatorname{Im}(A)$, che ha dimensione $3<4$, quindi è un sottospazio proprio di $\mathbb{R}^4$ (un iperpiano-immagine di dimensione $3$).
 ```
 
 ### 2.6 Due direzioni sono una base finché non collassano: la lezione dello slider

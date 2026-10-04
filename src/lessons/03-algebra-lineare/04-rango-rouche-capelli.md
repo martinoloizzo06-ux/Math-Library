@@ -50,7 +50,7 @@ fonti_integrate:
 versione: "3.0"
 data_ultima_rielaborazione: "2026-07-13"
 stato: completa
-
+profondita: approfondita
 componenti_usati:
   - slider
   - checkpoint
@@ -124,7 +124,11 @@ L'idea, che la dimostrazione renderà precisa, è che aggiungere la colonna $\ma
 | $\operatorname{rk}(A) = \operatorname{rk}([A\mid\mathbf{b}]) < n$ | infinite, con $n - \operatorname{rk}(A)$ variabili libere |
 
 ```checkpoint
-{"domanda":"Un sistema ha $A\\in\\mathbb{R}^{4\\times 3}$ (quattro equazioni, tre incognite) con $\\operatorname{rk}(A)=3$ e $\\operatorname{rk}([A\\mid\\mathbf{b}])=3$. Quante soluzioni ha?","risposta":"Poiché $\\operatorname{rk}(A)=\\operatorname{rk}([A\\mid\\mathbf{b}])=3$, il sistema è compatibile (Rouché-Capelli). Inoltre il rango eguaglia il numero di incognite $n=3$, quindi non ci sono variabili libere: $\\dim\\ker=3-3=0$. La soluzione è **unica**. Il fatto che le equazioni siano quattro (più delle incognite) non crea problemi: una delle quattro righe è combinazione delle altre e non aggiunge un vincolo nuovo."}
+[domanda]
+Un sistema ha $A\in\mathbb{R}^{4\times 3}$ (quattro equazioni, tre incognite) con $\operatorname{rk}(A)=3$ e $\operatorname{rk}([A\mid\mathbf{b}])=3$. Quante soluzioni ha?
+
+[risposta]
+Poiché $\operatorname{rk}(A)=\operatorname{rk}([A\mid\mathbf{b}])=3$, il sistema è compatibile (Rouché-Capelli). Inoltre il rango eguaglia il numero di incognite $n=3$, quindi non ci sono variabili libere: $\dim\ker=3-3=0$. La soluzione è **unica**. Il fatto che le equazioni siano quattro (più delle incognite) non crea problemi: una delle quattro righe è combinazione delle altre e non aggiunge un vincolo nuovo.
 ```
 
 ### 2.6 Struttura della soluzione generale
