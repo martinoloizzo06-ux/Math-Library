@@ -164,7 +164,7 @@ $$
 
 dove $n$ è il numero di colonne, cioè la dimensione dello spazio di partenza. A parole: ogni colonna «vale» o un pivot (contribuisce all'immagine) o una variabile libera (contribuisce al nucleo), senza sovrapposizioni e senza vuoti. La somma delle due dimensioni ricostruisce esattamente $n$. Questo è lo stesso teorema dimostrato nella lezione sul rango contando i pivot; qui la novità è interpretativo-strutturale — i due addendi sono *dimensioni di sottospazi*, non solo conteggi — e nella prossima lezione lo rileggeremo come «teorema fondamentale delle applicazioni lineari».
 
-*Micro-esempio.* Per $A=\begin{psmallmatrix}1&2&3\\0&1&1\end{psmallmatrix}$: due pivot, quindi rango $2$ e $\dim\operatorname{Im}(A)=2$ (l'immagine è tutto $\mathbb{R}^2$); una variabile libera, quindi $\dim\ker(A)=1$. Verifica: $2+1=3$, il numero di colonne.
+*Micro-esempio.* Per $A=\left(\begin{smallmatrix}1&2&3\\0&1&1\end{smallmatrix}\right)$: due pivot, quindi rango $2$ e $\dim\operatorname{Im}(A)=2$ (l'immagine è tutto $\mathbb{R}^2$); una variabile libera, quindi $\dim\ker(A)=1$. Verifica: $2+1=3$, il numero di colonne.
 
 ```checkpoint
 [domanda]
@@ -312,25 +312,25 @@ La costruzione esplicita della base del nucleo dalle variabili libere è la stes
 
 ## 4. Esempi
 
-**Esempio 1 (introduttivo) — Indipendenza in $\mathbb{R}^2$ col determinante.** I vettori $(1,2)$ e $(3,1)$: li dispongo in colonna, $A=\begin{psmallmatrix}1&3\\2&1\end{psmallmatrix}$. Basta osservare che le colonne non sono proporzionali; in modo sistematico, la riduzione dà due pivot, quindi rango $2$ e indipendenza. Essendo due vettori indipendenti in $\mathbb{R}^2$, formano una base.
+**Esempio 1 (introduttivo) — Indipendenza in $\mathbb{R}^2$ col determinante.** I vettori $(1,2)$ e $(3,1)$: li dispongo in colonna, $A=\left(\begin{smallmatrix}1&3\\2&1\end{smallmatrix}\right)$. Basta osservare che le colonne non sono proporzionali; in modo sistematico, la riduzione dà due pivot, quindi rango $2$ e indipendenza. Essendo due vettori indipendenti in $\mathbb{R}^2$, formano una base.
 
 **Esempio 2 (introduttivo) — Dipendenza per proporzionalità.** I vettori $(2,4)$ e $(1,2)$ sono dipendenti perché $(2,4)=2(1,2)$; la combinazione non banale $1\cdot(2,4)-2\cdot(1,2)=\mathbf{0}$ lo certifica. Non formano una base di $\mathbb{R}^2$: generano solo la retta $y=2x$.
 
 **Esempio 3 (intermedio) — Verifica con eliminazione.** I vettori $(1,2,0)$, $(0,1,3)$, $(1,0,-6)$ in colonna:
 
 $$
-A=\begin{psmallmatrix}1&0&1\\2&1&0\\0&3&-6\end{psmallmatrix}
+A=\left(\begin{smallmatrix}1&0&1\\2&1&0\\0&3&-6\end{smallmatrix}\right)
 \xrightarrow{R_2-2R_1}
-\begin{psmallmatrix}1&0&1\\0&1&-2\\0&3&-6\end{psmallmatrix}
+\left(\begin{smallmatrix}1&0&1\\0&1&-2\\0&3&-6\end{smallmatrix}\right)
 \xrightarrow{R_3-3R_2}
-\begin{psmallmatrix}1&0&1\\0&1&-2\\0&0&0\end{psmallmatrix}.
+\left(\begin{smallmatrix}1&0&1\\0&1&-2\\0&0&0\end{smallmatrix}\right).
 $$
 
 Due pivot su tre colonne: rango $2<3$, i vettori sono dipendenti. La colonna libera è la terza, e risolvendo $A\mathbf{c}=\mathbf{0}$ si trova $\mathbf{v}_3=\mathbf{v}_1-2\mathbf{v}_2$ (infatti $(1,0,-6)=(1,2,0)-2(0,1,3)$).
 
 **Esempio 4 (intermedio) — Base di un piano.** Il piano $x+y+z=0$ in $\mathbb{R}^3$: da $x=-y-z$, con $y=s$, $z=t$ liberi, i punti sono $(-s-t,s,t)=s(-1,1,0)+t(-1,0,1)$. I due vettori $(-1,1,0)$ e $(-1,0,1)$ generano il piano e non sono proporzionali, dunque sono indipendenti: sono una base del piano, che ha perciò dimensione $2$.
 
-**Esempio 5 (intermedio) — Base del nucleo e nullità.** Per $A=\begin{psmallmatrix}1&1&2\\2&2&4\end{psmallmatrix}$, la seconda riga è doppia della prima, l'unica equazione è $x_1+x_2+2x_3=0$, cioè $x_1=-x_2-2x_3$. Con $x_2=s$, $x_3=t$: $\ker(A)=\operatorname{span}\{(-1,1,0),(-2,0,1)\}$, e quei due generatori sono indipendenti (guardando le ultime due componenti, $(1,0)$ e $(0,1)$), quindi una base. Dunque $\dim\ker(A)=2$; poiché $\operatorname{rk}(A)=1$, la verifica $1+2=3$ (colonne) è soddisfatta.
+**Esempio 5 (intermedio) — Base del nucleo e nullità.** Per $A=\left(\begin{smallmatrix}1&1&2\\2&2&4\end{smallmatrix}\right)$, la seconda riga è doppia della prima, l'unica equazione è $x_1+x_2+2x_3=0$, cioè $x_1=-x_2-2x_3$. Con $x_2=s$, $x_3=t$: $\ker(A)=\operatorname{span}\{(-1,1,0),(-2,0,1)\}$, e quei due generatori sono indipendenti (guardando le ultime due componenti, $(1,0)$ e $(0,1)$), quindi una base. Dunque $\dim\ker(A)=2$; poiché $\operatorname{rk}(A)=1$, la verifica $1+2=3$ (colonne) è soddisfatta.
 
 **Esempio 6 (intermedio) — Coordinate in una base non canonica.** Base $\mathcal{B}=\{(2,1),(1,1)\}$ di $\mathbb{R}^2$; cerchiamo $[(5,1)]_{\mathcal{B}}$. Imponendo $c_1(2,1)+c_2(1,1)=(5,1)$ si ottiene il sistema $2c_1+c_2=5$, $c_1+c_2=1$; sottraendo, $c_1=4$ e quindi $c_2=-3$. Le coordinate sono $(4,-3)$, e la verifica $4(2,1)-3(1,1)=(5,1)$ conferma. Nella base canonica lo stesso vettore ha coordinate $(5,1)$: le coordinate dipendono dalla base.
 
@@ -366,11 +366,11 @@ Fuori dall'algebra lineare, base e dimensione sono ovunque si parli di gradi di 
 **Soluzione.** Li dispongo in colonna e riduco:
 
 $$
-\begin{psmallmatrix}1&2&0\\0&1&1\\1&0&-2\end{psmallmatrix}
+\left(\begin{smallmatrix}1&2&0\\0&1&1\\1&0&-2\end{smallmatrix}\right)
 \xrightarrow{R_3-R_1}
-\begin{psmallmatrix}1&2&0\\0&1&1\\0&-2&-2\end{psmallmatrix}
+\left(\begin{smallmatrix}1&2&0\\0&1&1\\0&-2&-2\end{smallmatrix}\right)
 \xrightarrow{R_3+2R_2}
-\begin{psmallmatrix}1&2&0\\0&1&1\\0&0&0\end{psmallmatrix}.
+\left(\begin{smallmatrix}1&2&0\\0&1&1\\0&0&0\end{smallmatrix}\right).
 $$
 
 Due pivot su tre colonne: rango $2<3$, dunque **dipendenti**. Per esibire la relazione, risolviamo $A\mathbf{c}=\mathbf{0}$ dalla forma ridotta ponendo la variabile libera $c_3=1$: da $R_2$ segue $c_2+c_3=0$, cioè $c_2=-1$; da $R_1$ segue $c_1+2c_2=0$, cioè $c_1=2$. La relazione di dipendenza è quindi $2\mathbf{v}_1-\mathbf{v}_2+\mathbf{v}_3=\mathbf{0}$, ovvero $\mathbf{v}_3=\mathbf{v}_2-2\mathbf{v}_1=(2,1,0)-2(1,0,1)=(0,1,-2)$. Verifica: $2(1,0,1)-(2,1,0)+(0,1,-2)=(0,0,0)$. ✓
@@ -380,12 +380,12 @@ Due pivot su tre colonne: rango $2<3$, dunque **dipendenti**. Per esibire la rel
 <details class="dim-tecnica">
 <summary>Esercizio 2 (introduttivo) — Base del nucleo</summary>
 
-**Testo.** Trovare una base di $\ker(A)$ per $A=\begin{psmallmatrix}1&2&3\\2&4&6\end{psmallmatrix}$ e verificare nullità più rango.
+**Testo.** Trovare una base di $\ker(A)$ per $A=\left(\begin{smallmatrix}1&2&3\\2&4&6\end{smallmatrix}\right)$ e verificare nullità più rango.
 
 **Soluzione.** La seconda riga è doppia della prima, quindi $\operatorname{rk}(A)=1$ e l'unica equazione è $x_1+2x_2+3x_3=0$, cioè $x_1=-2x_2-3x_3$. Con $x_2=s$, $x_3=t$ liberi:
 
 $$
-\ker(A)=s\begin{psmallmatrix}-2\\1\\0\end{psmallmatrix}+t\begin{psmallmatrix}-3\\0\\1\end{psmallmatrix}.
+\ker(A)=s\left(\begin{smallmatrix}-2\\1\\0\end{smallmatrix}\right)+t\left(\begin{smallmatrix}-3\\0\\1\end{smallmatrix}\right).
 $$
 
 I due generatori sono indipendenti (ultime due componenti $(1,0)$ e $(0,1)$): sono una base, $\dim\ker(A)=2$. Verifica: $\operatorname{rk}(A)+\dim\ker(A)=1+2=3$, il numero di colonne. ✓
@@ -412,21 +412,21 @@ Dalla prima $c_3=3-c_1$, dalla seconda $c_2=2-c_1$; sostituendo nella terza $(2-
 <details class="dim-tecnica">
 <summary>Esercizio 4 (intermedio) — Rango, nullità e base del nucleo</summary>
 
-**Testo.** Per $A=\begin{psmallmatrix}1&0&2&1\\0&1&-1&2\\2&1&3&4\end{psmallmatrix}$, calcolare rango e nullità ed esibire una base del nucleo.
+**Testo.** Per $A=\left(\begin{smallmatrix}1&0&2&1\\0&1&-1&2\\2&1&3&4\end{smallmatrix}\right)$, calcolare rango e nullità ed esibire una base del nucleo.
 
 **Soluzione.** Riduzione:
 
 $$
 \xrightarrow{R_3-2R_1}
-\begin{psmallmatrix}1&0&2&1\\0&1&-1&2\\0&1&-1&2\end{psmallmatrix}
+\left(\begin{smallmatrix}1&0&2&1\\0&1&-1&2\\0&1&-1&2\end{smallmatrix}\right)
 \xrightarrow{R_3-R_2}
-\begin{psmallmatrix}1&0&2&1\\0&1&-1&2\\0&0&0&0\end{psmallmatrix}.
+\left(\begin{smallmatrix}1&0&2&1\\0&1&-1&2\\0&0&0&0\end{smallmatrix}\right).
 $$
 
 Due pivot (colonne $1$ e $2$): $\operatorname{rk}(A)=2$, quindi $\dim\ker(A)=4-2=2$. Variabili libere $x_3=s$, $x_4=t$; da $R_2$, $x_2=x_3-2x_4=s-2t$; da $R_1$, $x_1=-2x_3-x_4=-2s-t$. Base del nucleo:
 
 $$
-\left\{\begin{psmallmatrix}-2\\1\\1\\0\end{psmallmatrix},\ \begin{psmallmatrix}-1\\-2\\0\\1\end{psmallmatrix}\right\}.
+\left\{\left(\begin{smallmatrix}-2\\1\\1\\0\end{smallmatrix}\right),\ \left(\begin{smallmatrix}-1\\-2\\0\\1\end{smallmatrix}\right)\right\}.
 $$
 
 </details>
@@ -445,7 +445,7 @@ $$
 
 **Testo.** Trovare la dimensione e una base di $W=\{(x,y,z,w)\in\mathbb{R}^4: x+y=0,\ z+w=0\}$.
 
-**Soluzione.** I due vincoli danno $y=-x$ e $w=-z$; le variabili libere sono $x=s$ e $z=t$. Allora $(x,y,z,w)=(s,-s,t,-t)=s(1,-1,0,0)+t(0,0,1,-1)$. I due generatori sono indipendenti (guardando le componenti $1$ e $3$), dunque una base: $\dim(W)=2$. Coerenza col conteggio: $W$ è il nucleo della matrice $\begin{psmallmatrix}1&1&0&0\\0&0&1&1\end{psmallmatrix}$, che ha rango $2$; nullità $=4-2=2$. ✓
+**Soluzione.** I due vincoli danno $y=-x$ e $w=-z$; le variabili libere sono $x=s$ e $z=t$. Allora $(x,y,z,w)=(s,-s,t,-t)=s(1,-1,0,0)+t(0,0,1,-1)$. I due generatori sono indipendenti (guardando le componenti $1$ e $3$), dunque una base: $\dim(W)=2$. Coerenza col conteggio: $W$ è il nucleo della matrice $\left(\begin{smallmatrix}1&1&0&0\\0&0&1&1\end{smallmatrix}\right)$, che ha rango $2$; nullità $=4-2=2$. ✓
 
 </details>
 
@@ -463,6 +463,6 @@ $$
 
 **Testo.** (a) Dato $\mathbf{v}=(3,5)$ in coordinate canoniche, trovare $[\mathbf{v}]_{\mathcal{B}}$ nella base $\mathcal{B}=\{(1,2),(1,1)\}$. (b) Interpretare il risultato dicendo perché $\mathcal{B}$ è effettivamente una base.
 
-**Soluzione.** (a) Imponiamo $c_1(1,2)+c_2(1,1)=(3,5)$: il sistema è $c_1+c_2=3$, $2c_1+c_2=5$; sottraendo la prima dalla seconda, $c_1=2$, quindi $c_2=1$. Coordinate: $[(3,5)]_{\mathcal{B}}=(2,1)$; verifica $2(1,2)+1(1,1)=(3,5)$. ✓ (b) Il sistema aveva soluzione *unica* per $(3,5)$, e lo stesso vale per ogni vettore-target: ciò equivale a dire che la matrice $\begin{psmallmatrix}1&1\\2&1\end{psmallmatrix}$ ha rango $2$, cioè colonne indipendenti che generano $\mathbb{R}^2$ — la definizione di base. L'unicità delle coordinate trovata è esattamente la proprietà dimostrata nella sezione 3.2.
+**Soluzione.** (a) Imponiamo $c_1(1,2)+c_2(1,1)=(3,5)$: il sistema è $c_1+c_2=3$, $2c_1+c_2=5$; sottraendo la prima dalla seconda, $c_1=2$, quindi $c_2=1$. Coordinate: $[(3,5)]_{\mathcal{B}}=(2,1)$; verifica $2(1,2)+1(1,1)=(3,5)$. ✓ (b) Il sistema aveva soluzione *unica* per $(3,5)$, e lo stesso vale per ogni vettore-target: ciò equivale a dire che la matrice $\left(\begin{smallmatrix}1&1\\2&1\end{smallmatrix}\right)$ ha rango $2$, cioè colonne indipendenti che generano $\mathbb{R}^2$ — la definizione di base. L'unicità delle coordinate trovata è esattamente la proprietà dimostrata nella sezione 3.2.
 
 </details>

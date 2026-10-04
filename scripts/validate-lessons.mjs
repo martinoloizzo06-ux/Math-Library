@@ -2,12 +2,18 @@
 // Uso (da math-library):  npm run validate [-- --json] [-- --only-errors]
 // Lezioni con `contratto: "3.0"` -> regole v3; senza `contratto` -> regole legacy v2.1.
 // Si validano solo le lezioni `completa` e `da-rivedere`; le altre sono contate e saltate.
+// E11: ogni formula (inline e display) deve passare katex.renderToString con throwOnError.
 // Il validatore NON corregge nulla e NON giudica il contenuto matematico.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import matter from 'gray-matter';
 import { load as yamlLoad } from 'js-yaml';
+import katex from 'katex';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkMath from 'remark-math';
+import remarkGfm from 'remark-gfm';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const LESSONS_DIR = path.join(ROOT, 'src', 'lessons');
@@ -112,6 +118,29 @@ function sectionsOf(outside) {
   });
   heads.forEach((h, i) => { h.end = i + 1 < heads.length ? heads[i + 1].idx : outside.length; });
   return heads;
+}
+
+// ── formule: estrazione esatta dai nodi math/inlineMath (non regex) ──────────
+const mdParser = unified().use(remarkParse).use(remarkMath).use(remarkGfm);
+
+function collectMath(node, out) {
+  if ((node.type === 'math' || node.type === 'inlineMath') && node.position) {
+    out.push({ value: node.value, display: node.type === 'math', line: node.position.start.line });
+  }
+  if (node.children) for (const c of node.children) collectMath(c, out);
+  return out;
+}
+
+function checkFormulas(body, bodyStartLine, E) {
+  const tree = mdParser.parse(body);
+  for (const f of collectMath(tree, [])) {
+    try {
+      katex.renderToString(f.value, { throwOnError: true, displayMode: f.display, strict: 'ignore' });
+    } catch (e) {
+      const excerpt = f.value.replace(/\s+/g, ' ').trim();
+      E('E11', bodyStartLine + f.line - 1, `formula non renderizzabile da KaTeX: «${excerpt.length > 80 ? excerpt.slice(0, 77) + '...' : excerpt}» — ${String(e.message).replace(/^KaTeX parse error: /, '')}`);
+    }
+  }
 }
 
 // ── validazione di una lezione ───────────────────────────────────────────────
@@ -232,6 +261,9 @@ function validate(lesson, ctx) {
     for (const row of outside) { if (row.text.trim() === '') flush(); else para.push(row); }
     flush();
   }
+
+  // E11 formule KaTeX
+  checkFormulas(lesson.body, lesson.bodyStartLine, E);
 
   // E4 sezioni + conteggi
   const heads = sectionsOf(outside);

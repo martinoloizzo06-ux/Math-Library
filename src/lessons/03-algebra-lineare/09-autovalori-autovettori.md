@@ -78,7 +78,7 @@ $$A\mathbf{v}=\lambda\mathbf{v}.$$
 
 La richiesta $\mathbf{v}\ne\mathbf{0}$ è essenziale: il vettore nullo soddisfa $A\mathbf{0}=\lambda\mathbf{0}$ per *qualunque* $\lambda$, e includerlo renderebbe la definizione vuota. Ammettiamo $\lambda$ complesso perché, come vedremo, alcune matrici reali (le rotazioni) hanno autovalori che vivono in $\mathbb{C}$.
 
-*Micro-esempio.* Per $A=\begin{psmallmatrix}2&0\\0&3\end{psmallmatrix}$ il vettore $\mathbf{e}_1=(1,0)$ è autovettore: $A\mathbf{e}_1=(2,0)=2\mathbf{e}_1$, autovalore $\lambda=2$. Analogamente $\mathbf{e}_2$ ha autovalore $3$. Gli assi coordinati sono le direzioni invarianti di una matrice diagonale.
+*Micro-esempio.* Per $A=\left(\begin{smallmatrix}2&0\\0&3\end{smallmatrix}\right)$ il vettore $\mathbf{e}_1=(1,0)$ è autovettore: $A\mathbf{e}_1=(2,0)=2\mathbf{e}_1$, autovalore $\lambda=2$. Analogamente $\mathbf{e}_2$ ha autovalore $3$. Gli assi coordinati sono le direzioni invarianti di una matrice diagonale.
 
 L'uguaglianza $A\mathbf{v}=\lambda\mathbf{v}$ si riscrive isolando il vettore:
 $$A\mathbf{v}=\lambda\mathbf{v}\iff A\mathbf{v}-\lambda\mathbf{v}=\mathbf{0}\iff(A-\lambda I)\mathbf{v}=\mathbf{0},$$
@@ -96,7 +96,7 @@ Per una matrice $2\times 2$ il polinomio prende una forma memorabile:
 $$p(\lambda)=\det\begin{pmatrix}a-\lambda&b\\c&d-\lambda\end{pmatrix}=\lambda^2-(a+d)\lambda+(ad-bc)=\lambda^2-\operatorname{tr}(A)\,\lambda+\det(A),$$
 dove $\operatorname{tr}(A)=a+d$ è la **traccia** (somma degli elementi diagonali). Bastano quindi traccia e determinante per scrivere l'equazione degli autovalori nel caso $2\times 2$.
 
-*Micro-esempio.* Per $A=\begin{psmallmatrix}4&1\\2&3\end{psmallmatrix}$: $\operatorname{tr}(A)=7$, $\det(A)=10$, quindi $p(\lambda)=\lambda^2-7\lambda+10=(\lambda-2)(\lambda-5)$. Gli autovalori sono $2$ e $5$.
+*Micro-esempio.* Per $A=\left(\begin{smallmatrix}4&1\\2&3\end{smallmatrix}\right)$: $\operatorname{tr}(A)=7$, $\det(A)=10$, quindi $p(\lambda)=\lambda^2-7\lambda+10=(\lambda-2)(\lambda-5)$. Gli autovalori sono $2$ e $5$.
 
 ```checkpoint
 [domanda]
@@ -115,7 +115,7 @@ $$V_{\lambda_0}=\ker(A-\lambda_0 I)=\{\mathbf{v}\in\mathbb{R}^n:\ A\mathbf{v}=\l
 
 È un sottospazio perché nucleo di una matrice [Trasformazioni lineari](/algebra-lineare/spazi-vettoriali/07-trasformazioni-lineari), e per un autovalore è sempre almeno di dimensione $1$ (contiene un autovettore non nullo). Ogni multiplo non nullo di un autovettore è ancora un autovettore con lo stesso autovalore: gli autovettori sono definiti «a meno di scala», e parlare di *direzione* invariante è più corretto che parlare di un singolo vettore.
 
-*Micro-esempio.* Per $\lambda_2=5$ della matrice precedente, $A-5I=\begin{psmallmatrix}-1&1\\2&-2\end{psmallmatrix}$; il nucleo è la retta $v_1=v_2$, cioè $V_5=\operatorname{span}\{(1,1)\}$, un autospazio di dimensione $1$.
+*Micro-esempio.* Per $\lambda_2=5$ della matrice precedente, $A-5I=\left(\begin{smallmatrix}-1&1\\2&-2\end{smallmatrix}\right)$; il nucleo è la retta $v_1=v_2$, cioè $V_5=\operatorname{span}\{(1,1)\}$, un autospazio di dimensione $1$.
 
 ### 2.4 Molteplicità algebrica e geometrica
 
@@ -130,7 +130,7 @@ Vale sempre la disuguaglianza
 $$1\le m_g(\lambda_0)\le m_a(\lambda_0),$$
 la cui parte destra dimostreremo in §3. La geometria non può mai superare l'algebra: un autovalore che compare una sola volta come radice ($m_a=1$) ha necessariamente autospazio di dimensione $1$. Quando invece $m_g<m_a$ l'autovalore è «carente» di autovettori, e la matrice non sarà diagonalizzabile.
 
-*Micro-esempio.* La matrice $J=\begin{psmallmatrix}2&1\\0&2\end{psmallmatrix}$ ha $p(\lambda)=(2-\lambda)^2$, dunque $\lambda=2$ con $m_a=2$. Ma $J-2I=\begin{psmallmatrix}0&1\\0&0\end{psmallmatrix}$ ha nucleo di dimensione $1$ (solo i multipli di $(1,0)$), quindi $m_g=1<2$. È il prototipo di matrice non diagonalizzabile.
+*Micro-esempio.* La matrice $J=\left(\begin{smallmatrix}2&1\\0&2\end{smallmatrix}\right)$ ha $p(\lambda)=(2-\lambda)^2$, dunque $\lambda=2$ con $m_a=2$. Ma $J-2I=\left(\begin{smallmatrix}0&1\\0&0\end{smallmatrix}\right)$ ha nucleo di dimensione $1$ (solo i multipli di $(1,0)$), quindi $m_g=1<2$. È il prototipo di matrice non diagonalizzabile.
 
 ```checkpoint
 [domanda]
@@ -150,7 +150,7 @@ La somma degli autovalori è la traccia; il loro prodotto è il determinante. Qu
 
 Una conseguenza del prodotto: $\lambda=0$ è autovalore di $A$ se e solo se $\det(A)=0$, cioè se e solo se $A$ è singolare. In tal caso l'autospazio di $0$ è esattamente il nucleo di $A$.
 
-*Micro-esempio.* $A=\begin{psmallmatrix}1&2\\2&4\end{psmallmatrix}$ ha $\det(A)=0$: dunque $0$ è autovalore, con autospazio $\ker(A)=\operatorname{span}\{(2,-1)\}$. Il secondo autovalore è $\operatorname{tr}(A)-0=5$.
+*Micro-esempio.* $A=\left(\begin{smallmatrix}1&2\\2&4\end{smallmatrix}\right)$ ha $\det(A)=0$: dunque $0$ è autovalore, con autospazio $\ker(A)=\operatorname{span}\{(2,-1)\}$. Il secondo autovalore è $\operatorname{tr}(A)-0=5$.
 
 **Potenze.** Se $A\mathbf{v}=\lambda\mathbf{v}$, applicando ancora $A$ si trova $A^2\mathbf{v}=A(\lambda\mathbf{v})=\lambda A\mathbf{v}=\lambda^2\mathbf{v}$, e per induzione
 $$A^k\mathbf{v}=\lambda^k\mathbf{v}.$$
@@ -166,7 +166,7 @@ Le matrici simmetriche ($A=A^T$) godono di proprietà spettrali eccezionali, che
 
 Se $A=A^T$ è reale, allora tutti i suoi autovalori sono **reali**, e autovettori associati ad autovalori **distinti** sono **ortogonali** (non solo indipendenti). Questo è un caso particolarissimo: per una matrice generica gli autovettori di autovalori diversi sono indipendenti, ma quasi mai perpendicolari. La dimostrazione dell'ortogonalità è in §3; l'importanza di questo fatto emergerà con il teorema spettrale nella lezione sulle forme quadratiche [Matrici simmetriche e forme quadratiche](/algebra-lineare/autovalori-e-diagonalizzazione/14-forme-quadratiche).
 
-*Micro-esempio.* $A=\begin{psmallmatrix}3&1\\1&3\end{psmallmatrix}$ è simmetrica: autovalori $2$ e $4$ (reali), con autovettori $(1,-1)$ e $(1,1)$; il loro prodotto scalare $1\cdot1+(-1)\cdot1=0$ conferma l'ortogonalità.
+*Micro-esempio.* $A=\left(\begin{smallmatrix}3&1\\1&3\end{smallmatrix}\right)$ è simmetrica: autovalori $2$ e $4$ (reali), con autovettori $(1,-1)$ e $(1,1)$; il loro prodotto scalare $1\cdot1+(-1)\cdot1=0$ conferma l'ortogonalità.
 
 ---
 
@@ -240,19 +240,19 @@ Il fatto che gli autovalori di una matrice simmetrica reale siano essi stessi re
 
 ## 4. Esempi
 
-**Esempio 1 (introduttivo) — $2\times 2$ con autovalori distinti.** $A=\begin{psmallmatrix}4&1\\2&3\end{psmallmatrix}$. Da $\operatorname{tr}=7$, $\det=10$: $p(\lambda)=\lambda^2-7\lambda+10=(\lambda-2)(\lambda-5)$. Per $\lambda=2$, $A-2I=\begin{psmallmatrix}2&1\\2&1\end{psmallmatrix}$ dà $2v_1+v_2=0$, autovettore $(1,-2)$. Per $\lambda=5$, $A-5I=\begin{psmallmatrix}-1&1\\2&-2\end{psmallmatrix}$ dà $v_1=v_2$, autovettore $(1,1)$. Controllo: $A(1,-2)=(2,-4)=2(1,-2)$ ✓.
+**Esempio 1 (introduttivo) — $2\times 2$ con autovalori distinti.** $A=\left(\begin{smallmatrix}4&1\\2&3\end{smallmatrix}\right)$. Da $\operatorname{tr}=7$, $\det=10$: $p(\lambda)=\lambda^2-7\lambda+10=(\lambda-2)(\lambda-5)$. Per $\lambda=2$, $A-2I=\left(\begin{smallmatrix}2&1\\2&1\end{smallmatrix}\right)$ dà $2v_1+v_2=0$, autovettore $(1,-2)$. Per $\lambda=5$, $A-5I=\left(\begin{smallmatrix}-1&1\\2&-2\end{smallmatrix}\right)$ dà $v_1=v_2$, autovettore $(1,1)$. Controllo: $A(1,-2)=(2,-4)=2(1,-2)$ ✓.
 
-**Esempio 2 (introduttivo) — matrice triangolare.** $A=\begin{psmallmatrix}3&5&7\\0&2&4\\0&0&1\end{psmallmatrix}$. Essendo triangolare, $\det(A-\lambda I)=(3-\lambda)(2-\lambda)(1-\lambda)$: gli autovalori sono gli elementi diagonali $3,2,1$. Per una matrice triangolare gli autovalori si leggono direttamente sulla diagonale.
+**Esempio 2 (introduttivo) — matrice triangolare.** $A=\left(\begin{smallmatrix}3&5&7\\0&2&4\\0&0&1\end{smallmatrix}\right)$. Essendo triangolare, $\det(A-\lambda I)=(3-\lambda)(2-\lambda)(1-\lambda)$: gli autovalori sono gli elementi diagonali $3,2,1$. Per una matrice triangolare gli autovalori si leggono direttamente sulla diagonale.
 
-**Esempio 3 (intermedio) — traccia e determinante come scorciatoia.** $A=\begin{psmallmatrix}1&2\\2&1\end{psmallmatrix}$: $\operatorname{tr}=2$, $\det=1-4=-3$. Cerchiamo due numeri di somma $2$ e prodotto $-3$: sono $3$ e $-1$. Quindi $\lambda_1=3$, $\lambda_2=-1$, senza scrivere esplicitamente il polinomio.
+**Esempio 3 (intermedio) — traccia e determinante come scorciatoia.** $A=\left(\begin{smallmatrix}1&2\\2&1\end{smallmatrix}\right)$: $\operatorname{tr}=2$, $\det=1-4=-3$. Cerchiamo due numeri di somma $2$ e prodotto $-3$: sono $3$ e $-1$. Quindi $\lambda_1=3$, $\lambda_2=-1$, senza scrivere esplicitamente il polinomio.
 
-**Esempio 4 (intermedio) — matrice simmetrica e ortogonalità.** $A=\begin{psmallmatrix}3&1\\1&3\end{psmallmatrix}$: $p(\lambda)=(3-\lambda)^2-1=(\lambda-2)(\lambda-4)$. Autovettori: per $\lambda=2$, $(1,-1)$; per $\lambda=4$, $(1,1)$. Prodotto scalare $1-1=0$: ortogonali, come garantito dalla simmetria.
+**Esempio 4 (intermedio) — matrice simmetrica e ortogonalità.** $A=\left(\begin{smallmatrix}3&1\\1&3\end{smallmatrix}\right)$: $p(\lambda)=(3-\lambda)^2-1=(\lambda-2)(\lambda-4)$. Autovettori: per $\lambda=2$, $(1,-1)$; per $\lambda=4$, $(1,1)$. Prodotto scalare $1-1=0$: ortogonali, come garantito dalla simmetria.
 
-**Esempio 5 (intermedio) — autovalore nullo e nucleo.** $A=\begin{psmallmatrix}1&2\\2&4\end{psmallmatrix}$: $\det=0$, quindi $0$ è autovalore, con autospazio $\ker(A)$: da $v_1+2v_2=0$, autovettore $(2,-1)$. Il secondo autovalore è $\operatorname{tr}(A)-0=5$, con autovettore soluzione di $(A-5I)\mathbf{v}=0$, cioè $(1,2)$.
+**Esempio 5 (intermedio) — autovalore nullo e nucleo.** $A=\left(\begin{smallmatrix}1&2\\2&4\end{smallmatrix}\right)$: $\det=0$, quindi $0$ è autovalore, con autospazio $\ker(A)$: da $v_1+2v_2=0$, autovettore $(2,-1)$. Il secondo autovalore è $\operatorname{tr}(A)-0=5$, con autovettore soluzione di $(A-5I)\mathbf{v}=0$, cioè $(1,2)$.
 
-**Esempio 6 (avanzato) — autovalori complessi (rotazione).** $A=\begin{psmallmatrix}0&-1\\1&0\end{psmallmatrix}$ è la rotazione di $90^\circ$. $p(\lambda)=\lambda^2+1=0$ dà $\lambda=\pm i$: nessun autovalore reale, quindi nessuna direzione reale invariante — ed è corretto, perché una rotazione di $90^\circ$ non lascia ferma alcuna retta del piano. Gli autovettori vivono in $\mathbb{C}^2$.
+**Esempio 6 (avanzato) — autovalori complessi (rotazione).** $A=\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)$ è la rotazione di $90^\circ$. $p(\lambda)=\lambda^2+1=0$ dà $\lambda=\pm i$: nessun autovalore reale, quindi nessuna direzione reale invariante — ed è corretto, perché una rotazione di $90^\circ$ non lascia ferma alcuna retta del piano. Gli autovettori vivono in $\mathbb{C}^2$.
 
-**Esempio 7 (avanzato) — molteplicità geometrica carente.** $A=\begin{psmallmatrix}2&1\\0&2\end{psmallmatrix}$: $p(\lambda)=(2-\lambda)^2$, autovalore $2$ con $m_a=2$. Ma $A-2I=\begin{psmallmatrix}0&1\\0&0\end{psmallmatrix}$ ha nucleo $\operatorname{span}\{(1,0)\}$, quindi $m_g=1$. La disuguaglianza $m_g<m_a$ segnala che la matrice non è diagonalizzabile.
+**Esempio 7 (avanzato) — molteplicità geometrica carente.** $A=\left(\begin{smallmatrix}2&1\\0&2\end{smallmatrix}\right)$: $p(\lambda)=(2-\lambda)^2$, autovalore $2$ con $m_a=2$. Ma $A-2I=\left(\begin{smallmatrix}0&1\\0&0\end{smallmatrix}\right)$ ha nucleo $\operatorname{span}\{(1,0)\}$, quindi $m_g=1$. La disuguaglianza $m_g<m_a$ segnala che la matrice non è diagonalizzabile.
 
 **Esempio 8 (applicativo) — comportamento asintotico di un sistema iterato.** Sia $\mathbf{x}_{k+1}=A\mathbf{x}_k$ con $A$ avente autovettori $\mathbf{v}_1,\mathbf{v}_2$ e autovalori $\lambda_1=3$, $\lambda_2=0{,}5$. Scritto lo stato iniziale come $\mathbf{x}_0=\mathbf{v}_1+\mathbf{v}_2$, dopo $k$ passi $\mathbf{x}_k=A^k\mathbf{x}_0=3^k\mathbf{v}_1+(0{,}5)^k\mathbf{v}_2$. Per $k$ grande il termine $(0{,}5)^k$ svanisce e $\mathbf{x}_k\approx 3^k\mathbf{v}_1$: il sistema si allinea alla direzione dell'autovalore dominante in modulo. È il principio del metodo delle potenze e, in scala planetaria, del calcolo del PageRank.
 
@@ -270,15 +270,15 @@ L'essenziale da trattenere. Un autovettore è una direzione che $A$ non ruota, s
 
 <details class="dim-tecnica"><summary>Esercizio 1 (introduttivo) — autovalori e autovettori completi</summary>
 
-**Testo.** Trovare autovalori e autovettori di $A=\begin{psmallmatrix}4&1\\2&3\end{psmallmatrix}$, verificando con traccia e determinante.
+**Testo.** Trovare autovalori e autovettori di $A=\left(\begin{smallmatrix}4&1\\2&3\end{smallmatrix}\right)$, verificando con traccia e determinante.
 
-**Soluzione.** $p(\lambda)=\lambda^2-7\lambda+10=(\lambda-2)(\lambda-5)$. Per $\lambda=2$: $A-2I=\begin{psmallmatrix}2&1\\2&1\end{psmallmatrix}$, equazione $2v_1+v_2=0$, autovettore $(1,-2)$. Per $\lambda=5$: $A-5I=\begin{psmallmatrix}-1&1\\2&-2\end{psmallmatrix}$, equazione $v_1=v_2$, autovettore $(1,1)$. Controlli: $\operatorname{tr}=7=2+5$ ✓, $\det=10=2\cdot5$ ✓.
+**Soluzione.** $p(\lambda)=\lambda^2-7\lambda+10=(\lambda-2)(\lambda-5)$. Per $\lambda=2$: $A-2I=\left(\begin{smallmatrix}2&1\\2&1\end{smallmatrix}\right)$, equazione $2v_1+v_2=0$, autovettore $(1,-2)$. Per $\lambda=5$: $A-5I=\left(\begin{smallmatrix}-1&1\\2&-2\end{smallmatrix}\right)$, equazione $v_1=v_2$, autovettore $(1,1)$. Controlli: $\operatorname{tr}=7=2+5$ ✓, $\det=10=2\cdot5$ ✓.
 
 </details>
 
 <details class="dim-tecnica"><summary>Esercizio 2 (introduttivo) — matrice triangolare</summary>
 
-**Testo.** Trovare gli autovalori di $A=\begin{psmallmatrix}5&3&1\\0&-2&7\\0&0&4\end{psmallmatrix}$.
+**Testo.** Trovare gli autovalori di $A=\left(\begin{smallmatrix}5&3&1\\0&-2&7\\0&0&4\end{smallmatrix}\right)$.
 
 **Soluzione.** La matrice è triangolare superiore, dunque $p(\lambda)=(5-\lambda)(-2-\lambda)(4-\lambda)$ e gli autovalori sono gli elementi diagonali: $\lambda_1=5$, $\lambda_2=-2$, $\lambda_3=4$. Verifica con la traccia: $5+(-2)+4=7=\operatorname{tr}(A)$ ✓.
 
@@ -286,7 +286,7 @@ L'essenziale da trattenere. Un autovettore è una direzione che $A$ non ruota, s
 
 <details class="dim-tecnica"><summary>Esercizio 3 (standard) — scorciatoia traccia/determinante</summary>
 
-**Testo.** Trovare gli autovalori di $A=\begin{psmallmatrix}6&2\\2&3\end{psmallmatrix}$ usando traccia e determinante.
+**Testo.** Trovare gli autovalori di $A=\left(\begin{smallmatrix}6&2\\2&3\end{smallmatrix}\right)$ usando traccia e determinante.
 
 **Soluzione.** $\operatorname{tr}(A)=9$, $\det(A)=18-4=14$. Gli autovalori risolvono $\lambda^2-9\lambda+14=0$, cioè $(\lambda-7)(\lambda-2)=0$. Dunque $\lambda_1=7$, $\lambda_2=2$; infatti $7+2=9$ e $7\cdot2=14$.
 
@@ -294,23 +294,23 @@ L'essenziale da trattenere. Un autovettore è una direzione che $A$ non ruota, s
 
 <details class="dim-tecnica"><summary>Esercizio 4 (standard) — simmetrica e ortogonalità</summary>
 
-**Testo.** Trovare autovalori e autovettori di $A=\begin{psmallmatrix}2&1\\1&2\end{psmallmatrix}$ e verificarne l'ortogonalità.
+**Testo.** Trovare autovalori e autovettori di $A=\left(\begin{smallmatrix}2&1\\1&2\end{smallmatrix}\right)$ e verificarne l'ortogonalità.
 
-**Soluzione.** $p(\lambda)=(2-\lambda)^2-1=(\lambda-1)(\lambda-3)$. Per $\lambda=1$: $A-I=\begin{psmallmatrix}1&1\\1&1\end{psmallmatrix}$, equazione $v_1+v_2=0$, autovettore $(1,-1)$. Per $\lambda=3$: $A-3I=\begin{psmallmatrix}-1&1\\1&-1\end{psmallmatrix}$, equazione $v_1=v_2$, autovettore $(1,1)$. Prodotto scalare $(1)(1)+(-1)(1)=0$: ortogonali, come previsto per una matrice simmetrica.
+**Soluzione.** $p(\lambda)=(2-\lambda)^2-1=(\lambda-1)(\lambda-3)$. Per $\lambda=1$: $A-I=\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)$, equazione $v_1+v_2=0$, autovettore $(1,-1)$. Per $\lambda=3$: $A-3I=\left(\begin{smallmatrix}-1&1\\1&-1\end{smallmatrix}\right)$, equazione $v_1=v_2$, autovettore $(1,1)$. Prodotto scalare $(1)(1)+(-1)(1)=0$: ortogonali, come previsto per una matrice simmetrica.
 
 </details>
 
 <details class="dim-tecnica"><summary>Esercizio 5 (standard) — autovalore nullo</summary>
 
-**Testo.** Mostrare che $A=\begin{psmallmatrix}2&-6\\-1&3\end{psmallmatrix}$ ha $\lambda=0$ come autovalore e trovare entrambi gli autovalori con i relativi autovettori.
+**Testo.** Mostrare che $A=\left(\begin{smallmatrix}2&-6\\-1&3\end{smallmatrix}\right)$ ha $\lambda=0$ come autovalore e trovare entrambi gli autovalori con i relativi autovettori.
 
-**Soluzione.** $\det(A)=6-6=0$, quindi $0$ è autovalore. L'autospazio è $\ker(A)$: da $2v_1-6v_2=0$, cioè $v_1=3v_2$, autovettore $(3,1)$. Il secondo autovalore è $\operatorname{tr}(A)-0=5$; per $\lambda=5$, $A-5I=\begin{psmallmatrix}-3&-6\\-1&-2\end{psmallmatrix}$ dà $v_1=-2v_2$, autovettore $(-2,1)$.
+**Soluzione.** $\det(A)=6-6=0$, quindi $0$ è autovalore. L'autospazio è $\ker(A)$: da $2v_1-6v_2=0$, cioè $v_1=3v_2$, autovettore $(3,1)$. Il secondo autovalore è $\operatorname{tr}(A)-0=5$; per $\lambda=5$, $A-5I=\left(\begin{smallmatrix}-3&-6\\-1&-2\end{smallmatrix}\right)$ dà $v_1=-2v_2$, autovettore $(-2,1)$.
 
 </details>
 
 <details class="dim-tecnica"><summary>Esercizio 6 (standard) — potenza via autovalori</summary>
 
-**Testo.** Con $A=\begin{psmallmatrix}1&2\\2&1\end{psmallmatrix}$ (autovalori $3$ e $-1$, autovettore $(1,1)$ per $\lambda=3$), verificare che $A^2(1,1)=9\,(1,1)$ e spiegare il caso generale.
+**Testo.** Con $A=\left(\begin{smallmatrix}1&2\\2&1\end{smallmatrix}\right)$ (autovalori $3$ e $-1$, autovettore $(1,1)$ per $\lambda=3$), verificare che $A^2(1,1)=9\,(1,1)$ e spiegare il caso generale.
 
 **Soluzione.** $A(1,1)=(1+2,\ 2+1)=(3,3)=3(1,1)$, dunque $(1,1)$ è autovettore con $\lambda=3$. Allora $A^2(1,1)=A(3\cdot(1,1))=3\,A(1,1)=3\cdot3(1,1)=9(1,1)=3^2(1,1)$. In generale $A^k\mathbf{v}=\lambda^k\mathbf{v}$: sugli autovettori l'azione di $A^k$ è la moltiplicazione per $\lambda^k$.
 
@@ -320,13 +320,13 @@ L'essenziale da trattenere. Un autovettore è una direzione che $A$ non ruota, s
 
 **Testo.** Verificare direttamente che gli autovettori $\mathbf{v}_1=(1,-2)$ (per $\lambda_1=2$) e $\mathbf{v}_2=(1,1)$ (per $\lambda_2=5$) dell'Esercizio 1 sono linearmente indipendenti, e collegare al risultato generale di §3.1.
 
-**Soluzione.** Da $c_1(1,-2)+c_2(1,1)=(0,0)$ si ottiene il sistema $c_1+c_2=0$, $-2c_1+c_2=0$. Sottraendo, $3c_1=0$, quindi $c_1=0$ e $c_2=0$: indipendenti. Equivalentemente, $\det\begin{psmallmatrix}1&1\\-2&1\end{psmallmatrix}=3\ne0$. Il teorema di §3.1 garantisce questa indipendenza a priori, senza calcoli, perché gli autovalori $2$ e $5$ sono distinti.
+**Soluzione.** Da $c_1(1,-2)+c_2(1,1)=(0,0)$ si ottiene il sistema $c_1+c_2=0$, $-2c_1+c_2=0$. Sottraendo, $3c_1=0$, quindi $c_1=0$ e $c_2=0$: indipendenti. Equivalentemente, $\det\left(\begin{smallmatrix}1&1\\-2&1\end{smallmatrix}\right)=3\ne0$. Il teorema di §3.1 garantisce questa indipendenza a priori, senza calcoli, perché gli autovalori $2$ e $5$ sono distinti.
 
 </details>
 
 <details class="dim-tecnica"><summary>Esercizio 8 (applicativo) — stabilità di un sistema iterato</summary>
 
-**Testo.** Un sistema evolve come $\mathbf{x}_{k+1}=A\mathbf{x}_k$ con $A=\begin{psmallmatrix}1{,}2&0\\0&0{,}8\end{psmallmatrix}$ e $\mathbf{x}_0=(1,1)$. Descrivere il comportamento per $k\to\infty$.
+**Testo.** Un sistema evolve come $\mathbf{x}_{k+1}=A\mathbf{x}_k$ con $A=\left(\begin{smallmatrix}1{,}2&0\\0&0{,}8\end{smallmatrix}\right)$ e $\mathbf{x}_0=(1,1)$. Descrivere il comportamento per $k\to\infty$.
 
 **Soluzione.** $A$ è diagonale, con autovalori $\lambda_1=1{,}2>1$ e $\lambda_2=0{,}8<1$ e autovettori gli assi $\mathbf{e}_1,\mathbf{e}_2$. Allora $\mathbf{x}_k=A^k\mathbf{x}_0=\big((1{,}2)^k,\ (0{,}8)^k\big)$. Per $k\to\infty$ la prima componente diverge ($(1{,}2)^k\to\infty$) e la seconda decade a zero ($(0{,}8)^k\to0$): il sistema si allinea asintoticamente alla direzione $\mathbf{e}_1$ dell'autovalore di modulo maggiore. La presenza di un autovalore $>1$ in modulo rende il sistema instabile.
 

@@ -84,7 +84,7 @@ $$A\mathbf{x} = \mathbf{b}, \qquad A \in \mathbb{R}^{m\times n},\ \ \mathbf{x}\i
 
 Questa non è solo un'abbreviazione: è la stessa lezione precedente sul prodotto matrice-vettore. La riga $i$-esima di $A\mathbf{x}$ è il prodotto scalare tra la riga $i$ di $A$ e il vettore $\mathbf{x}$, e imporre che valga $b_i$ ricostruisce esattamente l'equazione $i$-esima. C'è però una seconda lettura, quella *per colonne*, che sarà decisiva più avanti: $A\mathbf{x}$ è la combinazione lineare delle colonne di $A$ con pesi $x_1, \ldots, x_n$. Quindi risolvere $A\mathbf{x} = \mathbf{b}$ significa chiedersi: **con quali pesi devo combinare le colonne di $A$ per ottenere $\mathbf{b}$?**
 
-*Micro-esempio.* Il sistema $\begin{cases} x + 2y = 5 \\ 3x + y = 10\end{cases}$ diventa $A\mathbf{x}=\mathbf{b}$ con $A = \begin{psmallmatrix}1 & 2\\ 3 & 1\end{psmallmatrix}$, $\mathbf{x}=\begin{psmallmatrix}x\\y\end{psmallmatrix}$, $\mathbf{b}=\begin{psmallmatrix}5\\10\end{psmallmatrix}$. Nella lettura per colonne cerchiamo $x\begin{psmallmatrix}1\\3\end{psmallmatrix} + y\begin{psmallmatrix}2\\1\end{psmallmatrix} = \begin{psmallmatrix}5\\10\end{psmallmatrix}$.
+*Micro-esempio.* Il sistema $\begin{cases} x + 2y = 5 \\ 3x + y = 10\end{cases}$ diventa $A\mathbf{x}=\mathbf{b}$ con $A = \left(\begin{smallmatrix}1 & 2\\ 3 & 1\end{smallmatrix}\right)$, $\mathbf{x}=\left(\begin{smallmatrix}x\\y\end{smallmatrix}\right)$, $\mathbf{b}=\left(\begin{smallmatrix}5\\10\end{smallmatrix}\right)$. Nella lettura per colonne cerchiamo $x\left(\begin{smallmatrix}1\\3\end{smallmatrix}\right) + y\left(\begin{smallmatrix}2\\1\end{smallmatrix}\right) = \left(\begin{smallmatrix}5\\10\end{smallmatrix}\right)$.
 
 Un caso speciale importante è il **sistema omogeneo** $A\mathbf{x} = \mathbf{0}$, in cui tutti i termini noti sono nulli. Un sistema omogeneo non è mai impossibile: ha sempre almeno la **soluzione banale** $\mathbf{x} = \mathbf{0}$ (combinare le colonne con pesi tutti nulli dà il vettore nullo). La domanda interessante sarà se ne possiede *altre* oltre a quella.
 
@@ -233,8 +233,8 @@ Due pivot (colonne 1 e 2), la colonna 3 è libera: $z = t$. Dalla seconda riga $
 
 **Esempio 3 — Nessuna soluzione.** Per $\begin{cases}x+y=1\\ 2x+2y=5\end{cases}$, l'operazione $R_2 \leftarrow R_2 - 2R_1$ produce la riga $(0\ 0\mid 3)$, cioè $0=3$. **Sistema incompatibile.** Le due rette $x+y=1$ e $x+y=\tfrac{5}{2}$ sono parallele.
 
-**Esempio 4 — Sistema omogeneo e sue soluzioni non banali.** Per $A = \begin{psmallmatrix}1&2&-1\\ 2&4&-2\end{psmallmatrix}$, il sistema $A\mathbf{x}=\mathbf{0}$ dopo $R_2 \leftarrow R_2 - 2R_1$ si riduce all'unica equazione $x_1 + 2x_2 - x_3 = 0$. Due variabili libere $x_2 = s$, $x_3 = t$ danno $x_1 = -2s + t$, quindi
-$$\mathbf{x} = s\begin{psmallmatrix}-2\\1\\0\end{psmallmatrix} + t\begin{psmallmatrix}1\\0\\1\end{psmallmatrix},\quad s,t\in\mathbb{R}.$$
+**Esempio 4 — Sistema omogeneo e sue soluzioni non banali.** Per $A = \left(\begin{smallmatrix}1&2&-1\\ 2&4&-2\end{smallmatrix}\right)$, il sistema $A\mathbf{x}=\mathbf{0}$ dopo $R_2 \leftarrow R_2 - 2R_1$ si riduce all'unica equazione $x_1 + 2x_2 - x_3 = 0$. Due variabili libere $x_2 = s$, $x_3 = t$ danno $x_1 = -2s + t$, quindi
+$$\mathbf{x} = s\left(\begin{smallmatrix}-2\\1\\0\end{smallmatrix}\right) + t\left(\begin{smallmatrix}1\\0\\1\end{smallmatrix}\right),\quad s,t\in\mathbb{R}.$$
 L'insieme delle soluzioni è un piano per l'origine: infinite soluzioni oltre a quella banale.
 
 **Esempio 5 — Gauss–Jordan (lettura diretta in RREF).** Per $\begin{cases}2x + y = 5\\ x + 3y = 10\end{cases}$ portiamo tutto in RREF:
@@ -252,8 +252,8 @@ Con $R_2 \leftarrow R_2 - R_1$, $R_3 \leftarrow R_3 - 2R_1$, poi $R_3 \leftarrow
 $$\left(\begin{array}{cc|c}1&1&1\\0&-2&2\\0&0&2\end{array}\right).$$
 L'ultima riga è $0 = 2$: **incompatibile**. Avere più equazioni che incognite non garantisce compatibilità — le tre rette non hanno un punto comune. (Le prime due si incrociano in $(2,-1)$, che non soddisfa la terza: $2\cdot 2 + (-1) = 3 \neq 5$.)
 
-**Esempio 8 — Soluzione generale = particolare + omogenea (applicazione del Teorema 3.2).** Per $A = \begin{psmallmatrix}1&-1&2\\ 2&-2&4\end{psmallmatrix}$, $\mathbf{b} = \begin{psmallmatrix}3\\6\end{psmallmatrix}$, dopo $R_2 \leftarrow R_2 - 2R_1$ resta la sola equazione $x_1 - x_2 + 2x_3 = 3$. Una soluzione particolare (con $x_2=x_3=0$) è $\mathbf{x}_p = (3,0,0)$; le soluzioni omogenee sono $s(1,1,0) + t(-2,0,1)$. Per il teorema:
-$$\mathbf{x} = \begin{psmallmatrix}3\\0\\0\end{psmallmatrix} + s\begin{psmallmatrix}1\\1\\0\end{psmallmatrix} + t\begin{psmallmatrix}-2\\0\\1\end{psmallmatrix},\quad s,t\in\mathbb{R}.$$
+**Esempio 8 — Soluzione generale = particolare + omogenea (applicazione del Teorema 3.2).** Per $A = \left(\begin{smallmatrix}1&-1&2\\ 2&-2&4\end{smallmatrix}\right)$, $\mathbf{b} = \left(\begin{smallmatrix}3\\6\end{smallmatrix}\right)$, dopo $R_2 \leftarrow R_2 - 2R_1$ resta la sola equazione $x_1 - x_2 + 2x_3 = 3$. Una soluzione particolare (con $x_2=x_3=0$) è $\mathbf{x}_p = (3,0,0)$; le soluzioni omogenee sono $s(1,1,0) + t(-2,0,1)$. Per il teorema:
+$$\mathbf{x} = \left(\begin{smallmatrix}3\\0\\0\end{smallmatrix}\right) + s\left(\begin{smallmatrix}1\\1\\0\end{smallmatrix}\right) + t\left(\begin{smallmatrix}-2\\0\\1\end{smallmatrix}\right),\quad s,t\in\mathbb{R}.$$
 
 ## 5. Collegamenti e riepilogo
 
@@ -314,10 +314,10 @@ $$\left(\begin{array}{cc|c}1&2&5\\3&1&10\end{array}\right)\xrightarrow{R_2-3R_1}
 <details class="dim-tecnica">
 <summary>Esercizio 5 — Nucleo di una matrice</summary>
 
-Trovare tutte le soluzioni di $A\mathbf{x}=\mathbf{0}$ per $A = \begin{psmallmatrix}1&2&3\\ 2&4&6\\ 1&0&1\end{psmallmatrix}$.
+Trovare tutte le soluzioni di $A\mathbf{x}=\mathbf{0}$ per $A = \left(\begin{smallmatrix}1&2&3\\ 2&4&6\\ 1&0&1\end{smallmatrix}\right)$.
 
 **Soluzione.** $R_2 \leftarrow R_2 - 2R_1$, $R_3 \leftarrow R_3 - R_1$, poi $R_2 \leftrightarrow R_3$:
-$$\begin{psmallmatrix}1&2&3\\0&-2&-2\\0&0&0\end{psmallmatrix}.$$
+$$\left(\begin{smallmatrix}1&2&3\\0&-2&-2\\0&0&0\end{smallmatrix}\right).$$
 Due pivot (colonne 1,2), $z = t$ libera. Dalla seconda riga $-2y - 2t = 0 \Rightarrow y = -t$; dalla prima $x + 2(-t) + 3t = 0 \Rightarrow x = -t$. Quindi $\mathbf{x} = t\,(-1,-1,1)$, $t\in\mathbb{R}$. La dimensione dello spazio delle soluzioni è $1 = n - r = 3 - 2$, coerente col conteggio dei pivot.
 
 </details>
@@ -334,7 +334,7 @@ Per quali $k$ il sistema $\begin{cases}x + y = 3\\ x + ky = 5\end{cases}$ ha (a)
 <details class="dim-tecnica">
 <summary>Esercizio 7 — Applicare la struttura generale = particolare + omogenea</summary>
 
-Data $A = \begin{psmallmatrix}1&-1&2\\ 2&-2&4\end{psmallmatrix}$ e $\mathbf{b} = \begin{psmallmatrix}3\\6\end{psmallmatrix}$, scrivere la soluzione generale come $\mathbf{x}_p$ più le soluzioni omogenee, e verificare con $s=t=0$.
+Data $A = \left(\begin{smallmatrix}1&-1&2\\ 2&-2&4\end{smallmatrix}\right)$ e $\mathbf{b} = \left(\begin{smallmatrix}3\\6\end{smallmatrix}\right)$, scrivere la soluzione generale come $\mathbf{x}_p$ più le soluzioni omogenee, e verificare con $s=t=0$.
 
 **Soluzione.** $R_2 \leftarrow R_2 - 2R_1$ lascia $x_1 - x_2 + 2x_3 = 3$. Particolare: $\mathbf{x}_p = (3,0,0)$. Omogenee: da $x_1 = x_2 - 2x_3$ con $x_2=s$, $x_3=t$ si ha $s(1,1,0)+t(-2,0,1)$. Generale:
 $$\mathbf{x} = (3,0,0) + s(1,1,0) + t(-2,0,1),\quad s,t\in\mathbb{R}.$$

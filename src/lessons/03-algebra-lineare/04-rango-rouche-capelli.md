@@ -76,7 +76,7 @@ C'è poi un secondo teorema, altrettanto fondamentale, che lega il rango al nume
 
 Perché questa definizione è ben posta? Perché una stessa matrice si può ridurre a scalini per strade diverse, ma il *numero* di pivot che si ottiene è sempre lo stesso. Questo dipende dal fatto, dimostrato nella lezione precedente, che le operazioni elementari non cambiano l'insieme delle soluzioni; qui aggiungiamo che non cambiano nemmeno le relazioni di dipendenza tra le righe e tra le colonne, e quindi non cambiano il rango. Il rango è dunque un **invariante** della matrice, non un artefatto del particolare cammino di calcolo.
 
-*Micro-esempio.* La matrice $\begin{psmallmatrix}1&2\\ 2&4\end{psmallmatrix}$ ha la seconda riga uguale al doppio della prima. Un solo passo, $R_2 \leftarrow R_2 - 2R_1$, la riduce a $\begin{psmallmatrix}1&2\\ 0&0\end{psmallmatrix}$: un solo pivot, quindi $\operatorname{rk} = 1$. Le due righe portano una sola informazione.
+*Micro-esempio.* La matrice $\left(\begin{smallmatrix}1&2\\ 2&4\end{smallmatrix}\right)$ ha la seconda riga uguale al doppio della prima. Un solo passo, $R_2 \leftarrow R_2 - 2R_1$, la riduce a $\left(\begin{smallmatrix}1&2\\ 0&0\end{smallmatrix}\right)$: un solo pivot, quindi $\operatorname{rk} = 1$. Le due righe portano una sola informazione.
 
 Due proprietà seguono subito dalla definizione. Primo, il rango non può superare né il numero di righe né quello di colonne, perché ogni pivot occupa una riga distinta e una colonna distinta: $\operatorname{rk}(A) \le \min(m,n)$. Si dice che $A$ ha **rango pieno** quando vale l'uguaglianza. Secondo — e questo è meno ovvio — il numero di righe indipendenti coincide sempre col numero di colonne indipendenti, cioè $\operatorname{rk}(A) = \operatorname{rk}(A^\top)$. Ne parliamo nella parte tecnica della Sezione 3.
 
@@ -89,7 +89,7 @@ $$\operatorname{Im}(A) = \{A\mathbf{x} : \mathbf{x}\in\mathbb{R}^n\} = \{\text{t
 Questa è precisamente la lista dei termini noti $\mathbf{b}$ per cui il sistema $A\mathbf{x}=\mathbf{b}$ è risolvibile: risolvere il sistema significa esprimere $\mathbf{b}$ come combinazione delle colonne, cosa possibile esattamente quando $\mathbf{b}\in\operatorname{Im}(A)$. La dimensione di questo spazio — cioè il numero di direzioni indipendenti che le colonne sanno generare — è di nuovo il rango:
 $$\dim\big(\operatorname{Im}(A)\big) = \operatorname{rk}(A).$$
 
-*Micro-esempio.* Per $A = \begin{psmallmatrix}1&2\\ 2&4\end{psmallmatrix}$ le due colonne $\begin{psmallmatrix}1\\2\end{psmallmatrix}$ e $\begin{psmallmatrix}2\\4\end{psmallmatrix}$ sono l'una il doppio dell'altra: puntano nella stessa direzione. Le loro combinazioni riempiono solo una retta di $\mathbb{R}^2$, non tutto il piano — coerente con $\operatorname{rk} = 1$. Il sistema $A\mathbf{x}=\mathbf{b}$ ha soluzione solo se $\mathbf{b}$ giace su quella retta.
+*Micro-esempio.* Per $A = \left(\begin{smallmatrix}1&2\\ 2&4\end{smallmatrix}\right)$ le due colonne $\left(\begin{smallmatrix}1\\2\end{smallmatrix}\right)$ e $\left(\begin{smallmatrix}2\\4\end{smallmatrix}\right)$ sono l'una il doppio dell'altra: puntano nella stessa direzione. Le loro combinazioni riempiono solo una retta di $\mathbb{R}^2$, non tutto il piano — coerente con $\operatorname{rk} = 1$. Il sistema $A\mathbf{x}=\mathbf{b}$ ha soluzione solo se $\mathbf{b}$ giace su quella retta.
 
 ### 2.3 Nucleo e nullità
 
@@ -153,7 +153,7 @@ L'ultima riga anticipa il **determinante**, il tema di [algebra-08-determinanti]
 
 ### 2.8 Un elemento interattivo: quando due righe diventano dipendenti
 
-Il cursore mostra due rette per l'origine, $y = 2x$ (fissa) e $y = kx$ (variabile). Ciascuna corrisponde a una riga della matrice $\begin{psmallmatrix}2 & -1\\ k & -1\end{psmallmatrix}$ (l'equazione $y = mx$ si scrive $mx - y = 0$). Muovendo $k$ si vede quando le due righe portano informazione indipendente e quando invece collassano su una sola direzione.
+Il cursore mostra due rette per l'origine, $y = 2x$ (fissa) e $y = kx$ (variabile). Ciascuna corrisponde a una riga della matrice $\left(\begin{smallmatrix}2 & -1\\ k & -1\end{smallmatrix}\right)$ (l'equazione $y = mx$ si scrive $mx - y = 0$). Muovendo $k$ si vede quando le due righe portano informazione indipendente e quando invece collassano su una sola direzione.
 
 ```slider
 {"title":"Rette y=2x (fissa) e y=k·x: dipendenza tra le righe e caduta del rango (parametro: pendenza k)","fn":"2*x","fn2":"a*x","domain":[-3,3],"yDomain":[-6,6],"pname":"a","pmin":-3,"pmax":3,"pdefault":1,"pstep":0.1,"plabel":"pendenza k della seconda retta","label1":"retta y = 2x (prima riga)","label2":"retta y = k·x (seconda riga)"}
@@ -207,29 +207,29 @@ Nella dimostrazione di Rouché–Capelli abbiamo usato che «il rango è la dime
 
 ## 4. Esempi
 
-**Esempio 1 — Calcolo del rango e righe ridondanti.** Per $A = \begin{psmallmatrix}1&2&3\\ 2&4&6\\ 1&0&1\end{psmallmatrix}$, con $R_2 \leftarrow R_2 - 2R_1$, $R_3 \leftarrow R_3 - R_1$ e poi $R_2 \leftrightarrow R_3$:
-$$\begin{psmallmatrix}1&2&3\\ 0&-2&-2\\ 0&0&0\end{psmallmatrix}.$$
+**Esempio 1 — Calcolo del rango e righe ridondanti.** Per $A = \left(\begin{smallmatrix}1&2&3\\ 2&4&6\\ 1&0&1\end{smallmatrix}\right)$, con $R_2 \leftarrow R_2 - 2R_1$, $R_3 \leftarrow R_3 - R_1$ e poi $R_2 \leftrightarrow R_3$:
+$$\left(\begin{smallmatrix}1&2&3\\ 0&-2&-2\\ 0&0&0\end{smallmatrix}\right).$$
 Due pivot: $\operatorname{rk}(A) = 2$. La seconda riga originale era il doppio della prima — informazione ridondante, che l'eliminazione azzera.
 
 **Esempio 2 — Nullità dal teorema.** Per la matrice dell'Esempio 1, $n = 3$ e $\operatorname{rk} = 2$, quindi $\dim\ker(A) = 3 - 2 = 1$: una variabile libera. Risolvendo $A\mathbf{x}=\mathbf{0}$ dalla forma ridotta si trova $\ker(A) = \operatorname{span}\{(-1,-1,1)\}$, di dimensione $1$, in accordo col teorema. (Verifica: $A(-1,-1,1)^\top = (-1-2+3,\,-2-4+6,\,-1+0+1)^\top = \mathbf{0}$.)
 
-**Esempio 3 — Rouché–Capelli, sistema compatibile.** Per $A = \begin{psmallmatrix}1&2\\ 3&6\end{psmallmatrix}$ e $\mathbf{b} = \begin{psmallmatrix}2\\6\end{psmallmatrix}$: la riga 2 è tre volte la riga 1, quindi $\operatorname{rk}(A)=1$. Riducendo $[A\mid\mathbf{b}]$ con $R_2\leftarrow R_2-3R_1$ si ottiene $\begin{psmallmatrix}1&2&\mid&2\\ 0&0&\mid&0\end{psmallmatrix}$, dunque $\operatorname{rk}([A\mid\mathbf{b}])=1=\operatorname{rk}(A)$. **Compatibile**, e con $\operatorname{rk}=1<2=n$ ha infinite soluzioni ($x = 2 - 2t$, $y = t$).
+**Esempio 3 — Rouché–Capelli, sistema compatibile.** Per $A = \left(\begin{smallmatrix}1&2\\ 3&6\end{smallmatrix}\right)$ e $\mathbf{b} = \left(\begin{smallmatrix}2\\6\end{smallmatrix}\right)$: la riga 2 è tre volte la riga 1, quindi $\operatorname{rk}(A)=1$. Riducendo $[A\mid\mathbf{b}]$ con $R_2\leftarrow R_2-3R_1$ si ottiene $\left(\begin{smallmatrix}1&2&\mid&2\\ 0&0&\mid&0\end{smallmatrix}\right)$, dunque $\operatorname{rk}([A\mid\mathbf{b}])=1=\operatorname{rk}(A)$. **Compatibile**, e con $\operatorname{rk}=1<2=n$ ha infinite soluzioni ($x = 2 - 2t$, $y = t$).
 
-**Esempio 4 — Rouché–Capelli, sistema incompatibile.** Stesso $A$ ma $\mathbf{b} = \begin{psmallmatrix}2\\5\end{psmallmatrix}$. Con $R_2\leftarrow R_2-3R_1$ la matrice aumentata diventa $\begin{psmallmatrix}1&2&\mid&2\\ 0&0&\mid&-1\end{psmallmatrix}$, cioè $\operatorname{rk}([A\mid\mathbf{b}])=2 > 1 = \operatorname{rk}(A)$. **Incompatibile**: la riga finale dice $0 = -1$. Geometricamente, $\mathbf{b}=(2,5)$ non giace sulla retta generata dalla colonna $(1,3)$.
+**Esempio 4 — Rouché–Capelli, sistema incompatibile.** Stesso $A$ ma $\mathbf{b} = \left(\begin{smallmatrix}2\\5\end{smallmatrix}\right)$. Con $R_2\leftarrow R_2-3R_1$ la matrice aumentata diventa $\left(\begin{smallmatrix}1&2&\mid&2\\ 0&0&\mid&-1\end{smallmatrix}\right)$, cioè $\operatorname{rk}([A\mid\mathbf{b}])=2 > 1 = \operatorname{rk}(A)$. **Incompatibile**: la riga finale dice $0 = -1$. Geometricamente, $\mathbf{b}=(2,5)$ non giace sulla retta generata dalla colonna $(1,3)$.
 
-**Esempio 5 — Soluzione generale = particolare + nucleo.** Risolviamo $A\mathbf{x}=\mathbf{b}$ con $A = \begin{psmallmatrix}1&1&2\\ 2&1&3\\ 1&2&3\end{psmallmatrix}$ e $\mathbf{b} = \begin{psmallmatrix}3\\5\\4\end{psmallmatrix}$. Con $R_2\leftarrow R_2-2R_1$, $R_3\leftarrow R_3-R_1$, poi $R_3\leftarrow R_3+R_2$:
+**Esempio 5 — Soluzione generale = particolare + nucleo.** Risolviamo $A\mathbf{x}=\mathbf{b}$ con $A = \left(\begin{smallmatrix}1&1&2\\ 2&1&3\\ 1&2&3\end{smallmatrix}\right)$ e $\mathbf{b} = \left(\begin{smallmatrix}3\\5\\4\end{smallmatrix}\right)$. Con $R_2\leftarrow R_2-2R_1$, $R_3\leftarrow R_3-R_1$, poi $R_3\leftarrow R_3+R_2$:
 $$\left(\begin{array}{ccc|c}1&1&2&3\\ 0&-1&-1&-1\\ 0&0&0&0\end{array}\right).$$
 Qui $\operatorname{rk}(A) = \operatorname{rk}([A\mid\mathbf{b}]) = 2 < 3$: compatibile con una variabile libera $x_3 = t$. Dalla seconda riga $-x_2 - t = -1 \Rightarrow x_2 = 1 - t$; dalla prima $x_1 = 3 - x_2 - 2t = 2 - t$. Particolare (con $t=0$): $\mathbf{x}_p = (2,1,0)$. Nucleo: $t(-1,-1,1)$ (si verifica $A(-1,-1,1)^\top=\mathbf{0}$). **Soluzione generale:**
-$$\mathbf{x} = \begin{psmallmatrix}2\\1\\0\end{psmallmatrix} + t\begin{psmallmatrix}-1\\-1\\1\end{psmallmatrix},\quad t\in\mathbb{R}.$$
+$$\mathbf{x} = \left(\begin{smallmatrix}2\\1\\0\end{smallmatrix}\right) + t\left(\begin{smallmatrix}-1\\-1\\1\end{smallmatrix}\right),\quad t\in\mathbb{R}.$$
 
-**Esempio 6 — Rango pieno per righe di una matrice rettangolare.** Per $A = \begin{psmallmatrix}1&0&2\\ 0&1&3\end{psmallmatrix}\in\mathbb{R}^{2\times 3}$, già a scalini, ci sono due pivot: $\operatorname{rk}(A)=2=m$. Rango pieno per righe significa $\operatorname{Im}(A)=\mathbb{R}^2$: per **ogni** $\mathbf{b}\in\mathbb{R}^2$ il sistema è compatibile. E poiché $\operatorname{rk}=2<3=n$, la soluzione non è mai unica: c'è sempre $3-2=1$ variabile libera.
+**Esempio 6 — Rango pieno per righe di una matrice rettangolare.** Per $A = \left(\begin{smallmatrix}1&0&2\\ 0&1&3\end{smallmatrix}\right)\in\mathbb{R}^{2\times 3}$, già a scalini, ci sono due pivot: $\operatorname{rk}(A)=2=m$. Rango pieno per righe significa $\operatorname{Im}(A)=\mathbb{R}^2$: per **ogni** $\mathbf{b}\in\mathbb{R}^2$ il sistema è compatibile. E poiché $\operatorname{rk}=2<3=n$, la soluzione non è mai unica: c'è sempre $3-2=1$ variabile libera.
 
-**Esempio 7 — Un parametro che fa cadere il rango.** Per $A(k) = \begin{psmallmatrix}1&2&k\\ 0&1&3\\ 0&k&9\end{psmallmatrix}$, con $R_3 \leftarrow R_3 - k\,R_2$ la terza riga diventa $(0,\,0,\,9-3k)$. Quindi $\operatorname{rk}(A)<3 \iff 9-3k=0 \iff k=3$. Per $k=3$ si ha $\operatorname{rk}=2$ (una variabile libera); per $k\neq 3$ si ha $\operatorname{rk}=3$, rango pieno, e nel corrispondente sistema quadrato la soluzione è unica per ogni termine noto.
+**Esempio 7 — Un parametro che fa cadere il rango.** Per $A(k) = \left(\begin{smallmatrix}1&2&k\\ 0&1&3\\ 0&k&9\end{smallmatrix}\right)$, con $R_3 \leftarrow R_3 - k\,R_2$ la terza riga diventa $(0,\,0,\,9-3k)$. Quindi $\operatorname{rk}(A)<3 \iff 9-3k=0 \iff k=3$. Per $k=3$ si ha $\operatorname{rk}=2$ (una variabile libera); per $k\neq 3$ si ha $\operatorname{rk}=3$, rango pieno, e nel corrispondente sistema quadrato la soluzione è unica per ogni termine noto.
 
-**Esempio 8 — Verifica del teorema di nullità più rango su una $3\times 4$.** Per $A = \begin{psmallmatrix}1&2&1&3\\ 2&4&2&6\\ 1&2&0&2\end{psmallmatrix}$, con $R_2\leftarrow R_2-2R_1$, $R_3\leftarrow R_3-R_1$, poi $R_2\leftrightarrow R_3$:
-$$\begin{psmallmatrix}1&2&1&3\\ 0&0&-1&-1\\ 0&0&0&0\end{psmallmatrix}.$$
+**Esempio 8 — Verifica del teorema di nullità più rango su una $3\times 4$.** Per $A = \left(\begin{smallmatrix}1&2&1&3\\ 2&4&2&6\\ 1&2&0&2\end{smallmatrix}\right)$, con $R_2\leftarrow R_2-2R_1$, $R_3\leftarrow R_3-R_1$, poi $R_2\leftrightarrow R_3$:
+$$\left(\begin{smallmatrix}1&2&1&3\\ 0&0&-1&-1\\ 0&0&0&0\end{smallmatrix}\right).$$
 Pivot nelle colonne 1 e 3: $\operatorname{rk}(A)=2$, quindi $\dim\ker(A)=4-2=2$. Le colonne 2 e 4 sono libere ($x_2=s$, $x_4=t$); risolvendo, $x_3=-t$ e $x_1=-2s-2t$, da cui
-$$\ker(A) = \operatorname{span}\left\{\begin{psmallmatrix}-2\\1\\0\\0\end{psmallmatrix},\ \begin{psmallmatrix}-2\\0\\-1\\1\end{psmallmatrix}\right\},$$
+$$\ker(A) = \operatorname{span}\left\{\left(\begin{smallmatrix}-2\\1\\0\\0\end{smallmatrix}\right),\ \left(\begin{smallmatrix}-2\\0\\-1\\1\end{smallmatrix}\right)\right\},$$
 di dimensione $2 = 4 - 2$, come previsto.
 
 ## 5. Collegamenti e riepilogo
@@ -256,7 +256,7 @@ Fuori dall'algebra lineare, il rango è ovunque si parli di ridondanza e di info
 <details class="dim-tecnica">
 <summary>Esercizio 1 — Calcolo del rango</summary>
 
-Trovare il rango di $A = \begin{psmallmatrix}2&4&-2\\ 1&2&-1\\ 3&6&-3\end{psmallmatrix}$.
+Trovare il rango di $A = \left(\begin{smallmatrix}2&4&-2\\ 1&2&-1\\ 3&6&-3\end{smallmatrix}\right)$.
 
 **Soluzione.** Tutte le righe sono multipli di $(1,2,-1)$: la prima è $2\times$, la terza è $3\times$. Con $R_1\leftarrow\tfrac12 R_1$, poi $R_2\leftarrow R_2 - R_1$ e $R_3\leftarrow R_3 - 3R_1$, le righe 2 e 3 si annullano e resta un solo pivot. **$\operatorname{rk}(A)=1$**: una sola informazione indipendente.
 
@@ -274,7 +274,7 @@ Per quali $k$ il sistema $\begin{cases}x + y = 2\\ 2x + 2y = k\end{cases}$ ha so
 <details class="dim-tecnica">
 <summary>Esercizio 3 — Nucleo e verifica del teorema</summary>
 
-Trovare $\ker(A)$ per $A = \begin{psmallmatrix}1&2&1\\ 0&0&1\end{psmallmatrix}$ e verificare nullità più rango.
+Trovare $\ker(A)$ per $A = \left(\begin{smallmatrix}1&2&1\\ 0&0&1\end{smallmatrix}\right)$ e verificare nullità più rango.
 
 **Soluzione.** Dalla riga 2, $x_3 = 0$; dalla riga 1, $x_1 = -2x_2$. Variabile libera $x_2 = t$: $\mathbf{x} = t(-2,1,0)$, quindi $\ker(A) = \operatorname{span}\{(-2,1,0)\}$, $\dim=1$. Verifica: $\operatorname{rk}(A)=2$ e $2 + 1 = 3 = n$ ✓.
 
@@ -283,7 +283,7 @@ Trovare $\ker(A)$ per $A = \begin{psmallmatrix}1&2&1\\ 0&0&1\end{psmallmatrix}$ 
 <details class="dim-tecnica">
 <summary>Esercizio 4 — Soluzione generale</summary>
 
-Risolvere $\begin{psmallmatrix}1&0&2\\ 0&1&-1\\ 1&1&1\end{psmallmatrix}\mathbf{x} = \begin{psmallmatrix}1\\2\\3\end{psmallmatrix}$.
+Risolvere $\left(\begin{smallmatrix}1&0&2\\ 0&1&-1\\ 1&1&1\end{smallmatrix}\right)\mathbf{x} = \left(\begin{smallmatrix}1\\2\\3\end{smallmatrix}\right)$.
 
 **Soluzione.** Con $R_3\leftarrow R_3 - R_1 - R_2$: $\left(\begin{smallmatrix}1&0&2&\mid&1\\ 0&1&-1&\mid&2\\ 0&0&0&\mid&0\end{smallmatrix}\right)$, quindi $\operatorname{rk}=\operatorname{rk}([A\mid\mathbf{b}])=2<3$: compatibile con $x_3=t$ libera. Allora $x_2 = 2+t$, $x_1 = 1-2t$. Particolare $\mathbf{x}_p=(1,2,0)$; nucleo $t(-2,1,1)$ (verifica: $A(-2,1,1)^\top=\mathbf{0}$). **Generale:** $\mathbf{x} = (1,2,0) + t(-2,1,1)$, $t\in\mathbb{R}$.
 
@@ -292,10 +292,10 @@ Risolvere $\begin{psmallmatrix}1&0&2\\ 0&1&-1\\ 1&1&1\end{psmallmatrix}\mathbf{x
 <details class="dim-tecnica">
 <summary>Esercizio 5 — Rango e invertibilità</summary>
 
-$A = \begin{psmallmatrix}1&2&3\\ 4&5&6\\ 7&8&9\end{psmallmatrix}$ è invertibile?
+$A = \left(\begin{smallmatrix}1&2&3\\ 4&5&6\\ 7&8&9\end{smallmatrix}\right)$ è invertibile?
 
 **Soluzione.** Con $R_2\leftarrow R_2-4R_1$, $R_3\leftarrow R_3-7R_1$, poi $R_3\leftarrow R_3-2R_2$:
-$$\begin{psmallmatrix}1&2&3\\ 0&-3&-6\\ 0&0&0\end{psmallmatrix}.$$
+$$\left(\begin{smallmatrix}1&2&3\\ 0&-3&-6\\ 0&0&0\end{smallmatrix}\right).$$
 $\operatorname{rk}(A)=2<3$: **non invertibile** (singolare). Per la catena di equivalenze, $\ker(A)\neq\{\mathbf{0}\}$ e $\det(A)=0$. La terza riga è due volte la seconda meno la prima — una dipendenza nascosta.
 
 </details>
@@ -314,19 +314,19 @@ $$\left(\begin{array}{ccc|c}1&1&1&1\\ 0&\lambda-1&0&\lambda-1\\ 0&0&\lambda-1&0\
 <details class="dim-tecnica">
 <summary>Esercizio 7 — Rango della trasposta</summary>
 
-Verificare $\operatorname{rk}(A)=\operatorname{rk}(A^\top)$ per $A = \begin{psmallmatrix}1&2&0\\ 3&6&1\end{psmallmatrix}$.
+Verificare $\operatorname{rk}(A)=\operatorname{rk}(A^\top)$ per $A = \left(\begin{smallmatrix}1&2&0\\ 3&6&1\end{smallmatrix}\right)$.
 
-**Soluzione.** Con $R_2\leftarrow R_2-3R_1$: $\begin{psmallmatrix}1&2&0\\ 0&0&1\end{psmallmatrix}$, due pivot, $\operatorname{rk}(A)=2$. Per la trasposta $A^\top=\begin{psmallmatrix}1&3\\ 2&6\\ 0&1\end{psmallmatrix}$, con $R_2\leftarrow R_2-2R_1$ e $R_2\leftrightarrow R_3$ si arriva a $\begin{psmallmatrix}1&3\\ 0&1\\ 0&0\end{psmallmatrix}$, due pivot: $\operatorname{rk}(A^\top)=2$ ✓, in accordo con l'uguaglianza rango-righe = rango-colonne.
+**Soluzione.** Con $R_2\leftarrow R_2-3R_1$: $\left(\begin{smallmatrix}1&2&0\\ 0&0&1\end{smallmatrix}\right)$, due pivot, $\operatorname{rk}(A)=2$. Per la trasposta $A^\top=\left(\begin{smallmatrix}1&3\\ 2&6\\ 0&1\end{smallmatrix}\right)$, con $R_2\leftarrow R_2-2R_1$ e $R_2\leftrightarrow R_3$ si arriva a $\left(\begin{smallmatrix}1&3\\ 0&1\\ 0&0\end{smallmatrix}\right)$, due pivot: $\operatorname{rk}(A^\top)=2$ ✓, in accordo con l'uguaglianza rango-righe = rango-colonne.
 
 </details>
 
 <details class="dim-tecnica">
 <summary>Esercizio 8 — Nucleo e immagine di una $2\times 4$</summary>
 
-Per $A = \begin{psmallmatrix}1&0&-1&2\\ 2&1&-1&3\end{psmallmatrix}$, trovare $\operatorname{rk}(A)$, $\ker(A)$ e $\operatorname{Im}(A)$.
+Per $A = \left(\begin{smallmatrix}1&0&-1&2\\ 2&1&-1&3\end{smallmatrix}\right)$, trovare $\operatorname{rk}(A)$, $\ker(A)$ e $\operatorname{Im}(A)$.
 
-**Soluzione.** Con $R_2\leftarrow R_2-2R_1$: $\begin{psmallmatrix}1&0&-1&2\\ 0&1&1&-1\end{psmallmatrix}$, due pivot, $\operatorname{rk}(A)=2$. Variabili libere $x_3=s$, $x_4=t$: dalla riga 2 $x_2=-s+t$, dalla riga 1 $x_1=s-2t$, quindi
-$$\ker(A)=\operatorname{span}\left\{\begin{psmallmatrix}1\\-1\\1\\0\end{psmallmatrix},\ \begin{psmallmatrix}-2\\1\\0\\1\end{psmallmatrix}\right\},\quad \dim=2=4-2.$$
+**Soluzione.** Con $R_2\leftarrow R_2-2R_1$: $\left(\begin{smallmatrix}1&0&-1&2\\ 0&1&1&-1\end{smallmatrix}\right)$, due pivot, $\operatorname{rk}(A)=2$. Variabili libere $x_3=s$, $x_4=t$: dalla riga 2 $x_2=-s+t$, dalla riga 1 $x_1=s-2t$, quindi
+$$\ker(A)=\operatorname{span}\left\{\left(\begin{smallmatrix}1\\-1\\1\\0\end{smallmatrix}\right),\ \left(\begin{smallmatrix}-2\\1\\0\\1\end{smallmatrix}\right)\right\},\quad \dim=2=4-2.$$
 Poiché $\operatorname{rk}(A)=2=m$, il rango è pieno per righe: $\operatorname{Im}(A)=\mathbb{R}^2$, cioè ogni $\mathbf{b}\in\mathbb{R}^2$ è raggiungibile.
 
 </details>
