@@ -373,6 +373,6 @@ Dimostrare che in ogni spazio con prodotto scalare vale $\lVert\mathbf{u}+\mathb
 
 Per vettori colonna $\mathbf{u},\mathbf{v}\in\mathbb{R}^n$, chiarire la differenza tra $\mathbf{u}^{\!\top}\mathbf{v}$ e $\mathbf{u}\mathbf{v}^{\!\top}$, e calcolarli per $\mathbf{u}=(1,2)^{\!\top}$, $\mathbf{v}=(3,4)^{\!\top}$.
 
-**Soluzione.** $\mathbf{u}^{\!\top}\mathbf{v}$ è un prodotto $(1\times n)(n\times1)$: restituisce lo **scalare** $\sum u_iv_i$ (il prodotto scalare). $\mathbf{u}\mathbf{v}^{\!\top}$ è un prodotto $(n\times1)(1\times n)$: restituisce una **matrice** $n\times n$ di elemento $(i,j)$ pari a $u_iv_j$ (il prodotto esterno, di rango $1$). Numericamente: $\mathbf{u}^{\!\top}\mathbf{v}=3+8=11$, mentre $\mathbf{u}\mathbf{v}^{\!\top}=\begin{psmallmatrix}3&4\\6&8\end{psmallmatrix}$. Confonderli è l'errore più comune: il primo è un numero, il secondo una matrice.
+**Soluzione.** $\mathbf{u}^{\!\top}\mathbf{v}$ è un prodotto $(1\times n)(n\times1)$: restituisce lo **scalare** $\sum u_iv_i$ (il prodotto scalare). $\mathbf{u}\mathbf{v}^{\!\top}$ è un prodotto $(n\times1)(1\times n)$: restituisce una **matrice** $n\times n$ di elemento $(i,j)$ pari a $u_iv_j$ (il prodotto esterno, di rango $1$). Numericamente: $\mathbf{u}^{\!\top}\mathbf{v}=3+8=11$, mentre $\mathbf{u}\mathbf{v}^{\!\top}=\left(\begin{smallmatrix}3&4\\6&8\end{smallmatrix}\right)$. Confonderli è l'errore più comune: il primo è un numero, il secondo una matrice.
 
 </details>
