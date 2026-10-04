@@ -17,12 +17,11 @@ level: blue
 order: 12
 
 prerequisiti:
+  - algebra-04-rango-rouche-capelli
   - algebra-11-prodotto-scalare
 
 collegamenti:
-  - algebra-04-rango-rouche-capelli
   - algebra-13-gram-schmidt
-  - algebra-14-forme-quadratiche
 
 fonti_integrate:
   - id_fonte: austin-ula
@@ -35,7 +34,7 @@ fonti_integrate:
     note: "verifica del rigore: decomposizione diretta e teorema di miglior approssimazione; non tratta le equazioni normali in forma matriciale"
   - id_fonte: villanacci-math2
     ruolo: appunti-prof
-    sezioni_coperte: "Cap. 1 §1.2: prodotto scalare x·y in Rⁿ (Def. 7), spazio euclideo (Def. 9), norma (Def. 10), ortogonalità tra vettori non nulli (Def. 11); trasposta (Def. 63)"
+    sezioni_coperte: "Cap. 1 §1.2: prodotto scalare x·y in Rⁿ (Def. 7), spazio euclideo (Def. 9), norma (Def. 10), ortogonalità tra vettori non nulli (Def. 11); Cap. 3: trasposta (Def. 63)"
     note: "NON tratta complemento ortogonale, proiezione ortogonale né minimi quadrati: la notazione del professore è usata solo per prodotto scalare, norma e ortogonalità tra vettori; differenza di convenzione sull'ortogonalità (Def. 11 solo per vettori non nulli) segnalata in Teoria"
 
 contratto: "3.0"
@@ -51,11 +50,11 @@ componenti_usati:
 
 ## Intuizione
 
-Sotto il sole di mezzogiorno, la tua ombra sul pavimento è il punto del pavimento «più vicino» a te: la luce scende perpendicolare, e il segmento che va dalla tua testa alla sua ombra è ortogonale al pavimento. Questa è tutta l'idea della lezione.
+Con il sole allo zenit, cioè esattamente sopra di te, l'ombra della tua testa sul pavimento è il punto del pavimento più vicino alla testa: la luce scende perpendicolare, e il segmento che va dalla testa alla sua ombra è ortogonale al pavimento. Questa è tutta l'idea della lezione.
 
 In astratto: hai un vettore $\mathbf{b}$ e un sottospazio $W$ (una retta, un piano, …) che non lo contiene. Cerchi il vettore $\mathbf{p}\in W$ più vicino a $\mathbf{b}$. La risposta è la **proiezione ortogonale**, e la si riconosce da una sola proprietà: il **residuo** $\mathbf{e}=\mathbf{b}-\mathbf{p}$ è perpendicolare a tutto $W$. Se $\mathbf{e}$ avesse anche solo una piccola componente lungo $W$, potresti spostarti in quella direzione e avvicinarti ancora.
 
-Perché ci interessa? Perché molti sistemi $A\mathbf{x}=\mathbf{b}$ non hanno soluzione. Con 50 osservazioni di reddito e consumo e un modello $y=\beta_0+\beta_1x$ hai 50 equazioni e 2 incognite: i dati non stanno mai esattamente su una retta. Non si può risolvere, ma si può chiedere la soluzione **migliore possibile**: quella che rende $A\mathbf{x}$ il più vicino possibile a $\mathbf{b}$. Poiché i vettori $A\mathbf{x}$ formano lo spazio delle colonne di $A$ (la sua immagine $\operatorname{Im}(A)$), la risposta è proiettare $\mathbf{b}$ su $\operatorname{Im}(A)$. È il metodo dei **minimi quadrati**, cioè la regressione lineare.
+Perché ci interessa? Perché molti sistemi $A\mathbf{x}=\mathbf{b}$ non hanno soluzione. Con 50 osservazioni di reddito e consumo e un modello $y=\beta_0+\beta_1x$ hai 50 equazioni e 2 incognite: i dati non stanno quasi mai esattamente su una retta. Non si può risolvere, ma si può chiedere la soluzione **migliore possibile**: quella che rende $A\mathbf{x}$ il più vicino possibile a $\mathbf{b}$. Poiché i vettori $A\mathbf{x}$ formano lo spazio delle colonne di $A$ (la sua immagine $\operatorname{Im}(A)$), la risposta è proiettare $\mathbf{b}$ su $\operatorname{Im}(A)$. È il metodo dei **minimi quadrati**, cioè la regressione lineare.
 
 ## Teoria
 
@@ -73,13 +72,13 @@ $$
 
 Si legge «$W$ ortogonale»: è l'insieme dei vettori perpendicolari a *ogni* vettore di $W$. È un sottospazio: se $\mathbf{v}_1,\mathbf{v}_2\perp\mathbf{w}$, allora $\langle\alpha\mathbf{v}_1+\beta\mathbf{v}_2,\mathbf{w}\rangle=\alpha\cdot0+\beta\cdot0=0$ per linearità del prodotto scalare. Inoltre $W\cap W^\perp=\{\mathbf{0}\}$: un vettore in entrambi è ortogonale a sé stesso, quindi $\lVert\mathbf{v}\rVert^2=0$ e $\mathbf{v}=\mathbf{0}$.
 
-Per verificare $\mathbf{v}\in W^\perp$ basta controllare i vettori di una **base** di $W$: se $\mathbf{v}$ è ortogonale a $\mathbf{a}_1,\dots,\mathbf{a}_k$, è ortogonale a ogni loro combinazione lineare, sempre per linearità. Mettendo la base nelle colonne di $A=[\mathbf{a}_1\ \cdots\ \mathbf{a}_k]$, le condizioni $\mathbf{a}_j^T\mathbf{v}=0$ sono le righe del sistema $A^T\mathbf{v}=\mathbf{0}$. Quindi
+Per verificare $\mathbf{v}\in W^\perp$ basta controllare dei **generatori** $\mathbf{a}_1,\dots,\mathbf{a}_k$ di $W$ (non serve che siano indipendenti): se $\mathbf{v}$ è ortogonale a ciascuno, è ortogonale a ogni loro combinazione lineare, sempre per linearità. Mettendo i generatori nelle colonne di $A=[\mathbf{a}_1\ \cdots\ \mathbf{a}_k]$, le condizioni $\mathbf{a}_j^T\mathbf{v}=0$ sono le righe del sistema $A^T\mathbf{v}=\mathbf{0}$. Quindi, per **ogni** matrice $A$ (anche con colonne dipendenti),
 
 $$
 \operatorname{Im}(A)^\perp=\ker(A^T).
 $$
 
-Il complemento ortogonale dello spazio delle colonne (immagine) è il nucleo della trasposta; immagine, nucleo e rango $\operatorname{rk}$ sono quelli di [Rango e teorema di Rouché-Capelli](/algebra-lineare/fondamenti/04-rango-rouche-capelli). Per il teorema di nullità più rango, dimostrato in quella lezione, applicato a $A^T$, che ha $n$ colonne e rango $k$ (rango righe = rango colonne): $\dim\ker(A^T)=n-k$. Dunque $\dim W+\dim W^\perp=n$.
+Il complemento ortogonale dello spazio delle colonne (immagine) è il nucleo della trasposta; immagine, nucleo e rango $\operatorname{rk}$ sono quelli di [Rango e teorema di Rouché-Capelli](/algebra-lineare/fondamenti/04-rango-rouche-capelli). Scegliendo come colonne di $A$ una base di $W$ (quindi $k=\dim W$ e $\operatorname{rk}(A)=k$), il teorema di nullità più rango, dimostrato in quella lezione e applicato a $A^T$, che ha $n$ colonne e rango $k$ (rango righe = rango colonne), dà $\dim\ker(A^T)=n-k$. Dunque $\dim W+\dim W^\perp=n$.
 
 **Proiezione su una retta.** Sia $W=\operatorname{span}\{\mathbf{a}\}$ con $\mathbf{a}\neq\mathbf{0}$. Cerchiamo $\mathbf{p}=c\,\mathbf{a}$ con residuo ortogonale ad $\mathbf{a}$: $\mathbf{a}^T(\mathbf{b}-c\,\mathbf{a})=0$, cioè $c\,\mathbf{a}^T\mathbf{a}=\mathbf{a}^T\mathbf{b}$. Poiché $\mathbf{a}^T\mathbf{a}=\lVert\mathbf{a}\rVert^2>0$ si può dividere:
 
@@ -103,7 +102,7 @@ $$
 A^TA\,\hat{\mathbf{x}}=A^T\mathbf{b}.
 $$
 
-$A^TA$ è $k\times k$ e simmetrica; è invertibile esattamente quando le colonne di $A$ sono indipendenti (Esercizio 4). In quel caso
+$A^TA$ è $k\times k$ e simmetrica. Riga chiave: $\ker(A^TA)=\ker(A)$, perché se $A^TA\mathbf{x}=\mathbf{0}$ allora $0=\mathbf{x}^TA^TA\mathbf{x}=\lVert A\mathbf{x}\rVert^2$, quindi $A\mathbf{x}=\mathbf{0}$ (l'altra inclusione: $A\mathbf{x}=\mathbf{0}$ implica $A^TA\mathbf{x}=\mathbf{0}$). Una matrice quadrata è invertibile se e solo se il suo nucleo è $\{\mathbf{0}\}$, quindi $A^TA$ è invertibile se e solo se $\ker(A)=\{\mathbf{0}\}$, cioè se e solo se le colonne di $A$ sono indipendenti (dettagli nell'Esercizio 4). In quel caso
 
 $$
 \hat{\mathbf{x}}=(A^TA)^{-1}A^T\mathbf{b},\qquad \mathbf{p}=P\mathbf{b},\qquad P=A(A^TA)^{-1}A^T.
@@ -115,7 +114,7 @@ Simboli: $\hat{\mathbf{x}}$ sono le coordinate della proiezione nella base delle
 
 - $P^2=P$: proiettare una seconda volta non cambia nulla, perché $\mathbf{p}$ sta già in $W$;
 - $P^T=P$: $P$ è simmetrica;
-- $I-P$ è la proiezione su $W^\perp$, e $\mathbf{b}=P\mathbf{b}+(I-P)\mathbf{b}$.
+- $I-P$ è la proiezione su $W^\perp$: $(I-P)\mathbf{b}=\mathbf{b}-\mathbf{p}=\mathbf{e}\in W^\perp$ (passo 1 della dimostrazione), e ciò che resta, $P\mathbf{b}\in W$, è ortogonale a ogni vettore di $W^\perp$: è la stessa caratterizzazione «residuo ortogonale» applicata a $W^\perp$. Inoltre $\mathbf{b}=P\mathbf{b}+(I-P)\mathbf{b}$.
 
 > **Attenzione.** Il test della proiezione è sempre l'ortogonalità del residuo, $A^T(\mathbf{b}-\mathbf{p})=\mathbf{0}$: un punto di $W$ «vicino a occhio» non basta. E proiezione non è riflessione: la riflessione rispetto a $W$ è $2P-I$, che manda $\mathbf{p}+\mathbf{e}$ in $\mathbf{p}-\mathbf{e}$.
 
@@ -127,7 +126,7 @@ Se la base di $W$ è **ortonormale** (colonne di $Q$ con $Q^TQ=I$), allora $A^TA
 
 > **Attenzione.** $P=QQ^T$ vale solo se $Q^TQ=I$. Con una base qualsiasi serve $A(A^TA)^{-1}A^T$.
 
-**Minimi quadrati.** Se $A\mathbf{x}=\mathbf{b}$ non ha soluzione ($\mathbf{b}\notin \operatorname{Im}(A)$), si chiama **soluzione ai minimi quadrati** il vettore $\hat{\mathbf{x}}$ che minimizza $\lVert A\mathbf{x}-\mathbf{b}\rVert^2$, la somma dei quadrati degli scarti. Poiché $A\mathbf{x}$ percorre tutto $\operatorname{Im}(A)$, minimizzare $\lVert A\mathbf{x}-\mathbf{b}\rVert$ significa cercare il punto di $\operatorname{Im}(A)$ più vicino a $\mathbf{b}$. Il teorema della sezione successiva dice che quel punto è la proiezione: $\hat{\mathbf{x}}$ risolve le equazioni normali.
+**Minimi quadrati.** Per ogni $\mathbf{b}\in\mathbb{R}^n$ si chiama **soluzione ai minimi quadrati** di $A\mathbf{x}=\mathbf{b}$ un vettore $\hat{\mathbf{x}}$ che minimizza $\lVert A\mathbf{x}-\mathbf{b}\rVert^2$, la somma dei quadrati degli scarti. Se il sistema ha soluzione ($\mathbf{b}\in\operatorname{Im}(A)$) il minimo è $0$ e le soluzioni ai minimi quadrati coincidono con le soluzioni ordinarie; il caso interessante è $\mathbf{b}\notin\operatorname{Im}(A)$. Poiché $A\mathbf{x}$ percorre tutto $\operatorname{Im}(A)$, minimizzare $\lVert A\mathbf{x}-\mathbf{b}\rVert$ significa cercare il punto di $\operatorname{Im}(A)$ più vicino a $\mathbf{b}$. Il teorema della sezione successiva dice che quel punto è la proiezione: $\hat{\mathbf{x}}$ risolve le equazioni normali.
 
 ```checkpoint
 [domanda]
@@ -203,7 +202,7 @@ $$
 X=\begin{pmatrix}1&1\\1&2\\1&3\\1&4\end{pmatrix},\qquad X^TX=\begin{pmatrix}4&10\\10&30\end{pmatrix},\qquad X^T\mathbf{y}=\begin{pmatrix}16\\47\end{pmatrix}.
 $$
 
-Il sistema è incompatibile (quattro punti non allineati). Le equazioni normali sono $4\beta_0+10\beta_1=16$, $10\beta_0+30\beta_1=47$. La loro matrice dei coefficienti $X^TX$ ha determinante $4\cdot30-10\cdot10=20\neq0$, quindi la soluzione è unica: $\hat\beta_0=1/2$, $\hat\beta_1=7/5$. Retta stimata: $\hat y=0{,}5+1{,}4\,x$. Lettura con le unità: ogni 10 000 € di reddito in più, la spesa alimentare stimata sale di 1 400 €, cioè 14 centesimi per ogni euro in più (propensione marginale alla spesa alimentare $0{,}14$, in questo campione inventato); l'intercetta è una spesa di base di 500 €. Valori stimati $1{,}9;\ 3{,}3;\ 4{,}7;\ 6{,}1$; residui $0{,}1;\ -0{,}3;\ 0{,}3;\ -0{,}1$ (cioè $\pm100$ € e $\pm300$ €); somma dei quadrati $0{,}2$.
+Il sistema è incompatibile (quattro punti non allineati). Le equazioni normali sono $4\beta_0+10\beta_1=16$, $10\beta_0+30\beta_1=47$. La loro matrice dei coefficienti $X^TX$ ha determinante $4\cdot30-10\cdot10=20\neq0$, quindi la soluzione è unica: $\hat\beta_0=1/2$, $\hat\beta_1=7/5$. Retta stimata: $\hat y=0{,}5+1{,}4\,x$. Lettura con le unità: ogni 10 000 € di reddito in più, la spesa alimentare stimata sale di 1 400 €, cioè 14 centesimi per ogni euro in più (propensione marginale alla spesa alimentare $0{,}14$, in questo campione inventato); l'intercetta è una spesa di base di 500 € (estrapolazione: nel campione nessuna famiglia ha reddito nullo). Valori stimati $1{,}9;\ 3{,}3;\ 4{,}7;\ 6{,}1$; residui $0{,}1;\ -0{,}3;\ 0{,}3;\ -0{,}1$ (cioè $\pm100$ € e $\pm300$ €); somma dei quadrati $0{,}2$.
 
 *Ragionamento:* i residui sommano a zero, e non per caso. Il residuo è ortogonale a ogni colonna di $X$, quindi anche alla colonna di uno: $\mathbf{1}^T\mathbf{e}=\sum_i e_i=0$. Ogni regressione con intercetta ha questa proprietà.
 
@@ -239,7 +238,7 @@ $W^\perp=\ker(A^T)$ con $A^T=\left(\begin{smallmatrix}1&0&1\\0&1&1\end{smallmatr
 
 *Idempotenza:* $P^2=A(A^TA)^{-1}\,(A^TA)\,(A^TA)^{-1}A^T$. Il prodotto centrale $(A^TA)(A^TA)^{-1}$ è $I$, e resta $A(A^TA)^{-1}A^T=P$.
 
-*Simmetria:* $(XYZ)^T=Z^TY^TX^T$, quindi $P^T=A\,\big((A^TA)^{-1}\big)^T A^T$. L'inversa di una matrice simmetrica è simmetrica (trasponendo $MM^{-1}=I$ si ottiene $(M^{-1})^TM=I$, cioè $(M^{-1})^T=M^{-1}$), e $A^TA$ è simmetrica perché $(A^TA)^T=A^TA$. Quindi $P^T=P$.
+*Simmetria:* $(XYZ)^T=Z^TY^TX^T$, quindi $P^T=A\,\big((A^TA)^{-1}\big)^T A^T$. $A^TA$ è simmetrica perché $(A^TA)^T=A^T(A^T)^T=A^TA$. E l'inversa di una matrice simmetrica $M$ è simmetrica: trasponendo $MM^{-1}=I$ si ottiene $(M^{-1})^TM^T=I$; poiché $M^T=M$, questo dice $(M^{-1})^TM=I$, cioè $(M^{-1})^T$ è un'inversa di $M$, e per l'unicità dell'inversa $(M^{-1})^T=M^{-1}$. Con $M=A^TA$ si ottiene $\big((A^TA)^{-1}\big)^T=(A^TA)^{-1}$, quindi $P^T=A(A^TA)^{-1}A^T=P$.
 </details>
 
 **Esercizio 4.** Dimostra che $A^TA$ è invertibile se e solo se le colonne di $A$ sono linearmente indipendenti.
