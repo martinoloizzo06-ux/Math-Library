@@ -15,8 +15,6 @@ title_it: "Ortogonalità e proiezioni ortogonali"
 title_en: "Orthogonality and orthogonal projections"
 level: blue
 order: 12
-source_book: "A. Villanacci, Basic Linear Algebra, Metric Spaces, Differential Calculus and Nonlinear Programming (appunti); S. Axler, Linear Algebra Done Right (4ª ed.); D. Austin, Understanding Linear Algebra"
-source_chapter: "Complemento ortogonale, proiezione ortogonale, miglior approssimazione, minimi quadrati"
 
 prerequisiti:
   - algebra-11-prodotto-scalare
@@ -27,23 +25,23 @@ collegamenti:
   - algebra-14-forme-quadratiche
 
 fonti_integrate:
-  - id_fonte: villanacci-math2
-    ruolo: primaria
-    sezioni_coperte: "Ortogonalità in Rⁿ, complemento ortogonale, proiezione, notazione"
-    note: "appunti-prof: notazione e convenzioni come in sede d'esame"
-  - id_fonte: axler-ladr
-    ruolo: secondaria
-    sezioni_coperte: "Complemento ortogonale, decomposizione V = W ⊕ W⊥, proiezione come soluzione del problema di minimo"
-    note: "rigore: miglior approssimazione via Pitagora"
   - id_fonte: austin-ula
-    ruolo: secondaria
-    sezioni_coperte: "Proiezioni ortogonali, matrice di proiezione, minimi quadrati e regressione"
-    note: "intuizione ed esempi applicati"
+    ruolo: primaria
+    sezioni_coperte: "§6.2 complemento ortogonale e trasposta (Im(A)⊥ = ker(Aᵀ)); §6.3 proiezione ortogonale come vettore più vicino, formula di proiezione su base ortogonale/ortonormale; §6.5 minimi quadrati, equazioni normali (Prop. 6.5.6–6.5.7), retta di regressione"
+    note: "copre tutto il nucleo della lezione in Rⁿ con impostazione matriciale; primaria al posto di villanacci-math2, che non tratta questi argomenti"
+  - id_fonte: axler-ladr
+    ruolo: minore
+    sezioni_coperte: "§6C: complemento ortogonale (6.46–6.48), V = U ⊕ U⊥ (6.49), proiezione ortogonale P_U e sue proprietà (6.55–6.57), minimizzazione della distanza da un sottospazio (6.61)"
+    note: "verifica del rigore: decomposizione diretta e teorema di miglior approssimazione; non tratta le equazioni normali in forma matriciale"
+  - id_fonte: villanacci-math2
+    ruolo: appunti-prof
+    sezioni_coperte: "Cap. 1 §1.2: prodotto scalare x·y in Rⁿ (Def. 7), spazio euclideo (Def. 9), norma (Def. 10), ortogonalità tra vettori non nulli (Def. 11); trasposta (Def. 63)"
+    note: "NON tratta complemento ortogonale, proiezione ortogonale né minimi quadrati: la notazione del professore è usata solo per prodotto scalare, norma e ortogonalità tra vettori; differenza di convenzione sull'ortogonalità (Def. 11 solo per vettori non nulli) segnalata in Teoria"
 
 contratto: "3.0"
 profondita: essenziale
 tipo: teorica
-versione: "3.0"
+versione: "1.0"
 data_ultima_rielaborazione: "2026-10-04"
 stato: da-rivedere
 componenti_usati:
@@ -57,11 +55,15 @@ Sotto il sole di mezzogiorno, la tua ombra sul pavimento è il punto del pavimen
 
 In astratto: hai un vettore $\mathbf{b}$ e un sottospazio $W$ (una retta, un piano, …) che non lo contiene. Cerchi il vettore $\mathbf{p}\in W$ più vicino a $\mathbf{b}$. La risposta è la **proiezione ortogonale**, e la si riconosce da una sola proprietà: il **residuo** $\mathbf{e}=\mathbf{b}-\mathbf{p}$ è perpendicolare a tutto $W$. Se $\mathbf{e}$ avesse anche solo una piccola componente lungo $W$, potresti spostarti in quella direzione e avvicinarti ancora.
 
-Perché ci interessa? Perché molti sistemi $A\mathbf{x}=\mathbf{b}$ non hanno soluzione. Con 50 osservazioni di reddito e consumo e un modello $y=\beta_0+\beta_1x$ hai 50 equazioni e 2 incognite: i dati non stanno mai esattamente su una retta. Non si può risolvere, ma si può chiedere la soluzione **migliore possibile**: quella che rende $A\mathbf{x}$ il più vicino possibile a $\mathbf{b}$. Poiché i vettori $A\mathbf{x}$ formano lo spazio colonne $C(A)$, la risposta è proiettare $\mathbf{b}$ su $C(A)$. È il metodo dei **minimi quadrati**, cioè la regressione lineare.
+Perché ci interessa? Perché molti sistemi $A\mathbf{x}=\mathbf{b}$ non hanno soluzione. Con 50 osservazioni di reddito e consumo e un modello $y=\beta_0+\beta_1x$ hai 50 equazioni e 2 incognite: i dati non stanno mai esattamente su una retta. Non si può risolvere, ma si può chiedere la soluzione **migliore possibile**: quella che rende $A\mathbf{x}$ il più vicino possibile a $\mathbf{b}$. Poiché i vettori $A\mathbf{x}$ formano lo spazio delle colonne di $A$ (la sua immagine $\operatorname{Im}(A)$), la risposta è proiettare $\mathbf{b}$ su $\operatorname{Im}(A)$. È il metodo dei **minimi quadrati**, cioè la regressione lineare.
 
 ## Teoria
 
-Lavoriamo in $\mathbb{R}^n$ con il prodotto scalare standard $\langle\mathbf{u},\mathbf{v}\rangle=\mathbf{u}^T\mathbf{v}$ e la norma $\lVert\mathbf{v}\rVert=\sqrt{\mathbf{v}^T\mathbf{v}}$ della lezione [Prodotto scalare e spazi con norma](/algebra-lineare/ortogonalita/11-prodotto-scalare).
+Lavoriamo nello spazio euclideo $\mathbb{R}^n$ con il prodotto scalare standard e la norma $\lVert\mathbf{v}\rVert=\sqrt{\langle\mathbf{v},\mathbf{v}\rangle}$ della lezione [Prodotto scalare e spazi con norma](/algebra-lineare/ortogonalita/11-prodotto-scalare).
+
+**Simboli.** Tre scritture per lo stesso numero: $\langle\mathbf{u},\mathbf{v}\rangle=\mathbf{u}\cdot\mathbf{v}=\mathbf{u}^T\mathbf{v}=\sum_i u_iv_i$. Gli appunti del corso scrivono $\mathbf{x}\cdot\mathbf{y}$ (o $\mathbf{x}\mathbf{y}$); qui useremo $\langle\cdot,\cdot\rangle$ negli enunciati e $\mathbf{u}^T\mathbf{v}$ nei calcoli con le matrici, dove rende visibile il prodotto riga per colonna.
+
+**Convenzione sull'ortogonalità.** Diciamo $\mathbf{u}\perp\mathbf{v}$ quando $\langle\mathbf{u},\mathbf{v}\rangle=0$, senza escludere il vettore nullo: $\mathbf{0}$ è ortogonale a tutto. Gli appunti del corso definiscono l'ortogonalità solo tra vettori **non nulli**; sui vettori non nulli le due definizioni coincidono. Seguiamo la nostra (che è anche quella della lezione 11) perché serve in due punti: $W^\perp$ deve contenere $\mathbf{0}$ per essere un sottospazio, e il residuo deve poter essere nullo quando $\mathbf{b}\in W$.
 
 **Definizione (complemento ortogonale).** Dato un sottospazio $W\subseteq\mathbb{R}^n$,
 
@@ -74,10 +76,10 @@ Si legge «$W$ ortogonale»: è l'insieme dei vettori perpendicolari a *ogni* ve
 Per verificare $\mathbf{v}\in W^\perp$ basta controllare i vettori di una **base** di $W$: se $\mathbf{v}$ è ortogonale a $\mathbf{a}_1,\dots,\mathbf{a}_k$, è ortogonale a ogni loro combinazione lineare, sempre per linearità. Mettendo la base nelle colonne di $A=[\mathbf{a}_1\ \cdots\ \mathbf{a}_k]$, le condizioni $\mathbf{a}_j^T\mathbf{v}=0$ sono le righe del sistema $A^T\mathbf{v}=\mathbf{0}$. Quindi
 
 $$
-C(A)^\perp=N(A^T).
+\operatorname{Im}(A)^\perp=\ker(A^T).
 $$
 
-Il complemento ortogonale dello spazio colonne è il nucleo della trasposta. Per il teorema nullità più rango ([Rango e Rouché-Capelli](/algebra-lineare/fondamenti/04-rango-rouche-capelli)) applicato a $A^T$, che ha $n$ colonne e rango $k$: $\dim N(A^T)=n-k$. Dunque $\dim W+\dim W^\perp=n$.
+Il complemento ortogonale dello spazio delle colonne (immagine) è il nucleo della trasposta; immagine, nucleo e rango $\operatorname{rk}$ sono quelli di [Rango e teorema di Rouché-Capelli](/algebra-lineare/fondamenti/04-rango-rouche-capelli). Per il teorema di nullità più rango, dimostrato in quella lezione, applicato a $A^T$, che ha $n$ colonne e rango $k$ (rango righe = rango colonne): $\dim\ker(A^T)=n-k$. Dunque $\dim W+\dim W^\perp=n$.
 
 **Proiezione su una retta.** Sia $W=\operatorname{span}\{\mathbf{a}\}$ con $\mathbf{a}\neq\mathbf{0}$. Cerchiamo $\mathbf{p}=c\,\mathbf{a}$ con residuo ortogonale ad $\mathbf{a}$: $\mathbf{a}^T(\mathbf{b}-c\,\mathbf{a})=0$, cioè $c\,\mathbf{a}^T\mathbf{a}=\mathbf{a}^T\mathbf{b}$. Poiché $\mathbf{a}^T\mathbf{a}=\lVert\mathbf{a}\rVert^2>0$ si può dividere:
 
@@ -95,7 +97,7 @@ Qual è la proiezione di $\mathbf{b}=(4,-3)$ sulla retta generata da $\mathbf{a}
 $\mathbf{a}^T\mathbf{b}=12-12=0$: $\mathbf{b}$ è già ortogonale alla retta, cioè $\mathbf{b}\in W^\perp$. La proiezione è $\mathbf{p}=\mathbf{0}$ e il residuo è tutto $\mathbf{b}$.
 ```
 
-**Proiezione su un sottospazio.** Sia $W=C(A)$, con $A$ di tipo $n\times k$ a colonne linearmente indipendenti (una base di $W$). Un vettore di $W$ si scrive $\mathbf{p}=A\hat{\mathbf{x}}$ per un unico $\hat{\mathbf{x}}\in\mathbb{R}^k$. La richiesta «residuo ortogonale a $W$» significa $\mathbf{b}-A\hat{\mathbf{x}}\in C(A)^\perp=N(A^T)$, cioè $A^T(\mathbf{b}-A\hat{\mathbf{x}})=\mathbf{0}$. Queste sono le **equazioni normali**:
+**Proiezione su un sottospazio.** Sia $W=\operatorname{Im}(A)$, con $A$ di tipo $n\times k$ a colonne linearmente indipendenti (una base di $W$). Un vettore di $W$ si scrive $\mathbf{p}=A\hat{\mathbf{x}}$ per un unico $\hat{\mathbf{x}}\in\mathbb{R}^k$. La richiesta «residuo ortogonale a $W$» significa $\mathbf{b}-A\hat{\mathbf{x}}\in \operatorname{Im}(A)^\perp=\ker(A^T)$, cioè $A^T(\mathbf{b}-A\hat{\mathbf{x}})=\mathbf{0}$. Queste sono le **equazioni normali**:
 
 $$
 A^TA\,\hat{\mathbf{x}}=A^T\mathbf{b}.
@@ -107,19 +109,29 @@ $$
 \hat{\mathbf{x}}=(A^TA)^{-1}A^T\mathbf{b},\qquad \mathbf{p}=P\mathbf{b},\qquad P=A(A^TA)^{-1}A^T.
 $$
 
+> **Attenzione.** Se le colonne sono dipendenti, $A^TA$ è singolare: la proiezione $\mathbf{p}$ esiste ancora, ma $\hat{\mathbf{x}}$ non è unico. Prima si toglie la colonna ridondante. E $(A^TA)^{-1}A^T$ non è $A^{-1}$: $A$ è in generale rettangolare e non ha inversa (se è quadrata e invertibile, $P=I$).
+
 Simboli: $\hat{\mathbf{x}}$ sono le coordinate della proiezione nella base delle colonne di $A$; $P$ è la **matrice di proiezione** su $W$, di tipo $n\times n$. Per $k=1$ si ritrova $P_{\mathbf{a}}$. Proprietà di $P$:
 
 - $P^2=P$: proiettare una seconda volta non cambia nulla, perché $\mathbf{p}$ sta già in $W$;
 - $P^T=P$: $P$ è simmetrica;
 - $I-P$ è la proiezione su $W^\perp$, e $\mathbf{b}=P\mathbf{b}+(I-P)\mathbf{b}$.
 
-L'ultima riga è la **decomposizione ortogonale** $\mathbb{R}^n=W\oplus W^\perp$: ogni $\mathbf{b}$ si scrive come un pezzo in $W$ più un pezzo in $W^\perp$, e in modo unico. L'unicità viene da $W\cap W^\perp=\{\mathbf{0}\}$: se $\mathbf{w}_1+\mathbf{z}_1=\mathbf{w}_2+\mathbf{z}_2$ allora $\mathbf{w}_1-\mathbf{w}_2=\mathbf{z}_2-\mathbf{z}_1$ sta in entrambi, quindi è nullo. Se la base di $W$ è **ortonormale** (colonne di $Q$ con $Q^TQ=I$), la formula si semplifica in $P=QQ^T$: costruire una base così è lo scopo di [Gram-Schmidt e QR](/algebra-lineare/ortogonalita/13-gram-schmidt).
+> **Attenzione.** Il test della proiezione è sempre l'ortogonalità del residuo, $A^T(\mathbf{b}-\mathbf{p})=\mathbf{0}$: un punto di $W$ «vicino a occhio» non basta. E proiezione non è riflessione: la riflessione rispetto a $W$ è $2P-I$, che manda $\mathbf{p}+\mathbf{e}$ in $\mathbf{p}-\mathbf{e}$.
 
-**Minimi quadrati.** Se $A\mathbf{x}=\mathbf{b}$ non ha soluzione ($\mathbf{b}\notin C(A)$), si chiama **soluzione ai minimi quadrati** il vettore $\hat{\mathbf{x}}$ che minimizza $\lVert A\mathbf{x}-\mathbf{b}\rVert^2$, la somma dei quadrati degli scarti. Poiché $A\mathbf{x}$ percorre tutto $C(A)$, minimizzare $\lVert A\mathbf{x}-\mathbf{b}\rVert$ significa cercare il punto di $C(A)$ più vicino a $\mathbf{b}$. Il teorema della sezione successiva dice che quel punto è la proiezione: $\hat{\mathbf{x}}$ risolve le equazioni normali.
+**Decomposizione ortogonale.** $\mathbb{R}^n=W\oplus W^\perp$: ogni $\mathbf{b}$ si scrive in uno e un solo modo come un pezzo in $W$ più un pezzo in $W^\perp$. Le due metà hanno giustificazioni diverse.
+- *Esistenza:* $\mathbf{b}=P\mathbf{b}+(\mathbf{b}-P\mathbf{b})$. Il primo pezzo sta in $W$ perché è $A\hat{\mathbf{x}}$; che il secondo stia in $W^\perp$ è il **passo 1 della dimostrazione** nella sezione Dimostrazioni, che usa solo le equazioni normali e $\operatorname{Im}(A)^\perp=\ker(A^T)$, entrambe già stabilite qui sopra. (Se $W=\{\mathbf{0}\}$ non serve una base: $\mathbf{b}=\mathbf{0}+\mathbf{b}$.)
+- *Unicità:* viene da $W\cap W^\perp=\{\mathbf{0}\}$. Se $\mathbf{w}_1+\mathbf{z}_1=\mathbf{w}_2+\mathbf{z}_2$, allora $\mathbf{w}_1-\mathbf{w}_2=\mathbf{z}_2-\mathbf{z}_1$ sta in entrambi, quindi è nullo.
+
+Se la base di $W$ è **ortonormale** (colonne di $Q$ con $Q^TQ=I$), allora $A^TA=Q^TQ=I$ e la formula si semplifica in $P=QQ^T$: costruire una base così è lo scopo del [Processo di Gram-Schmidt e fattorizzazione QR](/algebra-lineare/ortogonalita/13-gram-schmidt).
+
+> **Attenzione.** $P=QQ^T$ vale solo se $Q^TQ=I$. Con una base qualsiasi serve $A(A^TA)^{-1}A^T$.
+
+**Minimi quadrati.** Se $A\mathbf{x}=\mathbf{b}$ non ha soluzione ($\mathbf{b}\notin \operatorname{Im}(A)$), si chiama **soluzione ai minimi quadrati** il vettore $\hat{\mathbf{x}}$ che minimizza $\lVert A\mathbf{x}-\mathbf{b}\rVert^2$, la somma dei quadrati degli scarti. Poiché $A\mathbf{x}$ percorre tutto $\operatorname{Im}(A)$, minimizzare $\lVert A\mathbf{x}-\mathbf{b}\rVert$ significa cercare il punto di $\operatorname{Im}(A)$ più vicino a $\mathbf{b}$. Il teorema della sezione successiva dice che quel punto è la proiezione: $\hat{\mathbf{x}}$ risolve le equazioni normali.
 
 ```checkpoint
 [domanda]
-Se $\mathbf{b}\in C(A)$ e le colonne di $A$ sono indipendenti, che cosa restituiscono le equazioni normali?
+Se $\mathbf{b}\in \operatorname{Im}(A)$ e le colonne di $A$ sono indipendenti, che cosa restituiscono le equazioni normali?
 
 [risposta]
 In quel caso $A\mathbf{x}=\mathbf{b}$ ha una soluzione esatta $\mathbf{x}^*$. Moltiplicando per $A^T$ si ottiene $A^TA\mathbf{x}^*=A^T\mathbf{b}$, e poiché $A^TA$ è invertibile la soluzione delle equazioni normali è unica: $\hat{\mathbf{x}}=\mathbf{x}^*$. La proiezione è $\mathbf{b}$ stesso e il residuo è nullo. I minimi quadrati estendono la soluzione ordinaria e non la contraddicono.
@@ -127,14 +139,14 @@ In quel caso $A\mathbf{x}=\mathbf{b}$ ha una soluzione esatta $\mathbf{x}^*$. Mo
 
 ## Dimostrazioni
 
-**Teorema (miglior approssimazione).** Sia $W=C(A)$ con colonne di $A$ indipendenti, $\mathbf{p}=P\mathbf{b}$. Per ogni $\mathbf{w}\in W$ vale $\lVert\mathbf{b}-\mathbf{w}\rVert\ge\lVert\mathbf{b}-\mathbf{p}\rVert$, con uguaglianza solo per $\mathbf{w}=\mathbf{p}$.
+**Teorema (miglior approssimazione).** Sia $W=\operatorname{Im}(A)$ con colonne di $A$ indipendenti, $\mathbf{p}=P\mathbf{b}$. Per ogni $\mathbf{w}\in W$ vale $\lVert\mathbf{b}-\mathbf{w}\rVert\ge\lVert\mathbf{b}-\mathbf{p}\rVert$, con uguaglianza solo per $\mathbf{w}=\mathbf{p}$.
 
 *Dimostrazione.*
 
-1. *Il residuo è ortogonale a $W$.* Per costruzione $\hat{\mathbf{x}}$ risolve $A^TA\hat{\mathbf{x}}=A^T\mathbf{b}$, cioè $A^T(\mathbf{b}-A\hat{\mathbf{x}})=\mathbf{0}$. Quindi $\mathbf{e}=\mathbf{b}-\mathbf{p}\in N(A^T)=C(A)^\perp=W^\perp$.
+1. *Il residuo è ortogonale a $W$.* Per costruzione $\hat{\mathbf{x}}$ risolve $A^TA\hat{\mathbf{x}}=A^T\mathbf{b}$, cioè $A^T(\mathbf{b}-A\hat{\mathbf{x}})=\mathbf{0}$. Quindi $\mathbf{e}=\mathbf{b}-\mathbf{p}\in \ker(A^T)=\operatorname{Im}(A)^\perp=W^\perp$. (È questo passo a dare l'esistenza nella decomposizione $\mathbb{R}^n=W\oplus W^\perp$ enunciata in Teoria.)
 2. *Spezziamo la distanza.* Per $\mathbf{w}\in W$ qualunque scriviamo $\mathbf{b}-\mathbf{w}=(\mathbf{b}-\mathbf{p})+(\mathbf{p}-\mathbf{w})$, sommando e sottraendo $\mathbf{p}$.
 3. *I due pezzi sono ortogonali.* $\mathbf{p}-\mathbf{w}\in W$, perché differenza di due vettori del sottospazio $W$; $\mathbf{b}-\mathbf{p}\in W^\perp$ per il passo 1. Quindi $\langle\mathbf{b}-\mathbf{p},\mathbf{p}-\mathbf{w}\rangle=0$.
-4. *Pitagora.* Per il teorema di Pitagora della [lezione 11](/algebra-lineare/ortogonalita/11-prodotto-scalare), applicato ai due vettori ortogonali del passo 3:
+4. *Pitagora.* Per il teorema di Pitagora di [Prodotto scalare e spazi con norma](/algebra-lineare/ortogonalita/11-prodotto-scalare), applicato ai due vettori ortogonali del passo 3:
 
 $$
 \lVert\mathbf{b}-\mathbf{w}\rVert^2=\lVert\mathbf{b}-\mathbf{p}\rVert^2+\lVert\mathbf{p}-\mathbf{w}\rVert^2.
@@ -156,7 +168,7 @@ Lo stesso risultato visto come problema di minimo. La distanza al quadrato da $\
 {
   "fn": "5*x**2 - 20*x + 25",
   "domain": [-0.5, 4.5],
-  "yDomain": [0, 30],
+  "yDomain": [0, 40],
   "title": "f(c) = ||b - c a||²: minimo in c = 2, valore 5",
   "label1": "f(c)",
   "color": "#2563eb"
@@ -183,7 +195,7 @@ $$
 
 Un vettore $\mathbf{n}$ ortogonale a $(1,1,0)$ e $(1,0,1)$ deve risolvere $n_1+n_2=0$, $n_1+n_3=0$: per esempio $\mathbf{n}=(1,-1,-1)$. Proiezione di $\mathbf{b}$ su $W^\perp$: $\frac{\mathbf{n}^T\mathbf{b}}{\mathbf{n}^T\mathbf{n}}\mathbf{n}=\frac{-4}{3}(1,-1,-1)=(-4/3,\,4/3,\,4/3)$. È esattamente il residuo $\mathbf{e}$ dell'Esempio 2. Togliendolo a $\mathbf{b}$ si ritrova $\mathbf{p}=(7/3,\,2/3,\,5/3)$. In matrici: $P=I-\frac{\mathbf{n}\mathbf{n}^T}{\mathbf{n}^T\mathbf{n}}$, la stessa matrice di prima. *Morale:* quando $W^\perp$ è più piccolo di $W$, proietta su $W^\perp$ e usa $\mathbf{b}=P\mathbf{b}+(I-P)\mathbf{b}$.
 
-**Esempio 4 (retta dei minimi quadrati).** Quattro famiglie hanno reddito $x=1,2,3,4$ e consumo $y=2,3,5,6$ (migliaia di euro). Cerchiamo $y\approx\beta_0+\beta_1x$.
+**Esempio 4 (retta dei minimi quadrati).** Quattro famiglie hanno reddito annuo $x=1,2,3,4$ (in **decine di migliaia** di euro: da 10 000 a 40 000 €) e spesa alimentare annua $y=2,3,5,6$ (in **migliaia** di euro). Cerchiamo $y\approx\beta_0+\beta_1x$.
 
 *Modello come sistema:* una equazione per osservazione, $\beta_0+\beta_1x_i=y_i$. In forma matriciale $X\boldsymbol\beta=\mathbf{y}$, con una colonna di uno (per $\beta_0$) e la colonna dei redditi:
 
@@ -191,24 +203,16 @@ $$
 X=\begin{pmatrix}1&1\\1&2\\1&3\\1&4\end{pmatrix},\qquad X^TX=\begin{pmatrix}4&10\\10&30\end{pmatrix},\qquad X^T\mathbf{y}=\begin{pmatrix}16\\47\end{pmatrix}.
 $$
 
-Il sistema è incompatibile (quattro punti non allineati). Le equazioni normali $4\beta_0+10\beta_1=16$, $10\beta_0+30\beta_1=47$ hanno determinante $20$ e soluzione $\hat\beta_0=1/2$, $\hat\beta_1=7/5$. Retta stimata: $\hat y=0{,}5+1{,}4\,x$ (ogni mille euro di reddito in più, $1{,}4$ mila di consumo in più in questo campione inventato). Valori stimati $1{,}9;\ 3{,}3;\ 4{,}7;\ 6{,}1$; residui $0{,}1;\ -0{,}3;\ 0{,}3;\ -0{,}1$; somma dei quadrati $0{,}2$.
+Il sistema è incompatibile (quattro punti non allineati). Le equazioni normali sono $4\beta_0+10\beta_1=16$, $10\beta_0+30\beta_1=47$. La loro matrice dei coefficienti $X^TX$ ha determinante $4\cdot30-10\cdot10=20\neq0$, quindi la soluzione è unica: $\hat\beta_0=1/2$, $\hat\beta_1=7/5$. Retta stimata: $\hat y=0{,}5+1{,}4\,x$. Lettura con le unità: ogni 10 000 € di reddito in più, la spesa alimentare stimata sale di 1 400 €, cioè 14 centesimi per ogni euro in più (propensione marginale alla spesa alimentare $0{,}14$, in questo campione inventato); l'intercetta è una spesa di base di 500 €. Valori stimati $1{,}9;\ 3{,}3;\ 4{,}7;\ 6{,}1$; residui $0{,}1;\ -0{,}3;\ 0{,}3;\ -0{,}1$ (cioè $\pm100$ € e $\pm300$ €); somma dei quadrati $0{,}2$.
 
 *Ragionamento:* i residui sommano a zero, e non per caso. Il residuo è ortogonale a ogni colonna di $X$, quindi anche alla colonna di uno: $\mathbf{1}^T\mathbf{e}=\sum_i e_i=0$. Ogni regressione con intercetta ha questa proprietà.
 
-## Errori comuni
-
-- **Dimenticare la condizione di ortogonalità.** Un vettore di $W$ «vicino a occhio» non è la proiezione. Il test è sempre $A^T(\mathbf{b}-\mathbf{p})=\mathbf{0}$.
-- **Usare $P=QQ^T$ con una base non ortonormale.** La formula semplice vale solo se $Q^TQ=I$; altrimenti serve $A(A^TA)^{-1}A^T$.
-- **Scrivere $(A^TA)^{-1}A^T=A^{-1}$.** $A$ è in generale rettangolare e non ha inversa. L'identità $(A^TA)^{-1}=A^{-1}(A^T)^{-1}$ vale solo per $A$ quadrata invertibile, e in quel caso $P=I$.
-- **Colonne dipendenti.** Allora $A^TA$ è singolare: la proiezione $\mathbf{p}$ esiste ancora, ma $\hat{\mathbf{x}}$ non è unico. Prima si toglie la colonna ridondante.
-- **Confondere proiezione e riflessione.** La riflessione rispetto a $W$ è $2P-I$, non $P$: manda $\mathbf{b}=\mathbf{p}+\mathbf{e}$ in $\mathbf{p}-\mathbf{e}$.
-
 ## Collegamenti e riepilogo
 
-- $C(A)^\perp=N(A^T)$, $\ \mathbb{R}^n=W\oplus W^\perp$, $\ \dim W+\dim W^\perp=n$.
+- $\operatorname{Im}(A)^\perp=\ker(A^T)$, $\ \mathbb{R}^n=W\oplus W^\perp$, $\ \dim W+\dim W^\perp=n$.
 - Proiezione: $A^TA\hat{\mathbf{x}}=A^T\mathbf{b}$, $\ P=A(A^TA)^{-1}A^T$, $\ P^2=P=P^T$; su una retta $P=\mathbf{a}\mathbf{a}^T/\mathbf{a}^T\mathbf{a}$.
 - Idea chiave: il punto più vicino è quello con residuo ortogonale (Pitagora).
-- Avanti: con una base ortonormale tutto si semplifica ([Gram-Schmidt e QR](/algebra-lineare/ortogonalita/13-gram-schmidt)). In statistica, $P$ è la «hat matrix» della regressione.
+- Avanti: con una base ortonormale tutto si semplifica ([Processo di Gram-Schmidt e fattorizzazione QR](/algebra-lineare/ortogonalita/13-gram-schmidt)). In statistica, $P$ è la «hat matrix» della regressione.
 
 ## Esercizi
 
@@ -225,7 +229,7 @@ $\mathbf{a}^T\mathbf{b}=2+0+8=10$, $\mathbf{a}^T\mathbf{a}=9$, quindi $\mathbf{p
 <details>
 <summary>Soluzione</summary>
 
-$W^\perp=N(A^T)$ con $A^T=\left(\begin{smallmatrix}1&0&1\\0&1&1\end{smallmatrix}\right)$: il sistema $v_1+v_3=0$, $v_2+v_3=0$ con $v_3=t$ libero dà $\mathbf{v}=t(-1,-1,1)$. Base di $W^\perp$: $\{(-1,-1,1)\}$. I due generatori di $W$ non sono proporzionali, quindi $\dim W=2$; $\dim W^\perp=1$; somma $3$.
+$W^\perp=\ker(A^T)$ con $A^T=\left(\begin{smallmatrix}1&0&1\\0&1&1\end{smallmatrix}\right)$: il sistema $v_1+v_3=0$, $v_2+v_3=0$ con $v_3=t$ libero dà $\mathbf{v}=t(-1,-1,1)$. Base di $W^\perp$: $\{(-1,-1,1)\}$. I due generatori di $W$ non sono proporzionali, quindi $\dim W=2$; $\dim W^\perp=1$; somma $3$.
 </details>
 
 **Esercizio 3.** Dimostra che $P=A(A^TA)^{-1}A^T$ soddisfa $P^2=P$ e $P^T=P$.
@@ -243,11 +247,11 @@ $W^\perp=N(A^T)$ con $A^T=\left(\begin{smallmatrix}1&0&1\\0&1&1\end{smallmatrix}
 <details>
 <summary>Soluzione</summary>
 
-$A^TA$ è quadrata, quindi è invertibile se e solo se $A^TA\mathbf{x}=\mathbf{0}$ ha solo $\mathbf{x}=\mathbf{0}$. Mostriamo che $N(A^TA)=N(A)$.
+$A^TA$ è quadrata, quindi è invertibile se e solo se $A^TA\mathbf{x}=\mathbf{0}$ ha solo $\mathbf{x}=\mathbf{0}$. Mostriamo che $\ker(A^TA)=\ker(A)$.
 
 Se $A\mathbf{x}=\mathbf{0}$, allora $A^TA\mathbf{x}=A^T\mathbf{0}=\mathbf{0}$. Viceversa, se $A^TA\mathbf{x}=\mathbf{0}$, moltiplicando a sinistra per $\mathbf{x}^T$ si ha $0=\mathbf{x}^TA^TA\mathbf{x}=(A\mathbf{x})^T(A\mathbf{x})=\lVert A\mathbf{x}\rVert^2$, quindi $A\mathbf{x}=\mathbf{0}$.
 
-Le colonne di $A$ sono indipendenti se e solo se $N(A)=\{\mathbf{0}\}$, cioè se e solo se $N(A^TA)=\{\mathbf{0}\}$, cioè se e solo se $A^TA$ è invertibile.
+Le colonne di $A$ sono indipendenti se e solo se $\ker(A)=\{\mathbf{0}\}$, cioè se e solo se $\ker(A^TA)=\{\mathbf{0}\}$, cioè se e solo se $A^TA$ è invertibile.
 </details>
 
 **Esercizio 5.** Trova la retta dei minimi quadrati $y=\beta_0+\beta_1x$ per i punti $(0,1)$, $(1,3)$, $(2,4)$ e la somma dei quadrati dei residui.
