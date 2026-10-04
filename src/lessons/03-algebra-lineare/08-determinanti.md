@@ -98,13 +98,13 @@ Dagli assiomi discendono, senza bisogno di alcuna formula, le regole di manipola
 
 **Scambio di due colonne: cambia il segno.** Se $A'$ si ottiene da $A$ scambiando due colonne, allora $\det(A')=-\det(A)$. Questo è il motivo per cui l'assioma 2 si chiama «alternanza»: la funzione *alterna* il segno a ogni scambio. La derivazione da «due colonne uguali danno zero» è in §3.
 
-*Micro-esempio.* Da $\det\begin{psmallmatrix}1&0\\0&1\end{psmallmatrix}=1$ segue, scambiando le colonne, $\det\begin{psmallmatrix}0&1\\1&0\end{psmallmatrix}=-1$.
+*Micro-esempio.* Da $\det\left(\begin{smallmatrix}1&0\\0&1\end{smallmatrix}\right)=1$ segue, scambiando le colonne, $\det\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)=-1$.
 
 **Colonna nulla: determinante nullo.** Se una colonna è il vettore nullo, per la multilinearità (con $\alpha=0$) il determinante è $0$.
 
 **Sommare a una colonna un multiplo di un'altra: il determinante non cambia.** Se a $\mathbf{a}_j$ si aggiunge $\lambda\mathbf{a}_k$ (con $k\ne j$), il determinante resta invariato. Questa è la proprietà cruciale: sono esattamente le mosse dell'eliminazione di Gauss che *non* alterano il determinante, e permettono di ridurre qualunque matrice a forma triangolare tenendo il conto del determinante. La verifica, brevissima, è in §3.
 
-*Micro-esempio.* $\det\begin{psmallmatrix}1&2\\0&1\end{psmallmatrix}$: sottraendo alla seconda colonna il doppio della prima si ottiene $\det\begin{psmallmatrix}1&0\\0&1\end{psmallmatrix}=1$; dunque il determinante di partenza vale anch'esso $1$.
+*Micro-esempio.* $\det\left(\begin{smallmatrix}1&2\\0&1\end{smallmatrix}\right)$: sottraendo alla seconda colonna il doppio della prima si ottiene $\det\left(\begin{smallmatrix}1&0\\0&1\end{smallmatrix}\right)=1$; dunque il determinante di partenza vale anch'esso $1$.
 
 **Colonne linearmente dipendenti: determinante nullo.** Se una colonna è combinazione lineare delle altre, con le mosse precedenti la si azzera senza cambiare il determinante, che quindi vale $0$. Questo è metà del criterio fondamentale di §2.5.
 
@@ -116,19 +116,19 @@ Per matrici piccole gli assiomi si condensano in formule esplicite.
 $$\det\begin{pmatrix}a&b\\c&d\end{pmatrix}=ad-bc.$$
 Il valore assoluto $\lvert ad-bc\rvert$ è l'area del parallelogramma di lati $(a,c)$ e $(b,d)$. La derivazione dagli assiomi è il modello di tutta la teoria ed è svolta per intero in §3.
 
-*Micro-esempio.* $\det\begin{psmallmatrix}3&1\\2&4\end{psmallmatrix}=3\cdot4-1\cdot2=10$.
+*Micro-esempio.* $\det\left(\begin{smallmatrix}3&1\\2&4\end{smallmatrix}\right)=3\cdot4-1\cdot2=10$.
 
 **Caso $3\times 3$ (regola di Sarrus).**
 $$\det\begin{pmatrix}a&b&c\\d&e&f\\g&h&i\end{pmatrix}=aei+bfg+cdh-ceg-afh-bdi.$$
 Si sommano i tre prodotti lungo le diagonali «discendenti verso destra» e si sottraggono i tre lungo le «discendenti verso sinistra», dopo aver idealmente riscritto le prime due colonne a fianco della matrice. Attenzione: questa scorciatoia vale **solo** per il $3\times 3$; estenderla al $4\times 4$ è uno degli errori più comuni.
 
-*Micro-esempio.* $\det\begin{psmallmatrix}2&1&3\\0&-1&2\\1&0&1\end{psmallmatrix}=2(-1)(1)+1\cdot2\cdot1+3\cdot0\cdot0-3(-1)(1)-2\cdot0\cdot2-1\cdot0\cdot1=-2+2+0+3-0-0=3$.
+*Micro-esempio.* $\det\left(\begin{smallmatrix}2&1&3\\0&-1&2\\1&0&1\end{smallmatrix}\right)=2(-1)(1)+1\cdot2\cdot1+3\cdot0\cdot0-3(-1)(1)-2\cdot0\cdot2-1\cdot0\cdot1=-2+2+0+3-0-0=3$.
 
 **Caso generale (sviluppo di Laplace).** Per una matrice $n\times n$ il determinante si riconduce a determinanti di taglia $n-1$. Chiamiamo **minore** $M_{ij}$ il determinante della sottomatrice $(n-1)\times(n-1)$ ottenuta cancellando la riga $i$ e la colonna $j$, e **cofattore** $C_{ij}=(-1)^{i+j}M_{ij}$. Allora, sviluppando lungo una qualsiasi riga $i$,
 $$\det(A)=\sum_{j=1}^{n}(-1)^{i+j}\,a_{ij}\,M_{ij}=\sum_{j=1}^{n}a_{ij}\,C_{ij},$$
 e vale la formula analoga sviluppando lungo una colonna. Il fattore $(-1)^{i+j}$ dispone i segni a scacchiera, con il $+$ nell'angolo in alto a sinistra. La libertà di scegliere la riga o la colonna è un dono pratico: **conviene svilupparsi lungo la linea con più zeri**, perché ogni entrata nulla cancella un intero minore.
 
-*Micro-esempio.* Sviluppando $\det\begin{psmallmatrix}1&2&3\\0&4&5\\0&0&6\end{psmallmatrix}$ lungo la prima colonna, restano solo il termine $(1,1)$: $1\cdot\det\begin{psmallmatrix}4&5\\0&6\end{psmallmatrix}=1\cdot24=24$. È il prodotto della diagonale, come vedremo per ogni matrice triangolare.
+*Micro-esempio.* Sviluppando $\det\left(\begin{smallmatrix}1&2&3\\0&4&5\\0&0&6\end{smallmatrix}\right)$ lungo la prima colonna, restano solo il termine $(1,1)$: $1\cdot\det\left(\begin{smallmatrix}4&5\\0&6\end{smallmatrix}\right)=1\cdot24=24$. È il prodotto della diagonale, come vedremo per ogni matrice triangolare.
 
 ```checkpoint
 [domanda]
@@ -144,7 +144,7 @@ Tre proprietà trasformano il determinante da formula in strumento teorico.
 
 **Matrice triangolare: prodotto della diagonale.** Se $A$ è triangolare (superiore o inferiore), $\det(A)$ è il prodotto degli elementi diagonali $a_{11}a_{22}\cdots a_{nn}$. Questo, unito alle mosse di §2.2, è l'algoritmo efficiente per calcolare determinanti grandi: si riduce la matrice a triangolare con l'eliminazione di Gauss (tenendo conto degli scambi, che cambiano il segno) e si moltiplica la diagonale.
 
-*Micro-esempio.* $\det\begin{psmallmatrix}2&7&-1\\0&3&5\\0&0&4\end{psmallmatrix}=2\cdot3\cdot4=24$, indipendentemente dai valori sopra la diagonale.
+*Micro-esempio.* $\det\left(\begin{smallmatrix}2&7&-1\\0&3&5\\0&0&4\end{smallmatrix}\right)=2\cdot3\cdot4=24$, indipendentemente dai valori sopra la diagonale.
 
 **Trasposizione: $\det(A^{T})=\det(A)$.** Trasporre non cambia il determinante. È la ragione per cui gli assiomi enunciati sulle colonne valgono identici sulle righe: ogni affermazione «per colonne» ha la sua gemella «per righe», e lo sviluppo di Laplace funziona indifferentemente lungo righe o colonne.
 
@@ -174,7 +174,7 @@ Arriviamo al fatto che dà senso a tutto il resto e collega il determinante alle
 
 Questo teorema salda il determinante alla catena di equivalenze del rango e delle basi: fornisce un *unico numero* la cui nullità certifica la singolarità. La dimostrazione completa è in §3.
 
-*Micro-esempio.* $A=\begin{psmallmatrix}k&1\\2&k\end{psmallmatrix}$ ha $\det(A)=k^{2}-2$: la matrice è invertibile per ogni $k$ tranne $k=\pm\sqrt{2}$, dove le colonne diventano proporzionali.
+*Micro-esempio.* $A=\left(\begin{smallmatrix}k&1\\2&k\end{smallmatrix}\right)$ ha $\det(A)=k^{2}-2$: la matrice è invertibile per ogni $k$ tranne $k=\pm\sqrt{2}$, dove le colonne diventano proporzionali.
 
 **Interpretazione geometrica.** Per $A\in M_{n,n}(\mathbb{R})$ il numero $\lvert\det(A)\rvert$ è il volume $n$-dimensionale del parallelepipedo generato dalle colonne di $A$, e il segno codifica l'orientazione: $\det(A)>0$ conserva il verso dello spazio, $\det(A)<0$ lo inverte, $\det(A)=0$ lo appiattisce (volume nullo, colonne dipendenti). Il determinante è dunque il **fattore di scala dei volumi** della trasformazione $\mathbf{x}\mapsto A\mathbf{x}$: è la lettura geometrica del legame matrice–trasformazione lineare della lezione precedente.
 
@@ -192,13 +192,13 @@ Il determinante non solo diagnostica l'invertibilità: quando essa vale, fornisc
 $$x_j=\frac{\det(A_j)}{\det(A)},\qquad j=1,\dots,n,$$
 dove $A_j$ è la matrice ottenuta da $A$ sostituendo la $j$-esima colonna con il termine noto $\mathbf{b}$.
 
-*Micro-esempio.* Per $\begin{psmallmatrix}2&1\\1&-1\end{psmallmatrix}\mathbf{x}=\begin{psmallmatrix}5\\1\end{psmallmatrix}$ si ha $\det(A)=-3$, $\det(A_1)=\det\begin{psmallmatrix}5&1\\1&-1\end{psmallmatrix}=-6$, quindi $x_1=-6/-3=2$; e $\det(A_2)=\det\begin{psmallmatrix}2&5\\1&1\end{psmallmatrix}=-3$, quindi $x_2=1$.
+*Micro-esempio.* Per $\left(\begin{smallmatrix}2&1\\1&-1\end{smallmatrix}\right)\mathbf{x}=\left(\begin{smallmatrix}5\\1\end{smallmatrix}\right)$ si ha $\det(A)=-3$, $\det(A_1)=\det\left(\begin{smallmatrix}5&1\\1&-1\end{smallmatrix}\right)=-6$, quindi $x_1=-6/-3=2$; e $\det(A_2)=\det\left(\begin{smallmatrix}2&5\\1&1\end{smallmatrix}\right)=-3$, quindi $x_2=1$.
 
 **Formula dell'inversa con l'aggiunta.** Sia $C_{ij}$ il cofattore di posto $(i,j)$. La **matrice aggiunta** $\operatorname{adj}(A)$ è la trasposta della matrice dei cofattori, cioè $(\operatorname{adj}(A))_{ij}=C_{ji}$. Allora, se $\det(A)\ne 0$,
 $$A^{-1}=\frac{1}{\det(A)}\operatorname{adj}(A).$$
 L'indice invertito $C_{ji}$ (non $C_{ij}$) è il dettaglio da non dimenticare: l'aggiunta è la *trasposta* della matrice dei cofattori.
 
-*Micro-esempio.* Per $A=\begin{psmallmatrix}2&1\\5&3\end{psmallmatrix}$, $\det(A)=1$; i cofattori danno $\operatorname{adj}(A)=\begin{psmallmatrix}3&-1\\-5&2\end{psmallmatrix}$, quindi $A^{-1}=\begin{psmallmatrix}3&-1\\-5&2\end{psmallmatrix}$.
+*Micro-esempio.* Per $A=\left(\begin{smallmatrix}2&1\\5&3\end{smallmatrix}\right)$, $\det(A)=1$; i cofattori danno $\operatorname{adj}(A)=\left(\begin{smallmatrix}3&-1\\-5&2\end{smallmatrix}\right)$, quindi $A^{-1}=\left(\begin{smallmatrix}3&-1\\-5&2\end{smallmatrix}\right)$.
 
 ---
 
@@ -208,7 +208,7 @@ L'indice invertito $C_{ji}$ (non $C_{ij}$) è il dettaglio da non dimenticare: l
 
 Mostriamo come le tre proprietà, senza altra informazione, costringano la formula $ad-bc$. È il prototipo del meccanismo di unicità.
 
-Scriviamo le colonne di $A=\begin{psmallmatrix}a&b\\c&d\end{psmallmatrix}$ nella base canonica: $\mathbf{a}_1=(a,c)=a\mathbf{e}_1+c\mathbf{e}_2$ e $\mathbf{a}_2=(b,d)=b\mathbf{e}_1+d\mathbf{e}_2$.
+Scriviamo le colonne di $A=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)$ nella base canonica: $\mathbf{a}_1=(a,c)=a\mathbf{e}_1+c\mathbf{e}_2$ e $\mathbf{a}_2=(b,d)=b\mathbf{e}_1+d\mathbf{e}_2$.
 
 Applichiamo la multilinearità (assioma 1) alla prima colonna, tenendo fissa la seconda:
 $$\det(A)=\det(a\mathbf{e}_1+c\mathbf{e}_2,\ \mathbf{a}_2)=a\det(\mathbf{e}_1,\mathbf{a}_2)+c\det(\mathbf{e}_2,\mathbf{a}_2).$$
@@ -307,22 +307,22 @@ Dividendo per $\det(A)\ne 0$ si ottiene $x_j=\det(A_j)/\det(A)$. $\blacksquare$
 
 ## 4. Esempi
 
-**Esempio 1 (introduttivo) — $2\times 2$ e sua area.** $A=\begin{psmallmatrix}3&1\\2&4\end{psmallmatrix}$: $\det(A)=3\cdot4-1\cdot2=10$. Il parallelogramma di lati $(3,2)$ e $(1,4)$ ha area $\lvert10\rvert=10$; il segno positivo dice che l'orientazione delle due colonne è quella canonica.
+**Esempio 1 (introduttivo) — $2\times 2$ e sua area.** $A=\left(\begin{smallmatrix}3&1\\2&4\end{smallmatrix}\right)$: $\det(A)=3\cdot4-1\cdot2=10$. Il parallelogramma di lati $(3,2)$ e $(1,4)$ ha area $\lvert10\rvert=10$; il segno positivo dice che l'orientazione delle due colonne è quella canonica.
 
-**Esempio 2 (introduttivo) — determinante nullo e dipendenza.** $A=\begin{psmallmatrix}1&2\\3&6\end{psmallmatrix}$: $\det(A)=6-6=0$. La seconda colonna è il doppio della prima, colonne dipendenti, $A$ non invertibile. Il criterio di §2.5 si legge qui a occhio.
+**Esempio 2 (introduttivo) — determinante nullo e dipendenza.** $A=\left(\begin{smallmatrix}1&2\\3&6\end{smallmatrix}\right)$: $\det(A)=6-6=0$. La seconda colonna è il doppio della prima, colonne dipendenti, $A$ non invertibile. Il criterio di §2.5 si legge qui a occhio.
 
-**Esempio 3 (intermedio) — $3\times 3$ con Sarrus.** $A=\begin{psmallmatrix}2&1&3\\0&-1&2\\1&0&1\end{psmallmatrix}$. Diagonali discendenti a destra: $2(-1)(1)+1\cdot2\cdot1+3\cdot0\cdot0=-2+2+0=0$. Diagonali discendenti a sinistra: $3(-1)(1)+2\cdot2\cdot(? )$... svolgiamo con la formula ordinata $aei+bfg+cdh-ceg-afh-bdi$: $-2+2+0-3\cdot(-1)\cdot1-2\cdot0\cdot2-1\cdot0\cdot1=0-(-3)-0-0=3$. Dunque $\det(A)=3$.
+**Esempio 3 (intermedio) — $3\times 3$ con Sarrus.** $A=\left(\begin{smallmatrix}2&1&3\\0&-1&2\\1&0&1\end{smallmatrix}\right)$. Diagonali discendenti a destra: $2(-1)(1)+1\cdot2\cdot1+3\cdot0\cdot0=-2+2+0=0$. Diagonali discendenti a sinistra: $3(-1)(1)+2\cdot2\cdot(? )$... svolgiamo con la formula ordinata $aei+bfg+cdh-ceg-afh-bdi$: $-2+2+0-3\cdot(-1)\cdot1-2\cdot0\cdot2-1\cdot0\cdot1=0-(-3)-0-0=3$. Dunque $\det(A)=3$.
 
-**Esempio 4 (intermedio) — sfruttare gli zeri con Laplace.** Per $A=\begin{psmallmatrix}5&2&7\\0&3&0\\0&4&1\end{psmallmatrix}$ conviene la seconda riga (due zeri): $\det(A)=3\cdot(-1)^{2+2}\det\begin{psmallmatrix}5&7\\0&1\end{psmallmatrix}=3\cdot(5\cdot1-7\cdot0)=15$. Scegliere bene la linea di sviluppo ha ridotto tutto a un solo minore $2\times 2$.
+**Esempio 4 (intermedio) — sfruttare gli zeri con Laplace.** Per $A=\left(\begin{smallmatrix}5&2&7\\0&3&0\\0&4&1\end{smallmatrix}\right)$ conviene la seconda riga (due zeri): $\det(A)=3\cdot(-1)^{2+2}\det\left(\begin{smallmatrix}5&7\\0&1\end{smallmatrix}\right)=3\cdot(5\cdot1-7\cdot0)=15$. Scegliere bene la linea di sviluppo ha ridotto tutto a un solo minore $2\times 2$.
 
-**Esempio 5 (intermedio) — invertibilità parametrica.** $A=\begin{psmallmatrix}t&2&0\\1&t&0\\0&0&3\end{psmallmatrix}$. Sviluppando lungo la terza colonna: $\det(A)=3\det\begin{psmallmatrix}t&2\\1&t\end{psmallmatrix}=3(t^2-2)$. La matrice è singolare esattamente per $t=\pm\sqrt2$; altrove è invertibile.
+**Esempio 5 (intermedio) — invertibilità parametrica.** $A=\left(\begin{smallmatrix}t&2&0\\1&t&0\\0&0&3\end{smallmatrix}\right)$. Sviluppando lungo la terza colonna: $\det(A)=3\det\left(\begin{smallmatrix}t&2\\1&t\end{smallmatrix}\right)=3(t^2-2)$. La matrice è singolare esattamente per $t=\pm\sqrt2$; altrove è invertibile.
 
-**Esempio 6 (intermedio) — proprietà del prodotto come verifica.** $A=\begin{psmallmatrix}2&1\\0&3\end{psmallmatrix}$, $B=\begin{psmallmatrix}1&-1\\1&2\end{psmallmatrix}$: $\det(A)=6$, $\det(B)=3$, quindi $\det(AB)=18$. Controllo diretto: $AB=\begin{psmallmatrix}3&0\\3&6\end{psmallmatrix}$, $\det(AB)=18-0=18$. La moltiplicatività fornisce un test rapido contro gli errori di calcolo.
+**Esempio 6 (intermedio) — proprietà del prodotto come verifica.** $A=\left(\begin{smallmatrix}2&1\\0&3\end{smallmatrix}\right)$, $B=\left(\begin{smallmatrix}1&-1\\1&2\end{smallmatrix}\right)$: $\det(A)=6$, $\det(B)=3$, quindi $\det(AB)=18$. Controllo diretto: $AB=\left(\begin{smallmatrix}3&0\\3&6\end{smallmatrix}\right)$, $\det(AB)=18-0=18$. La moltiplicatività fornisce un test rapido contro gli errori di calcolo.
 
-**Esempio 7 (avanzato) — matrice a blocchi triangolare.** $A=\begin{psmallmatrix}2&0&0&0\\1&3&0&0\\4&2&1&0\\1&0&2&5\end{psmallmatrix}$ è triangolare inferiore: $\det(A)=2\cdot3\cdot1\cdot5=30$. Nessuno sviluppo di Laplace: il risultato è il prodotto della diagonale.
+**Esempio 7 (avanzato) — matrice a blocchi triangolare.** $A=\left(\begin{smallmatrix}2&0&0&0\\1&3&0&0\\4&2&1&0\\1&0&2&5\end{smallmatrix}\right)$ è triangolare inferiore: $\det(A)=2\cdot3\cdot1\cdot5=30$. Nessuno sviluppo di Laplace: il risultato è il prodotto della diagonale.
 
 **Esempio 8 (applicativo) — volume in $\mathbb{R}^3$ e orientazione.** I vettori $\mathbf{a}=(1,0,2)$, $\mathbf{b}=(0,1,1)$, $\mathbf{c}=(1,1,0)$ generano un parallelepipedo di volume $\lvert\det[\mathbf{a}\,\mathbf{b}\,\mathbf{c}]\rvert$. Sviluppando lungo la prima riga:
-$$\det\begin{pmatrix}1&0&1\\0&1&1\\2&1&0\end{pmatrix}=1\det\begin{psmallmatrix}1&1\\1&0\end{psmallmatrix}-0+1\det\begin{psmallmatrix}0&1\\2&1\end{psmallmatrix}=1(0-1)+1(0-2)=-3.$$
+$$\det\begin{pmatrix}1&0&1\\0&1&1\\2&1&0\end{pmatrix}=1\det\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)-0+1\det\left(\begin{smallmatrix}0&1\\2&1\end{smallmatrix}\right)=1(0-1)+1(0-2)=-3.$$
 Il volume è $\lvert-3\rvert=3$; il segno negativo segnala che la terna $(\mathbf{a},\mathbf{b},\mathbf{c})$ è orientata «alla mancina» rispetto alla base canonica.
 
 ---
@@ -341,10 +341,10 @@ L'essenziale da trattenere. Il determinante è l'unica funzione multilineare alt
 
 <details class="dim-tecnica"><summary>Esercizio 1 (introduttivo) — determinante 3×3 con Laplace</summary>
 
-**Testo.** Calcolare $\det\begin{psmallmatrix}2&1&3\\0&-1&2\\1&0&1\end{psmallmatrix}$ sviluppando lungo la prima colonna.
+**Testo.** Calcolare $\det\left(\begin{smallmatrix}2&1&3\\0&-1&2\\1&0&1\end{smallmatrix}\right)$ sviluppando lungo la prima colonna.
 
 **Soluzione.** La prima colonna ha entrate $2,0,1$; sopravvivono i termini $(1,1)$ e $(3,1)$:
-$$\det=2(-1)^{1+1}\det\begin{psmallmatrix}-1&2\\0&1\end{psmallmatrix}+1(-1)^{3+1}\det\begin{psmallmatrix}1&3\\-1&2\end{psmallmatrix}.$$
+$$\det=2(-1)^{1+1}\det\left(\begin{smallmatrix}-1&2\\0&1\end{smallmatrix}\right)+1(-1)^{3+1}\det\left(\begin{smallmatrix}1&3\\-1&2\end{smallmatrix}\right).$$
 Il primo minore vale $(-1)(1)-2\cdot0=-1$; il secondo $1\cdot2-3(-1)=2+3=5$. Quindi
 $$\det=2(1)(-1)+1(1)(5)=-2+5=\mathbf{3},$$
 in accordo con il calcolo per Sarrus dell'Esempio 3.
@@ -353,10 +353,10 @@ in accordo con il calcolo per Sarrus dell'Esempio 3.
 
 <details class="dim-tecnica"><summary>Esercizio 2 (standard) — invertibilità parametrica</summary>
 
-**Testo.** Per quali $t\in\mathbb{R}$ la matrice $A=\begin{psmallmatrix}t&2&0\\1&t&0\\0&0&3\end{psmallmatrix}$ non è invertibile?
+**Testo.** Per quali $t\in\mathbb{R}$ la matrice $A=\left(\begin{smallmatrix}t&2&0\\1&t&0\\0&0&3\end{smallmatrix}\right)$ non è invertibile?
 
 **Soluzione.** Sviluppando lungo la terza colonna (una sola entrata non nulla, $3$ in posizione $(3,3)$):
-$$\det(A)=3(-1)^{3+3}\det\begin{psmallmatrix}t&2\\1&t\end{psmallmatrix}=3(t^2-2).$$
+$$\det(A)=3(-1)^{3+3}\det\left(\begin{smallmatrix}t&2\\1&t\end{smallmatrix}\right)=3(t^2-2).$$
 Per il criterio del determinante, $A$ è singolare $\iff\det(A)=0\iff t^2=2\iff t=\pm\sqrt2$.
 
 </details>
@@ -373,17 +373,17 @@ Per il criterio del determinante, $A$ è singolare $\iff\det(A)=0\iff t^2=2\iff 
 
 **Testo.** Risolvere con Cramer $\begin{cases}x+2y=7\\3x-y=1\end{cases}$.
 
-**Soluzione.** $A=\begin{psmallmatrix}1&2\\3&-1\end{psmallmatrix}$, $\det(A)=-1-6=-7\ne0$: soluzione unica. Sostituendo il termine noto $\mathbf{b}=(7,1)$:
-$$A_1=\begin{psmallmatrix}7&2\\1&-1\end{psmallmatrix},\ \det(A_1)=-7-2=-9,\qquad A_2=\begin{psmallmatrix}1&7\\3&1\end{psmallmatrix},\ \det(A_2)=1-21=-20.$$
+**Soluzione.** $A=\left(\begin{smallmatrix}1&2\\3&-1\end{smallmatrix}\right)$, $\det(A)=-1-6=-7\ne0$: soluzione unica. Sostituendo il termine noto $\mathbf{b}=(7,1)$:
+$$A_1=\left(\begin{smallmatrix}7&2\\1&-1\end{smallmatrix}\right),\ \det(A_1)=-7-2=-9,\qquad A_2=\left(\begin{smallmatrix}1&7\\3&1\end{smallmatrix}\right),\ \det(A_2)=1-21=-20.$$
 Quindi $x=\dfrac{-9}{-7}=\dfrac97$, $y=\dfrac{-20}{-7}=\dfrac{20}{7}$. Verifica: $\tfrac97+2\cdot\tfrac{20}{7}=\tfrac{49}{7}=7$ ✓ e $3\cdot\tfrac97-\tfrac{20}{7}=\tfrac{7}{7}=1$ ✓.
 
 </details>
 
 <details class="dim-tecnica"><summary>Esercizio 5 (standard) — inversa con l'aggiunta</summary>
 
-**Testo.** Calcolare $A^{-1}$ per $A=\begin{psmallmatrix}1&2\\3&7\end{psmallmatrix}$ con la formula dell'aggiunta.
+**Testo.** Calcolare $A^{-1}$ per $A=\left(\begin{smallmatrix}1&2\\3&7\end{smallmatrix}\right)$ con la formula dell'aggiunta.
 
-**Soluzione.** $\det(A)=7-6=1$. I cofattori sono $C_{11}=7$, $C_{12}=-3$, $C_{21}=-2$, $C_{22}=1$. L'aggiunta è la *trasposta* della matrice dei cofattori: $\operatorname{adj}(A)=\begin{psmallmatrix}C_{11}&C_{21}\\C_{12}&C_{22}\end{psmallmatrix}=\begin{psmallmatrix}7&-2\\-3&1\end{psmallmatrix}$. Dunque $A^{-1}=\tfrac11\begin{psmallmatrix}7&-2\\-3&1\end{psmallmatrix}$. Verifica: $\begin{psmallmatrix}1&2\\3&7\end{psmallmatrix}\begin{psmallmatrix}7&-2\\-3&1\end{psmallmatrix}=\begin{psmallmatrix}1&0\\0&1\end{psmallmatrix}$ ✓.
+**Soluzione.** $\det(A)=7-6=1$. I cofattori sono $C_{11}=7$, $C_{12}=-3$, $C_{21}=-2$, $C_{22}=1$. L'aggiunta è la *trasposta* della matrice dei cofattori: $\operatorname{adj}(A)=\left(\begin{smallmatrix}C_{11}&C_{21}\\C_{12}&C_{22}\end{smallmatrix}\right)=\left(\begin{smallmatrix}7&-2\\-3&1\end{smallmatrix}\right)$. Dunque $A^{-1}=\tfrac11\left(\begin{smallmatrix}7&-2\\-3&1\end{smallmatrix}\right)$. Verifica: $\left(\begin{smallmatrix}1&2\\3&7\end{smallmatrix}\right)\left(\begin{smallmatrix}7&-2\\-3&1\end{smallmatrix}\right)=\left(\begin{smallmatrix}1&0\\0&1\end{smallmatrix}\right)$ ✓.
 
 </details>
 
@@ -391,13 +391,13 @@ Quindi $x=\dfrac{-9}{-7}=\dfrac97$, $y=\dfrac{-20}{-7}=\dfrac{20}{7}$. Verifica:
 
 **Testo.** Calcolare l'area del triangolo di vertici $P=(1,2)$, $Q=(4,3)$, $R=(2,6)$.
 
-**Soluzione.** I lati uscenti da $P$ sono $\mathbf{u}=Q-P=(3,1)$ e $\mathbf{v}=R-P=(1,4)$. L'area del parallelogramma è $\lvert\det\begin{psmallmatrix}3&1\\1&4\end{psmallmatrix}\rvert=\lvert12-1\rvert=11$; quella del triangolo è la metà, $\tfrac{11}{2}=5{,}5$ unità quadrate.
+**Soluzione.** I lati uscenti da $P$ sono $\mathbf{u}=Q-P=(3,1)$ e $\mathbf{v}=R-P=(1,4)$. L'area del parallelogramma è $\lvert\det\left(\begin{smallmatrix}3&1\\1&4\end{smallmatrix}\right)\rvert=\lvert12-1\rvert=11$; quella del triangolo è la metà, $\tfrac{11}{2}=5{,}5$ unità quadrate.
 
 </details>
 
 <details class="dim-tecnica"><summary>Esercizio 7 (avanzato) — calcolo per riduzione a triangolare</summary>
 
-**Testo.** Calcolare $\det\begin{psmallmatrix}1&2&1\\2&5&3\\1&3&4\end{psmallmatrix}$ usando le operazioni sulle righe (o colonne) che non alterano il determinante.
+**Testo.** Calcolare $\det\left(\begin{smallmatrix}1&2&1\\2&5&3\\1&3&4\end{smallmatrix}\right)$ usando le operazioni sulle righe (o colonne) che non alterano il determinante.
 
 **Soluzione.** Sottraiamo alla riga 2 il doppio della riga 1 e alla riga 3 la riga 1 (operazioni che non cambiano il determinante, versione «per righe» di §3.2):
 $$\begin{pmatrix}1&2&1\\2&5&3\\1&3&4\end{pmatrix}\longrightarrow\begin{pmatrix}1&2&1\\0&1&1\\0&1&3\end{pmatrix}\longrightarrow\begin{pmatrix}1&2&1\\0&1&1\\0&0&2\end{pmatrix},$$
@@ -410,7 +410,7 @@ dove nell'ultimo passaggio si sottrae la riga 2 alla riga 3. La matrice finale �
 **Testo.** Determinare il volume del parallelepipedo generato da $\mathbf{a}=(1,0,2)$, $\mathbf{b}=(0,1,1)$, $\mathbf{c}=(1,1,0)$ e stabilirne l'orientazione.
 
 **Soluzione.** Poniamo i vettori come colonne e sviluppiamo lungo la prima riga:
-$$\det\begin{pmatrix}1&0&1\\0&1&1\\2&1&0\end{pmatrix}=1\det\begin{psmallmatrix}1&1\\1&0\end{psmallmatrix}-0\cdot(\cdots)+1\det\begin{psmallmatrix}0&1\\2&1\end{psmallmatrix}=1(0-1)+1(0-2)=-3.$$
+$$\det\begin{pmatrix}1&0&1\\0&1&1\\2&1&0\end{pmatrix}=1\det\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)-0\cdot(\cdots)+1\det\left(\begin{smallmatrix}0&1\\2&1\end{smallmatrix}\right)=1(0-1)+1(0-2)=-3.$$
 Il volume è $\lvert-3\rvert=3$ unità cubiche. Il segno negativo indica che la terna è orientata negativamente (sistema mancino) rispetto alla base canonica. Poiché il determinante è non nullo, i tre vettori sono indipendenti e formano una base di $\mathbb{R}^3$.
 
 </details>

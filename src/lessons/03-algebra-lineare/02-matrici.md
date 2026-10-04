@@ -60,7 +60,7 @@ sezioni_omesse: []
 
 Nella lezione precedente un vettore era un singolo oggetto: una freccia, una lista di numeri. La matrice nasce quando si vuole *trasformare* i vettori in modo organizzato — ruotarli, scalarli, mescolarli — o quando si vogliono impacchettare molti coefficienti insieme, come nei sistemi di equazioni. È il secondo protagonista dell'algebra lineare, e il modo giusto di guardarla cambia tutto.
 
-Il salto concettuale di questa lezione è uno solo: **una matrice non è (solo) una tabella di numeri; è una trasformazione lineare**, una funzione che prende un vettore e ne restituisce un altro secondo una regola fissa. Il numero $3$ è, di per sé, statico; ma visto come «l'operazione: moltiplica per $3$» diventa dinamico. Allo stesso modo la matrice $\begin{psmallmatrix}0&-1\\1&0\end{psmallmatrix}$ è la tabella di quattro numeri, ma soprattutto è *l'operazione: ruota il piano di $90^\circ$*. Da questa doppia lettura — tabella e trasformazione — discende quasi tutto ciò che segue nel corso.
+Il salto concettuale di questa lezione è uno solo: **una matrice non è (solo) una tabella di numeri; è una trasformazione lineare**, una funzione che prende un vettore e ne restituisce un altro secondo una regola fissa. Il numero $3$ è, di per sé, statico; ma visto come «l'operazione: moltiplica per $3$» diventa dinamico. Allo stesso modo la matrice $\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)$ è la tabella di quattro numeri, ma soprattutto è *l'operazione: ruota il piano di $90^\circ$*. Da questa doppia lettura — tabella e trasformazione — discende quasi tutto ciò che segue nel corso.
 
 Perché servono? Tre motivi ricorrenti.
 
@@ -86,7 +86,7 @@ $$A = \begin{pmatrix} a_{11} & a_{12} & \cdots & a_{1n} \\ a_{21} & a_{22} & \cd
 
 L'elemento nella riga $i$ e colonna $j$ si indica $a_{ij}$: il **primo indice è la riga, il secondo la colonna**. L'insieme delle matrici $m\times n$ reali si scrive $\mathbb{R}^{m\times n}$. Una matrice con $m = n$ si dice **quadrata**. Un vettore colonna di $\mathbb{R}^n$ è, in questa ottica, una matrice $n \times 1$; un vettore riga è $1 \times n$.
 
-*Micro-esempio.* Nella matrice $A = \begin{psmallmatrix}5 & -2 & 0 \\ 1 & 3 & 4\end{psmallmatrix}$ (tipo $2\times 3$) si ha $a_{11} = 5$, $a_{13} = 0$, $a_{22} = 3$, $a_{23} = 4$.
+*Micro-esempio.* Nella matrice $A = \left(\begin{smallmatrix}5 & -2 & 0 \\ 1 & 3 & 4\end{smallmatrix}\right)$ (tipo $2\times 3$) si ha $a_{11} = 5$, $a_{13} = 0$, $a_{22} = 3$, $a_{23} = 4$.
 
 ### 2.2 Somma e moltiplicazione per scalare
 
@@ -96,7 +96,7 @@ $$(A+B)_{ij} = a_{ij} + b_{ij}, \qquad (cA)_{ij} = c\,a_{ij}\ \ (c \in \mathbb{R
 
 Con queste operazioni $\mathbb{R}^{m\times n}$ è a sua volta uno spazio vettoriale (i suoi «vettori» sono matrici): valgono le stesse otto proprietà viste nella lezione sui vettori, con la matrice nulla $O$ (tutti zeri) nel ruolo dell'elemento neutro. Nulla di sorprendente: una matrice $m\times n$ è, in fondo, un elenco di $mn$ numeri, e le operazioni sono quelle di $\mathbb{R}^{mn}$ scritte in forma rettangolare.
 
-*Micro-esempio.* $2\begin{psmallmatrix}1&0\\-1&2\end{psmallmatrix} + \begin{psmallmatrix}3&4\\0&1\end{psmallmatrix} = \begin{psmallmatrix}2&0\\-2&4\end{psmallmatrix} + \begin{psmallmatrix}3&4\\0&1\end{psmallmatrix} = \begin{psmallmatrix}5&4\\-2&5\end{psmallmatrix}$.
+*Micro-esempio.* $2\left(\begin{smallmatrix}1&0\\-1&2\end{smallmatrix}\right) + \left(\begin{smallmatrix}3&4\\0&1\end{smallmatrix}\right) = \left(\begin{smallmatrix}2&0\\-2&4\end{smallmatrix}\right) + \left(\begin{smallmatrix}3&4\\0&1\end{smallmatrix}\right) = \left(\begin{smallmatrix}5&4\\-2&5\end{smallmatrix}\right)$.
 
 ### 2.3 Il prodotto matrice-vettore: due letture
 
@@ -116,7 +116,7 @@ Cioè: $A\mathbf{x}$ è la **combinazione lineare delle colonne di $A$**, con co
 
 Le due letture danno lo stesso risultato: sono due modi di riorganizzare la stessa somma $\sum_{i,j} a_{ij} x_j$.
 
-*Micro-esempio.* Con $A = \begin{psmallmatrix}1&3\\2&4\end{psmallmatrix}$ e $\mathbf{x} = (2,-1)$: per colonne, $A\mathbf{x} = 2\begin{psmallmatrix}1\\2\end{psmallmatrix} - \begin{psmallmatrix}3\\4\end{psmallmatrix} = \begin{psmallmatrix}-1\\0\end{psmallmatrix}$. Per righe: prima componente $1\cdot 2 + 3(-1) = -1$, seconda $2\cdot 2 + 4(-1) = 0$. Coincidono.
+*Micro-esempio.* Con $A = \left(\begin{smallmatrix}1&3\\2&4\end{smallmatrix}\right)$ e $\mathbf{x} = (2,-1)$: per colonne, $A\mathbf{x} = 2\left(\begin{smallmatrix}1\\2\end{smallmatrix}\right) - \left(\begin{smallmatrix}3\\4\end{smallmatrix}\right) = \left(\begin{smallmatrix}-1\\0\end{smallmatrix}\right)$. Per righe: prima componente $1\cdot 2 + 3(-1) = -1$, seconda $2\cdot 2 + 4(-1) = 0$. Coincidono.
 
 ### 2.4 La matrice è una trasformazione lineare
 
@@ -126,7 +126,7 @@ $$A(\mathbf{x} + \mathbf{y}) = A\mathbf{x} + A\mathbf{y}, \qquad A(c\,\mathbf{x}
 
 Entrambe seguono direttamente dalla definizione. Un'applicazione con queste proprietà si chiama **trasformazione lineare**: rispetta somme e multipli, quindi rispetta ogni combinazione lineare. Vale anche il viceversa (lo vedremo nella lezione dedicata): ogni trasformazione lineare da $\mathbb{R}^n$ a $\mathbb{R}^m$ è data da una matrice, e le colonne di quella matrice sono le immagini dei versori della base canonica, $A\mathbf{e}_j = \mathbf{a}_j$. Detto altrimenti: *per conoscere una trasformazione lineare basta sapere dove manda i vettori base*, e quelle immagini sono le colonne della matrice.
 
-Ecco, in modo interattivo, come una matrice deforma lo spazio. La matrice di *shear* $\begin{psmallmatrix}1 & k \\ 0 & 1\end{psmallmatrix}$ «inclina» il piano; osserva come trasforma la retta $y = x$ al crescere di $k$:
+Ecco, in modo interattivo, come una matrice deforma lo spazio. La matrice di *shear* $\left(\begin{smallmatrix}1 & k \\ 0 & 1\end{smallmatrix}\right)$ «inclina» il piano; osserva come trasforma la retta $y = x$ al crescere di $k$:
 
 ```slider
 {"title":"La matrice di shear [[1,k],[0,1]] deforma il piano: immagine della retta y = x","fn":"x/(1+a)","fn2":"x","domain":[-3,3],"yDomain":[-3,3],"pname":"a","pmin":0,"pmax":3,"pdefault":0,"pstep":0.1,"plabel":"parametro di shear k","label1":"retta trasformata (pendenza 1/(1+k))","label2":"retta originale y = x"}
@@ -134,7 +134,7 @@ Ecco, in modo interattivo, come una matrice deforma lo spazio. La matrice di *sh
 
 A $k=0$ la matrice è l'identità e la retta resta $y=x$. Al crescere di $k$ il piano si inclina e la retta si appiattisce verso l'asse orizzontale (pendenza $1/(1+k)$). La matrice non «contiene» la retta: la *muove*. È questa l'immagine da fissare.
 
-*Micro-esempio.* La matrice di rotazione di $90^\circ$ antioraria è $R = \begin{psmallmatrix}0 & -1\\ 1 & 0\end{psmallmatrix}$. Le sue colonne dicono dove finiscono i versori base: $\mathbf{e}_1 = (1,0) \mapsto (0,1)$ e $\mathbf{e}_2 = (0,1) \mapsto (-1,0)$. Ogni altro vettore ruota di conseguenza: $(3,-2) \mapsto (2,3)$.
+*Micro-esempio.* La matrice di rotazione di $90^\circ$ antioraria è $R = \left(\begin{smallmatrix}0 & -1\\ 1 & 0\end{smallmatrix}\right)$. Le sue colonne dicono dove finiscono i versori base: $\mathbf{e}_1 = (1,0) \mapsto (0,1)$ e $\mathbf{e}_2 = (0,1) \mapsto (-1,0)$. Ogni altro vettore ruota di conseguenza: $(3,-2) \mapsto (2,3)$.
 
 ### 2.5 Il prodotto di matrici è composizione
 
@@ -150,7 +150,7 @@ Che il prodotto *sia* la composizione lo cattura l'identità $(AB)\mathbf{x} = A
 
 **Il prodotto può annullarsi senza fattori nulli:** esistono $A, B \neq O$ con $AB = O$. Due trasformazioni non banali possono comporre nella trasformazione che manda tutto a zero (per esempio proiettare su una retta e poi su una perpendicolare).
 
-*Micro-esempio.* Con $A = \begin{psmallmatrix}1&2\\3&4\end{psmallmatrix}$ e $B = \begin{psmallmatrix}0&1\\1&0\end{psmallmatrix}$ (lo scambio di colonne/righe): $AB = \begin{psmallmatrix}2&1\\4&3\end{psmallmatrix}$ ma $BA = \begin{psmallmatrix}3&4\\1&2\end{psmallmatrix}$. Diversi.
+*Micro-esempio.* Con $A = \left(\begin{smallmatrix}1&2\\3&4\end{smallmatrix}\right)$ e $B = \left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ (lo scambio di colonne/righe): $AB = \left(\begin{smallmatrix}2&1\\4&3\end{smallmatrix}\right)$ ma $BA = \left(\begin{smallmatrix}3&4\\1&2\end{smallmatrix}\right)$. Diversi.
 
 ```checkpoint
 [domanda] Siano $A$ di tipo $3\times 2$ e $B$ di tipo $2\times 4$. Il prodotto $AB$ è definito? Di che tipo? E $BA$?
@@ -165,7 +165,7 @@ $$(A^\top)_{ij} = a_{ji}.$$
 
 Le sue proprietà elementari: $(A^\top)^\top = A$, $\ (A+B)^\top = A^\top + B^\top$, $\ (cA)^\top = c\,A^\top$, e la regola con l'ordine invertito $(AB)^\top = B^\top A^\top$ (dimostrata in §3.1). Una matrice quadrata con $A^\top = A$ si dice **simmetrica** ($a_{ij} = a_{ji}$): sono le matrici centrali del modulo finale del corso (teorema spettrale, forme quadratiche). Una con $A^\top = -A$ si dice **antisimmetrica**. La trasposta compare ovunque appaia il prodotto scalare: infatti $\mathbf{u}\cdot\mathbf{v} = \mathbf{u}^\top\mathbf{v}$, il prodotto scalare scritto come prodotto riga-per-colonna.
 
-*Micro-esempio.* Per ogni matrice $A$, il prodotto $A A^\top$ è simmetrico: $(A A^\top)^\top = (A^\top)^\top A^\top = A A^\top$. Con $A = \begin{psmallmatrix}1&2&3\\4&5&6\end{psmallmatrix}$ si ottiene $A A^\top = \begin{psmallmatrix}14&32\\32&77\end{psmallmatrix}$, simmetrica.
+*Micro-esempio.* Per ogni matrice $A$, il prodotto $A A^\top$ è simmetrico: $(A A^\top)^\top = (A^\top)^\top A^\top = A A^\top$. Con $A = \left(\begin{smallmatrix}1&2&3\\4&5&6\end{smallmatrix}\right)$ si ottiene $A A^\top = \left(\begin{smallmatrix}14&32\\32&77\end{smallmatrix}\right)$, simmetrica.
 
 ### 2.7 Matrice identità e inversa
 
@@ -181,7 +181,7 @@ $$A = \begin{pmatrix}a&b\\c&d\end{pmatrix} \ \Longrightarrow\ A^{-1} = \frac{1}{
 
 valida quando il numero $\det(A) = ad - bc$ è diverso da zero. Quel numero, il **determinante**, misura di quanto la trasformazione dilata le aree; quando è nullo la matrice schiaccia il piano su una retta e l'inversa non può esistere. È il tema di una lezione dedicata.
 
-*Micro-esempio.* Per $A = \begin{psmallmatrix}2&1\\5&3\end{psmallmatrix}$: $\det(A) = 6-5 = 1 \neq 0$, quindi $A^{-1} = \begin{psmallmatrix}3&-1\\-5&2\end{psmallmatrix}$. Controllo: $A A^{-1} = I_2$.
+*Micro-esempio.* Per $A = \left(\begin{smallmatrix}2&1\\5&3\end{smallmatrix}\right)$: $\det(A) = 6-5 = 1 \neq 0$, quindi $A^{-1} = \left(\begin{smallmatrix}3&-1\\-5&2\end{smallmatrix}\right)$. Controllo: $A A^{-1} = I_2$.
 
 ```checkpoint
 [domanda] Sappiamo che $A$ e $B$ sono invertibili $n\times n$. Qual è l'inversa di $AB$? È $A^{-1}B^{-1}$?
@@ -268,27 +268,27 @@ e poiché ciò vale per ogni $\mathbf{x}$, le due matrici $(AB)C$ e $A(BC)$ coin
 
 ## 4. Esempi
 
-**Esempio 1 (introduttivo) — Prodotto $2\times 2$ e non commutatività.** Con $A = \begin{psmallmatrix}2&-1\\0&3\end{psmallmatrix}$, $B = \begin{psmallmatrix}1&4\\2&-1\end{psmallmatrix}$:
+**Esempio 1 (introduttivo) — Prodotto $2\times 2$ e non commutatività.** Con $A = \left(\begin{smallmatrix}2&-1\\0&3\end{smallmatrix}\right)$, $B = \left(\begin{smallmatrix}1&4\\2&-1\end{smallmatrix}\right)$:
 $$AB = \begin{pmatrix}0 & 9\\ 6 & -3\end{pmatrix}, \qquad BA = \begin{pmatrix}2 & 11\\ 4 & -5\end{pmatrix}.$$
 I due risultati sono diversi: $AB \neq BA$.
 
-**Esempio 2 (introduttivo) — Combinazione di colonne.** Con $A = \begin{psmallmatrix}3&-1&2\\1&0&4\\2&1&-1\end{psmallmatrix}$ e $\mathbf{x} = (1,2,-1)$, la lettura per colonne dà
-$$A\mathbf{x} = 1\begin{psmallmatrix}3\\1\\2\end{psmallmatrix} + 2\begin{psmallmatrix}-1\\0\\1\end{psmallmatrix} - \begin{psmallmatrix}2\\4\\-1\end{psmallmatrix} = \begin{psmallmatrix}-1\\-3\\5\end{psmallmatrix}.$$
+**Esempio 2 (introduttivo) — Combinazione di colonne.** Con $A = \left(\begin{smallmatrix}3&-1&2\\1&0&4\\2&1&-1\end{smallmatrix}\right)$ e $\mathbf{x} = (1,2,-1)$, la lettura per colonne dà
+$$A\mathbf{x} = 1\left(\begin{smallmatrix}3\\1\\2\end{smallmatrix}\right) + 2\left(\begin{smallmatrix}-1\\0\\1\end{smallmatrix}\right) - \left(\begin{smallmatrix}2\\4\\-1\end{smallmatrix}\right) = \left(\begin{smallmatrix}-1\\-3\\5\end{smallmatrix}\right).$$
 
 **Esempio 3 (intermedio) — Prodotto tra matrici rettangolari.** Con $A$ di tipo $2\times 3$ e $B$ di tipo $3\times 2$, $AB$ è $2\times 2$:
 $$A = \begin{pmatrix}1&2&3\\4&5&6\end{pmatrix},\ B = \begin{pmatrix}7&8\\9&10\\11&12\end{pmatrix} \ \Rightarrow\ AB = \begin{pmatrix}58&64\\139&154\end{pmatrix}.$$
 Il prodotto $BA$ esisterebbe anch'esso ma sarebbe $3\times 3$: dimensioni diverse, dunque $AB$ e $BA$ non sono neppure confrontabili.
 
-**Esempio 4 (intermedio) — Inversa $2\times 2$ e verifica.** Per $A = \begin{psmallmatrix}3&2\\7&5\end{psmallmatrix}$: $\det(A) = 15 - 14 = 1$, quindi $A^{-1} = \begin{psmallmatrix}5&-2\\-7&3\end{psmallmatrix}$. Il prodotto $A A^{-1}$ dà $\begin{psmallmatrix}15-14 & -6+6\\ 35-35 & -14+15\end{psmallmatrix} = I_2$.
+**Esempio 4 (intermedio) — Inversa $2\times 2$ e verifica.** Per $A = \left(\begin{smallmatrix}3&2\\7&5\end{smallmatrix}\right)$: $\det(A) = 15 - 14 = 1$, quindi $A^{-1} = \left(\begin{smallmatrix}5&-2\\-7&3\end{smallmatrix}\right)$. Il prodotto $A A^{-1}$ dà $\left(\begin{smallmatrix}15-14 & -6+6\\ 35-35 & -14+15\end{smallmatrix}\right) = I_2$.
 
-**Esempio 5 (intermedio) — Matrice singolare.** Per $A = \begin{psmallmatrix}1&2\\2&4\end{psmallmatrix}$: $\det(A) = 4 - 4 = 0$. La seconda riga è il doppio della prima; come trasformazione, $A$ schiaccia tutto il piano sulla retta generata dalla colonna $(1,2)$. Perdendo una dimensione non si può tornare indietro: $A^{-1}$ non esiste.
+**Esempio 5 (intermedio) — Matrice singolare.** Per $A = \left(\begin{smallmatrix}1&2\\2&4\end{smallmatrix}\right)$: $\det(A) = 4 - 4 = 0$. La seconda riga è il doppio della prima; come trasformazione, $A$ schiaccia tutto il piano sulla retta generata dalla colonna $(1,2)$. Perdendo una dimensione non si può tornare indietro: $A^{-1}$ non esiste.
 
-**Esempio 6 (avanzato) — Prodotto nullo senza fattori nulli.** Con $A = B = \begin{psmallmatrix}1&1\\-1&-1\end{psmallmatrix}$: $A^2 = \begin{psmallmatrix}1-1 & 1-1\\ -1+1 & -1+1\end{psmallmatrix} = O$. Nessuno dei fattori è la matrice nulla, eppure il prodotto lo è. Come trasformazioni, $A$ proietta su una retta lungo una direzione che $A$ stessa manda a zero: applicarla due volte annulla tutto.
+**Esempio 6 (avanzato) — Prodotto nullo senza fattori nulli.** Con $A = B = \left(\begin{smallmatrix}1&1\\-1&-1\end{smallmatrix}\right)$: $A^2 = \left(\begin{smallmatrix}1-1 & 1-1\\ -1+1 & -1+1\end{smallmatrix}\right) = O$. Nessuno dei fattori è la matrice nulla, eppure il prodotto lo è. Come trasformazioni, $A$ proietta su una retta lungo una direzione che $A$ stessa manda a zero: applicarla due volte annulla tutto.
 
-**Esempio 7 (avanzato) — Le rotazioni si sommano.** La matrice di rotazione di angolo $\theta$ è $R_\theta = \begin{psmallmatrix}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{psmallmatrix}$. Moltiplicando $R_\theta R_\phi$ e usando le formule di addizione trigonometriche si ottiene $R_{\theta+\phi}$: comporre due rotazioni dà la rotazione con gli angoli sommati. Qui, eccezionalmente, $R_\theta R_\phi = R_\phi R_\theta$: le rotazioni del piano commutano tra loro (ma non con le riflessioni).
+**Esempio 7 (avanzato) — Le rotazioni si sommano.** La matrice di rotazione di angolo $\theta$ è $R_\theta = \left(\begin{smallmatrix}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{smallmatrix}\right)$. Moltiplicando $R_\theta R_\phi$ e usando le formule di addizione trigonometriche si ottiene $R_{\theta+\phi}$: comporre due rotazioni dà la rotazione con gli angoli sommati. Qui, eccezionalmente, $R_\theta R_\phi = R_\phi R_\theta$: le rotazioni del piano commutano tra loro (ma non con le riflessioni).
 
-**Esempio 8 (applicativo, economia) — Catena di Markov.** In un mercato con due imprese, ogni mese il $90\%$ dei clienti di A resta con A e il $10\%$ passa a B; per B, l'$80\%$ resta e il $20\%$ passa ad A. La **matrice di transizione** è $P = \begin{psmallmatrix}0.9 & 0.2\\ 0.1 & 0.8\end{psmallmatrix}$ (colonna = stato di partenza). Se oggi le quote sono $\mathbf{s}_0 = (0.5, 0.5)$, il mese prossimo saranno
-$$\mathbf{s}_1 = P\mathbf{s}_0 = \begin{psmallmatrix}0.9\cdot 0.5 + 0.2\cdot 0.5\\ 0.1\cdot 0.5 + 0.8\cdot 0.5\end{psmallmatrix} = \begin{psmallmatrix}0.55\\ 0.45\end{psmallmatrix}.$$
+**Esempio 8 (applicativo, economia) — Catena di Markov.** In un mercato con due imprese, ogni mese il $90\%$ dei clienti di A resta con A e il $10\%$ passa a B; per B, l'$80\%$ resta e il $20\%$ passa ad A. La **matrice di transizione** è $P = \left(\begin{smallmatrix}0.9 & 0.2\\ 0.1 & 0.8\end{smallmatrix}\right)$ (colonna = stato di partenza). Se oggi le quote sono $\mathbf{s}_0 = (0.5, 0.5)$, il mese prossimo saranno
+$$\mathbf{s}_1 = P\mathbf{s}_0 = \left(\begin{smallmatrix}0.9\cdot 0.5 + 0.2\cdot 0.5\\ 0.1\cdot 0.5 + 0.8\cdot 0.5\end{smallmatrix}\right) = \left(\begin{smallmatrix}0.55\\ 0.45\end{smallmatrix}\right).$$
 Dopo $n$ mesi le quote sono $P^n \mathbf{s}_0$: iterare la trasformazione è elevare la matrice a potenza. Sapere verso cosa converge $P^n$ è un problema di autovalori, che affronteremo più avanti.
 
 ---
@@ -309,7 +309,7 @@ Dopo $n$ mesi le quote sono $P^n \mathbf{s}_0$: iterare la trasformazione è ele
 | Trasposta | $A^\top$ | $m\times n \to n\times m$ | — |
 | Inversa | $A^{-1}$ | solo quadrate non singolari | — |
 
-Regole chiave: $(AB)^\top = B^\top A^\top$; $\ (AB)^{-1} = B^{-1}A^{-1}$; $\ (AB)C = A(BC)$ (associativa) ma $AB \neq BA$ in generale; $\ A A^{-1} = A^{-1}A = I$; per le $2\times 2$, $A^{-1} = \tfrac{1}{ad-bc}\begin{psmallmatrix}d&-b\\-c&a\end{psmallmatrix}$.
+Regole chiave: $(AB)^\top = B^\top A^\top$; $\ (AB)^{-1} = B^{-1}A^{-1}$; $\ (AB)C = A(BC)$ (associativa) ma $AB \neq BA$ in generale; $\ A A^{-1} = A^{-1}A = I$; per le $2\times 2$, $A^{-1} = \tfrac{1}{ad-bc}\left(\begin{smallmatrix}d&-b\\-c&a\end{smallmatrix}\right)$.
 
 **Errori comuni da evitare.** Scambiare l'ordine nel prodotto: $AB \neq BA$ (e a volte solo uno è definito). Sommare matrici di dimensioni diverse. Sbagliare la condizione dimensionale del prodotto (devono combaciare le colonne di $A$ con le righe di $B$). Scrivere $(AB)^{-1} = A^{-1}B^{-1}$ o $(AB)^\top = A^\top B^\top$: l'ordine si inverte. Dedurre da $AB = O$ che uno dei due sia nullo (falso per le matrici). Cercare l'inversa di una matrice con determinante nullo.
 
@@ -317,15 +317,15 @@ Regole chiave: $(AB)^\top = B^\top A^\top$; $\ (AB)^{-1} = B^{-1}A^{-1}$; $\ (AB
 
 ## 6. Esercizi
 
-**E1 (introduttivo).** Calcola $AB$ e $BA$ per $A = \begin{psmallmatrix}2&-1\\0&3\end{psmallmatrix}$, $B = \begin{psmallmatrix}1&4\\2&-1\end{psmallmatrix}$ e verifica che differiscono.
+**E1 (introduttivo).** Calcola $AB$ e $BA$ per $A = \left(\begin{smallmatrix}2&-1\\0&3\end{smallmatrix}\right)$, $B = \left(\begin{smallmatrix}1&4\\2&-1\end{smallmatrix}\right)$ e verifica che differiscono.
 
 <details class="dim-tecnica"><summary>Soluzione E1</summary>
 
-$AB = \begin{psmallmatrix}2\cdot 1 - 1\cdot 2 & 2\cdot 4 - 1\cdot(-1)\\ 0\cdot 1 + 3\cdot 2 & 0\cdot 4 + 3\cdot(-1)\end{psmallmatrix} = \begin{psmallmatrix}0 & 9\\ 6 & -3\end{psmallmatrix}$; $\ BA = \begin{psmallmatrix}1\cdot 2 + 4\cdot 0 & 1\cdot(-1) + 4\cdot 3\\ 2\cdot 2 - 1\cdot 0 & 2\cdot(-1) - 1\cdot 3\end{psmallmatrix} = \begin{psmallmatrix}2 & 11\\ 4 & -5\end{psmallmatrix}$. Diversi.
+$AB = \left(\begin{smallmatrix}2\cdot 1 - 1\cdot 2 & 2\cdot 4 - 1\cdot(-1)\\ 0\cdot 1 + 3\cdot 2 & 0\cdot 4 + 3\cdot(-1)\end{smallmatrix}\right) = \left(\begin{smallmatrix}0 & 9\\ 6 & -3\end{smallmatrix}\right)$; $\ BA = \left(\begin{smallmatrix}1\cdot 2 + 4\cdot 0 & 1\cdot(-1) + 4\cdot 3\\ 2\cdot 2 - 1\cdot 0 & 2\cdot(-1) - 1\cdot 3\end{smallmatrix}\right) = \left(\begin{smallmatrix}2 & 11\\ 4 & -5\end{smallmatrix}\right)$. Diversi.
 
 </details>
 
-**E2 (introduttivo).** Calcola $A\mathbf{x}$ leggendo il prodotto come combinazione delle colonne, per $A = \begin{psmallmatrix}3&-1&2\\1&0&4\\2&1&-1\end{psmallmatrix}$ e $\mathbf{x} = (1,2,-1)$.
+**E2 (introduttivo).** Calcola $A\mathbf{x}$ leggendo il prodotto come combinazione delle colonne, per $A = \left(\begin{smallmatrix}3&-1&2\\1&0&4\\2&1&-1\end{smallmatrix}\right)$ e $\mathbf{x} = (1,2,-1)$.
 
 <details class="dim-tecnica"><summary>Soluzione E2</summary>
 
@@ -333,15 +333,15 @@ $A\mathbf{x} = 1(3,1,2) + 2(-1,0,1) - (2,4,-1) = (3-2-2,\ 1+0-4,\ 2+2+1) = (-1,-
 
 </details>
 
-**E3 (introduttivo).** Trova l'inversa di $A = \begin{psmallmatrix}3&2\\7&5\end{psmallmatrix}$ e verificala.
+**E3 (introduttivo).** Trova l'inversa di $A = \left(\begin{smallmatrix}3&2\\7&5\end{smallmatrix}\right)$ e verificala.
 
 <details class="dim-tecnica"><summary>Soluzione E3</summary>
 
-$\det(A) = 15 - 14 = 1$, quindi $A^{-1} = \begin{psmallmatrix}5&-2\\-7&3\end{psmallmatrix}$. Verifica: $A A^{-1} = \begin{psmallmatrix}15-14 & -6+6\\ 35-35 & -14+15\end{psmallmatrix} = I_2$.
+$\det(A) = 15 - 14 = 1$, quindi $A^{-1} = \left(\begin{smallmatrix}5&-2\\-7&3\end{smallmatrix}\right)$. Verifica: $A A^{-1} = \left(\begin{smallmatrix}15-14 & -6+6\\ 35-35 & -14+15\end{smallmatrix}\right) = I_2$.
 
 </details>
 
-**E4 (intermedio).** Determina per quale valore di $k$ la matrice $A = \begin{psmallmatrix}k&2\\3&6\end{psmallmatrix}$ è singolare, e interpreta il risultato come trasformazione.
+**E4 (intermedio).** Determina per quale valore di $k$ la matrice $A = \left(\begin{smallmatrix}k&2\\3&6\end{smallmatrix}\right)$ è singolare, e interpreta il risultato come trasformazione.
 
 <details class="dim-tecnica"><summary>Soluzione E4</summary>
 
@@ -349,23 +349,23 @@ $\det(A) = 6k - 6 = 0 \iff k = 1$. Per $k=1$ le righe $(1,2)$ e $(3,6) = 3(1,2)$
 
 </details>
 
-**E5 (intermedio).** Calcola $A^3$ per la matrice di shear $A = \begin{psmallmatrix}1&1\\0&1\end{psmallmatrix}$ e congettura $A^n$.
+**E5 (intermedio).** Calcola $A^3$ per la matrice di shear $A = \left(\begin{smallmatrix}1&1\\0&1\end{smallmatrix}\right)$ e congettura $A^n$.
 
 <details class="dim-tecnica"><summary>Soluzione E5</summary>
 
-$A^2 = \begin{psmallmatrix}1&2\\0&1\end{psmallmatrix}$, $A^3 = A^2 A = \begin{psmallmatrix}1&3\\0&1\end{psmallmatrix}$. In generale $A^n = \begin{psmallmatrix}1&n\\0&1\end{psmallmatrix}$: applicare $n$ volte lo shear somma gli scorrimenti (si dimostra per induzione).
+$A^2 = \left(\begin{smallmatrix}1&2\\0&1\end{smallmatrix}\right)$, $A^3 = A^2 A = \left(\begin{smallmatrix}1&3\\0&1\end{smallmatrix}\right)$. In generale $A^n = \left(\begin{smallmatrix}1&n\\0&1\end{smallmatrix}\right)$: applicare $n$ volte lo shear somma gli scorrimenti (si dimostra per induzione).
 
 </details>
 
-**E6 (intermedio).** Verifica che ogni matrice della forma $A A^\top$ è simmetrica e calcolala per $A = \begin{psmallmatrix}1&2&3\\4&5&6\end{psmallmatrix}$.
+**E6 (intermedio).** Verifica che ogni matrice della forma $A A^\top$ è simmetrica e calcolala per $A = \left(\begin{smallmatrix}1&2&3\\4&5&6\end{smallmatrix}\right)$.
 
 <details class="dim-tecnica"><summary>Soluzione E6</summary>
 
-$(A A^\top)^\top = (A^\top)^\top A^\top = A A^\top$, quindi è simmetrica. Numericamente: $A A^\top = \begin{psmallmatrix}1+4+9 & 4+10+18\\ 4+10+18 & 16+25+36\end{psmallmatrix} = \begin{psmallmatrix}14 & 32\\ 32 & 77\end{psmallmatrix}$, e l'elemento fuori diagonale coincide ($32 = 32$).
+$(A A^\top)^\top = (A^\top)^\top A^\top = A A^\top$, quindi è simmetrica. Numericamente: $A A^\top = \left(\begin{smallmatrix}1+4+9 & 4+10+18\\ 4+10+18 & 16+25+36\end{smallmatrix}\right) = \left(\begin{smallmatrix}14 & 32\\ 32 & 77\end{smallmatrix}\right)$, e l'elemento fuori diagonale coincide ($32 = 32$).
 
 </details>
 
-**E7 (avanzato).** Dimostra che $R_\theta R_\phi = R_{\theta+\phi}$ per le matrici di rotazione $R_\theta = \begin{psmallmatrix}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{psmallmatrix}$.
+**E7 (avanzato).** Dimostra che $R_\theta R_\phi = R_{\theta+\phi}$ per le matrici di rotazione $R_\theta = \left(\begin{smallmatrix}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{smallmatrix}\right)$.
 
 <details class="dim-tecnica"><summary>Soluzione E7</summary>
 
@@ -373,11 +373,11 @@ Moltiplicando ed applicando le formule di addizione: elemento $(1,1)$: $\cos\the
 
 </details>
 
-**E8 (avanzato).** Ogni matrice quadrata si decompone in modo unico come somma di una simmetrica e di una antisimmetrica. Trova la decomposizione di $A = \begin{psmallmatrix}1&3\\-1&2\end{psmallmatrix}$.
+**E8 (avanzato).** Ogni matrice quadrata si decompone in modo unico come somma di una simmetrica e di una antisimmetrica. Trova la decomposizione di $A = \left(\begin{smallmatrix}1&3\\-1&2\end{smallmatrix}\right)$.
 
 <details class="dim-tecnica"><summary>Soluzione E8</summary>
 
-Parte simmetrica $S = \tfrac12(A + A^\top)$ e antisimmetrica $K = \tfrac12(A - A^\top)$. Con $A^\top = \begin{psmallmatrix}1&-1\\3&2\end{psmallmatrix}$: $S = \tfrac12\begin{psmallmatrix}2&2\\2&4\end{psmallmatrix} = \begin{psmallmatrix}1&1\\1&2\end{psmallmatrix}$, $K = \tfrac12\begin{psmallmatrix}0&4\\-4&0\end{psmallmatrix} = \begin{psmallmatrix}0&2\\-2&0\end{psmallmatrix}$. Verifica: $S + K = A$. L'unicità segue dal fatto che $S$ è forzatamente $\tfrac12(A+A^\top)$ (trasponendo $A = S+K$ si ottiene $A^\top = S - K$, e si risolve).
+Parte simmetrica $S = \tfrac12(A + A^\top)$ e antisimmetrica $K = \tfrac12(A - A^\top)$. Con $A^\top = \left(\begin{smallmatrix}1&-1\\3&2\end{smallmatrix}\right)$: $S = \tfrac12\left(\begin{smallmatrix}2&2\\2&4\end{smallmatrix}\right) = \left(\begin{smallmatrix}1&1\\1&2\end{smallmatrix}\right)$, $K = \tfrac12\left(\begin{smallmatrix}0&4\\-4&0\end{smallmatrix}\right) = \left(\begin{smallmatrix}0&2\\-2&0\end{smallmatrix}\right)$. Verifica: $S + K = A$. L'unicità segue dal fatto che $S$ è forzatamente $\tfrac12(A+A^\top)$ (trasponendo $A = S+K$ si ottiene $A^\top = S - K$, e si risolve).
 
 </details>
 
@@ -385,11 +385,11 @@ Parte simmetrica $S = \tfrac12(A + A^\top)$ e antisimmetrica $K = \tfrac12(A - A
 
 <details class="dim-tecnica"><summary>Soluzione E9</summary>
 
-Prendi $A = \begin{psmallmatrix}1&0\\0&0\end{psmallmatrix}$ (proiezione sull'asse $x$) e $B = \begin{psmallmatrix}0&0\\1&0\end{psmallmatrix}$. Allora $AB = \begin{psmallmatrix}0&0\\0&0\end{psmallmatrix} = O$, mentre $BA = \begin{psmallmatrix}0&0\\1&0\end{psmallmatrix} \neq O$. Mostra insieme che il prodotto può annullarsi senza fattori nulli e che l'ordine conta.
+Prendi $A = \left(\begin{smallmatrix}1&0\\0&0\end{smallmatrix}\right)$ (proiezione sull'asse $x$) e $B = \left(\begin{smallmatrix}0&0\\1&0\end{smallmatrix}\right)$. Allora $AB = \left(\begin{smallmatrix}0&0\\0&0\end{smallmatrix}\right) = O$, mentre $BA = \left(\begin{smallmatrix}0&0\\1&0\end{smallmatrix}\right) \neq O$. Mostra insieme che il prodotto può annullarsi senza fattori nulli e che l'ordine conta.
 
 </details>
 
-**E10 (applicativo).** Con la matrice di transizione $P = \begin{psmallmatrix}0.9 & 0.2\\ 0.1 & 0.8\end{psmallmatrix}$ e stato iniziale $\mathbf{s}_0 = (0.5, 0.5)$, calcola $\mathbf{s}_1 = P\mathbf{s}_0$ e $\mathbf{s}_2 = P\mathbf{s}_1$. Che cosa noti sulla somma delle componenti?
+**E10 (applicativo).** Con la matrice di transizione $P = \left(\begin{smallmatrix}0.9 & 0.2\\ 0.1 & 0.8\end{smallmatrix}\right)$ e stato iniziale $\mathbf{s}_0 = (0.5, 0.5)$, calcola $\mathbf{s}_1 = P\mathbf{s}_0$ e $\mathbf{s}_2 = P\mathbf{s}_1$. Che cosa noti sulla somma delle componenti?
 
 <details class="dim-tecnica"><summary>Soluzione E10</summary>
 

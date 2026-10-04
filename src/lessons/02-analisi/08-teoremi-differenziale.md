@@ -514,7 +514,9 @@ Il limite è $e^{3}$. (Coerente con $\lim_{x\to\infty}(1+a/x)^x=e^a$.) ✓
 **Soluzione.** Denominatore comune: $\dfrac{\sin x-x}{x\sin x}$, forma $\tfrac00$. Usando $\sin x\sim x$ al denominatore, $x\sin x\sim x^2$; oppure due de l'Hôpital:
 $$
 \frac{\sin x-x}{x\sin x}\stackrel{\text{H}}{=}\frac{\cos x-1}{\sin x+x\cos x}\stackrel{\text{H}}{=}\frac{-\sin x}{2\cos x-x\sin x}\ \longrightarrow\ \frac{0}{2}=0.
-$$ ✓
+$$
+
+✓
 </details>
 
 <details>

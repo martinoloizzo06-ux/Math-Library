@@ -270,10 +270,10 @@ Il membro sinistro è $\mathbf{0}$ per definizione di opposto. Il destro, per as
 
 **Esempio 4 (intermedio) — Un piano per l'origine in $\mathbb{R}^3$.** Sia $W=\{(x,y,z):x-2y+z=0\}$. È un sottospazio: contiene $(0,0,0)$; se due punti soddisfano l'equazione, la loro somma la soddisfa perché $\big((x_1+x_2)-2(y_1+y_2)+(z_1+z_2)\big)=(x_1-2y_1+z_1)+(x_2-2y_2+z_2)=0+0=0$; e ogni multiplo scalare la soddisfa perché $c(x-2y+z)=c\cdot 0=0$. È un piano per l'origine. Possiamo anche descriverlo come span: risolvendo $x=2y-z$, i punti sono $(2y-z,\,y,\,z)=y(2,1,0)+z(-1,0,1)$, dunque $W=\operatorname{span}\{(2,1,0),(-1,0,1)\}$.
 
-**Esempio 5 (intermedio) — Nucleo di una matrice come sottospazio.** Sia $A=\begin{psmallmatrix}1&2&-1\\2&4&-2\end{psmallmatrix}$. La seconda riga è il doppio della prima, quindi il sistema $A\mathbf{x}=\mathbf{0}$ si riduce all'unica equazione $x_1+2x_2-x_3=0$, cioè $x_1=-2x_2+x_3$. Con $x_2=s$, $x_3=t$ liberi:
+**Esempio 5 (intermedio) — Nucleo di una matrice come sottospazio.** Sia $A=\left(\begin{smallmatrix}1&2&-1\\2&4&-2\end{smallmatrix}\right)$. La seconda riga è il doppio della prima, quindi il sistema $A\mathbf{x}=\mathbf{0}$ si riduce all'unica equazione $x_1+2x_2-x_3=0$, cioè $x_1=-2x_2+x_3$. Con $x_2=s$, $x_3=t$ liberi:
 
 $$
-\ker(A)=\left\{s\begin{psmallmatrix}-2\\1\\0\end{psmallmatrix}+t\begin{psmallmatrix}1\\0\\1\end{psmallmatrix}:s,t\in\mathbb{R}\right\}=\operatorname{span}\left\{\begin{psmallmatrix}-2\\1\\0\end{psmallmatrix},\begin{psmallmatrix}1\\0\\1\end{psmallmatrix}\right\}.
+\ker(A)=\left\{s\left(\begin{smallmatrix}-2\\1\\0\end{smallmatrix}\right)+t\left(\begin{smallmatrix}1\\0\\1\end{smallmatrix}\right):s,t\in\mathbb{R}\right\}=\operatorname{span}\left\{\left(\begin{smallmatrix}-2\\1\\0\end{smallmatrix}\right),\left(\begin{smallmatrix}1\\0\\1\end{smallmatrix}\right)\right\}.
 $$
 
 Il nucleo è un piano per l'origine in $\mathbb{R}^3$: la teoria della sezione 3.2 garantiva che fosse un sottospazio, e il calcolo lo esibisce come span dei suoi generatori.
@@ -328,12 +328,12 @@ Fuori dall'algebra lineare, la struttura di spazio vettoriale è il vocabolario 
 <details class="dim-tecnica">
 <summary>Esercizio 4 (intermedio) — Nucleo di una matrice</summary>
 
-**Testo.** Trovare $\ker(A)$ per $A=\begin{psmallmatrix}1&-1&2\\2&-2&4\end{psmallmatrix}$ e verificare che è un sottospazio esibendone i generatori.
+**Testo.** Trovare $\ker(A)$ per $A=\left(\begin{smallmatrix}1&-1&2\\2&-2&4\end{smallmatrix}\right)$ e verificare che è un sottospazio esibendone i generatori.
 
 **Soluzione.** La seconda riga è il doppio della prima, quindi l'unica equazione è $x_1-x_2+2x_3=0$, cioè $x_1=x_2-2x_3$. Con $x_2=s$, $x_3=t$ liberi:
 
 $$
-\ker(A)=s\begin{psmallmatrix}1\\1\\0\end{psmallmatrix}+t\begin{psmallmatrix}-2\\0\\1\end{psmallmatrix},\qquad s,t\in\mathbb{R},
+\ker(A)=s\left(\begin{smallmatrix}1\\1\\0\end{smallmatrix}\right)+t\left(\begin{smallmatrix}-2\\0\\1\end{smallmatrix}\right),\qquad s,t\in\mathbb{R},
 $$
 
 dunque $\ker(A)=\operatorname{span}\{(1,1,0),(-2,0,1)\}$. Essendo uno span, è automaticamente un sottospazio (sezione 3.1); è un piano per l'origine in $\mathbb{R}^3$.
@@ -343,7 +343,7 @@ dunque $\ker(A)=\operatorname{span}\{(1,1,0),(-2,0,1)\}$. Essendo uno span, è a
 <details class="dim-tecnica">
 <summary>Esercizio 5 (intermedio) — Immagine e coerenza col rango</summary>
 
-**Testo.** Per $A=\begin{psmallmatrix}1&2&3\\0&1&1\end{psmallmatrix}$ descrivere $\operatorname{Im}(A)$ e verificare la relazione nullità più rango.
+**Testo.** Per $A=\left(\begin{smallmatrix}1&2&3\\0&1&1\end{smallmatrix}\right)$ descrivere $\operatorname{Im}(A)$ e verificare la relazione nullità più rango.
 
 **Soluzione.** Le colonne sono $\mathbf{c}_1=(1,0)^{\!\top}$, $\mathbf{c}_2=(2,1)^{\!\top}$, $\mathbf{c}_3=(3,1)^{\!\top}$. Si osserva $\mathbf{c}_3=\mathbf{c}_1+\mathbf{c}_2$, quindi $\mathbf{c}_3$ non aggiunge direzioni: $\operatorname{Im}(A)=\operatorname{span}\{\mathbf{c}_1,\mathbf{c}_2\}$. I due vettori $\mathbf{c}_1,\mathbf{c}_2$ non sono proporzionali, quindi generano tutto $\mathbb{R}^2$: $\operatorname{Im}(A)=\mathbb{R}^2$, dimensione $2$, cioè rango $2$. Il nucleo ha una variabile libera ($3$ colonne meno $2$ pivot), dimensione $1$. Verifica: $\operatorname{rk}(A)+\dim\ker(A)=2+1=3$, pari al numero di colonne. $\checkmark$
 

@@ -97,7 +97,7 @@ $$
 
 La ricetta per costruire $A$ è tanto semplice quanto rivelatrice: la $j$-esima colonna di $A$ è l'immagine $T(\mathbf{e}_j)$ del $j$-esimo vettore della base canonica. La ragione, che dimostreremo nella sezione 3, è quella anticipata nell'introduzione: ogni $\mathbf{x}=(x_1,\dots,x_n)$ si scrive come $x_1\mathbf{e}_1+\cdots+x_n\mathbf{e}_n$, e la linearità impone $T(\mathbf{x})=x_1T(\mathbf{e}_1)+\cdots+x_nT(\mathbf{e}_n)$, che è esattamente la lettura per colonne del prodotto $A\mathbf{x}$. *Conoscere l'azione di $T$ sulla base determina $T$ ovunque.*
 
-*Micro-esempio.* Per la rotazione di $90^\circ$ in senso antiorario, $T(\mathbf{e}_1)=T(1,0)=(0,1)$ e $T(\mathbf{e}_2)=T(0,1)=(-1,0)$: mettendo queste due immagini in colonna si ottiene $A=\begin{psmallmatrix}0&-1\\1&0\end{psmallmatrix}$, la matrice di rotazione. Non serve altro: quelle due colonne codificano l'intera rotazione.
+*Micro-esempio.* Per la rotazione di $90^\circ$ in senso antiorario, $T(\mathbf{e}_1)=T(1,0)=(0,1)$ e $T(\mathbf{e}_2)=T(0,1)=(-1,0)$: mettendo queste due immagini in colonna si ottiene $A=\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)$, la matrice di rotazione. Non serve altro: quelle due colonne codificano l'intera rotazione.
 
 Il principio «l'azione sulla base determina la trasformazione» vale in qualunque spazio, non solo in $\mathbb{R}^n$. In uno spazio astratto come $P_2$, una volta scelte una base di partenza e una di arrivo, si costruisce ugualmente una matrice le cui colonne sono le coordinate delle immagini dei vettori di base. È il ponte che permette di trattare la derivazione di polinomi, o qualunque altra operazione lineare, con l'aritmetica delle matrici.
 
@@ -157,7 +157,7 @@ Primo caso: $n=m=4$ e rango $4$. Iniettiva sì ($\operatorname{rk}=n=4$, nucleo 
 
 ### 2.6 Geometria, composizione e lo slider
 
-Il potere delle trasformazioni lineari si apprezza vedendole come operazioni geometriche. In $\mathbb{R}^2$, molte trasformazioni familiari sono lineari e hanno matrici standard: la rotazione di un angolo $\theta$ ha matrice $\begin{psmallmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{psmallmatrix}$; la riflessione rispetto all'asse $x$ è $\begin{psmallmatrix}1&0\\0&-1\end{psmallmatrix}$; la proiezione sull'asse $x$ è $\begin{psmallmatrix}1&0\\0&0\end{psmallmatrix}$; la dilatazione di fattore $k$ è $\begin{psmallmatrix}k&0\\0&k\end{psmallmatrix}$. Ciascuna si ricostruisce con la ricetta delle colonne: dove finiscono $\mathbf{e}_1$ ed $\mathbf{e}_2$.
+Il potere delle trasformazioni lineari si apprezza vedendole come operazioni geometriche. In $\mathbb{R}^2$, molte trasformazioni familiari sono lineari e hanno matrici standard: la rotazione di un angolo $\theta$ ha matrice $\left(\begin{smallmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{smallmatrix}\right)$; la riflessione rispetto all'asse $x$ è $\left(\begin{smallmatrix}1&0\\0&-1\end{smallmatrix}\right)$; la proiezione sull'asse $x$ è $\left(\begin{smallmatrix}1&0\\0&0\end{smallmatrix}\right)$; la dilatazione di fattore $k$ è $\left(\begin{smallmatrix}k&0\\0&k\end{smallmatrix}\right)$. Ciascuna si ricostruisce con la ricetta delle colonne: dove finiscono $\mathbf{e}_1$ ed $\mathbf{e}_2$.
 
 Comporre due trasformazioni — applicarne una dopo l'altra — corrisponde a moltiplicare le loro matrici, con un'avvertenza sull'ordine: se prima si applica $T$ (matrice $A$) e poi $S$ (matrice $B$), la composizione $S\circ T$ ha matrice $BA$, non $AB$. L'ordine è invertito rispetto alla lettura da sinistra a destra, perché $\mathbf{x}$ incontra prima $A$ e poi $B$: $S(T(\mathbf{x}))=B(A\mathbf{x})=(BA)\mathbf{x}$. Questo è il motivo strutturale per cui il prodotto di matrici non è commutativo: comporre una rotazione e una riflessione in ordine diverso dà risultati geometrici diversi.
 
@@ -237,21 +237,21 @@ dove l'ultimo passaggio è l'associatività del prodotto matrice-vettore. Per l'
 
 ## 4. Esempi
 
-**Esempio 1 (introduttivo) — Riconoscere una trasformazione lineare e trovarne la matrice.** Sia $T(x,y)=(2x+y,\,x-y)$. È lineare: manda $\mathbf{0}$ in $\mathbf{0}$ e ogni uscita è combinazione lineare degli ingressi. La matrice si legge dalle immagini dei versori: $T(\mathbf{e}_1)=T(1,0)=(2,1)$ e $T(\mathbf{e}_2)=T(0,1)=(1,-1)$, dunque $A=\begin{psmallmatrix}2&1\\1&-1\end{psmallmatrix}$.
+**Esempio 1 (introduttivo) — Riconoscere una trasformazione lineare e trovarne la matrice.** Sia $T(x,y)=(2x+y,\,x-y)$. È lineare: manda $\mathbf{0}$ in $\mathbf{0}$ e ogni uscita è combinazione lineare degli ingressi. La matrice si legge dalle immagini dei versori: $T(\mathbf{e}_1)=T(1,0)=(2,1)$ e $T(\mathbf{e}_2)=T(0,1)=(1,-1)$, dunque $A=\left(\begin{smallmatrix}2&1\\1&-1\end{smallmatrix}\right)$.
 
-**Esempio 2 (introduttivo) — Riflessione rispetto all'asse $x$.** $T(x,y)=(x,-y)$. Immagini dei versori: $T(\mathbf{e}_1)=(1,0)$, $T(\mathbf{e}_2)=(0,-1)$, quindi $A=\begin{psmallmatrix}1&0\\0&-1\end{psmallmatrix}$. È un isomorfismo (il determinante è $-1\neq 0$), e applicandola due volte si torna all'identità: $A^2=I$, come dev'essere per una riflessione.
+**Esempio 2 (introduttivo) — Riflessione rispetto all'asse $x$.** $T(x,y)=(x,-y)$. Immagini dei versori: $T(\mathbf{e}_1)=(1,0)$, $T(\mathbf{e}_2)=(0,-1)$, quindi $A=\left(\begin{smallmatrix}1&0\\0&-1\end{smallmatrix}\right)$. È un isomorfismo (il determinante è $-1\neq 0$), e applicandola due volte si torna all'identità: $A^2=I$, come dev'essere per una riflessione.
 
-**Esempio 3 (introduttivo) — Proiezione e i suoi sottospazi.** $T(x,y)=(x,0)$, matrice $A=\begin{psmallmatrix}1&0\\0&0\end{psmallmatrix}$. Il nucleo è l'asse $y$: i punti $(0,y)$ vengono mandati in $\mathbf{0}$. L'immagine è l'asse $x$. Le dimensioni sono $\dim\ker(T)=1$ e $\dim\operatorname{Im}(T)=1$, con somma $2=\dim\mathbb{R}^2$: il teorema fondamentale è verificato. Nota che $T$ non è né iniettiva (nucleo non banale) né suriettiva (immagine più piccola dell'arrivo).
+**Esempio 3 (introduttivo) — Proiezione e i suoi sottospazi.** $T(x,y)=(x,0)$, matrice $A=\left(\begin{smallmatrix}1&0\\0&0\end{smallmatrix}\right)$. Il nucleo è l'asse $y$: i punti $(0,y)$ vengono mandati in $\mathbf{0}$. L'immagine è l'asse $x$. Le dimensioni sono $\dim\ker(T)=1$ e $\dim\operatorname{Im}(T)=1$, con somma $2=\dim\mathbb{R}^2$: il teorema fondamentale è verificato. Nota che $T$ non è né iniettiva (nucleo non banale) né suriettiva (immagine più piccola dell'arrivo).
 
-**Esempio 4 (intermedio) — Trasformazione non quadrata: nucleo e immagine.** Sia $T\colon\mathbb{R}^3\to\mathbb{R}^2$, $T(x,y,z)=(x+y,\,y+z)$, con matrice $A=\begin{psmallmatrix}1&1&0\\0&1&1\end{psmallmatrix}$. Il rango è $2$ (due pivot), quindi l'immagine è tutto $\mathbb{R}^2$: $T$ è suriettiva. Il nucleo ha dimensione $3-2=1$: da $x+y=0$ e $y+z=0$ si ottiene $x=-y$, $z=-y$, cioè $\ker(T)=\operatorname{span}\{(-1,1,-1)\}$. $T$ non è iniettiva, coerentemente col fatto che $\dim\mathbb{R}^3>\dim\mathbb{R}^2$.
+**Esempio 4 (intermedio) — Trasformazione non quadrata: nucleo e immagine.** Sia $T\colon\mathbb{R}^3\to\mathbb{R}^2$, $T(x,y,z)=(x+y,\,y+z)$, con matrice $A=\left(\begin{smallmatrix}1&1&0\\0&1&1\end{smallmatrix}\right)$. Il rango è $2$ (due pivot), quindi l'immagine è tutto $\mathbb{R}^2$: $T$ è suriettiva. Il nucleo ha dimensione $3-2=1$: da $x+y=0$ e $y+z=0$ si ottiene $x=-y$, $z=-y$, cioè $\ker(T)=\operatorname{span}\{(-1,1,-1)\}$. $T$ non è iniettiva, coerentemente col fatto che $\dim\mathbb{R}^3>\dim\mathbb{R}^2$.
 
-**Esempio 5 (intermedio) — Composizione: riflessione poi proiezione.** Sia $T$ la riflessione rispetto all'asse $y$, $A_T=\begin{psmallmatrix}-1&0\\0&1\end{psmallmatrix}$, e $S$ la proiezione sull'asse $x$, $A_S=\begin{psmallmatrix}1&0\\0&0\end{psmallmatrix}$. La composizione $S\circ T$ (prima $T$, poi $S$) ha matrice $A_S A_T=\begin{psmallmatrix}1&0\\0&0\end{psmallmatrix}\begin{psmallmatrix}-1&0\\0&1\end{psmallmatrix}=\begin{psmallmatrix}-1&0\\0&0\end{psmallmatrix}$, cioè $(S\circ T)(x,y)=(-x,0)$: si riflette e poi si schiaccia sull'asse $x$.
+**Esempio 5 (intermedio) — Composizione: riflessione poi proiezione.** Sia $T$ la riflessione rispetto all'asse $y$, $A_T=\left(\begin{smallmatrix}-1&0\\0&1\end{smallmatrix}\right)$, e $S$ la proiezione sull'asse $x$, $A_S=\left(\begin{smallmatrix}1&0\\0&0\end{smallmatrix}\right)$. La composizione $S\circ T$ (prima $T$, poi $S$) ha matrice $A_S A_T=\left(\begin{smallmatrix}1&0\\0&0\end{smallmatrix}\right)\left(\begin{smallmatrix}-1&0\\0&1\end{smallmatrix}\right)=\left(\begin{smallmatrix}-1&0\\0&0\end{smallmatrix}\right)$, cioè $(S\circ T)(x,y)=(-x,0)$: si riflette e poi si schiaccia sull'asse $x$.
 
-**Esempio 6 (intermedio) — Composizione di rotazioni.** Se $R_\alpha$ e $R_\beta$ sono rotazioni in $\mathbb{R}^2$, la loro composizione è la rotazione della somma degli angoli: $R_\beta\circ R_\alpha=R_{\alpha+\beta}$. Lo si verifica moltiplicando le matrici e usando le formule di addizione di seno e coseno. In particolare $R_{\pi/2}\circ R_{\pi/2}=R_\pi$: infatti $\begin{psmallmatrix}0&-1\\1&0\end{psmallmatrix}^2=\begin{psmallmatrix}-1&0\\0&-1\end{psmallmatrix}$, che è la rotazione di $180^\circ$.
+**Esempio 6 (intermedio) — Composizione di rotazioni.** Se $R_\alpha$ e $R_\beta$ sono rotazioni in $\mathbb{R}^2$, la loro composizione è la rotazione della somma degli angoli: $R_\beta\circ R_\alpha=R_{\alpha+\beta}$. Lo si verifica moltiplicando le matrici e usando le formule di addizione di seno e coseno. In particolare $R_{\pi/2}\circ R_{\pi/2}=R_\pi$: infatti $\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)^2=\left(\begin{smallmatrix}-1&0\\0&-1\end{smallmatrix}\right)$, che è la rotazione di $180^\circ$.
 
-**Esempio 7 (avanzato) — Una trasformazione lineare su uno spazio di polinomi.** La derivazione $D\colon P_2\to P_2$, $D(p)=p'$, è lineare (la derivata di una somma è la somma delle derivate, e le costanti escono). Nella base $\{1,x,x^2\}$ le immagini sono $D(1)=0$, $D(x)=1$, $D(x^2)=2x$, che in coordinate sono $(0,0,0)$, $(1,0,0)$, $(0,2,0)$. La matrice è $\begin{psmallmatrix}0&1&0\\0&0&2\\0&0&0\end{psmallmatrix}$. Il nucleo di $D$ è lo spazio delle costanti (i polinomi con derivata nulla), dimensione $1$; l'immagine è $\operatorname{span}\{1,x\}=P_1$, dimensione $2$; e $1+2=3=\dim P_2$.
+**Esempio 7 (avanzato) — Una trasformazione lineare su uno spazio di polinomi.** La derivazione $D\colon P_2\to P_2$, $D(p)=p'$, è lineare (la derivata di una somma è la somma delle derivate, e le costanti escono). Nella base $\{1,x,x^2\}$ le immagini sono $D(1)=0$, $D(x)=1$, $D(x^2)=2x$, che in coordinate sono $(0,0,0)$, $(1,0,0)$, $(0,2,0)$. La matrice è $\left(\begin{smallmatrix}0&1&0\\0&0&2\\0&0&0\end{smallmatrix}\right)$. Il nucleo di $D$ è lo spazio delle costanti (i polinomi con derivata nulla), dimensione $1$; l'immagine è $\operatorname{span}\{1,x\}=P_1$, dimensione $2$; e $1+2=3=\dim P_2$.
 
-**Esempio 8 (avanzato) — Un isomorfismo su $P_2$.** La trasformazione $T\colon P_2\to P_2$, $T(p)=p+p'$, è lineare. Immagini della base: $T(1)=1$, $T(x)=x+1$, $T(x^2)=x^2+2x$, in coordinate $(1,0,0)$, $(1,1,0)$, $(0,2,1)$. La matrice è $\begin{psmallmatrix}1&1&0\\0&1&2\\0&0&1\end{psmallmatrix}$, triangolare con determinante $1\neq 0$: $T$ è un isomorfismo di $P_2$ in sé. Ciò significa che l'equazione $p+p'=q$ ha, per ogni polinomio $q$ di grado $\le 2$, una e una sola soluzione $p$ di grado $\le 2$.
+**Esempio 8 (avanzato) — Un isomorfismo su $P_2$.** La trasformazione $T\colon P_2\to P_2$, $T(p)=p+p'$, è lineare. Immagini della base: $T(1)=1$, $T(x)=x+1$, $T(x^2)=x^2+2x$, in coordinate $(1,0,0)$, $(1,1,0)$, $(0,2,1)$. La matrice è $\left(\begin{smallmatrix}1&1&0\\0&1&2\\0&0&1\end{smallmatrix}\right)$, triangolare con determinante $1\neq 0$: $T$ è un isomorfismo di $P_2$ in sé. Ciò significa che l'equazione $p+p'=q$ ha, per ogni polinomio $q$ di grado $\le 2$, una e una sola soluzione $p$ di grado $\le 2$.
 
 ---
 
@@ -272,7 +272,7 @@ Fuori dall'algebra lineare, le trasformazioni lineari sono il linguaggio di innu
 
 **Testo.** Stabilire quali fra $T_1(x,y)=(2x+y,\,x-y)$, $T_2(x,y)=(x+1,\,y)$, $T_3(x,y)=(xy,\,x)$ sono trasformazioni lineari.
 
-**Soluzione.** $T_1$: manda $\mathbf{0}$ in $\mathbf{0}$; l'additività e l'omogeneità si verificano perché ogni componente è combinazione lineare degli ingressi. È lineare, matrice $\begin{psmallmatrix}2&1\\1&-1\end{psmallmatrix}$. $T_2$: $T_2(0,0)=(1,0)\neq\mathbf{0}$, quindi *non* lineare (è una traslazione). $T_3$: la prima componente $xy$ non è lineare; controprova con l'omogeneità, $T_3(2\cdot(1,1))=T_3(2,2)=(4,2)$ mentre $2\,T_3(1,1)=2(1,1)=(2,2)$: diversi. Non lineare.
+**Soluzione.** $T_1$: manda $\mathbf{0}$ in $\mathbf{0}$; l'additività e l'omogeneità si verificano perché ogni componente è combinazione lineare degli ingressi. È lineare, matrice $\left(\begin{smallmatrix}2&1\\1&-1\end{smallmatrix}\right)$. $T_2$: $T_2(0,0)=(1,0)\neq\mathbf{0}$, quindi *non* lineare (è una traslazione). $T_3$: la prima componente $xy$ non è lineare; controprova con l'omogeneità, $T_3(2\cdot(1,1))=T_3(2,2)=(4,2)$ mentre $2\,T_3(1,1)=2(1,1)=(2,2)$: diversi. Non lineare.
 
 </details>
 
@@ -281,19 +281,19 @@ Fuori dall'algebra lineare, le trasformazioni lineari sono il linguaggio di innu
 
 **Testo.** Trovare la matrice della riflessione rispetto alla retta $y=x$ in $\mathbb{R}^2$ e verificarne una proprietà caratteristica.
 
-**Soluzione.** La riflessione rispetto a $y=x$ scambia le coordinate: $T(x,y)=(y,x)$. Immagini dei versori: $T(\mathbf{e}_1)=T(1,0)=(0,1)$, $T(\mathbf{e}_2)=T(0,1)=(1,0)$, quindi $A=\begin{psmallmatrix}0&1\\1&0\end{psmallmatrix}$. Proprietà caratteristica: riflettere due volte riporta all'origine di partenza, e infatti $A^2=\begin{psmallmatrix}0&1\\1&0\end{psmallmatrix}^2=\begin{psmallmatrix}1&0\\0&1\end{psmallmatrix}=I$.
+**Soluzione.** La riflessione rispetto a $y=x$ scambia le coordinate: $T(x,y)=(y,x)$. Immagini dei versori: $T(\mathbf{e}_1)=T(1,0)=(0,1)$, $T(\mathbf{e}_2)=T(0,1)=(1,0)$, quindi $A=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$. Proprietà caratteristica: riflettere due volte riporta all'origine di partenza, e infatti $A^2=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)^2=\left(\begin{smallmatrix}1&0\\0&1\end{smallmatrix}\right)=I$.
 
 </details>
 
 <details class="dim-tecnica">
 <summary>Esercizio 3 (intermedio) — Nucleo e immagine di una TL 4→3</summary>
 
-**Testo.** Per $T\colon\mathbb{R}^4\to\mathbb{R}^3$ con matrice $A=\begin{psmallmatrix}1&2&0&1\\0&0&1&2\\1&2&1&3\end{psmallmatrix}$, trovare $\ker(T)$ e $\operatorname{Im}(T)$ e verificare il teorema fondamentale.
+**Testo.** Per $T\colon\mathbb{R}^4\to\mathbb{R}^3$ con matrice $A=\left(\begin{smallmatrix}1&2&0&1\\0&0&1&2\\1&2&1&3\end{smallmatrix}\right)$, trovare $\ker(T)$ e $\operatorname{Im}(T)$ e verificare il teorema fondamentale.
 
 **Soluzione.** La terza riga è la somma delle prime due, quindi si annulla nella riduzione: $\operatorname{rk}(A)=2$, con pivot nelle colonne $1$ e $3$. Variabili libere $x_2=s$, $x_4=t$. Da $R_1$: $x_1=-2s-t$; da $R_2$: $x_3=-2t$. Dunque
 
 $$
-\ker(T)=s\begin{psmallmatrix}-2\\1\\0\\0\end{psmallmatrix}+t\begin{psmallmatrix}-1\\0\\-2\\1\end{psmallmatrix},\qquad \dim\ker(T)=2.
+\ker(T)=s\left(\begin{smallmatrix}-2\\1\\0\\0\end{smallmatrix}\right)+t\left(\begin{smallmatrix}-1\\0\\-2\\1\end{smallmatrix}\right),\qquad \dim\ker(T)=2.
 $$
 
 L'immagine è lo span delle colonne pivot: $\operatorname{Im}(T)=\operatorname{span}\{(1,0,1),(0,1,1)\}$, dimensione $2$. Verifica: $\dim\ker+\dim\operatorname{Im}=2+2=4=\dim\mathbb{R}^4$. ✓
@@ -303,9 +303,9 @@ L'immagine è lo span delle colonne pivot: $\operatorname{Im}(T)=\operatorname{s
 <details class="dim-tecnica">
 <summary>Esercizio 4 (intermedio) — Iniettività via determinante</summary>
 
-**Testo.** La trasformazione $T\colon\mathbb{R}^3\to\mathbb{R}^3$ con matrice $A=\begin{psmallmatrix}1&2&1\\0&1&1\\1&1&0\end{psmallmatrix}$ è iniettiva?
+**Testo.** La trasformazione $T\colon\mathbb{R}^3\to\mathbb{R}^3$ con matrice $A=\left(\begin{smallmatrix}1&2&1\\0&1&1\\1&1&0\end{smallmatrix}\right)$ è iniettiva?
 
-**Soluzione.** Per una trasformazione quadrata, iniettività, suriettività e invertibilità coincidono, e si controllano col determinante. Sviluppando lungo la prima colonna: $\det(A)=1\cdot\det\begin{psmallmatrix}1&1\\1&0\end{psmallmatrix}-0+1\cdot\det\begin{psmallmatrix}2&1\\1&1\end{psmallmatrix}=1(0-1)+1(2-1)=-1+1=0$. Poiché $\det(A)=0$, la matrice non è invertibile: il nucleo è non banale e $T$ **non è iniettiva**. (La prossima lezione formalizzerà il legame determinante–invertibilità qui usato.)
+**Soluzione.** Per una trasformazione quadrata, iniettività, suriettività e invertibilità coincidono, e si controllano col determinante. Sviluppando lungo la prima colonna: $\det(A)=1\cdot\det\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)-0+1\cdot\det\left(\begin{smallmatrix}2&1\\1&1\end{smallmatrix}\right)=1(0-1)+1(2-1)=-1+1=0$. Poiché $\det(A)=0$, la matrice non è invertibile: il nucleo è non banale e $T$ **non è iniettiva**. (La prossima lezione formalizzerà il legame determinante–invertibilità qui usato.)
 
 </details>
 
@@ -314,7 +314,7 @@ L'immagine è lo span delle colonne pivot: $\operatorname{Im}(T)=\operatorname{s
 
 **Testo.** Siano $R$ la rotazione di $\pi/2$ e $F$ la riflessione rispetto all'asse $x$. Calcolare le matrici di $F\circ R$ e $R\circ F$ e verificare che sono diverse.
 
-**Soluzione.** $A_R=\begin{psmallmatrix}0&-1\\1&0\end{psmallmatrix}$, $A_F=\begin{psmallmatrix}1&0\\0&-1\end{psmallmatrix}$. La composizione $F\circ R$ (prima $R$, poi $F$) ha matrice $A_F A_R=\begin{psmallmatrix}1&0\\0&-1\end{psmallmatrix}\begin{psmallmatrix}0&-1\\1&0\end{psmallmatrix}=\begin{psmallmatrix}0&-1\\-1&0\end{psmallmatrix}$. La composizione $R\circ F$ (prima $F$, poi $R$) ha matrice $A_R A_F=\begin{psmallmatrix}0&-1\\1&0\end{psmallmatrix}\begin{psmallmatrix}1&0\\0&-1\end{psmallmatrix}=\begin{psmallmatrix}0&1\\1&0\end{psmallmatrix}$. Le due matrici sono diverse: comporre rotazione e riflessione in ordine opposto dà trasformazioni geometriche distinte, un esempio concreto della non commutatività del prodotto.
+**Soluzione.** $A_R=\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)$, $A_F=\left(\begin{smallmatrix}1&0\\0&-1\end{smallmatrix}\right)$. La composizione $F\circ R$ (prima $R$, poi $F$) ha matrice $A_F A_R=\left(\begin{smallmatrix}1&0\\0&-1\end{smallmatrix}\right)\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)=\left(\begin{smallmatrix}0&-1\\-1&0\end{smallmatrix}\right)$. La composizione $R\circ F$ (prima $F$, poi $R$) ha matrice $A_R A_F=\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)\left(\begin{smallmatrix}1&0\\0&-1\end{smallmatrix}\right)=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$. Le due matrici sono diverse: comporre rotazione e riflessione in ordine opposto dà trasformazioni geometriche distinte, un esempio concreto della non commutatività del prodotto.
 
 </details>
 
@@ -323,7 +323,7 @@ L'immagine è lo span delle colonne pivot: $\operatorname{Im}(T)=\operatorname{s
 
 **Testo.** Scrivere la matrice della rotazione di $\pi/4$ e calcolare l'immagine di $(1,0)$; interpretare il risultato.
 
-**Soluzione.** $R_{\pi/4}=\begin{psmallmatrix}\cos(\pi/4)&-\sin(\pi/4)\\\sin(\pi/4)&\cos(\pi/4)\end{psmallmatrix}=\begin{psmallmatrix}\frac{\sqrt2}{2}&-\frac{\sqrt2}{2}\\[2pt]\frac{\sqrt2}{2}&\frac{\sqrt2}{2}\end{psmallmatrix}$. Applicandola a $(1,0)$: $R_{\pi/4}(1,0)^{\!\top}=\big(\tfrac{\sqrt2}{2},\tfrac{\sqrt2}{2}\big)^{\!\top}$. Il versore orizzontale $\mathbf{e}_1$ viene ruotato di $45^\circ$ e finisce sulla bisettrice $y=x$, a distanza $1$ dall'origine (la rotazione conserva la lunghezza): infatti $\big(\tfrac{\sqrt2}{2}\big)^2+\big(\tfrac{\sqrt2}{2}\big)^2=\tfrac12+\tfrac12=1$.
+**Soluzione.** $R_{\pi/4}=\left(\begin{smallmatrix}\cos(\pi/4)&-\sin(\pi/4)\\\sin(\pi/4)&\cos(\pi/4)\end{smallmatrix}\right)=\left(\begin{smallmatrix}\frac{\sqrt2}{2}&-\frac{\sqrt2}{2}\\[2pt]\frac{\sqrt2}{2}&\frac{\sqrt2}{2}\end{smallmatrix}\right)$. Applicandola a $(1,0)$: $R_{\pi/4}(1,0)^{\!\top}=\big(\tfrac{\sqrt2}{2},\tfrac{\sqrt2}{2}\big)^{\!\top}$. Il versore orizzontale $\mathbf{e}_1$ viene ruotato di $45^\circ$ e finisce sulla bisettrice $y=x$, a distanza $1$ dall'origine (la rotazione conserva la lunghezza): infatti $\big(\tfrac{\sqrt2}{2}\big)^2+\big(\tfrac{\sqrt2}{2}\big)^2=\tfrac12+\tfrac12=1$.
 
 </details>
 

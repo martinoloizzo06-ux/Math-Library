@@ -80,7 +80,7 @@ $$B=P^{-1}AP.$$
 
 Matrici simili rappresentano la **stessa** trasformazione lineare, viste in due basi diverse: $A$ nella base standard, $B$ nella base data dalle colonne di $P$. Per questo la similitudine conserva tutte le grandezze intrinseche della trasformazione — traccia, determinante, autovalori — che non dipendono dal sistema di coordinate. In particolare, matrici simili hanno lo **stesso polinomio caratteristico** (dimostrato in §3), il fatto che avevamo usato senza prova nella lezione sugli autovalori.
 
-*Micro-esempio.* $A=\begin{psmallmatrix}4&1\\2&3\end{psmallmatrix}$ e la sua futura forma diagonale $\Lambda=\begin{psmallmatrix}2&0\\0&5\end{psmallmatrix}$ sono simili: rappresentano la stessa trasformazione, l'una nella base canonica, l'altra nella base dei due autovettori. Entrambe hanno traccia $7$ e determinante $10$.
+*Micro-esempio.* $A=\left(\begin{smallmatrix}4&1\\2&3\end{smallmatrix}\right)$ e la sua futura forma diagonale $\Lambda=\left(\begin{smallmatrix}2&0\\0&5\end{smallmatrix}\right)$ sono simili: rappresentano la stessa trasformazione, l'una nella base canonica, l'altra nella base dei due autovettori. Entrambe hanno traccia $7$ e determinante $10$.
 
 ### 2.2 Definizione di matrice diagonalizzabile
 
@@ -101,7 +101,7 @@ Riletto attraverso le molteplicità della lezione precedente, il criterio divent
 
 **Condizione sufficiente comoda.** Se $A$ ha $n$ autovalori **distinti**, allora è diagonalizzabile: ciascuno porta $m_a=1$, quindi $m_g=1=m_a$, e i relativi autovettori sono indipendenti. È una condizione sufficiente, non necessaria: una matrice può avere autovalori ripetuti ed essere ugualmente diagonalizzabile, purché ogni autospazio sia pieno.
 
-*Micro-esempio.* $\begin{psmallmatrix}4&1\\2&3\end{psmallmatrix}$ ha autovalori distinti $2$ e $5$: diagonalizzabile. Invece $\begin{psmallmatrix}2&1\\0&2\end{psmallmatrix}$ ha $\lambda=2$ con $m_a=2$ ma $m_g=1$: **non** diagonalizzabile, le manca un autovettore.
+*Micro-esempio.* $\left(\begin{smallmatrix}4&1\\2&3\end{smallmatrix}\right)$ ha autovalori distinti $2$ e $5$: diagonalizzabile. Invece $\left(\begin{smallmatrix}2&1\\0&2\end{smallmatrix}\right)$ ha $\lambda=2$ con $m_a=2$ ma $m_g=1$: **non** diagonalizzabile, le manca un autovettore.
 
 ```checkpoint
 [domanda]
@@ -117,7 +117,7 @@ Il criterio si traduce in un algoritmo in quattro passi.
 
 Primo, si calcola il polinomio caratteristico $p(\lambda)=\det(A-\lambda I)$ e se ne trovano le radici, gli autovalori $\lambda_1,\dots,\lambda_k$. Secondo, per ciascun $\lambda_i$ si determina una base dell'autospazio $V_{\lambda_i}=\ker(A-\lambda_i I)$, risolvendo il sistema omogeneo. Terzo, si raccolgono tutti gli autovettori così ottenuti: se sono in tutto $n$ (cioè ogni $m_g=m_a$), si dispongono come colonne di $P$, ponendo sulla diagonale di $\Lambda$ i corrispondenti autovalori nello stesso ordine. Quarto, si verifica l'uguaglianza nella forma comoda $AP=P\Lambda$, che evita di calcolare $P^{-1}$.
 
-*Micro-esempio.* Per $\begin{psmallmatrix}4&1\\2&3\end{psmallmatrix}$: autovettori $(1,-2)$ per $\lambda=2$ e $(1,1)$ per $\lambda=5$, quindi $P=\begin{psmallmatrix}1&1\\-2&1\end{psmallmatrix}$, $\Lambda=\begin{psmallmatrix}2&0\\0&5\end{psmallmatrix}$. Controllo: $AP=\begin{psmallmatrix}2&5\\-4&5\end{psmallmatrix}=P\Lambda$.
+*Micro-esempio.* Per $\left(\begin{smallmatrix}4&1\\2&3\end{smallmatrix}\right)$: autovettori $(1,-2)$ per $\lambda=2$ e $(1,1)$ per $\lambda=5$, quindi $P=\left(\begin{smallmatrix}1&1\\-2&1\end{smallmatrix}\right)$, $\Lambda=\left(\begin{smallmatrix}2&0\\0&5\end{smallmatrix}\right)$. Controllo: $AP=\left(\begin{smallmatrix}2&5\\-4&5\end{smallmatrix}\right)=P\Lambda$.
 
 ### 2.5 A cosa serve: potenze, funzioni ed esponenziale di matrice
 
@@ -193,19 +193,19 @@ dove si è portato $P$ e $P^{-1}$ fuori dalla somma (leciti perché costanti ris
 
 ## 4. Esempi
 
-**Esempio 1 (introduttivo) — diagonalizzazione completa $2\times 2$.** $A=\begin{psmallmatrix}4&1\\2&3\end{psmallmatrix}$, autovalori $2,5$ con autovettori $(1,-2),(1,1)$. Allora $P=\begin{psmallmatrix}1&1\\-2&1\end{psmallmatrix}$, $\Lambda=\begin{psmallmatrix}2&0\\0&5\end{psmallmatrix}$, $P^{-1}=\tfrac13\begin{psmallmatrix}1&-1\\2&1\end{psmallmatrix}$. Verifica rapida: $AP=\begin{psmallmatrix}2&5\\-4&5\end{psmallmatrix}=P\Lambda$ ✓.
+**Esempio 1 (introduttivo) — diagonalizzazione completa $2\times 2$.** $A=\left(\begin{smallmatrix}4&1\\2&3\end{smallmatrix}\right)$, autovalori $2,5$ con autovettori $(1,-2),(1,1)$. Allora $P=\left(\begin{smallmatrix}1&1\\-2&1\end{smallmatrix}\right)$, $\Lambda=\left(\begin{smallmatrix}2&0\\0&5\end{smallmatrix}\right)$, $P^{-1}=\tfrac13\left(\begin{smallmatrix}1&-1\\2&1\end{smallmatrix}\right)$. Verifica rapida: $AP=\left(\begin{smallmatrix}2&5\\-4&5\end{smallmatrix}\right)=P\Lambda$ ✓.
 
-**Esempio 2 (introduttivo) — matrice non diagonalizzabile.** $A=\begin{psmallmatrix}3&1\\0&3\end{psmallmatrix}$: $p(\lambda)=(3-\lambda)^2$, autovalore $3$ con $m_a=2$. Ma $A-3I=\begin{psmallmatrix}0&1\\0&0\end{psmallmatrix}$ ha autospazio $\operatorname{span}\{(1,0)\}$, dunque $m_g=1<2$. Non esistono due autovettori indipendenti: $A$ non è diagonalizzabile.
+**Esempio 2 (introduttivo) — matrice non diagonalizzabile.** $A=\left(\begin{smallmatrix}3&1\\0&3\end{smallmatrix}\right)$: $p(\lambda)=(3-\lambda)^2$, autovalore $3$ con $m_a=2$. Ma $A-3I=\left(\begin{smallmatrix}0&1\\0&0\end{smallmatrix}\right)$ ha autospazio $\operatorname{span}\{(1,0)\}$, dunque $m_g=1<2$. Non esistono due autovettori indipendenti: $A$ non è diagonalizzabile.
 
-**Esempio 3 (intermedio) — potenza elevata $A^{10}$.** $A=\begin{psmallmatrix}1&2\\2&1\end{psmallmatrix}$, autovalori $3,-1$, autovettori $(1,1),(1,-1)$. Con $P=\begin{psmallmatrix}1&1\\1&-1\end{psmallmatrix}$, $P^{-1}=\tfrac12\begin{psmallmatrix}1&1\\1&-1\end{psmallmatrix}$ e $\Lambda^{10}=\operatorname{diag}(3^{10},1)=\operatorname{diag}(59049,1)$:
+**Esempio 3 (intermedio) — potenza elevata $A^{10}$.** $A=\left(\begin{smallmatrix}1&2\\2&1\end{smallmatrix}\right)$, autovalori $3,-1$, autovettori $(1,1),(1,-1)$. Con $P=\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$, $P^{-1}=\tfrac12\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$ e $\Lambda^{10}=\operatorname{diag}(3^{10},1)=\operatorname{diag}(59049,1)$:
 $$A^{10}=P\Lambda^{10}P^{-1}=\tfrac12\begin{pmatrix}59050&59048\\59048&59050\end{pmatrix}.$$
 Il calcolo diretto avrebbe richiesto nove moltiplicazioni matriciali.
 
-**Esempio 4 (intermedio) — sistema differenziale disaccoppiato.** Per $\dot{\mathbf{x}}=A\mathbf{x}$ con $A=\begin{psmallmatrix}-1&0\\0&-3\end{psmallmatrix}$ e $\mathbf{x}(0)=(2,1)$: la matrice è già diagonale, quindi $\mathbf{x}(t)=\big(2e^{-t},\,e^{-3t}\big)$. Entrambe le componenti decadono ($\lambda<0$): sistema asintoticamente stabile, con la seconda che svanisce tre volte più in fretta.
+**Esempio 4 (intermedio) — sistema differenziale disaccoppiato.** Per $\dot{\mathbf{x}}=A\mathbf{x}$ con $A=\left(\begin{smallmatrix}-1&0\\0&-3\end{smallmatrix}\right)$ e $\mathbf{x}(0)=(2,1)$: la matrice è già diagonale, quindi $\mathbf{x}(t)=\big(2e^{-t},\,e^{-3t}\big)$. Entrambe le componenti decadono ($\lambda<0$): sistema asintoticamente stabile, con la seconda che svanisce tre volte più in fretta.
 
-**Esempio 5 (intermedio) — autovalore ripetuto ma diagonalizzabile.** $A=\begin{psmallmatrix}2&0&0\\0&3&1\\0&1&3\end{psmallmatrix}$. Il blocco $\begin{psmallmatrix}3&1\\1&3\end{psmallmatrix}$ dà autovalori $2$ e $4$; con il $2$ del primo blocco, gli autovalori sono $2$ (con $m_a=2$) e $4$. Per $\lambda=2$, $A-2I$ impone $v_2+v_3=0$ senza vincolare $v_1$: autospazio $\operatorname{span}\{(1,0,0),(0,1,-1)\}$ di dimensione $2=m_a$. Poiché ogni autospazio è pieno, $A$ è diagonalizzabile pur avendo un autovalore ripetuto.
+**Esempio 5 (intermedio) — autovalore ripetuto ma diagonalizzabile.** $A=\left(\begin{smallmatrix}2&0&0\\0&3&1\\0&1&3\end{smallmatrix}\right)$. Il blocco $\left(\begin{smallmatrix}3&1\\1&3\end{smallmatrix}\right)$ dà autovalori $2$ e $4$; con il $2$ del primo blocco, gli autovalori sono $2$ (con $m_a=2$) e $4$. Per $\lambda=2$, $A-2I$ impone $v_2+v_3=0$ senza vincolare $v_1$: autospazio $\operatorname{span}\{(1,0,0),(0,1,-1)\}$ di dimensione $2=m_a$. Poiché ogni autospazio è pieno, $A$ è diagonalizzabile pur avendo un autovalore ripetuto.
 
-**Esempio 6 (avanzato) — Fibonacci e formula di Binet.** La ricorrenza $F_{n+1}=F_n+F_{n-1}$ si scrive $\begin{psmallmatrix}F_{n+1}\\F_n\end{psmallmatrix}=A\begin{psmallmatrix}F_n\\F_{n-1}\end{psmallmatrix}$ con $A=\begin{psmallmatrix}1&1\\1&0\end{psmallmatrix}$. Gli autovalori sono $\varphi=\tfrac{1+\sqrt5}{2}$ e $\psi=\tfrac{1-\sqrt5}{2}$. Diagonalizzando e leggendo la prima componente si ottiene la formula di Binet $F_n=\dfrac{\varphi^n-\psi^n}{\sqrt5}$. Poiché $|\psi|<1$, il termine $\psi^n$ svanisce e $F_n\approx\varphi^n/\sqrt5$: la successione cresce come la sezione aurea.
+**Esempio 6 (avanzato) — Fibonacci e formula di Binet.** La ricorrenza $F_{n+1}=F_n+F_{n-1}$ si scrive $\left(\begin{smallmatrix}F_{n+1}\\F_n\end{smallmatrix}\right)=A\left(\begin{smallmatrix}F_n\\F_{n-1}\end{smallmatrix}\right)$ con $A=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$. Gli autovalori sono $\varphi=\tfrac{1+\sqrt5}{2}$ e $\psi=\tfrac{1-\sqrt5}{2}$. Diagonalizzando e leggendo la prima componente si ottiene la formula di Binet $F_n=\dfrac{\varphi^n-\psi^n}{\sqrt5}$. Poiché $|\psi|<1$, il termine $\psi^n$ svanisce e $F_n\approx\varphi^n/\sqrt5$: la successione cresce come la sezione aurea.
 
 **Esempio 7 (avanzato) — comportamento asintotico di un ecosistema.** Un sistema $\mathbf{x}_{k+1}=A\mathbf{x}_k$ con autovalori $|\lambda_1|>1>|\lambda_2|$ e autovettori $\mathbf{v}_1,\mathbf{v}_2$. Scritto $\mathbf{x}_0=c_1\mathbf{v}_1+c_2\mathbf{v}_2$, si ha $\mathbf{x}_k=c_1\lambda_1^k\mathbf{v}_1+c_2\lambda_2^k\mathbf{v}_2$. Per $k$ grande il secondo termine svanisce e $\mathbf{x}_k\approx c_1\lambda_1^k\mathbf{v}_1$: la popolazione si allinea alla direzione dell'autovettore dominante, la cui composizione descrive la proporzione stabile tra le specie.
 
@@ -225,35 +225,35 @@ L'essenziale da trattenere. $A$ è diagonalizzabile quando è simile a una diago
 
 <details class="dim-tecnica"><summary>Esercizio 1 (introduttivo) — diagonalizzazione completa</summary>
 
-**Testo.** Diagonalizzare $A=\begin{psmallmatrix}4&1\\2&3\end{psmallmatrix}$, scrivendo esplicitamente $P$, $\Lambda$, $P^{-1}$ e verificando.
+**Testo.** Diagonalizzare $A=\left(\begin{smallmatrix}4&1\\2&3\end{smallmatrix}\right)$, scrivendo esplicitamente $P$, $\Lambda$, $P^{-1}$ e verificando.
 
-**Soluzione.** Autovalori $2,5$; autovettori $(1,-2),(1,1)$. Quindi $P=\begin{psmallmatrix}1&1\\-2&1\end{psmallmatrix}$, $\Lambda=\begin{psmallmatrix}2&0\\0&5\end{psmallmatrix}$, e $\det P=3$ dà $P^{-1}=\tfrac13\begin{psmallmatrix}1&-1\\2&1\end{psmallmatrix}$. Verifica: $P\Lambda P^{-1}=\tfrac13\begin{psmallmatrix}1&1\\-2&1\end{psmallmatrix}\begin{psmallmatrix}2&0\\0&5\end{psmallmatrix}\begin{psmallmatrix}1&-1\\2&1\end{psmallmatrix}=\begin{psmallmatrix}4&1\\2&3\end{psmallmatrix}$ ✓.
+**Soluzione.** Autovalori $2,5$; autovettori $(1,-2),(1,1)$. Quindi $P=\left(\begin{smallmatrix}1&1\\-2&1\end{smallmatrix}\right)$, $\Lambda=\left(\begin{smallmatrix}2&0\\0&5\end{smallmatrix}\right)$, e $\det P=3$ dà $P^{-1}=\tfrac13\left(\begin{smallmatrix}1&-1\\2&1\end{smallmatrix}\right)$. Verifica: $P\Lambda P^{-1}=\tfrac13\left(\begin{smallmatrix}1&1\\-2&1\end{smallmatrix}\right)\left(\begin{smallmatrix}2&0\\0&5\end{smallmatrix}\right)\left(\begin{smallmatrix}1&-1\\2&1\end{smallmatrix}\right)=\left(\begin{smallmatrix}4&1\\2&3\end{smallmatrix}\right)$ ✓.
 
 </details>
 
 <details class="dim-tecnica"><summary>Esercizio 2 (introduttivo) — riconoscere la non diagonalizzabilità</summary>
 
-**Testo.** Stabilire se $A=\begin{psmallmatrix}3&1\\0&3\end{psmallmatrix}$ è diagonalizzabile.
+**Testo.** Stabilire se $A=\left(\begin{smallmatrix}3&1\\0&3\end{smallmatrix}\right)$ è diagonalizzabile.
 
-**Soluzione.** $p(\lambda)=(3-\lambda)^2$, unico autovalore $3$ con $m_a=2$. L'autospazio è $\ker\begin{psmallmatrix}0&1\\0&0\end{psmallmatrix}=\operatorname{span}\{(1,0)\}$, quindi $m_g=1$. Essendo $m_g<m_a$, la matrice non è diagonalizzabile: manca un secondo autovettore indipendente.
+**Soluzione.** $p(\lambda)=(3-\lambda)^2$, unico autovalore $3$ con $m_a=2$. L'autospazio è $\ker\left(\begin{smallmatrix}0&1\\0&0\end{smallmatrix}\right)=\operatorname{span}\{(1,0)\}$, quindi $m_g=1$. Essendo $m_g<m_a$, la matrice non è diagonalizzabile: manca un secondo autovettore indipendente.
 
 </details>
 
 <details class="dim-tecnica"><summary>Esercizio 3 (standard) — potenza tramite diagonalizzazione</summary>
 
-**Testo.** Calcolare $A^{10}$ per $A=\begin{psmallmatrix}1&2\\2&1\end{psmallmatrix}$.
+**Testo.** Calcolare $A^{10}$ per $A=\left(\begin{smallmatrix}1&2\\2&1\end{smallmatrix}\right)$.
 
-**Soluzione.** Autovalori $3,-1$, autovettori $(1,1),(1,-1)$. Con $P=\begin{psmallmatrix}1&1\\1&-1\end{psmallmatrix}$, $P^{-1}=\tfrac12\begin{psmallmatrix}1&1\\1&-1\end{psmallmatrix}$ e $\Lambda^{10}=\operatorname{diag}(3^{10},(-1)^{10})=\operatorname{diag}(59049,1)$:
-$$A^{10}=\tfrac12\begin{psmallmatrix}1&1\\1&-1\end{psmallmatrix}\begin{psmallmatrix}59049&0\\0&1\end{psmallmatrix}\begin{psmallmatrix}1&1\\1&-1\end{psmallmatrix}=\tfrac12\begin{pmatrix}59050&59048\\59048&59050\end{pmatrix}.$$
+**Soluzione.** Autovalori $3,-1$, autovettori $(1,1),(1,-1)$. Con $P=\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$, $P^{-1}=\tfrac12\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$ e $\Lambda^{10}=\operatorname{diag}(3^{10},(-1)^{10})=\operatorname{diag}(59049,1)$:
+$$A^{10}=\tfrac12\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)\left(\begin{smallmatrix}59049&0\\0&1\end{smallmatrix}\right)\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)=\tfrac12\begin{pmatrix}59050&59048\\59048&59050\end{pmatrix}.$$
 
 </details>
 
 <details class="dim-tecnica"><summary>Esercizio 4 (standard) — sistema differenziale lineare</summary>
 
-**Testo.** Risolvere $\dot{\mathbf{x}}=A\mathbf{x}$ con $A=\begin{psmallmatrix}2&1\\0&-1\end{psmallmatrix}$ e $\mathbf{x}(0)=(1,2)$.
+**Testo.** Risolvere $\dot{\mathbf{x}}=A\mathbf{x}$ con $A=\left(\begin{smallmatrix}2&1\\0&-1\end{smallmatrix}\right)$ e $\mathbf{x}(0)=(1,2)$.
 
 **Soluzione.** Autovalori $2,-1$ (triangolare); autovettori $(1,0)$ per $\lambda=2$ e, da $(A+I)\mathbf{v}=0$ cioè $3v_1+v_2=0$, $(1,-3)$ per $\lambda=-1$. Scomponiamo $\mathbf{x}(0)=c_1(1,0)+c_2(1,-3)$: da $-3c_2=2$ segue $c_2=-\tfrac23$ e $c_1=\tfrac53$. Quindi
-$$\mathbf{x}(t)=\tfrac53 e^{2t}\begin{psmallmatrix}1\\0\end{psmallmatrix}-\tfrac23 e^{-t}\begin{psmallmatrix}1\\-3\end{psmallmatrix}.$$
+$$\mathbf{x}(t)=\tfrac53 e^{2t}\left(\begin{smallmatrix}1\\0\end{smallmatrix}\right)-\tfrac23 e^{-t}\left(\begin{smallmatrix}1\\-3\end{smallmatrix}\right).$$
 Il modo $e^{2t}$ domina per $t\to+\infty$: sistema instabile.
 
 </details>
@@ -262,13 +262,13 @@ Il modo $e^{2t}$ domina per $t\to+\infty$: sistema instabile.
 
 **Testo.** Per $a_{n+2}=5a_{n+1}-6a_n$ con $a_0=0$, $a_1=1$, trovare la formula chiusa di $a_n$.
 
-**Soluzione.** La matrice di aggiornamento $A=\begin{psmallmatrix}5&-6\\1&0\end{psmallmatrix}$ ha $p(\lambda)=\lambda^2-5\lambda+6=(\lambda-2)(\lambda-3)$. La soluzione generale è combinazione dei modi: $a_n=c_1\,2^n+c_2\,3^n$. Le condizioni iniziali danno $c_1+c_2=0$ e $2c_1+3c_2=1$, quindi $c_1=-1$, $c_2=1$: $a_n=3^n-2^n$. Verifica: $a_2=9-4=5=5\cdot1-6\cdot0$ ✓.
+**Soluzione.** La matrice di aggiornamento $A=\left(\begin{smallmatrix}5&-6\\1&0\end{smallmatrix}\right)$ ha $p(\lambda)=\lambda^2-5\lambda+6=(\lambda-2)(\lambda-3)$. La soluzione generale è combinazione dei modi: $a_n=c_1\,2^n+c_2\,3^n$. Le condizioni iniziali danno $c_1+c_2=0$ e $2c_1+3c_2=1$, quindi $c_1=-1$, $c_2=1$: $a_n=3^n-2^n$. Verifica: $a_2=9-4=5=5\cdot1-6\cdot0$ ✓.
 
 </details>
 
 <details class="dim-tecnica"><summary>Esercizio 6 (standard) — stabilità in tempo discreto</summary>
 
-**Testo.** Il sistema $\mathbf{x}_{k+1}=A\mathbf{x}_k$ con $A=\begin{psmallmatrix}0{,}5&0{,}2\\0&0{,}3\end{psmallmatrix}$ è stabile?
+**Testo.** Il sistema $\mathbf{x}_{k+1}=A\mathbf{x}_k$ con $A=\left(\begin{smallmatrix}0{,}5&0{,}2\\0&0{,}3\end{smallmatrix}\right)$ è stabile?
 
 **Soluzione.** $A$ è triangolare superiore: autovalori $0{,}5$ e $0{,}3$, entrambi con modulo $<1$. Dunque $A^k\mathbf{x}_0\to\mathbf{0}$ per ogni stato iniziale: il sistema è asintoticamente stabile. La velocità di convergenza è dettata dall'autovalore maggiore in modulo, $0{,}5$ (all'incirca un dimezzamento a ogni passo).
 
@@ -276,7 +276,7 @@ Il modo $e^{2t}$ domina per $t\to+\infty$: sistema instabile.
 
 <details class="dim-tecnica"><summary>Esercizio 7 (avanzato) — invarianza del polinomio caratteristico</summary>
 
-**Testo.** Verificare su un esempio che matrici simili hanno lo stesso polinomio caratteristico: prese $A=\begin{psmallmatrix}4&1\\2&3\end{psmallmatrix}$ e la sua diagonale $\Lambda=\begin{psmallmatrix}2&0\\0&5\end{psmallmatrix}$, confrontare i due polinomi.
+**Testo.** Verificare su un esempio che matrici simili hanno lo stesso polinomio caratteristico: prese $A=\left(\begin{smallmatrix}4&1\\2&3\end{smallmatrix}\right)$ e la sua diagonale $\Lambda=\left(\begin{smallmatrix}2&0\\0&5\end{smallmatrix}\right)$, confrontare i due polinomi.
 
 **Soluzione.** Per $A$: $p_A(\lambda)=\lambda^2-\operatorname{tr}(A)\lambda+\det(A)=\lambda^2-7\lambda+10$. Per $\Lambda$: $p_\Lambda(\lambda)=(2-\lambda)(5-\lambda)=\lambda^2-7\lambda+10$. Coincidono, come garantito dal risultato di §3.2, essendo $A=P\Lambda P^{-1}$ con $P$ la matrice degli autovettori. Anche traccia ($7$) e determinante ($10$) sono uguali.
 
@@ -284,9 +284,9 @@ Il modo $e^{2t}$ domina per $t\to+\infty$: sistema instabile.
 
 <details class="dim-tecnica"><summary>Esercizio 8 (avanzato) — diagonalizzazione 3×3</summary>
 
-**Testo.** Diagonalizzare $A=\begin{psmallmatrix}1&0&0\\0&3&1\\0&1&3\end{psmallmatrix}$.
+**Testo.** Diagonalizzare $A=\left(\begin{smallmatrix}1&0&0\\0&3&1\\0&1&3\end{smallmatrix}\right)$.
 
-**Soluzione.** Il blocco $\begin{psmallmatrix}3&1\\1&3\end{psmallmatrix}$ ha autovalori $2$ e $4$; con l'$1$ del primo blocco, gli autovalori di $A$ sono $1,2,4$, distinti: diagonalizzabile. Autovettori: $\lambda=1\to(1,0,0)$; $\lambda=2$, da $(A-2I)\mathbf{v}=0$ con $v_2+v_3=0\to(0,1,-1)$; $\lambda=4$, da $-v_2+v_3=0\to(0,1,1)$. Quindi
+**Soluzione.** Il blocco $\left(\begin{smallmatrix}3&1\\1&3\end{smallmatrix}\right)$ ha autovalori $2$ e $4$; con l'$1$ del primo blocco, gli autovalori di $A$ sono $1,2,4$, distinti: diagonalizzabile. Autovettori: $\lambda=1\to(1,0,0)$; $\lambda=2$, da $(A-2I)\mathbf{v}=0$ con $v_2+v_3=0\to(0,1,-1)$; $\lambda=4$, da $-v_2+v_3=0\to(0,1,1)$. Quindi
 $$P=\begin{pmatrix}1&0&0\\0&1&1\\0&-1&1\end{pmatrix},\qquad\Lambda=\begin{pmatrix}1&0&0\\0&2&0\\0&0&4\end{pmatrix}.$$
 
 </details>
