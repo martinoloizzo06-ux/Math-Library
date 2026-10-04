@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/validate-lessons.mjs --only-errors",
     "build": "vite build",
     "lint": "oxlint",
     "validate": "node scripts/validate-lessons.mjs",
