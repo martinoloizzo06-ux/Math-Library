@@ -1,4 +1,5 @@
 import { parseFrontmatter } from './frontmatter.js';
+import { LEVEL_KEYS } from './levels.js';
 
 export const SUBJECTS_META = [
   { id: 'base',           label_it: 'Matematica di base',      label_en: 'Basic Mathematics',     level: 'green',  emoji: '📐', order: 1 },
@@ -19,18 +20,73 @@ function slugify(str) {
     .replace(/^-+|-+$/g, '');
 }
 
+const COMPANION_RE = /\.(approfondimento|essenziale)\.md$/;
+
+function warnDev(...args) {
+  if (import.meta.env.DEV) console.warn('[KB]', ...args);
+}
+
+// Un livello = contenuto + i campi che possono cambiare tra i due file di una lezione.
+function makeLevel(data, content) {
+  return {
+    id: data.id,
+    content,
+    stato: data.stato ?? null,
+    versione: data.versione ?? null,
+    prerequisiti: Array.isArray(data.prerequisiti) ? data.prerequisiti : null,
+    collegamenti: Array.isArray(data.collegamenti) ? data.collegamenti : null,
+  };
+}
+
 export function loadLessons() {
   const rawModules = import.meta.glob('../lessons/**/*.md', { query: '?raw', import: 'default', eager: true });
 
   const allLessons = [];
+  const companions = [];
   for (const [path, raw] of Object.entries(rawModules)) {
     const { data, content } = parseFrontmatter(raw);
-    if (data.id) {
-      const lessonSlug = path.split('/').pop().replace(/\.md$/, '');
-      const topicSlug  = slugify(data.topic_it || 'generale');
-      allLessons.push({ ...data, content, lessonSlug, topicSlug });
+    if (!data.id) continue;
+    const fileName = path.split('/').pop();
+    const companion = COMPANION_RE.exec(fileName);
+    if (companion) {
+      // File compagno: non è una lezione a sé, viene agganciato alla lezione base.
+      companions.push({ kind: companion[1], fileName, data, content });
+      continue;
     }
+    const lessonSlug = fileName.replace(/\.md$/, '');
+    const topicSlug  = slugify(data.topic_it || 'generale');
+    // Senza `profondita` vale `approfondita` (regola legacy, CONTRATTO_V3 §9).
+    const ownKey = data.profondita === 'essenziale' ? 'essenziale' : 'approfondita';
+    allLessons.push({
+      ...data, content, lessonSlug, topicSlug,
+      levels: { [ownKey]: makeLevel(data, content) },
+    });
   }
+
+  const baseById = {};
+  for (const lesson of allLessons) baseById[lesson.id] = lesson;
+
+  for (const { kind, fileName, data, content } of companions) {
+    const key = kind === 'approfondimento' ? 'approfondita' : 'essenziale';
+    const field = kind === 'approfondimento' ? 'estende' : 'approfondimento';
+    const base = baseById[data[field]];
+    if (!base) {
+      warnDev(`Compagno ignorato: ${fileName} ha ${field}="${data[field]}" che non punta a una lezione esistente.`);
+      continue;
+    }
+    if (base.levels[key]) {
+      warnDev(`Compagno ignorato: ${fileName} duplica il livello già presente in ${base.id}.`);
+      continue;
+    }
+    base.levels[key] = makeLevel(data, content);
+  }
+
+  for (const lesson of allLessons) {
+    lesson.levelsAvailable = LEVEL_KEYS.filter(k => lesson.levels[k]);
+    // Testo di ricerca: tutti i livelli disponibili, senza duplicare la lezione.
+    lesson.searchContent = lesson.levelsAvailable.map(k => lesson.levels[k].content).join('\n');
+  }
+
   allLessons.sort((a, b) => (a.order || 0) - (b.order || 0));
 
   // Indice id → lezione per la risoluzione dei prerequisiti
