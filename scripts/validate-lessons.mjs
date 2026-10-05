@@ -3,6 +3,7 @@
 // Lezioni con `contratto: "3.0"` -> regole v3; senza `contratto` -> regole legacy v2.1.
 // Si validano solo le lezioni `completa` e `da-rivedere`; le altre sono contate e saltate.
 // E11: ogni formula (inline e display) deve passare katex.renderToString con throwOnError.
+// W1 conta le righe del corpo (frontmatter escluso), non del file.
 // Il validatore NON corregge nulla e NON giudica il contenuto matematico.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -149,7 +150,8 @@ function validate(lesson, ctx) {
   const E = (rule, line, msg) => issues.push({ level: 'E', rule, line: line || 1, msg });
   const W = (rule, line, msg) => issues.push({ level: 'W', rule, line: line || 1, msg });
   const d = lesson.data;
-  const stats = { righe: lesson.raw.split('\n').length, checkpoint: 0, esempi: 0, esercizi: 0 };
+  // righeCorpo = righe dopo il frontmatter (senza newline finale): è la misura usata da W1.
+  const stats = { righe: lesson.raw.split('\n').length, righeCorpo: lesson.body.replace(/\n+$/, '').split('\n').length, checkpoint: 0, esempi: 0, esercizi: 0 };
 
   // E1
   if (lesson.parseError) { E('E1', 1, `frontmatter YAML non valido: ${lesson.parseError}`); return { issues, stats }; }
@@ -315,7 +317,9 @@ function validate(lesson, ctx) {
 
   // W1–W3
   const prof = d.profondita || 'approfondita';
-  if (v3 && prof === 'essenziale' && (stats.righe < 120 || stats.righe > 320)) W('W1', 1, `${stats.righe} righe: fuori dall'intervallo Essenziale (120–320)`);
+  // W1: righe del CORPO (frontmatter escluso). Essenziale 120–320; Approfondimento solo il minimo (150).
+  if (v3 && prof === 'essenziale' && (stats.righeCorpo < 120 || stats.righeCorpo > 320)) W('W1', 1, `${stats.righeCorpo} righe di corpo: fuori dall'intervallo Essenziale (120–320)`);
+  if (prof === 'approfondita' && stats.righeCorpo < 150) W('W1', 1, `${stats.righeCorpo} righe di corpo: sotto il minimo Approfondimento (150)`);
   const q = QUANTITA[prof];
   const outOf = (n, [lo, hi]) => n < lo || n > hi;
   const fmt = ([lo, hi]) => (hi === Infinity ? `≥ ${lo}` : lo === hi ? `${lo}` : `${lo}–${hi}`);
@@ -361,11 +365,11 @@ if (AS_JSON) {
   const shown = ONLY_ERRORS ? results.filter(r => r.errors.length) : results;
   const pad = (s, n) => String(s).padEnd(n);
   const padL = (s, n) => String(s).padStart(n);
-  console.log(`${pad('Lezione', 42)} ${padL('righe', 5)} ${padL('chk', 3)} ${padL('esem', 4)} ${padL('eserc', 5)} ${padL('err', 3)} ${padL('avv', 3)}`);
+  console.log(`${pad('Lezione', 42)} ${padL('corpo', 5)} ${padL('chk', 3)} ${padL('esem', 4)} ${padL('eserc', 5)} ${padL('err', 3)} ${padL('avv', 3)}`);
   console.log('-'.repeat(70));
   for (const r of shown) {
     const name = r.lesson.rel.replace('src/lessons/', '');
-    console.log(`${pad(name.length > 42 ? '…' + name.slice(-41) : name, 42)} ${padL(r.stats.righe, 5)} ${padL(r.stats.checkpoint, 3)} ${padL(r.stats.esempi, 4)} ${padL(r.stats.esercizi, 5)} ${padL(r.errors.length, 3)} ${padL(r.warnings.length, 3)}`);
+    console.log(`${pad(name.length > 42 ? '…' + name.slice(-41) : name, 42)} ${padL(r.stats.righeCorpo, 5)} ${padL(r.stats.checkpoint, 3)} ${padL(r.stats.esempi, 4)} ${padL(r.stats.esercizi, 5)} ${padL(r.errors.length, 3)} ${padL(r.warnings.length, 3)}`);
   }
   console.log('-'.repeat(70));
   const detail = shown.flatMap(r => r.issues.filter(i => !ONLY_ERRORS || i.level === 'E').map(i => ({ r, i })));
