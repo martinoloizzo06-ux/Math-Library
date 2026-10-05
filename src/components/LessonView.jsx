@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
@@ -10,6 +10,8 @@ import MathPlot from './visual/MathPlot.jsx';
 import FunctionSlider from './visual/FunctionSlider.jsx';
 import NormalBell from './visual/NormalBell.jsx';
 import Checkpoint from './Checkpoint.jsx';
+import LevelSwitch from './LevelSwitch.jsx';
+import { resolveLevel, readLevelPreference, saveLevelPreference, levelToParam } from '../utils/levels.js';
 
 const VISUAL = { plot: MathPlot, slider: FunctionSlider, normalbell: NormalBell };
 
@@ -100,9 +102,24 @@ export default function LessonView({
   const read         = progress.isRead(lesson.id);
   const bookmarked   = progress.isBookmarked(lesson.id);
 
+  // Livello mostrato: ?livello= → preferenza ricordata → Essenziale → unico disponibile.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeKey = resolveLevel(lesson, searchParams.get('livello'), readLevelPreference());
+  const level     = lesson.levels[activeKey];
+
+  const changeLevel = key => {
+    if (key === activeKey) return;
+    saveLevelPreference(key);
+    const next = new URLSearchParams(searchParams);
+    next.set('livello', levelToParam(key));
+    setSearchParams(next, { replace: true });
+    window.scrollTo(0, 0);
+  };
+
   const livello = lesson.livello ?? null;
-  const stato   = lesson.stato   ?? null;
-  const prereqs = Array.isArray(lesson.prerequisiti) ? lesson.prerequisiti : [];
+  const stato   = level.stato ?? lesson.stato ?? null;
+  const prereqs = level.prerequisiti ?? (Array.isArray(lesson.prerequisiti) ? lesson.prerequisiti : []);
+  const panelId = `lesson-${lesson.id}`;
 
   const livelloCfg = livello ? LIVELLO_LABEL[livello] : null;
   const statoCfg   = stato   ? STATO_LABEL[stato]     : null;
@@ -121,7 +138,7 @@ export default function LessonView({
           <h1 className="lesson-title">{title}</h1>
           <div className="lesson-badges">
             {livelloCfg && (
-              <span className={`kb-badge ${livelloCfg.cls}`}>
+              <span className={`kb-badge ${livelloCfg.cls}`} title={lang === 'it' ? 'Difficoltà' : 'Difficulty'}>
                 {lang === 'it' ? livelloCfg.it : livelloCfg.en}
               </span>
             )}
@@ -132,6 +149,14 @@ export default function LessonView({
             )}
           </div>
         </div>
+
+        <LevelSwitch
+          available={lesson.levelsAvailable}
+          active={activeKey}
+          onChange={changeLevel}
+          lang={lang}
+          idPrefix={panelId}
+        />
 
         <div className="lesson-actions">
           <button
@@ -155,8 +180,14 @@ export default function LessonView({
 
       <PrerequisitiBadge ids={prereqs} lessonById={lessonById} lang={lang} />
 
-      <article className="lesson-content">
-        <ReactMarkdown {...MD_PLUGINS}>{lesson.content}</ReactMarkdown>
+      <article
+        key={`${lesson.id}:${activeKey}`}
+        id={`${panelId}-panel`}
+        className="lesson-content"
+        role="tabpanel"
+        aria-labelledby={`${panelId}-tab-${activeKey}`}
+      >
+        <ReactMarkdown {...MD_PLUGINS}>{level.content}</ReactMarkdown>
       </article>
 
       {/* Punto di integrazione AI tutor — disabilitato */}

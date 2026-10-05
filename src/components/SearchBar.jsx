@@ -110,8 +110,8 @@ export default function SearchBar({ allLessons, subjects, lang }) {
             {query.length < 2 && (
               <p className="search-hint">
                 {lang === 'it'
-                  ? '121 lezioni in 7 materie — digita almeno 2 caratteri.'
-                  : '121 lessons across 7 subjects — type at least 2 characters.'}
+                  ? `${allLessons.length} lezioni in ${subjects.length} materie — digita almeno 2 caratteri.`
+                  : `${allLessons.length} lessons across ${subjects.length} subjects — type at least 2 characters.`}
               </p>
             )}
 

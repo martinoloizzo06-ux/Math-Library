@@ -13,6 +13,7 @@ export function useSearch(allLessons, subjects) {
   const corpus = useMemo(() =>
     allLessons.map(l => ({
       ...l,
+      content: l.searchContent ?? l.content,
       subject_label_it: subjectMap[l.subject]?.label_it ?? '',
       subject_label_en: subjectMap[l.subject]?.label_en ?? '',
     })),

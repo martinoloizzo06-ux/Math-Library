@@ -1,5 +1,6 @@
 import React from 'react';
 import Breadcrumb from './Breadcrumb.jsx';
+import LevelPips from './LevelPips.jsx';
 
 export default function LessonList({ subject, topic, lang, onSelectLesson, onBackToTopics, onBackToSubjects, progress }) {
   const subjectLabel = lang === 'it' ? subject.label_it : subject.label_en;
@@ -27,6 +28,7 @@ export default function LessonList({ subject, topic, lang, onSelectLesson, onBac
             >
               <span className={`lesson-dot lesson-dot--${lesson.level || 'green'}`} />
               <span className="list-item-title">{title}</span>
+              <LevelPips available={lesson.levelsAvailable} lang={lang} />
               <div className="list-item-badges">
                 {bookmarked && <span className="badge" title="Segnalibro">🔖</span>}
                 {read       && <span className="badge badge--read" title="Letta">✓</span>}
