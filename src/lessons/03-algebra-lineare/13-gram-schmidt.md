@@ -50,7 +50,7 @@ profondita: essenziale
 tipo: tecnica
 versione: "1.0"
 data_ultima_rielaborazione: "2026-10-05"
-stato: da-rivedere
+stato: completa
 componenti_usati:
   - checkpoint
 ---
