@@ -151,7 +151,7 @@ $$
 \lVert\mathbf{b}-\mathbf{w}\rVert^2=\lVert\mathbf{b}-\mathbf{p}\rVert^2+\lVert\mathbf{p}-\mathbf{w}\rVert^2.
 $$
 
-5. *Conclusione.* Il secondo addendo è $\ge0$, quindi $\lVert\mathbf{b}-\mathbf{w}\rVert^2\ge\lVert\mathbf{b}-\mathbf{p}\rVert^2$. Vale l'uguaglianza se e solo se $\lVert\mathbf{p}-\mathbf{w}\rVert=0$, cioè $\mathbf{w}=\mathbf{p}$ (positività della norma). $\blacksquare$
+5. *Conclusione.* Il secondo addendo è $\ge0$, quindi $\lVert\mathbf{b}-\mathbf{w}\rVert^2\ge\lVert\mathbf{b}-\mathbf{p}\rVert^2$. Vale l'uguaglianza se e solo se $\lVert\mathbf{p}-\mathbf{w}\rVert=0$, cioè $\mathbf{w}=\mathbf{p}$ (separazione della norma). $\blacksquare$
 
 Il teorema giustifica i minimi quadrati: il minimo di $\lVert A\mathbf{x}-\mathbf{b}\rVert$ si raggiunge quando $A\mathbf{x}=\mathbf{p}$, e poiché le colonne sono indipendenti c'è un solo $\mathbf{x}$ con questa proprietà, $\hat{\mathbf{x}}$.
 
