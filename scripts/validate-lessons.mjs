@@ -4,6 +4,9 @@
 // Si validano solo le lezioni `completa` e `da-rivedere`; le altre sono contate e saltate.
 // E11: ogni formula (inline e display) deve passare katex.renderToString con throwOnError.
 // W1 conta le righe del corpo (frontmatter escluso), non del file.
+// E12/W5: i file compagni `NN-slug.approfondimento.md` / `NN-slug.essenziale.md` seguono le regole di CONTRATTO_V3.md §2–§3
+// (legame con la lezione base in una sola direzione: dal compagno alla base). I compagni non sono lezioni navigabili.
+// Opzione `--lessons-dir <cartella>`: valida una cartella di prova invece di src/lessons.
 // Il validatore NON corregge nulla e NON giudica il contenuto matematico.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -17,10 +20,15 @@ import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const LESSONS_DIR = path.join(ROOT, 'src', 'lessons');
 const CATALOGO = path.resolve(ROOT, '..', 'CATALOGO_FONTI.md');
 
-const args = new Set(process.argv.slice(2));
+const argv = process.argv.slice(2);
+const dirIdx = argv.findIndex(a => a === '--lessons-dir' || a.startsWith('--lessons-dir='));
+const dirArg = dirIdx === -1 ? null : (argv[dirIdx].includes('=') ? argv[dirIdx].split('=').slice(1).join('=') : argv[dirIdx + 1]);
+if (dirIdx !== -1 && !dirArg) { console.error('--lessons-dir richiede una cartella'); process.exit(2); }
+const LESSONS_DIR = dirArg ? path.resolve(dirArg) : path.join(ROOT, 'src', 'lessons');
+
+const args = new Set(argv);
 const AS_JSON = args.has('--json');
 const ONLY_ERRORS = args.has('--only-errors');
 
@@ -46,6 +54,10 @@ const QUANTITA = {
   approfondita: { esempi: [6, Infinity], esercizi: [8, Infinity], checkpoint: [2, 3], fonti: 2 },
 };
 
+// File compagni (CONTRATTO_V3 §2): stesso riconoscimento per nome del loader.
+const COMPANION_RE = /\.(approfondimento|essenziale)\.md$/;
+const bodyLines = s => s.replace(/\n+$/, '').split('\n').length;
+
 const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const slugify = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
@@ -68,7 +80,8 @@ function loadCatalogIds() {
 function parseLesson(file) {
   const raw = fs.readFileSync(file, 'utf8');
   const rel = path.relative(ROOT, file);
-  const lesson = { file, rel, raw, data: {}, body: '', bodyStartLine: 1, parseError: null, lessonSlug: path.basename(file, '.md') };
+  const companion = COMPANION_RE.exec(path.basename(file));
+  const lesson = { file, rel, raw, data: {}, body: '', bodyStartLine: 1, parseError: null, lessonSlug: path.basename(file, '.md'), companion: companion ? companion[1] : null };
   try {
     const parsed = matter(raw, { engines: { yaml: s => yamlLoad(s) } });
     lesson.data = parsed.data || {};
@@ -171,10 +184,51 @@ function validate(lesson, ctx) {
   for (const field of ['prerequisiti', 'collegamenti']) {
     for (const id of Array.isArray(d[field]) ? d[field] : []) {
       if (!ctx.byId.has(id)) E('E2', 1, `${field}: id inesistente "${id}"`);
+      else if (ctx.byId.get(id).companion) E('E12', 1, `${field}: "${id}" è un file compagno, non una lezione navigabile (indicare l'id della lezione base)`);
     }
   }
   for (const field of ['estende', 'approfondimento']) {
     if (d[field] && !ctx.byId.has(d[field])) E('E2', 1, `${field}: id inesistente "${d[field]}"`);
+  }
+
+  // E12 / W5: file compagni (CONTRATTO_V3 §2–§3). Il legame va dal compagno alla base, in una sola direzione.
+  if (lesson.companion) {
+    const kind = lesson.companion;
+    const linkField = kind === 'approfondimento' ? 'estende' : 'approfondimento';
+    const otherField = kind === 'approfondimento' ? 'approfondimento' : 'estende';
+    const wantProf = kind === 'approfondimento' ? 'approfondita' : 'essenziale';
+    const suffix = `.${kind}.md`;
+    const target = d[linkField];
+    const base = target ? ctx.byId.get(target) : null;
+    if (!target) E('E12', 1, `file .${kind}.md senza il campo "${linkField}" (id della lezione base)`);
+    if (d[otherField]) E('E12', 1, `file .${kind}.md con il campo "${otherField}", che spetta all'altro tipo di compagno`);
+    if (target && base && base.companion) E('E12', 1, `${linkField}: "${target}" è a sua volta un file compagno`);
+    if (target && d.id !== `${target}-${kind}`) E('E12', 1, `id del compagno deve essere "${target}-${kind}" (trovato "${d.id}")`);
+    if (d.contratto !== '3.0') E('E12', 1, 'compagno senza contratto: "3.0"');
+    if (d.profondita !== wantProf) E('E12', 1, `profondita del compagno .${kind}.md deve essere "${wantProf}" (trovato "${d.profondita}")`);
+    if (base && !base.companion) {
+      const expectedFile = path.join(path.dirname(lesson.file), path.basename(lesson.file).slice(0, -suffix.length) + '.md');
+      if (path.resolve(base.file) !== expectedFile) E('E12', 1, `nome file: il compagno di ${path.relative(path.dirname(lesson.file), base.file)} deve chiamarsi ${path.basename(base.file, '.md')}${suffix} nella stessa cartella`);
+      const baseProf = base.data.profondita || 'approfondita';
+      const wantBase = kind === 'approfondimento' ? 'essenziale' : 'approfondita';
+      const baseLevelOk = baseProf === wantBase;
+      if (!baseLevelOk) E('E12', 1, `la lezione base "${target}" ha profondita "${baseProf}": un compagno .${kind}.md richiede una base "${wantBase}" (altrimenti il loader lo scarta)`);
+      for (const [f, label] of [['materia', 'materia'], ['argomento', 'argomento']]) {
+        if (d[f] !== base.data[f]) E('E12', 1, `${label} del compagno ("${d[f]}") diversa da quella della base ("${base.data[f]}")`);
+      }
+      // W5: l'Approfondimento non dovrebbe essere più corto dell'Essenziale; tipo coerente con la base.
+      const bodyOf = l => bodyLines(l.body);
+      const approf = kind === 'approfondimento' ? lesson : base;
+      const essen = kind === 'approfondimento' ? base : lesson;
+      if (baseLevelOk && bodyOf(approf) < bodyOf(essen)) W('W5', 1, `corpo dell'Approfondimento (${bodyOf(approf)} righe) più corto di quello dell'Essenziale (${bodyOf(essen)})`);
+      if (d.tipo && base.data.tipo && d.tipo !== base.data.tipo) W('W5', 1, `tipo "${d.tipo}" diverso da quello della base ("${base.data.tipo}")`);
+    }
+    const group = ctx.companionGroups.get(`${target}|${kind}`) || [];
+    if (target && group.length > 1) E('E12', 1, `più compagni .${kind}.md per la stessa base "${target}": ${group.map(l => path.relative(LESSONS_DIR, l.file)).join(', ')}`);
+  } else {
+    for (const f of ['estende', 'approfondimento']) {
+      if (d[f]) E('E12', 1, `campo "${f}" in un file che non è un compagno: spetta solo ai file .approfondimento.md / .essenziale.md`);
+    }
   }
 
   // E3
@@ -233,7 +287,8 @@ function validate(lesson, ctx) {
     if (/\\tag\b/.test(text)) E('E8', line, '\\tag non supportato da KaTeX nel corpo');
     for (const m of text.matchAll(/\]\((\/[^)\s]*)\)/g)) {
       const target = m[1].split('#')[0].split('?')[0].replace(/\/$/, '');
-      if (!ctx.urls.has(target)) E('E8', line, `link interno a lezione inesistente: ${m[1]}`);
+      if (ctx.companionUrls.has(target)) E('E8', line, `link a un file compagno: ${m[1]} (il livello si sceglie con ?livello=essenziale|approfondimento sull'URL della lezione base)`);
+      else if (!ctx.urls.has(target)) E('E8', line, `link interno a lezione inesistente: ${m[1]}`);
     }
     const low = text.toLowerCase();
     for (const p of FORBIDDEN) if (low.includes(p)) E('E10', line, `frase vietata: "${p}"`);
@@ -340,9 +395,19 @@ const all = listMd(LESSONS_DIR).map(parseLesson);
 const ctx = {
   byId: new Map(all.filter(l => l.data.id).map(l => [l.data.id, l])),
   idCount: new Map(),
-  urls: new Set(all.map(l => l.url)),
+  // Solo le lezioni base sono pagine navigabili; i compagni vivono sull'URL della base.
+  urls: new Set(all.filter(l => !l.companion).map(l => l.url)),
+  companionUrls: new Set(all.filter(l => l.companion).map(l => l.url)),
+  companionGroups: new Map(),
   catalog: loadCatalogIds(),
 };
+for (const l of all) {
+  if (!l.companion) continue;
+  const target = l.data[l.companion === 'approfondimento' ? 'estende' : 'approfondimento'];
+  if (!target) continue;
+  const key = `${target}|${l.companion}`;
+  ctx.companionGroups.set(key, [...(ctx.companionGroups.get(key) || []), l]);
+}
 for (const l of all) if (l.data.id) ctx.idCount.set(l.data.id, (ctx.idCount.get(l.data.id) || 0) + 1);
 
 const results = [];
@@ -368,7 +433,7 @@ if (AS_JSON) {
   console.log(`${pad('Lezione', 42)} ${padL('corpo', 5)} ${padL('chk', 3)} ${padL('esem', 4)} ${padL('eserc', 5)} ${padL('err', 3)} ${padL('avv', 3)}`);
   console.log('-'.repeat(70));
   for (const r of shown) {
-    const name = r.lesson.rel.replace('src/lessons/', '');
+    const name = path.relative(LESSONS_DIR, r.lesson.file);
     console.log(`${pad(name.length > 42 ? '…' + name.slice(-41) : name, 42)} ${padL(r.stats.righeCorpo, 5)} ${padL(r.stats.checkpoint, 3)} ${padL(r.stats.esempi, 4)} ${padL(r.stats.esercizi, 5)} ${padL(r.errors.length, 3)} ${padL(r.warnings.length, 3)}`);
   }
   console.log('-'.repeat(70));
