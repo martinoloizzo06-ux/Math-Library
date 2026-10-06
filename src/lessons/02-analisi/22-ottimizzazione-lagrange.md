@@ -1,475 +1,284 @@
 ---
 id: analisi-22-ottimizzazione-lagrange
+titolo: "Ottimizzazione libera e vincolata — moltiplicatori di Lagrange"
+materia: analisi
+argomento: "Analisi multivariata"
+modulo: "Ottimizzazione in più variabili"
+livello: universitario
+slug: analisi-22-ottimizzazione-lagrange
+
+# legacy
 subject: analisi
 topic_it: Analisi multivariata
 topic_en: Multivariable analysis
-title_it: Ottimizzazione libera e vincolata — moltiplicatori di Lagrange
-title_en: Free and constrained optimization — Lagrange multipliers
+title_it: "Ottimizzazione libera e vincolata — moltiplicatori di Lagrange"
+title_en: "Free and constrained optimization — Lagrange multipliers"
 level: blue
 order: 22
-source_book: "J. Stewart, Calculus; MIT OCW 18.02"
-source_chapter: "Cap. 14 — Ottimizzazione"
-stato: da-rielaborare
+
+prerequisiti:
+  - analisi-20-funzioni-piu-variabili
+  - analisi-21-gradiente-differenziabilita
+  - algebra-14-forme-quadratiche
+  - analisi-10-taylor
+
+collegamenti:
+  - analisi-04-continuita
+  - analisi-08-teoremi-differenziale
+  - analisi-09-studio-funzione
+  - analisi-23-integrali-multipli
+
+fonti_integrate:
+  - id_fonte: villanacci-math2
+    ruolo: primaria
+    sezioni_coperte: "Prop. 848 (gradiente nullo in un estremo interno); Def. 825 (matrice Hessiana); §18.6 (gradiente ortogonale alle curve di livello, via funzione implicita); §18.5 (teorema della funzione implicita, solo come enunciato); §18.7 Def. 908 (soluzione del problema vincolato) e Thm 909 (teorema di Lagrange con la condizione di rango, dimostrato con la funzione implicita); §21.1 Def. 979 (condizioni di Kuhn-Tucker); §21.2 Thm 992 e Rem. 993 (la condizione di rango non si può togliere); §21.4 (passi risolutivi, esistenza con il teorema di Weierstrass); §21.6 Thm 1001, Prop. 1003 e Rem. 1005 (inviluppo e significato dei moltiplicatori); §22.1 (problema del consumatore, moltiplicatore come utilità marginale del reddito)"
+    note: "appunti-prof, priorità su notazione e convenzioni d'esame. Gli appunti NON trattano il test locale del second'ordine con la definitezza dell'Hessiana (classificano con la concavità: Prop. 936, 937, 941 e Thm 975): l'enunciato viene da austin-ula e la dimostrazione è scritta qui. Convenzione degli appunti: lagrangiana f + λg con vincolo g(x) = 0 (o g(x) ≥ 0); confronto dei segni in Teoria. Nella Rem. 993 il testo dice «does have full rank» dove la jacobiana nel punto ha rango 1 (refuso)"
+  - id_fonte: austin-ula
+    ruolo: minore
+    sezioni_coperte: "§7.2: Prop. 7.2.13 (test delle derivate seconde con gli autovalori dell'Hessiana e versione 2×2 con determinante e f_xx), con la giustificazione intuitiva tramite l'approssimazione quadratica"
+    note: "fonte dell'enunciato del test del second'ordine; la dimostrazione con il resto di Lagrange e la maggiorazione delle derivate seconde è scritta qui"
+
+contratto: "3.0"
+profondita: essenziale
+tipo: tecnica
+versione: "1.0"
+data_ultima_rielaborazione: "2026-10-06"
+stato: da-rivedere
+componenti_usati:
+  - checkpoint
+  - slider
 ---
 
-## 1. Intuizione — Trovare la vetta e camminare sul recinto
+## Intuizione
 
-**Ottimizzazione libera:** immagina di cercare la cima più alta di una montagna senza vincoli di percorso. Puoi muoverti in qualsiasi direzione. Al vertice, non c'è più "su": il gradiente è zero in tutte le direzioni. Questo è un **punto critico libero**.
+Cerchi il punto più alto di un terreno, libero di muoverti ovunque. In cima il terreno è piatto: nessuna direzione fa salire. Nel linguaggio della lezione [Gradiente, differenziabilità e piano tangente](/analisi/analisi-multivariata/21-gradiente-differenziabilita) ogni derivata direzionale $\nabla f\cdot\mathbf{u}$ è nulla, quindi $\nabla f=\mathbf{0}$.
 
-**Ottimizzazione vincolata:** ora hai un vincolo — devi restare su un sentiero preciso (una curva). Non puoi scendere dalla cresta per trovare la cima. Il massimo sul sentiero si trova dove il sentiero è "tangente" alle curve di livello della quota. In quel punto, il gradiente della quota e il gradiente che descrive il sentiero sono **paralleli** — uno è multiplo dell'altro. Quel moltiplicatore è $\lambda$, il **moltiplicatore di Lagrange**.
+Ma «piatto» non vuol dire «cima». Anche il fondo di una conca è piatto, e lo è il passo di montagna, che sale in una direzione e scende nell'altra (una **sella**). Per distinguere i tre casi si guarda la curvatura, cioè le derivate seconde: vicino a un punto piatto la funzione si comporta come la forma quadratica della sua Hessiana, e la lezione [Matrici simmetriche e forme quadratiche](/algebra-lineare/autovalori-e-diagonalizzazione/14-forme-quadratiche) di algebra lineare insegna a leggerne il segno.
 
-L'intuizione chiave: al punto ottimo vincolato, non si guadagna nulla spostandosi lungo il vincolo — le curve di livello di $f$ e il vincolo si toccano senza incrociarsi.
+Ora devi restare su un sentiero: il **vincolo** $g(\mathbf{x})=c$, per esempio il bilancio di un consumatore. Il punto più alto *del sentiero* in genere non è una cima del terreno: lì il terreno sale ancora, ma in una direzione che ti farebbe uscire dal sentiero.
 
----
+Disegna sulla mappa le curve di livello di $f$. Camminando sul sentiero attraversi livelli sempre più alti, fino al livello più alto che il sentiero riesce a raggiungere. Lì il sentiero non taglia più la curva di livello: la sfiora. Le due curve sono **tangenti**.
 
-## 2. Prerequisiti
+Due curve tangenti hanno la stessa direzione normale, e le normali sono i gradienti: $\nabla f$ è perpendicolare alle curve di livello di $f$, $\nabla g$ al sentiero. Quindi nell'ottimo vincolato i due gradienti sono paralleli:
 
-- Gradiente $\nabla f$ e sue proprietà geometriche (lezione 21)
-- Derivate parziali $f_x$, $f_y$, $f_{xx}$, $f_{xy}$, $f_{yy}$
-- Sistemi di equazioni non lineari
-- Nozione di massimo/minimo locale e globale
-- Determinante di una matrice $2\times 2$: $\det\begin{pmatrix}a&b\\c&d\end{pmatrix}=ad-bc$
+$$
+\nabla f=\lambda\,\nabla g .
+$$
 
----
+Il numero $\lambda$ è il **moltiplicatore di Lagrange**. Ha anche un significato economico preciso: dice di quanto cambia il valore ottimo se la risorsa $c$ aumenta di un'unità. È il **prezzo ombra** della risorsa.
 
-## 3. Teoria
+## Teoria
 
-### Punti critici liberi
+**Simboli.** Si usa la notazione delle lezioni 20 e 21 e della lezione 14 di algebra lineare: $f_x$, $f_{xy}$ per le derivate parziali, $\nabla f$ per il gradiente, $H_f(\mathbf{x}_0)$ per l'Hessiana, punti di $\mathbb{R}^n$ in grassetto. Gli appunti scrivono $Df$ e $D^2f$, e la lagrangiana come $f+\lambda g$ con il vincolo nella forma $g(\mathbf{x})=0$. Qui la lagrangiana è $\mathcal{L}=f-\lambda\,(g-c)$. Se negli appunti il vincolo è scritto $c-g(\mathbf{x})=0$ (per esempio $w-\mathbf{p}\cdot\mathbf{x}=0$, §22.1), i due $\lambda$ coincidono; se è scritto $g(\mathbf{x})-c=0$, hanno segno opposto.
 
-Un punto $(a,b)$ è **critico** (o stazionario) per $f$ se
+**Estremi.** Sia $f:A\to\mathbb{R}$ con $A\subseteq\mathbb{R}^n$. Il punto $\mathbf{x}_0\in A$ è di **minimo locale** se esiste $r>0$ tale che $f(\mathbf{x})\ge f(\mathbf{x}_0)$ per ogni $\mathbf{x}\in A$ con $\|\mathbf{x}-\mathbf{x}_0\|<r$. È **stretto** se la disuguaglianza è stretta per $\mathbf{x}\ne\mathbf{x}_0$, **globale** se vale per ogni $\mathbf{x}\in A$. Per il massimo si scrive $\le$. Un punto interno con $\nabla f(\mathbf{x}_0)=\mathbf{0}$ è un **punto critico** (o stazionario).
 
-$$\nabla f(a,b) = \mathbf{0}, \quad \text{cioè} \quad f_x(a,b) = 0 \text{ e } f_y(a,b) = 0$$
+**Condizione del prim'ordine.** Se $\mathbf{x}_0$ è interno ad $A$, è un estremo locale di $f$ e le derivate parziali esistono in $\mathbf{x}_0$, allora
 
-I punti critici sono **candidati** a massimi o minimi locali (o punti di sella).
+$$
+\nabla f(\mathbf{x}_0)=\mathbf{0}.
+$$
 
-### Matrice hessiana e classificazione
+In un estremo interno tutte le pendenze lungo gli assi sono nulle (appunti Prop. 848). *Perché:* la funzione di una variabile $t\mapsto f(\mathbf{x}_0+t\mathbf{e}_i)$ ha un estremo locale in $t=0$, e la sua derivata in $0$ è $f_{x_i}(\mathbf{x}_0)$ ([Funzioni di più variabili e derivate parziali](/analisi/analisi-multivariata/20-funzioni-piu-variabili)); per il teorema di Fermat ([Teoremi del calcolo differenziale (Rolle, Lagrange, de l'Hôpital)](/analisi/calcolo-differenziale-una-variabile/08-teoremi-differenziale)) quella derivata è nulla.
 
-La **matrice hessiana** di $f$ nel punto $(a,b)$ è la matrice delle derivate seconde:
+> **Attenzione.** La condizione è solo necessaria: $f(x,y)=xy$ ha $\nabla f(0,0)=\mathbf{0}$, ma nell'origine ha una sella. E vale solo nei punti *interni*: sul bordo del dominio un estremo può avere gradiente non nullo.
 
-$$H_f(a,b) = \begin{pmatrix} f_{xx}(a,b) & f_{xy}(a,b) \\ f_{xy}(a,b) & f_{yy}(a,b) \end{pmatrix}$$
+**Test del second'ordine.** Sia $f$ di classe $C^2$ in una palla centrata nel punto critico $\mathbf{x}_0$. L'Hessiana $H_f(\mathbf{x}_0)$ è simmetrica, quindi ha autovalori reali $\lambda_1,\dots,\lambda_n$ ([Matrici simmetriche e forme quadratiche](/algebra-lineare/autovalori-e-diagonalizzazione/14-forme-quadratiche)). Allora:
 
-Il **discriminante** (o hessiano scalare) è
+- tutti gli autovalori $>0$ ($H$ definita positiva) ⇒ $\mathbf{x}_0$ è un **minimo locale stretto**;
+- tutti $<0$ ($H$ definita negativa) ⇒ **massimo locale stretto**;
+- almeno uno $>0$ e almeno uno $<0$ ($H$ indefinita) ⇒ **punto di sella**: in ogni intorno $f$ prende valori sia maggiori sia minori di $f(\mathbf{x}_0)$.
 
-$$D(a,b) = \det H_f(a,b) = f_{xx}(a,b)\,f_{yy}(a,b) - [f_{xy}(a,b)]^2$$
+Per $n=2$ bastano i minori $D_1=f_{xx}$ e $D_2=\det H$ (algebra 14): $\det H>0$ e $f_{xx}>0$ danno un minimo, $\det H>0$ e $f_{xx}<0$ un massimo, $\det H<0$ una sella. Per $n$ qualunque si può usare il criterio di Sylvester sui minori principali di testa $D_1,\dots,D_n$ (algebra 14): tutti $>0$, minimo; segni alterni a partire da $D_1<0$, massimo.
 
-**Criterio della seconda derivata:**
+**Il caso dubbio.** Se $H$ è semidefinita ma non definita (autovalori tutti $\ge0$ o tutti $\le0$, almeno uno nullo), il test non decide. $f=x^2+y^4$ e $k=x^2-y^4$ hanno nell'origine la stessa Hessiana $\left(\begin{smallmatrix}2&0\\0&0\end{smallmatrix}\right)$. La prima ha un minimo; la seconda una sella, perché $k(0,t)=-t^4<0<k(t,0)$. Lungo l'autovettore dell'autovalore nullo contano i termini di ordine superiore; per provare un estremo, però, non basta una sola direzione e nemmeno il controllo lungo ogni retta per il punto (il controesempio di Peano è nell'Approfondimento). Resta una condizione necessaria, dimostrata nell'Approfondimento: in un minimo locale $H_f(\mathbf{x}_0)$ è semidefinita positiva, in un massimo semidefinita negativa.
 
-| Condizione | Classificazione |
-| --- | --- |
-| $D > 0$ e $f_{xx} > 0$ | **Minimo locale** |
-| $D > 0$ e $f_{xx} < 0$ | **Massimo locale** |
-| $D < 0$ | **Punto di sella** |
-| $D = 0$ | Criterio non conclusivo |
+**Perché il test funziona.** Sia $H_f(\mathbf{x}_0)$ definita positiva, con autovalore minimo $\lambda_{\min}>0$. Sia $r$ il raggio della palla in cui $f$ è $C^2$. Fissato $\mathbf{h}$ con $\|\mathbf{h}\|<r$ (così il segmento da $\mathbf{x}_0$ a $\mathbf{x}_0+\mathbf{h}$ sta nella palla), sia $\varphi(t)=f(\mathbf{x}_0+t\mathbf{h})$. La regola della catena (lezione 21), applicata due volte, dà $\varphi'(t)=\nabla f(\mathbf{x}_0+t\mathbf{h})\cdot\mathbf{h}$ e $\varphi''(t)=\sum_{i,j}f_{x_ix_j}(\mathbf{x}_0+t\mathbf{h})\,h_ih_j=\mathbf{h}^TH_f(\mathbf{x}_0+t\mathbf{h})\,\mathbf{h}$. La formula di Taylor con resto di Lagrange in una variabile ([Polinomio di Taylor, sviluppi di MacLaurin e formula del resto](/analisi/calcolo-differenziale-una-variabile/10-taylor)), con $\varphi'(0)=\nabla f(\mathbf{x}_0)\cdot\mathbf{h}=0$, dà per qualche $\tau\in(0,1)$
 
-**Intuizione:** $D>0$ significa che la curvatura ha lo stesso segno in tutte le direzioni (ciotola o cupola); $D<0$ significa curvatura mista (sella da cavallo).
+$$
+f(\mathbf{x}_0+\mathbf{h})=f(\mathbf{x}_0)+\tfrac12\,\mathbf{h}^TH_f(\mathbf{y})\,\mathbf{h},\qquad \mathbf{y}=\mathbf{x}_0+\tau\mathbf{h}.
+$$
 
-### Ottimizzazione vincolata — Moltiplicatori di Lagrange
+Si scrive $H_f(\mathbf{y})=H_f(\mathbf{x}_0)+\big(H_f(\mathbf{y})-H_f(\mathbf{x}_0)\big)$ e si stimano i due pezzi.
 
-**Problema:** massimizzare (o minimizzare) $f(x,y)$ soggetta al vincolo $g(x,y)=c$.
+- *Primo pezzo.* $\mathbf{h}^TH_f(\mathbf{x}_0)\mathbf{h}\ge\lambda_{\min}\|\mathbf{h}\|^2$ (algebra 14).
+- *Secondo pezzo: la maggiorazione.* Per una matrice $M$ vale $\mathbf{h}^TM\mathbf{h}=\sum_{i,j}m_{ij}h_ih_j$, e $|h_ih_j|\le\|\mathbf{h}\|^2$ perché ogni componente è al più la norma. Quindi
 
-**Condizione necessaria del primo ordine:** in ogni punto di ottimo vincolato (purché $\nabla g \neq \mathbf{0}$),
+$$
+\big|\mathbf{h}^T\big(H_f(\mathbf{y})-H_f(\mathbf{x}_0)\big)\mathbf{h}\big|\le S(\mathbf{y})\,\|\mathbf{h}\|^2,\qquad S(\mathbf{y})=\sum_{i,j}\big|f_{x_ix_j}(\mathbf{y})-f_{x_ix_j}(\mathbf{x}_0)\big|.
+$$
 
-$$\nabla f(x,y) = \lambda\,\nabla g(x,y)$$
+- *Continuità.* Le derivate seconde sono continue, quindi $S(\mathbf{y})\to0$ per $\mathbf{y}\to\mathbf{x}_0$: esiste $\delta$ con $0<\delta\le r$ e $S(\mathbf{y})<\lambda_{\min}$ quando $\|\mathbf{y}-\mathbf{x}_0\|<\delta$.
 
-cioè il sistema
+Se $0<\|\mathbf{h}\|<\delta$, anche $\|\mathbf{y}-\mathbf{x}_0\|=\tau\|\mathbf{h}\|<\delta$, quindi $\mathbf{h}^TH_f(\mathbf{y})\mathbf{h}\ge\big(\lambda_{\min}-S(\mathbf{y})\big)\|\mathbf{h}\|^2>0$ e $f(\mathbf{x}_0+\mathbf{h})>f(\mathbf{x}_0)$: minimo locale stretto. Per il massimo si applica l'argomento a $-f$. Per la sella si ripete il conto con $\mathbf{h}=t\mathbf{v}$, dove $\mathbf{v}$ è un autovettore di un autovalore $\lambda>0$ (al posto di $\lambda_{\min}$ si usa $\lambda$, perché $\mathbf{v}^TH_f(\mathbf{x}_0)\mathbf{v}=\lambda\|\mathbf{v}\|^2$): $f$ sale lungo $\mathbf{v}$ per $t\ne0$ piccolo, e scende lungo un autovettore di un autovalore negativo.
 
-$$\begin{cases} f_x = \lambda\,g_x \\ f_y = \lambda\,g_y \\ g(x,y) = c \end{cases}$$
+```checkpoint
+[domanda]
+In un punto critico $H_f=\left(\begin{smallmatrix}2&3\\3&2\end{smallmatrix}\right)$. Poiché $f_{xx}=2>0$, è un minimo?
 
-con $\lambda\in\mathbb{R}$ detto **moltiplicatore di Lagrange**.
-
-Il sistema ha $3$ equazioni in $3$ incognite: $x$, $y$, $\lambda$. Le soluzioni sono i **candidati** all'ottimo.
-
-**Metodo alternativo (funzione di Lagrange):** definire
-
-$$\mathcal{L}(x,y,\lambda) = f(x,y) - \lambda\,(g(x,y)-c)$$
-
-e imporre $\nabla\mathcal{L} = \mathbf{0}$ (rispetto a tutte le variabili incluso $\lambda$): si ottiene lo stesso sistema.
-
-**Con $n$ variabili e $m$ vincoli** ($m < n$): il sistema diventa
-
-$$\nabla f = \sum_{i=1}^{m}\lambda_i\nabla g_i, \quad g_i(\mathbf{x})=c_i \; (i=1,\ldots,m)$$
-
-### Interpretazione di $\lambda$
-
-Il moltiplicatore $\lambda$ ha un significato economico preciso: se il vincolo è $g=c$, allora
-
-$$\lambda = \frac{df^*}{dc}$$
-
-dove $f^*$ è il valore ottimo. Indica di quanto cambia il valore ottimo se si "allenta" il vincolo di un'unità. In economia: prezzo ombra, valore marginale del vincolo.
-
----
-
-## 4. Derivazione commentata — Perché $\nabla f = \lambda \nabla g$?
-
-**Claim:** al punto di ottimo vincolato $(a,b)$ con $g(a,b)=c$ e $\nabla g(a,b)\neq \mathbf{0}$, esiste $\lambda$ tale che $\nabla f(a,b)=\lambda\nabla g(a,b)$.
-
-**Dimostrazione (via curva sul vincolo):**
-
-**Passo 1.** Il vincolo $g(x,y)=c$ è una curva. Parametrizziamola: $\mathbf{r}(t)=(x(t),y(t))$ con $g(x(t),y(t))=c$.
-
-**Passo 2.** La funzione $h(t)=f(x(t),y(t))$ ha un ottimo in $t_0$ (dove $\mathbf{r}(t_0)=(a,b)$). Quindi $h'(t_0)=0$.
-
-**Passo 3.** Per la regola della catena:
-
-$$h'(t_0) = \nabla f(a,b)\cdot\mathbf{r}'(t_0) = 0$$
-
-Quindi $\nabla f(a,b) \perp \mathbf{r}'(t_0)$ (perpendicolare al vettore tangente al vincolo).
-
-**Passo 4.** Derivando $g(x(t),y(t))=c$:
-
-$$\nabla g(a,b)\cdot\mathbf{r}'(t_0) = 0$$
-
-Quindi anche $\nabla g(a,b) \perp \mathbf{r}'(t_0)$.
-
-**Passo 5.** In $\mathbb{R}^2$, se due vettori sono entrambi perpendicolari alla stessa direzione, sono **paralleli**: $\nabla f(a,b) = \lambda\,\nabla g(a,b)$ per qualche scalare $\lambda$. $\square$
-
----
-
-## 5. Esempi
-
-**Esempio 1 — Classificazione: minimo e sella**
-
-$f(x,y) = x^3 - 3x + y^2 - 4y + 7$
-
-$f_x = 3x^2-3=0 \Rightarrow x=\pm 1$; $f_y=2y-4=0 \Rightarrow y=2$.
-
-Punti critici: $(1,2)$ e $(-1,2)$.
-
-$f_{xx}=6x$, $f_{xy}=0$, $f_{yy}=2$; $D=12x\cdot 2-0=12x$.
-
-- $(1,2)$: $D=12>0$, $f_{xx}=6>0$ → **minimo locale**. Valore: $f(1,2)=1-3+4-8+7=1$.
-- $(-1,2)$: $D=-12<0$ → **punto di sella**.
-
----
-
-**Esempio 2 — Massimo e minimo globali su un dominio chiuso**
-
-$f(x,y)=x^2+y^2-2x$ su $D=\{x^2+y^2\leq 4\}$.
-
-**Interno:** $f_x=2x-2=0$, $f_y=2y=0$ → punto critico $(1,0)$. $f(1,0)=-1$.
-
-**Frontiera** ($x^2+y^2=4$): con Lagrange, $g=x^2+y^2-4=0$.
-
-$\nabla f=\lambda\nabla g$: $(2x-2, 2y)=\lambda(2x,2y)$.
-
-Da $2y=2\lambda y$: o $y=0$ o $\lambda=1$.
-
-- $y=0$, $x^2=4$: $x=\pm 2$. $f(2,0)=0$, $f(-2,0)=8$.
-- $\lambda=1$: $2x-2=2x$: impossibile.
-
-Confronto: minimo $f=-1$ in $(1,0)$; massimo $f=8$ in $(-2,0)$.
-
----
-
-**Esempio 3 — Lagrange classico: massimo sul cerchio**
-
-Massimizzare $f(x,y)=xy$ su $g(x,y)=x^2+y^2=1$.
-
-Sistema: $y=2\lambda x$, $x=2\lambda y$, $x^2+y^2=1$.
-
-Moltiplicando le prime due: $xy=4\lambda^2 xy$.
-
-- Se $xy\neq 0$: $\lambda^2=1/4$, $\lambda=\pm 1/2$.
-  - $\lambda=1/2$: $y=x$; con vincolo $2x^2=1$, $x=\pm 1/\sqrt{2}$. $f=1/2$.
-  - $\lambda=-1/2$: $y=-x$. $f=-1/2$.
-- Se $xy=0$: $x=0$ o $y=0$ → $f=0$.
-
-**Massimo:** $f=1/2$ in $(\pm 1/\sqrt{2},\pm 1/\sqrt{2})$ (segni uguali).
-**Minimo:** $f=-1/2$ in $(\pm 1/\sqrt{2},\mp 1/\sqrt{2})$ (segni opposti).
-
----
-
-**Esempio 4 — Lagrange a tre variabili**
-
-Minimizzare $f(x,y,z)=x^2+y^2+z^2$ su $g=x+2y+3z=14$.
-
-$\nabla f=\lambda\nabla g$: $(2x,2y,2z)=\lambda(1,2,3)$.
-
-$x=\lambda/2$, $y=\lambda$, $z=3\lambda/2$.
-
-Vincolo: $\lambda/2+2\lambda+9\lambda/2 = 14 \Rightarrow \lambda(1/2+2+9/2)=\lambda\cdot 7=14 \Rightarrow \lambda=2$.
-
-$x=1$, $y=2$, $z=3$. Minimo: $f=1+4+9=\mathbf{14}$.
-
-**Significato:** il punto più vicino all'origine sul piano $x+2y+3z=14$.
-
----
-
-**Esempio 5 — Punto di sella (visualizzazione)**
-
-$f(x,y)=x^2-y^2$.
-
-$\nabla f=(2x,-2y)=\mathbf{0}$ solo nell'origine.
-
-$D=f_{xx}f_{yy}-(f_{xy})^2=2\cdot(-2)-0=-4<0$: **punto di sella**.
-
-Lungo $y=0$: $f=x^2$ ha un minimo. Lungo $x=0$: $f=-y^2$ ha un massimo. La superficie ha la forma di una sella da cavallo.
-
----
-
-**Esempio 6 — Lagrange con due vincoli**
-
-Trovare il punto sulla retta $\{x+y=1,\ y+z=1\}$ più vicino all'origine.
-
-Minimizzare $f=x^2+y^2+z^2$ con $g_1=x+y-1=0$, $g_2=y+z-1=0$.
-
-$\nabla f=\lambda_1\nabla g_1+\lambda_2\nabla g_2$:
-
-$(2x,2y,2z)=\lambda_1(1,1,0)+\lambda_2(0,1,1)$.
-
-$2x=\lambda_1$, $2y=\lambda_1+\lambda_2$, $2z=\lambda_2$.
-
-Da vincoli: $x+y=1$ e $y+z=1$. Sostituendo: $\lambda_1/2+(\lambda_1+\lambda_2)/2=1$ e $(\lambda_1+\lambda_2)/2+\lambda_2/2=1$.
-
-Prima: $\lambda_1+\lambda_2/2=1$. Seconda: $\lambda_1/2+\lambda_2=1$.
-
-Risolvendo: $\lambda_1=\lambda_2=2/3$. Quindi $x=z=1/3$, $y=2/3$.
-
-Minimo: $f=1/9+4/9+1/9=\mathbf{2/3}$.
-
----
-
-**Esempio 7 — Hessiano e forma quadratica**
-
-$f(x,y)=x^4+y^4-4xy+2$.
-
-$f_x=4x^3-4y=0$, $f_y=4y^3-4x=0$: da queste $x=y^3$ e $y=x^3$, quindi $x=x^9$, $x(x^8-1)=0$.
-
-Soluzioni: $x=0$ (poi $y=0$) e $x=\pm 1$ (poi $y=\pm 1$).
-
-Hessiano: $f_{xx}=12x^2$, $f_{xy}=-4$, $f_{yy}=12y^2$.
-
-- $(0,0)$: $D=0\cdot 0-16=-16<0$ → sella.
-- $(1,1)$: $D=12\cdot 12-16=128>0$, $f_{xx}=12>0$ → **minimo locale**. $f(1,1)=0$.
-- $(-1,-1)$: $D=128>0$, $f_{xx}=12>0$ → **minimo locale**. $f(-1,-1)=0$.
-
----
-
-**Esempio 8 — Ottimizzazione economica**
-
-Un'azienda produce $x$ unità del bene A e $y$ del bene B con costo $C(x,y)=x^2+xy+y^2$. Il contratto impone $x+y=10$. Minimizzare $C$.
-
-Lagrange: $\nabla C=\lambda\nabla g$. $(2x+y, x+2y)=\lambda(1,1)$.
-
-$2x+y=x+2y \Rightarrow x=y$. Vincolo: $2x=10 \Rightarrow x=y=5$.
-
-$C_{\min}=25+25+25=\mathbf{75}$.
-
----
-
-## 6. Grafico
-
-Il punto di sella di $f(x,y)=x^2-y^2$ è ben visibile nelle sezioni: lungo $y=0$ è un minimo, lungo $x=0$ è un massimo:
-
-```plot
-{"title":"Sezione y=0: f(x,0)=x² (minimo) e x=0: f(0,y)=−y² (massimo)","fn":"x*x","fn2":"-x*x","domain":[-3,3],"yDomain":[-6,6],"label1":"f(x,0)=x² (sezione y=0)","label2":"f(0,y)=−y² (sezione x=0)"}
+[risposta]
+No. $\det H=4-9=-5<0$: $H$ è indefinita (autovalori $5$ e $-1$), quindi il punto è una sella. Il segno di $f_{xx}$ conta solo quando $\det H>0$.
 ```
 
-La curva blu ha un minimo in $x=0$; la rossa ha un massimo. L'origine è simultaneamente un minimo e un massimo in direzioni diverse: questo è un **punto di sella**.
+**Esistenza: il teorema di Weierstrass.** Una funzione continua su un insieme non vuoto, chiuso e limitato di $\mathbb{R}^n$ ha massimo e minimo globali (appunti §21.4, passo 3; il caso di una variabile è in [Continuità e teoremi fondamentali](/analisi/limiti-e-continuita/04-continuita)). Questo autorizza la strategia «trova i candidati e confronta i valori»: se il massimo esiste, è tra i candidati. Su un insieme non limitato può mancare: $f=x+y$ sulla retta $y=x$ non ha né massimo né minimo.
 
----
+**Ottimizzazione vincolata.** Si cerca il massimo (o il minimo) di $f(\mathbf{x})$ fra i punti che soddisfano $g(\mathbf{x})=c$, con $f$ e $g$ di classe $C^1$ su un aperto $A\subseteq\mathbb{R}^n$. Un **estremo locale vincolato** è un punto che si confronta solo con i punti vicini *del vincolo*.
 
-## 7. Slider
+**Teorema di Lagrange (un vincolo).** Se $\mathbf{x}_0$ è un estremo locale di $f$ sul vincolo $g=c$ e $\nabla g(\mathbf{x}_0)\ne\mathbf{0}$, esiste un unico $\lambda\in\mathbb{R}$ tale che
 
-Esplora il punto critico di $f(x,y)=x^2+a\cdot y^2$ al variare di $a$ (sezione con $y=1$: $f(x,1)=x^2+a$):
+$$
+\nabla f(\mathbf{x}_0)=\lambda\,\nabla g(\mathbf{x}_0),\qquad g(\mathbf{x}_0)=c.
+$$
+
+Si legge: nell'ottimo vincolato il gradiente dell'obiettivo è un multiplo del gradiente del vincolo. $\lambda$ è il moltiplicatore di Lagrange. L'ipotesi $\nabla g(\mathbf{x}_0)\ne\mathbf{0}$ è la **qualificazione del vincolo**: negli appunti (Thm 909, Thm 992) è la condizione di rango pieno della jacobiana dei vincoli, che con un solo vincolo significa $\nabla g\ne\mathbf{0}$. Il moltiplicatore è unico perché, moltiplicando scalarmente per $\nabla g$, vale $\lambda=\nabla f\cdot\nabla g/\|\nabla g\|^2$.
+
+*Geometria.* Se $\nabla f$ non fosse parallelo a $\nabla g$, avrebbe una componente tangente al vincolo: muovendosi sul vincolo in quel verso $f$ crescerebbe, nel verso opposto calerebbe, e il punto non sarebbe un estremo. La dimostrazione per $n=2$ è nella sezione Dimostrazioni.
+
+**La lagrangiana.** Con $\mathcal{L}(\mathbf{x},\lambda)=f(\mathbf{x})-\lambda\big(g(\mathbf{x})-c\big)$ le condizioni diventano $\nabla_{\mathbf{x}}\mathcal{L}=\mathbf{0}$ e $\partial\mathcal{L}/\partial\lambda=0$: un sistema di $n+1$ equazioni nelle $n+1$ incognite $(\mathbf{x},\lambda)$. Il punto trovato è critico per $\mathcal{L}$, ma in genere non ne è un estremo: se sia massimo o minimo si decide guardando $f$ sul vincolo.
+
+> **Attenzione (qualificazione).** Si minimizzi $f(x,y)=x$ sulla cuspide $g(x,y)=y^2-x^3=0$. Sul vincolo $x=y^{2/3}\ge0$, quindi il minimo vale $0$ ed è nell'origine. Lì però $\nabla g=(-3x^2,2y)=(0,0)$, e $\nabla f=(1,0)$ non è multiplo del vettore nullo. Il sistema $1=-3\lambda x^2$, $0=2\lambda y$, $y^2=x^3$ non ha soluzioni: la seconda equazione dà $\lambda=0$, impossibile per la prima, oppure $y=0$, quindi $x=0$ e di nuovo $1=0$. I punti del vincolo con $\nabla g=\mathbf{0}$ vanno sempre esaminati a parte (negli appunti, Rem. 993 mostra lo stesso fenomeno con due vincoli).
+
+**Il moltiplicatore come prezzo ombra.** Sia $v(c)$ il valore ottimo con vincolo $g=c$, raggiunto in $\mathbf{x}^*(c)$ con moltiplicatore $\lambda(c)$, e si supponga che $\mathbf{x}^*$ dipenda da $c$ in modo derivabile (in condizioni regolari è garantito, appunti §21.6). Allora
+
+$$
+v'(c)=\lambda(c).
+$$
+
+*Perché:* $v(c)=f(\mathbf{x}^*(c))$. Per la regola della catena e per la condizione di Lagrange, $v'(c)=\nabla f(\mathbf{x}^*)\cdot\mathbf{x}^{*\prime}(c)=\lambda\,\nabla g(\mathbf{x}^*)\cdot\mathbf{x}^{*\prime}(c)$. L'ultimo prodotto scalare è la derivata di $c\mapsto g(\mathbf{x}^*(c))$, che vale identicamente $c$: quindi è $1$.
+
+Si legge: $\lambda$ misura di quanto cambia l'ottimo per un'unità in più di risorsa, $v(c+1)-v(c)\approx\lambda$. Nel problema del consumatore, con $c$ il reddito, $\lambda$ è l'**utilità marginale del reddito** (appunti §22.1). Nella minimizzazione del costo con un vincolo di produzione, è il **costo marginale**.
+
+> **Attenzione.** $\lambda$ dipende da come è scritto il vincolo. $\sqrt{KL}=4$ e $KL=16$ descrivono lo stesso insieme, ma il primo $\lambda$ misura la sensibilità rispetto alla quantità prodotta, il secondo rispetto al suo quadrato (Esercizio 4).
+
+```checkpoint
+[domanda]
+Un consumatore ha reddito $w=100$ e all'ottimo il moltiplicatore vale $\lambda=3$. Senza risolvere nulla: di quanto cambia, circa, l'utilità massima se il reddito passa a $101$? E a $98$?
+
+[risposta]
+Per $v'(w)=\lambda$: circa $+3$ con $w=101$ e circa $-2\cdot3=-6$ con $w=98$. Sono stime al prim'ordine, buone per variazioni piccole, perché anche $\lambda$ cambia con $w$.
+```
+
+**Cenno: vincoli di disuguaglianza (Karush-Kuhn-Tucker).** Per massimizzare $f$ con il vincolo $g(\mathbf{x})\le c$ (e $\nabla g\ne\mathbf{0}$ nel punto, se il vincolo è attivo) le condizioni diventano $\nabla f(\mathbf{x}_0)=\mu\,\nabla g(\mathbf{x}_0)$, $\mu\ge0$, $g(\mathbf{x}_0)\le c$, $\mu\,\big(g(\mathbf{x}_0)-c\big)=0$. È la forma degli appunti (Def. 979) con il vincolo scritto $c-g(\mathbf{x})\ge0$. L'ultima condizione, la **complementarità**, dice che o il vincolo è **attivo** ($g=c$) o $\mu=0$: un vincolo non attivo non conta vicino al punto, che è un punto critico libero (negli appunti la Prop. 1003 ne dà la versione globale, sotto ipotesi di quasi-concavità). Il segno $\mu\ge0$ dice che, quando $\mu>0$, nel massimo $\nabla f$ punta fuori dalla regione ammessa: per salire bisognerebbe violare il vincolo. Teoria completa, qualificazioni e condizioni sufficienti sono nell'Approfondimento.
+
+## Dimostrazioni
+
+**Teorema di Lagrange, caso $n=2$.** *Ipotesi:* $f,g$ di classe $C^1$ su un aperto $A\subseteq\mathbb{R}^2$; $\mathbf{x}_0=(x_0,y_0)$ è un estremo locale di $f$ sul vincolo $\{g=c\}$; $\nabla g(\mathbf{x}_0)\ne\mathbf{0}$. *Tesi:* esiste $\lambda$ con $\nabla f(\mathbf{x}_0)=\lambda\nabla g(\mathbf{x}_0)$.
+
+*Passo 1 — vicino a $\mathbf{x}_0$ il vincolo è una curva liscia.* Poiché $\nabla g(\mathbf{x}_0)\ne\mathbf{0}$, almeno una derivata parziale è non nulla; sia $g_y(\mathbf{x}_0)\ne0$ (se è $g_x$, si scambiano i ruoli di $x$ e $y$). Si usa senza dimostrazione il **teorema della funzione implicita** (appunti §18.5): esistono un intervallo aperto $I\ni x_0$, un intorno $U$ di $\mathbf{x}_0$ e una funzione $\phi:I\to\mathbb{R}$ di classe $C^1$, con $\phi(x_0)=y_0$, tali che i punti del vincolo in $U$ sono esattamente i punti $(x,\phi(x))$ con $x\in I$. La curva $\mathbf{r}(t)=\big(x_0+t,\ \phi(x_0+t)\big)$ percorre quindi il vincolo, passa per $\mathbf{x}_0$ in $t=0$ e ha velocità $\mathbf{r}'(0)=\big(1,\phi'(x_0)\big)\ne\mathbf{0}$.
+
+*Passo 2 — $\nabla f(\mathbf{x}_0)$ è ortogonale a $\mathbf{r}'(0)$.* La funzione di una variabile $h(t)=f(\mathbf{r}(t))$ ha un estremo locale in $t=0$. Infatti $\mathbf{r}$ è continua, quindi per $t$ piccolo $\mathbf{r}(t)$ è un punto del vincolo vicino a $\mathbf{x}_0$, e su questi punti $f$ non supera $f(\mathbf{x}_0)$ (o non scende sotto, per un minimo). Per il teorema di Fermat $h'(0)=0$; per la regola della catena $h'(0)=\nabla f(\mathbf{x}_0)\cdot\mathbf{r}'(0)$. Quindi $\nabla f(\mathbf{x}_0)\cdot\mathbf{r}'(0)=0$.
+
+*Passo 3 — anche $\nabla g(\mathbf{x}_0)$ è ortogonale a $\mathbf{r}'(0)$.* Per $t$ vicino a $0$ vale $g(\mathbf{r}(t))=c$: la funzione è costante, quindi ha derivata nulla, e per la regola della catena $\nabla g(\mathbf{x}_0)\cdot\mathbf{r}'(0)=0$. È l'ortogonalità tra gradiente e curve di livello della lezione 21.
+
+*Passo 4 — due vettori del piano ortogonali allo stesso vettore non nullo sono paralleli.* Sia $\mathbf{r}'(0)=(a,b)\ne\mathbf{0}$. Ogni $(u,v)$ con $au+bv=0$ è multiplo di $(-b,a)$: se $a\ne0$, allora $u=-bv/a$ e $(u,v)=\tfrac va(-b,a)$; se $a=0$, allora $b\ne0$, quindi $v=0$ e $(u,v)=-\tfrac ub(-b,a)$. Dai passi 2 e 3, $\nabla f(\mathbf{x}_0)=\alpha(-b,a)$ e $\nabla g(\mathbf{x}_0)=\beta(-b,a)$ per qualche $\alpha,\beta$, con $\beta\ne0$ perché $\nabla g(\mathbf{x}_0)\ne\mathbf{0}$. Allora $\nabla f(\mathbf{x}_0)=\tfrac\alpha\beta\,\nabla g(\mathbf{x}_0)$: è la tesi con $\lambda=\alpha/\beta$. $\blacksquare$
+
+*Dove serve l'ipotesi.* $\nabla g(\mathbf{x}_0)\ne\mathbf{0}$ entra nel passo 1 (senza, il vincolo può non essere una curva liscia: la cuspide della Teoria) e nel passo 4 (garantisce $\beta\ne0$). In $\mathbb{R}^n$ con un vincolo l'idea è la stessa, usando tutte le curve del vincolo per $\mathbf{x}_0$; con più vincoli serve il rango pieno della jacobiana (appunti Thm 909). Entrambi i casi sono nell'Approfondimento.
+
+## Procedura
+
+**A. Ottimizzazione libera** di $f$ di classe $C^2$ su un aperto.
+
+1. Risolvi $\nabla f=\mathbf{0}$: i punti critici sono gli unici candidati interni.
+2. In ogni punto critico calcola $H_f$ e classificalo con gli autovalori o con Sylvester; per $n=2$ con $\det H$ e $f_{xx}$.
+3. Se $H$ è semidefinita ma non definita, il test tace. Rette o curve per il punto possono mostrare che **non** è un estremo ($f$ sale lungo una e scende lungo un'altra); per provare che lo è serve il confronto diretto di $f(\mathbf{x})$ con $f(\mathbf{x}_0)$ in tutto un intorno.
+4. Per gli estremi **globali** i test locali non bastano: serve un argomento diretto (una disuguaglianza, una formula esatta) oppure il confronto dei valori su un insieme chiuso e limitato, bordo compreso.
+
+**B. Ottimizzazione con un vincolo** $g=c$.
+
+1. Trova i punti del vincolo con $\nabla g=\mathbf{0}$: sono candidati da esaminare a parte.
+2. Risolvi il sistema $\nabla f=\lambda\nabla g$, $g=c$, nelle incognite $\mathbf{x}$ e $\lambda$. Spesso conviene ricavare $\lambda$ da due equazioni e uguagliare le espressioni.
+3. Decidi chi è massimo e chi minimo. Se il vincolo è chiuso e limitato, per Weierstrass massimo e minimo esistono: confronta $f$ su tutti i candidati, compresi i punti dove il vincolo finisce (per esempio sugli assi, se le variabili devono essere non negative). Se non è limitato, giustifica l'esistenza a parte: per esempio, una funzione continua su un vincolo chiuso e non vuoto, che tende a $+\infty$ quando $\|\mathbf{x}\|\to\infty$ restando sul vincolo, ha minimo.
+4. Leggi $\lambda$ come $v'(c)$.
+
+> **Attenzione.** Risolvere il sistema produce candidati, non risposte: il passo 3 non si salta.
+
+## Esempi
+
+**Esempio 1 (libera: un'impresa con due prodotti).** Il profitto è $\pi(x,y)=10x+8y-x^2-xy-y^2$, con $x,y$ le quantità prodotte.
+
+*Strategia:* punto critico, poi Hessiana. *Punto critico:* $\pi_x=10-2x-y=0$ e $\pi_y=8-x-2y=0$. Sottraendo dalla prima il doppio della seconda si ha $-6+3y=0$, cioè $y=2$, poi $x=4$. *Hessiana:* $H=\left(\begin{smallmatrix}-2&-1\\-1&-2\end{smallmatrix}\right)$ in ogni punto, con $D_1=-2<0$ e $D_2=4-1=3>0$: definita negativa (autovalori $-1$ e $-3$). Quindi $(4,2)$ è un massimo locale stretto, con $\pi(4,2)=40+16-16-8-4=28$. *Globale?* $\pi$ è un polinomio di grado 2, quindi la sua formula di Taylor si ferma al second'ordine e il resto è nullo: $\pi(4+h_1,2+h_2)=28+\tfrac12\mathbf{h}^TH\mathbf{h}<28$ per ogni $\mathbf{h}\ne\mathbf{0}$. Il massimo è globale.
+
+**Esempio 2 (libera: due minimi e una sella).** $f(x,y)=x^4+y^4-4xy$.
+
+*Punti critici:* $f_x=4x^3-4y=0$ e $f_y=4y^3-4x=0$ danno $y=x^3$ e $x=y^3=x^9$, cioè $x(x^8-1)=0$: tra i reali $x=0$ o $x=\pm1$. Punti $(0,0)$, $(1,1)$, $(-1,-1)$. *Hessiana:* $H=\left(\begin{smallmatrix}12x^2&-4\\-4&12y^2\end{smallmatrix}\right)$.
+
+- In $(0,0)$: $H=\left(\begin{smallmatrix}0&-4\\-4&0\end{smallmatrix}\right)$, $\det H=-16<0$, autovalori $\pm4$: **sella**. Verifica diretta: $f(t,t)=2t^4-4t^2<0$ e $f(t,-t)=2t^4+4t^2>0$ per $t\ne0$ piccolo.
+- In $(1,1)$ e $(-1,-1)$: $H=\left(\begin{smallmatrix}12&-4\\-4&12\end{smallmatrix}\right)$, $D_1=12>0$, $D_2=144-16=128>0$, autovalori $8$ e $16$: **minimi locali stretti**, con $f=-2$.
+
+*Globali?* Da $4xy\le2(x^2+y^2)$ segue $f\ge(x^4-2x^2)+(y^4-2y^2)=(x^2-1)^2+(y^2-1)^2-2\ge-2$: i due minimi sono globali. Massimo globale non ne esiste, perché $f(t,0)=t^4\to+\infty$.
+
+**Esempio 3 (vincolata: estremi su una circonferenza).** Massimo e minimo di $f(x,y)=3x+4y$ su $x^2+y^2=25$.
+
+*Qualificazione:* $\nabla g=(2x,2y)$ si annulla solo nell'origine, che non sta sul vincolo. *Sistema:* $3=2\lambda x$, $4=2\lambda y$, $x^2+y^2=25$. Il moltiplicatore non è nullo (altrimenti $3=0$), quindi $x=\tfrac3{2\lambda}$, $y=\tfrac2\lambda$, e sostituendo $\tfrac{9}{4\lambda^2}+\tfrac{4}{\lambda^2}=\tfrac{25}{4\lambda^2}=25$, cioè $\lambda=\pm\tfrac12$. Candidati: $(3,4)$ con $\lambda=\tfrac12$ e $(-3,-4)$ con $\lambda=-\tfrac12$.
+
+*Chi è chi:* la circonferenza è chiusa e limitata, quindi per Weierstrass massimo e minimo esistono e sono tra i candidati: $f(3,4)=25$ è il massimo, $f(-3,-4)=-25$ il minimo. Geometricamente, le rette di livello $3x+4y=k$ sono tangenti alla circonferenza proprio dove il raggio è parallelo a $(3,4)$.
+
+*Prezzo ombra:* su $x^2+y^2=c$ il massimo vale $5\sqrt c$, e $\tfrac{d}{dc}5\sqrt c=\tfrac{5}{2\sqrt c}=\tfrac12$ per $c=25$: è il $\lambda$ del massimo.
+
+**Esempio 4 (il consumatore e il prezzo ombra).** Un consumatore massimizza $U(x,y)=xy$ con il vincolo di bilancio $p_xx+p_yy=w$, con $x,y\ge0$ e prezzi e reddito positivi.
+
+*Sistema:* $\nabla U=(y,x)=\lambda(p_x,p_y)$, quindi $y=\lambda p_x$ e $x=\lambda p_y$. Nel vincolo: $2\lambda p_xp_y=w$. Allora
+
+$$
+\lambda=\frac{w}{2p_xp_y},\qquad x=\frac{w}{2p_x},\qquad y=\frac{w}{2p_y},\qquad v(w)=xy=\frac{w^2}{4p_xp_y}.
+$$
+
+*Perché è il massimo:* il vincolo con $x,y\ge0$ è un segmento, chiuso e limitato; agli estremi (sugli assi) $U=0$, all'interno $U>0$. Il massimo esiste, non sta agli estremi, quindi è un punto interno del segmento dove vale Lagrange ($\nabla g=(p_x,p_y)\ne\mathbf{0}$): l'unico candidato.
+
+*Con i numeri* $p_x=1$, $p_y=2$, $w=8$: paniere $(4,2)$, $U^*=8$, $\lambda=2$. Verifica del prezzo ombra: $v'(w)=\tfrac{w}{2p_xp_y}=\lambda$; con $w=9$ si ha $v=\tfrac{81}8=10{,}125$, cioè $+2{,}125\approx\lambda=2$. Un euro in più vale circa $2$ unità di utilità.
+
+Nel grafico muovi il livello $a$ della curva di indifferenza $xy=a$ e osserva la retta di bilancio. Per $a<8$ la curva taglia la retta in due panieri acquistabili; per $a=8$ la tocca solo in $(4,2)$, tangente; per $a>8$ non la incontra più, perché quell'utilità non è raggiungibile con il reddito dato.
 
 ```slider
-{"title":"f(x)=x²+a·1² — effetto di a sulla forma","fn":"x*x + a","fn2":"0*x","domain":[-3,3],"yDomain":[-4,10],"pname":"a","pmin":-2,"pmax":2,"pdefault":1,"pstep":0.1,"plabel":"a","label1":"f(x,1)=x²+a","label2":"livello zero"}
+{"title": "Curve di indifferenza xy = a e retta di bilancio x + 2y = 8", "fn": "a/x", "fn2": "(8 - x)/2", "domain": [0, 10], "yDomain": [0, 4.5], "pname": "a", "pmin": 2, "pmax": 14, "pdefault": 4, "pstep": 1, "plabel": "livello di utilità a", "label1": "curva di indifferenza xy = a", "label2": "vincolo x + 2y = 8"}
 ```
 
-Quando $a>0$: il minimo di $f$ è un minimo globale (paraboloide ellittico). Quando $a<0$: la funzione ha un punto di sella nell'origine (paraboloide iperbolico). Il discriminante $D=2a\cdot 2-0=4a$ cambia segno con $a$.
+## Esercizi
 
----
-
-## 8. Errori comuni
-
-| Errore | Forma sbagliata | Forma corretta |
-| --- | --- | --- |
-| Dimenticare il vincolo nel sistema | Solo $\nabla f=\lambda\nabla g$ | Aggiungere sempre $g(x,y)=c$ |
-| Fermarsi ai candidati senza confrontarli | Prendere il primo punto trovato | Valutare $f$ in tutti i candidati e scegliere |
-| Usare $D$ senza punto critico | Calcolare $D$ in punto arbitrario | $D$ si valuta solo **nei punti critici** |
-| Confondere $f_{xy}$ e $f_{xx}$ nel discriminante | $D=f_{xx}f_{xy}-(f_{yy})^2$ | $D=f_{xx}f_{yy}-(f_{xy})^2$ |
-| $D=0$ conclusivo | "$D=0$ → minimo/massimo" | $D=0$: criterio **non conclusivo**, serve altro |
-| Ignorare frontiera nel dominio chiuso | Solo punti interni critici | Includere la frontiera con Lagrange o parametrizzazione |
-| Dividere per $\nabla g$ invece di usare il sistema | "$\nabla f / \nabla g = \lambda$" | Scrivere le equazioni componente per componente |
-
----
-
-## 9. Applicazioni reali
-
-**Ingegneria strutturale.** Un progettista deve minimizzare il peso di una trave (funzione da minimizzare) rispettando limiti di resistenza (vincoli). I moltiplicatori di Lagrange danno la "sensibilità" del peso ottimo rispetto a ciascun vincolo: se $\lambda_i$ è grande, allentare il vincolo $i$ porta un grande risparmio di peso. Questa informazione guida le scelte di progetto.
-
-**Microeconomia e teoria del consumatore.** Un consumatore massimizza l'utilità $U(x,y)$ spendendo esattamente il budget $B=p_x x + p_y y$. La condizione di Lagrange dà $U_x/p_x = U_y/p_y = \lambda$: il rapporto tra utilità marginale e prezzo deve essere uguale per tutti i beni. Questo è il celebre "teorema di Gossen" e fonda tutta la teoria della domanda.
-
-**Apprendimento automatico — SVM.** Le macchine a vettori di supporto (Support Vector Machine) trovano l'iperpiano separatore di massimo margine attraverso un problema di ottimizzazione vincolata quadratica. I moltiplicatori di Lagrange identificano i **vettori di supporto** (i punti dati critici sul bordo del margine): solo questi determinano il classificatore, rendendo l'SVM efficiente e robusto.
-
----
-
-## 10. Riepilogo
-
-| Concetto | Formula / Condizione | Note |
-| --- | --- | --- |
-| Punto critico libero | $\nabla f = \mathbf{0}$ | Necessario, non sufficiente |
-| Discriminante hessiano | $D = f_{xx}f_{yy}-(f_{xy})^2$ | Solo nei punti critici |
-| Minimo locale | $D>0$, $f_{xx}>0$ | Curvatura positiva in tutte le direzioni |
-| Massimo locale | $D>0$, $f_{xx}<0$ | Curvatura negativa in tutte le direzioni |
-| Punto di sella | $D<0$ | Curvatura mista |
-| Criterio di Lagrange | $\nabla f=\lambda\nabla g$, $g=c$ | 3 equazioni, 3 incognite |
-| Significato di $\lambda$ | $\lambda=df^*/dc$ | Sensibilità del valore ottimo al vincolo |
-
----
-
-## 11. Esercizi
+**Esercizio 1.** Trova e classifica i punti critici di $f(x,y)=x^3-3x+y^2$. Ci sono estremi globali?
 
 <details>
-<summary>Esercizio 1 — Trovare e classificare i punti critici</summary>
+<summary>Soluzione</summary>
 
-**Testo:** $f(x,y)=x^3+y^3-3xy$. Trovare e classificare tutti i punti critici.
-
-**Soluzione:**
-
-$f_x=3x^2-3y=0 \Rightarrow y=x^2$; $f_y=3y^2-3x=0 \Rightarrow x=y^2$.
-
-Sostituendo: $x=(x^2)^2=x^4$, $x^4-x=0$, $x(x^3-1)=0$.
-
-$x=0$ (poi $y=0$) e $x=1$ (poi $y=1$).
-
-$f_{xx}=6x$, $f_{xy}=-3$, $f_{yy}=6y$. $D=36xy-9$.
-
-- $(0,0)$: $D=-9<0$ → **punto di sella**.
-- $(1,1)$: $D=36-9=27>0$, $f_{xx}=6>0$ → **minimo locale**. $f(1,1)=-1$.
-
+$f_x=3x^2-3=0$ e $f_y=2y=0$: punti $(1,0)$ e $(-1,0)$. $H=\left(\begin{smallmatrix}6x&0\\0&2\end{smallmatrix}\right)$. In $(1,0)$: $\operatorname{diag}(6,2)$, definita positiva, **minimo locale** con $f=-2$. In $(-1,0)$: $\operatorname{diag}(-6,2)$, indefinita, **sella**. Nessun estremo globale: $f(t,0)=t^3-3t$ tende a $-\infty$ per $t\to-\infty$ e a $+\infty$ per $t\to+\infty$.
 </details>
 
+**Esercizio 2.** Mostra che $f=x^2+y^4$ e $k=x^2-y^4$ hanno entrambe un punto critico nell'origine con la stessa Hessiana, ma che la prima vi ha un minimo e la seconda una sella. Perché il test del second'ordine non poteva distinguerle?
+
 <details>
-<summary>Esercizio 2 — Lagrange: massimo su ellisse</summary>
+<summary>Soluzione</summary>
 
-**Testo:** Trovare i valori massimo e minimo di $f(x,y)=x+2y$ su $g(x,y)=x^2+4y^2=4$.
-
-**Soluzione:**
-
-$\nabla f=\lambda\nabla g$: $(1,2)=\lambda(2x,8y)$.
-
-$1=2\lambda x \Rightarrow x=1/(2\lambda)$; $2=8\lambda y \Rightarrow y=1/(4\lambda)$.
-
-Vincolo: $\frac{1}{4\lambda^2}+\frac{4}{16\lambda^2}=4 \Rightarrow \frac{1}{4\lambda^2}+\frac{1}{4\lambda^2}=4 \Rightarrow \frac{1}{2\lambda^2}=4 \Rightarrow \lambda^2=1/8$.
-
-$\lambda=\pm 1/(2\sqrt{2})$.
-
-- $\lambda>0$: $x=\sqrt{2}$, $y=\sqrt{2}/2$. $f=\sqrt{2}+\sqrt{2}=2\sqrt{2}$ (**massimo**).
-- $\lambda<0$: $x=-\sqrt{2}$, $y=-\sqrt{2}/2$. $f=-2\sqrt{2}$ (**minimo**).
-
+$\nabla f=(2x,4y^3)$ e $\nabla k=(2x,-4y^3)$ si annullano in $(0,0)$; in entrambi i casi $H=\left(\begin{smallmatrix}2&0\\0&0\end{smallmatrix}\right)$, semidefinita positiva con un autovalore nullo. $f\ge0=f(0,0)$: minimo (globale). $k(t,0)=t^2>0$ e $k(0,t)=-t^4<0$: sella. La parte quadratica $\tfrac12\mathbf{h}^TH\mathbf{h}=h_1^2$ è nulla lungo la direzione $(0,1)$, dove decide il termine $\pm y^4$, che l'Hessiana non vede.
 </details>
 
+**Esercizio 3.** Trova il punto della retta $x+2y=5$ più vicino all'origine, minimizzando $x^2+y^2$, e verifica che $\lambda$ è la derivata del valore minimo rispetto al termine noto.
+
 <details>
-<summary>Esercizio 3 — Minima distanza da un punto a una retta</summary>
+<summary>Soluzione</summary>
 
-**Testo:** Trovare il punto sulla retta $2x+y=5$ più vicino all'origine. Usare i moltiplicatori di Lagrange.
-
-**Soluzione:**
-
-Minimizzare $f(x,y)=x^2+y^2$ con $g(x,y)=2x+y=5$.
-
-$(2x,2y)=\lambda(2,1)$: $x=\lambda$, $y=\lambda/2$.
-
-Vincolo: $2\lambda+\lambda/2=5 \Rightarrow 5\lambda/2=5 \Rightarrow \lambda=2$.
-
-$x=2$, $y=1$. Distanza: $\sqrt{4+1}=\sqrt{5}$.
-
-Verifica con formula: distanza punto-retta $d=\lvert 0+0-5\rvert/\sqrt{4+1}=5/\sqrt{5}=\sqrt{5}$ ✓.
-
+$(2x,2y)=\lambda(1,2)$: $x=\lambda/2$, $y=\lambda$; nel vincolo $\tfrac\lambda2+2\lambda=5$, quindi $\lambda=2$, punto $(1,2)$, valore $5$. È un minimo perché $x^2+y^2\to+\infty$ lungo la retta (procedura B, passo 3). Con termine noto $c$: $x=c/5$, $y=2c/5$, $v(c)=c^2/5$, e $v'(5)=2=\lambda$.
 </details>
 
+**Esercizio 4.** Un'impresa produce $q=\sqrt{KL}$ con capitale $K>0$ e lavoro $L>0$, pagati $2$ e $8$ per unità. Minimizza il costo $2K+8L$ per produrre $q=4$, prima con il vincolo $\sqrt{KL}=4$, poi con $KL=16$. Confronta i due $\lambda$.
+
 <details>
-<summary>Esercizio 4 — Ottimizzazione su dominio chiuso</summary>
+<summary>Soluzione</summary>
 
-**Testo:** Trovare i valori massimo e minimo di $f(x,y)=x^2-xy+y^2$ su $D=\{x^2+y^2\leq 1\}$.
-
-**Soluzione:**
-
-**Interno:** $f_x=2x-y=0$, $f_y=-x+2y=0 \Rightarrow x=y=0$. $f(0,0)=0$.
-
-**Frontiera:** $g=x^2+y^2-1=0$. $(2x-y,-x+2y)=\lambda(2x,2y)$.
-
-$(1-\lambda)2x=y$ e $(-1+2\lambda)y\cdot\text{...}$: poniamo $y=mx$.
-
-Da $(2-2\lambda)x=mx$: $m=2-2\lambda$. Da $(-1+2\lambda)y=2\lambda y/1$... più semplicemente: sostituendo $y=x$ o $y=-x$ nel vincolo:
-
-- $y=x$: $f=x^2-x^2+x^2=x^2=1$ (su frontiera). $f=1$.
-- $y=-x$: $f=x^2+x^2+x^2=3x^2=3$ (su frontiera, $x=\pm 1/\sqrt{?}$... attenzione: $2x^2=1$, $x=1/\sqrt{2}$, $f=3/2$).
-
-Procediamo con Lagrange: $2x-y=2\lambda x$, $-x+2y=2\lambda y$. Somma: $x+y=2\lambda(x+y)$. Se $x+y\neq 0$: $\lambda=1/2$. Da $2x-y=x$: $x=y$. Vincolo: $x=1/\sqrt{2}$, $f=1/2$.
-
-Differenza equazioni: $3x-3y=2\lambda(x-y)$. Se $x\neq y$: $\lambda=3/2$. $2x-y=3x \Rightarrow y=-x$. Vincolo: $x=1/\sqrt{2}$, $f=3\cdot 1/2=3/2$.
-
-**Riepilogo:** minimo $f=0$ in $(0,0)$; massimo $f=3/2$ in $(\pm 1/\sqrt{2},\mp 1/\sqrt{2})$.
-
+Con $g=\sqrt{KL}$: $\nabla g=\big(\tfrac12\sqrt{L/K},\ \tfrac12\sqrt{K/L}\big)$. Il rapporto delle due equazioni dà $\tfrac28=\tfrac LK$, cioè $K=4L$; nel vincolo $2L=4$, quindi $L=2$, $K=8$, costo $32$. È il minimo: sul vincolo $L=16/K$ e il costo $2K+128/K$ tende a $+\infty$ sia per $K\to0^+$ sia per $K\to+\infty$, quindi un minimo esiste (procedura B, passo 3) ed è l'unico candidato. Dalla prima equazione $2=\lambda\cdot\tfrac12\cdot\tfrac12$, quindi $\lambda=8$. In generale $L=q/2$, $K=2q$ e il costo minimo è $C(q)=8q$: $\lambda=C'(q)=8$ è il **costo marginale**. Con $KL=16$: $(2,8)=\tilde\lambda(L,K)=\tilde\lambda(2,8)$, quindi $\tilde\lambda=1$. Stesso punto, moltiplicatore diverso: ora il termine noto è $s=q^2$, $C=8\sqrt s$ e $\tfrac{dC}{ds}=\tfrac{4}{\sqrt s}=1$ per $s=16$.
 </details>
 
+**Esercizio 5.** Trova massimo e minimo di $f(x,y)=xy$ sulla circonferenza $x^2+y^2=2$.
+
 <details>
-<summary>Esercizio 5 — Massimo del prodotto con somma fissa</summary>
+<summary>Soluzione</summary>
 
-**Testo:** Fra tutti i rettangoli di perimetro $P$ fissato, quale ha area massima?
-
-**Soluzione:**
-
-Lati $x$ e $y$. Massimizzare $A=xy$ con $g=2x+2y=P$.
-
-$(y,x)=\lambda(2,2) \Rightarrow y=2\lambda=x$: il rettangolo ottimo è un **quadrato**.
-
-Con $4x=P$: $x=y=P/4$. Area massima: $A=(P/4)^2=P^2/16$.
-
-**Significato:** fissato il perimetro, il quadrato ha area massima fra tutti i rettangoli (caso particolare dell'isoperimetrica).
-
+$(y,x)=\lambda(2x,2y)$: $y=2\lambda x$ e $x=2\lambda y=4\lambda^2x$. Se $x=0$ allora $y=0$, che non sta sul vincolo; quindi $4\lambda^2=1$, $\lambda=\pm\tfrac12$. Con $\lambda=\tfrac12$: $y=x$, punti $(1,1)$ e $(-1,-1)$, $f=1$. Con $\lambda=-\tfrac12$: $y=-x$, punti $(1,-1)$ e $(-1,1)$, $f=-1$. Il vincolo è chiuso e limitato: massimo $1$, minimo $-1$.
 </details>
 
-<details>
-<summary>Esercizio 6 — Lagrange e interpretazione di $\lambda$</summary>
-
-**Testo:** Massimizzare $f(x,y)=xy$ con $x+y=c$ (parametro). Trovare $f^*(c)$ e verificare che $\lambda = df^*/dc$.
-
-**Soluzione:**
-
-$(y,x)=\lambda(1,1) \Rightarrow x=y=c/2$. $f^*(c)=(c/2)^2=c^2/4$.
-
-$\frac{df^*}{dc}=\frac{c}{2}=\lambda$ (dalla prima equazione $y=\lambda$ con $y=c/2$): $\lambda=c/2$ ✓.
-
-</details>
+**Esercizio 6 (KKT).** Massimizza $f(x,y)=-(x-1)^2-(y-1)^2$ con il vincolo $x+y\le c$, prima per $c=4$ e poi per $c=1$, usando le condizioni con $\mu\ge0$ e la complementarità.
 
 <details>
-<summary>Esercizio 7 — Punto di sella non ovvio</summary>
+<summary>Soluzione</summary>
 
-**Testo:** $f(x,y)=x^2 y^2 - y^2 - x^2 + 1$. Mostrare che $(0,0)$ è un punto di sella.
-
-**Soluzione:**
-
-$f_x=2xy^2-2x=2x(y^2-1)=0$; $f_y=2x^2 y-2y=2y(x^2-1)=0$.
-
-In $(0,0)$: $f_x=0$, $f_y=0$ → punto critico.
-
-$f_{xx}=2y^2-2$, $f_{xy}=4xy$, $f_{yy}=2x^2-2$.
-
-In $(0,0)$: $f_{xx}=-2$, $f_{xy}=0$, $f_{yy}=-2$. $D=(-2)(-2)-0=4>0$, $f_{xx}=-2<0$ → **massimo locale**.
-
-(Attenzione: non è una sella! $f(0,0)=1$ è massimo locale. Ci sono altri punti critici: $(\pm 1,\pm 1)$ con $D=4\cdot 4-16=0$ — criterio non conclusivo.)
-
-</details>
-
-<details>
-<summary>Esercizio 8 — Lagrange a tre variabili: produzione ottimale</summary>
-
-**Testo:** Una fabbrica produce con funzione $Q(K,L,M)=K^{1/3}L^{1/3}M^{1/3}$ (capitale $K$, lavoro $L$, materiali $M$). Il costo totale è $2K+3L+6M=12$. Massimizzare $Q$.
-
-**Soluzione:**
-
-$\nabla Q = \lambda\nabla g$ con $g=2K+3L+6M-12$.
-
-$\frac{1}{3}K^{-2/3}L^{1/3}M^{1/3}=2\lambda$, $\frac{1}{3}K^{1/3}L^{-2/3}M^{1/3}=3\lambda$, $\frac{1}{3}K^{1/3}L^{1/3}M^{-2/3}=6\lambda$.
-
-Rapporto prima/seconda: $L/K=2/3$. Rapporto prima/terza: $M/K=1/3$.
-
-Con vincolo: $2K+3\cdot(2K/3)+6\cdot(K/3)=12 \Rightarrow 2K+2K+2K=12 \Rightarrow K=2$, $L=4/3$, $M=2/3$.
-
-$Q_{\max}=2^{1/3}(4/3)^{1/3}(2/3)^{1/3}=(2\cdot 4/3\cdot 2/3)^{1/3}=(16/9)^{1/3}$.
-
+$\nabla f=\big(-2(x-1),-2(y-1)\big)=\mu(1,1)$. *$c=4$.* Se il vincolo fosse attivo, dalle due equazioni $x-1=y-1$, quindi $x=y=2$, e $(-2,-2)=\mu(1,1)$ darebbe $\mu=-2<0$: escluso. Quindi $\mu=0$, $\nabla f=\mathbf{0}$, punto $(1,1)$, ammissibile perché $1+1\le4$: il vincolo non conta. *$c=1$.* Con $\mu=0$ si ritrova $(1,1)$, che viola $x+y\le1$; quindi il vincolo è attivo, $x=y=\tfrac12$ e $(1,1)=\mu(1,1)$ dà $\mu=1\ge0$: massimo in $(\tfrac12,\tfrac12)$, valore $-\tfrac12$. Controllo geometrico: $-f$ è il quadrato della distanza da $(1,1)$, e il punto del semipiano $x+y\le1$ più vicino a $(1,1)$ è la sua proiezione $(\tfrac12,\tfrac12)$.
 </details>
