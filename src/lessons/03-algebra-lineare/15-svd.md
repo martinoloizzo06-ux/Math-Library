@@ -54,7 +54,7 @@ profondita: essenziale
 tipo: teorica
 versione: "1.0"
 data_ultima_rielaborazione: "2026-10-06"
-stato: da-rivedere
+stato: completa
 componenti_usati:
   - checkpoint
   - plot
